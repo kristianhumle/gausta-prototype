@@ -25,7 +25,7 @@
     <div class="reveal" style="margin-bottom:24px">
       <p class="eyebrow" data-en="Floor plan">Plantegning</p>
       <h2 data-en="Walk through the apartment.">Gå gennem lejligheden.</h2>
-      <p class="lead" data-en="Each room on the plan shows its photos.">Hvert rum på planen viser sine billeder.</p>
+      <p class="lead" data-en="See all photos, or pick a room to see just that room.">Se alle billeder, eller vælg et rum for kun at se det rum.</p>
       <p style="margin-top:10px"><span class="proto-tag">Prototypebilleder</span></p>
     </div>
     <div data-plan="panel"></div>
@@ -35,19 +35,6 @@
 <section class="section">
   <div class="wrap layout-aside">
     <div class="stack">
-      <p><span class="proto-tag">Prototypebilleder</span> <span class="muted">Midlertidige billeder. Rumnavne er gæt ud fra billedet og skal bekræftes.</span></p>
-      <div class="row-flex" data-filter-group="#lej-gallery">
-        <button class="filter" data-f="all" aria-pressed="true" data-en="All">Alle</button>
-        <button class="filter" data-f="stue" aria-pressed="false" data-en="Living">Stue</button>
-        <button class="filter" data-f="koekken" aria-pressed="false" data-en="Kitchen">Køkken</button>
-        <button class="filter" data-f="sove" aria-pressed="false" data-en="Bedrooms">Soveværelser</button>
-        <button class="filter" data-f="bad" aria-pressed="false" data-en="Bath">Bad</button>
-        <button class="filter" data-f="entre" aria-pressed="false" data-en="Hall and ski room">Entré og skirum</button>
-        <button class="filter" data-f="ude" aria-pressed="false" data-en="Outside">Udendørs</button>
-        <button class="filter" data-f="depot" aria-pressed="false" data-en="Storage">Depot</button>
-      </div>
-      <div class="tiles reveal" id="lej-gallery" data-gallery-group></div>
-
       <div class="ph-img reveal" style="min-height:140px">Video (kommer)</div>
 
       <h2 style="margin-top:32px" data-en="Facilities">Faciliteter</h2>
@@ -74,21 +61,5 @@
 </section>
 <script src="app.js"></script>
 <script src="plan.js"></script>
-<script>
-document.addEventListener('gl:ready', function () {
-  var L = function (n, cat, cap, cls) { return {k:'lejligheden/lejligheden-' + (n < 10 ? '0' : '') + n, cat:cat, cap:cap, cls:cls || ''}; };
-  GL.buildGallery(document.getElementById('lej-gallery'), [
-    L(5,'stue','Stue og spisebord','big'), L(21,'stue','Stue'), L(19,'stue','Stue'),
-    L(30,'stue','Stue','tall'), L(34,'stue','Stue'), L(27,'stue','Stue'), L(24,'stue','Tv-hjørne'),
-    L(11,'stue','Sofabord'), L(14,'stue','Stue'), L(15,'stue','Stue'), L(4,'stue','Brændeovn'),
-    L(3,'koekken','Køkken og spisebord'), L(16,'koekken','Køkken'), L(31,'koekken','Køkken','wide2'), L(18,'koekken','Køkkenkrog'), L(1,'koekken','Detalje'),
-    L(7,'sove','Soveværelse'), L(12,'sove','Soveværelse'), L(29,'sove','Soveværelse','tall'), L(32,'sove','Soveværelse med terrassedør'), L(10,'sove','Køjeseng'),
-    L(6,'bad','Bad, detalje'), L(9,'bad','Bad med vaskemaskine'), L(22,'bad','Håndklæder'), L(23,'bad','Bad'),
-    L(13,'entre','Skirum'), L(17,'entre','Entré'), L(2,'entre','Gang'), L(28,'entre','Entré'), L(25,'stue','Terrassedør med gardin'),
-    L(8,'ude','Bygningen udefra'), L(26,'ude','Indgang'),
-    L(20,'depot','Depot'), L(33,'depot','Depot')
-  ], {caps:true});
-});
-</script>
 </body>
 </html>

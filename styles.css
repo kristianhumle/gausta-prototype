@@ -451,3 +451,14 @@ textarea.field { min-height: 96px; resize: vertical; }
 [data-season-card] .season-state::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid currentColor; }
 [data-season-card].current .season-state::before { background: currentColor; }
 @media (prefers-reduced-motion: reduce) { [data-season-card], [data-season-card]:hover { transition: none; transform: none; } }
+
+/* room selector above the plan */
+.plan-pills { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 16px; }
+.plan-pills .filter .n { font-size: .72rem; font-weight: 700; opacity: .65; margin-left: 4px; }
+.plan-pills .filter[aria-pressed="true"] .n { opacity: .9; }
+.plan-note { margin-top: 14px; }
+@media (max-width: 860px) {
+  .plan-pills { flex-wrap: nowrap; overflow-x: auto; margin-left: -20px; margin-right: -20px; padding: 2px 20px 8px; scrollbar-width: none; }
+  .plan-pills::-webkit-scrollbar { display: none; }
+  .plan-pills .filter { flex: none; white-space: nowrap; }
+}

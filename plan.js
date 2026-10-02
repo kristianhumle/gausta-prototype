@@ -8,7 +8,7 @@
 
   var ROOMS = [
     { id: 'entre', name: 'Entré og skirum', dim: '4 m²', desc: 'Indgangen med garderobe og bænk til overtøj og sko. Her er også plads til ski og udstyr.', poly: [[668,212],[750,212],[750,330],[668,330]], label: [709,262], pin: [709,318],
-      photos: [[L(17),'Entré med garderobe'],[L(28),'Entré med bænk'],[L(2),'Gang'],[L(13),'Skirum'],[L(26),'Indgang udefra']] },
+      photos: [[L(17),'Entré med garderobe'],[L(28),'Entré med bænk'],[L(2),'Gang'],[L(13),'Skirum']] },
     { id: 'sov1', name: 'Soveværelse 1', dim: '6 m²', desc: 'Soveværelse med dobbeltseng, lænestol og vindue.', poly: [[552,212],[668,212],[668,318],[552,318]], label: [610,262], pin: [653,227],
       photos: [[L(7),'Soveværelse'],[L(29),'Soveværelse, sengebord']] },
     { id: 'sov2', name: 'Soveværelse 2', dim: '5 m²', desc: 'Lille soveværelse med køjeseng.', poly: [[750,212],[860,212],[860,312],[750,312]], label: [805,262], pin: [845,227],
@@ -20,8 +20,12 @@
     { id: 'stuesov', name: 'TV-stue / soveværelse', lines: ['TV-stue /','soveværelse'], dim: '10 m²', desc: 'TV-stue med sofa og tv, som også kan bruges som ekstra soveværelse.', poly: [[750,416],[860,416],[860,640],[750,640]], label: [805,500], pin: [845,431],
       photos: [[L(24),'Tv-hjørne'],[L(27),'Sofa og tv'],[L(12),'Seng og tv'],[L(32),'Seng med terrassedør']] },
     { id: 'terrasse', name: 'Terrasse', dim: '25 m²', desc: 'Terrasse med plads til udemøbler og sol det meste af dagen.', poly: [[552,660],[860,660],[860,815],[552,815]], label: [705,738], pin: [705,775],
-      photos: [['sommer/sommer-01','Terrassen om sommeren'],[L(8),'Bygningen udefra']] }
+      photos: [['sommer/sommer-01','Terrassen om sommeren']] },
+    { id: 'outside', name: 'Uden for planen', short: 'Uden for planen', dim: '', desc: 'Bygningen udefra, indgangen og depotrum uden for selve lejligheden.', photos: [[L(8),'Bygningen udefra'],[L(26),'Indgang udefra'],[L(20),'Depot'],[L(33),'Depot']] }
   ];
+  var SHORT = { entre: 'Entré og skirum', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', outside: 'Uden for planen' };
+  var PILLS = ['entre', 'sov1', 'sov2', 'kstue', 'bad', 'stuesov', 'terrasse', 'outside'];
+  var ORDER_ALL = ['kstue', 'stuesov', 'sov1', 'sov2', 'bad', 'entre', 'terrasse', 'outside'];
   function room(id) { return ROOMS.filter(function (r) { return r.id === id; })[0]; }
   function lines(r) { return r.lines || r.name.replace(' og ', ' og|').split('|'); }
 
@@ -29,6 +33,7 @@
     var s = '<svg class="plan-svg" viewBox="535 180 340 650" role="group" aria-label="Plantegning med rum">';
     // room fills (hit areas)
     ROOMS.forEach(function (r) {
+      if (!r.poly) return;
       var pts = r.poly.map(function (p) { return p.join(','); }).join(' ');
       var badge = r.photos.length;
       s += '<g class="room" data-room="' + r.id + '" tabindex="0" role="button" aria-label="' + r.name + ', ' + r.photos.length + ' billeder">' +
@@ -72,33 +77,52 @@
     el.addEventListener('keydown', function (e) { if (e.key !== 'Enter' && e.key !== ' ') return; var g = e.target.closest('.room'); if (g) { e.preventDefault(); onPick(room(g.dataset.room)); } });
   }
   function mark(el, id) { [].forEach.call(el.querySelectorAll('.room'), function (g) { g.classList.toggle('on', g.dataset.room === id); }); }
+  function allPhotos() {
+    var out = [];
+    ORDER_ALL.forEach(function (id) { var r = room(id); r.photos.forEach(function (p) { out.push([p[0], p[1], r.name]); }); });
+    return out;
+  }
 
-  // paper plan + side panel (stacks on phones; scrolls the panel into view after a tap)
+  // Plan + room selector + photo panel. "Alle" (all rooms) is the default view.
   function panelVariant(el) {
     var touch = matchMedia('(hover: none)').matches;
     var stacked = function () { return matchMedia('(max-width: 860px)').matches; };
     var verb = touch ? 'Tryk' : 'Klik';
-    el.innerHTML = '<p class="plan-tip">' + verb + ' på et rum for at se billeder. Tallet viser antal billeder.</p>' +
-      '<div class="plan-split"><div class="plan-paper plan-wrap">' + drawing() + '</div><div class="plan-panel" aria-live="polite"></div></div>';
-    var panel = el.querySelector('.plan-panel'), planBox = el.querySelector('.plan-paper');
-    function empty() { panel.innerHTML = '<div class="slot"><b>Vælg et rum</b>' + verb + ' på planen. Billederne vises her, uden at forlade siden.</div>'; }
-    function pick(r, i, scroll) {
-      i = i || 0; mark(el, r.id);
-      var p = r.photos[i];
+    var all = allPhotos();
+    el.innerHTML = '<p class="plan-tip">' + verb + ' på et rum på planen, eller vælg rum i listen. Tallet på planen viser antal billeder.</p>' +
+      '<div class="plan-pills" role="group" aria-label="Vælg rum"><button type="button" class="filter" data-r="all" aria-pressed="true">Alle <span class="n">' + all.length + '</span></button>' +
+      PILLS.map(function (id) { return '<button type="button" class="filter" data-r="' + id + '" aria-pressed="false">' + SHORT[id] + ' <span class="n">' + room(id).photos.length + '</span></button>'; }).join('') + '</div>' +
+      '<div class="plan-split"><div class="plan-paper plan-wrap">' + drawing() + '</div><div class="plan-panel" aria-live="polite"></div></div>' +
+      '<p class="faint plan-note">Prototypebilleder. Rumnavne og hvilke billeder der hører til hvilket rum er gæt ud fra billederne og skal bekræftes.</p>';
+    var panel = el.querySelector('.plan-panel'), planBox = el.querySelector('.plan-paper'), cur = 'all';
+
+    function show(id, i, scroll) {
+      cur = id; i = i || 0;
+      var isAll = id === 'all', r = isAll ? null : room(id);
+      var photos = isAll ? all : r.photos.map(function (p) { return [p[0], p[1], r.name]; });
+      var p = photos[i];
+      mark(el, isAll ? null : id);
+      [].forEach.call(el.querySelectorAll('.plan-pills .filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.r === id)); });
+      var cap = isAll ? p[1] + ' · ' + p[2] : p[1];
       panel.innerHTML = '<button type="button" class="plan-back btn btn-ghost btn-sm">↑ Tilbage til planen</button>' +
-        '<h3 style="margin:0 0 4px">' + r.name + '</h3><div class="muted" style="font-size:.85rem;margin-bottom:12px">' + r.dim + ' <span class="verify">skal verificeres</span></div>' +
-        '<div data-gallery-group>' + r.photos.map(function (q, k) {
-          if (k !== i) return '<a class="sr-only" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + q[1] + '">' + q[1] + '</a>';
-          return '<a class="plan-hero" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + q[1] + '" aria-label="Forstør billedet: ' + q[1] + '"><img class="photo" src="' + GL.photo(q[0], 'm') + '" alt="' + q[1] + '">' +
-            '<span class="zoom-hint">' + GL.icon('search') + (touch ? 'Tryk for at forstørre' : 'Klik for at forstørre') + '</span><span class="cap">' + q[1] + '</span></a>';
+        '<h3 style="margin:0 0 4px">' + (isAll ? 'Alle billeder' : r.name) + '</h3>' +
+        '<div class="muted" style="font-size:.85rem;margin-bottom:12px">' + (isAll ? photos.length + ' billeder fra hele lejligheden' : photos.length + ' billeder' + (r.dim ? ' · ' + r.dim + ' <span class="verify">skal verificeres</span>' : '')) + '</div>' +
+        '<div data-gallery-group>' + photos.map(function (q, k) {
+          var qc = isAll ? q[1] + ' · ' + q[2] : q[1];
+          if (k !== i) return '<a class="sr-only" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + qc + '">' + qc + '</a>';
+          return '<a class="plan-hero" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + cap + '" aria-label="Forstør billedet: ' + cap + '"><img class="photo" src="' + GL.photo(q[0], 'm') + '" alt="' + cap + '">' +
+            '<span class="zoom-hint">' + GL.icon('search') + (touch ? 'Tryk for at forstørre' : 'Klik for at forstørre') + '</span><span class="cap">' + cap + '</span></a>';
         }).join('') + '</div>' +
-        '<div class="plan-thumbs">' + r.photos.map(function (q, k) { return '<button type="button" class="' + (k === i ? 'on' : '') + '" data-k="' + k + '" aria-label="' + q[1] + '"><img src="' + GL.photo(q[0], 's') + '" alt=""></button>'; }).join('') + '</div>' +
-        '<p class="plan-desc">' + r.desc + '</p>';
-      [].forEach.call(panel.querySelectorAll('.plan-thumbs button'), function (b) { b.addEventListener('click', function () { pick(r, +b.dataset.k, false); }); });
+        '<div class="plan-thumbs">' + photos.map(function (q, k) { return '<button type="button" class="' + (k === i ? 'on' : '') + '" data-k="' + k + '" aria-label="' + q[1] + '"><img src="' + GL.photo(q[0], 's') + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' +
+        '<p class="plan-desc">' + (isAll ? 'Vælg et rum på planen eller i listen over planen for kun at se det rums billeder.' : r.desc) + '</p>';
+      [].forEach.call(panel.querySelectorAll('.plan-thumbs button'), function (b) { b.addEventListener('click', function () { show(id, +b.dataset.k, false); }); });
       panel.querySelector('.plan-back').addEventListener('click', function () { planBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
       if (scroll && stacked()) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    empty(); bindRooms(el, function (r) { pick(r, 0, true); });
+    // pills select a room; tapping the selected room on the plan returns to "Alle"
+    el.querySelector('.plan-pills').addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b) show(b.dataset.r, 0, false); });
+    bindRooms(el, function (r) { if (cur === r.id) show('all', 0, false); else show(r.id, 0, true); });
+    show('all', 0, false);
   }
 
   window.GL = window.GL || {};
