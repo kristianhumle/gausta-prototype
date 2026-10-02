@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gausta Lodge 52 · Fjeldlejlighed på Gausta</title>
+<meta name="description" content="Prototype af forsiden til Gausta Lodge 52.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="site">
+
+<!-- A1 · Hero (årstidsbaseret illustration som pladsholder; ingen fotos før boligen er møbleret) -->
+<section class="hero" data-photo-map="winter=vinter/vinter-09;summer=sommer/sommer-02;autumn=efteraar/efteraar-03">
+  <div class="wrap">
+    <p class="eyebrow" data-en="Gausta · Telemark · approx. 960 m a.s.l.">Gausta · Telemark · ca. 960 m.o.h.</p>
+    <h1 data-en="Your base at the foot of the mountain.">Din base ved foden af fjeldet.</h1>
+    <p class="lead" data-en="A mountain apartment for skiing, hiking and slow days at Gausta. Seasonal content, current conditions and everything you need for your stay, in one place.">En fjeldlejlighed til ski, vandring og langsomme dage på Gausta. Årstidens indhold, aktuelle forhold og alt til opholdet samlet ét sted.</p>
+    <div class="row-flex">
+      <a class="btn btn-primary btn-lg" href="#booking" data-en="See available dates">Se ledige datoer</a>
+      <a class="btn btn-ghost btn-lg" href="lejligheden.html" data-en="See the apartment">Se lejligheden</a>
+    </div>
+  </div>
+  <div class="hero-art" data-hero-art></div>
+</section>
+
+<!-- A1 · Faktalinje (Fakta fra boligfilen, ikke fra annoncen: TK7) -->
+<div class="wrap">
+  <div class="facts" role="list">
+    <div role="listitem"><b>66 m²</b><span data-en="Living area (BRA-i)">Boligareal (BRA-i)</span></div>
+    <div role="listitem"><b>7</b><span data-en="Beds">Sengepladser</span></div>
+    <div role="listitem"><b>2 + TV</b><span data-en="Bedrooms + TV room">Soveværelser + TV-stue</span></div>
+    <div role="listitem"><b>1</b><span data-en="Bathroom">Bad</span></div>
+    <div role="listitem"><b>25 m²</b><span data-en="Terrace">Terrasse</span></div>
+    <div role="listitem"><b data-en="Ground">Stueplan</b><span data-en="Floor">Etage</span></div>
+  </div>
+  <p class="stamp" style="margin-top:10px">Kilde: boligfilen, 2. oktober 2026 · "3 soveværelser" og "utsikt" fra annoncen er ikke verificeret og vises ikke.</p>
+</div>
+
+<!-- A1 · Interaktiv plantegning (koncept B, valgt) -->
+<section class="section" id="plan">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px">
+      <p class="eyebrow" data-en="Floor plan">Plantegning</p>
+      <h2 data-en="Walk through the apartment.">Gå gennem lejligheden.</h2>
+      <p class="lead" data-en="Pick a room on the plan to see its photos.">Vælg et rum på planen og se billederne.</p>
+      <p style="margin-top:10px"><span class="proto-tag">Prototypebilleder</span></p>
+    </div>
+    <div data-plan="panel"></div>
+  </div>
+</section>
+
+<!-- A1 · Årstidsfortælling (TK3) -->
+<section class="section" id="aarstider">
+  <div class="wrap">
+    <div class="center reveal">
+      <p class="eyebrow" data-en="Four seasons">Fire årstider</p>
+      <h2 data-en="Gausta changes. So does this page.">Gausta skifter. Det gør siden også.</h2>
+      <p class="lead" data-en="Palette, imagery and highlighted content follow the date, or the season you choose.">Farver, billeder og fremhævet indhold følger datoen, eller den årstid du vælger.</p>
+    </div>
+    <div class="grid grid-4" style="margin-top:40px">
+      <div class="card reveal" data-season-card="winter"><div class="card-img"><img loading="lazy" src="assets/web/vinter/vinter-03-s.webp" alt="Langrend ved Gausta om vinteren"></div><div class="ico-box" data-icon="snow"></div><h3 data-en="Winter">Vinter</h3><p class="muted" data-en="Slalom slopes and cross-country trails. Content to be set once the ski details are verified.">Slalompister og langrendsløjper. Indhold fastlægges, når skidetaljer er verificeret.</p></div>
+      <div class="card reveal" data-season-card="spring"><div class="card-img"><div class="ph-img" style="height:100%;border-radius:0;border:0">Forår: billede mangler</div></div><div class="ico-box" data-icon="flower"></div><h3 data-en="Spring">Forår</h3><p class="muted" data-en="Late snow, light evenings and the first bare trails.">Sensne, lyse aftener og de første bare stier.</p></div>
+      <div class="card reveal" data-season-card="summer"><div class="card-img"><img loading="lazy" src="assets/web/sommer/sommer-03-s.webp" alt="Vandring på fjeldet om sommeren"></div><div class="ico-box" data-icon="sun"></div><h3 data-en="Summer">Sommer</h3><p class="muted" data-en="Hiking, cycling and the Gaustatoppen route.">Vandring, cykling og turen mod Gaustatoppen.</p></div>
+      <div class="card reveal" data-season-card="autumn"><div class="card-img"><img loading="lazy" src="assets/web/efteraar/efteraar-03-s.webp" alt="Sø og fjeld om efteråret"></div><div class="ico-box" data-icon="leaf"></div><h3 data-en="Autumn">Efterår</h3><p class="muted" data-en="Colours on the plateau and quiet trails.">Farver på fjeldet og stille stier.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- A1 · Galleri (pladsholdere) -->
+<section class="section band-soft">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:28px">
+      <p class="eyebrow" data-en="Gallery">Galleri</p>
+      <h2 data-en="See the apartment.">Se lejligheden.</h2>
+      <p><span class="proto-tag">Prototypebilleder</span> <span class="muted" data-en="Temporary photos for the prototype. Final high-resolution photos replace them later.">Midlertidige billeder til prototypen. Endelige billeder i høj opløsning erstatter dem senere.</span></p>
+    </div>
+    <div class="gallery reveal" id="home-gallery" data-gallery-group></div>
+    <p style="margin-top:20px"><a href="lejligheden.html" data-en="All apartment details →">Alle detaljer om lejligheden →</a></p>
+  </div>
+</section>
+
+<!-- A5 · Gausta nu (live-data med fallback) -->
+<section class="section" id="nu">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:28px">
+      <p class="eyebrow">Gausta nu</p>
+      <h2 data-en="Conditions right now.">Forholdene lige nu.</h2>
+    </div>
+    <div class="live reveal">
+      <div><small data-en="Temperature">Temperatur</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+      <div><small data-en="Snow depth">Snedybde</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+      <div><small data-en="Lifts open">Åbne lifte</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+      <div><small data-en="Road conditions">Vejforhold</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+    </div>
+    <div class="live-foot"><span class="stamp" data-en="Fallback when a feed is down: “Last updated HH:MM”.">Fallback ved nedbrud: "Sidst opdateret kl. TT:MM".</span><a href="omraadet.html#nu" data-en="Weather, webcam and more →">Vejr, webcam og mere →</a></div>
+  </div>
+</section>
+
+<!-- A2 · Booking-slot (model-neutral, spec afsnit 6) -->
+<section class="section band-soft" id="booking">
+  <div class="wrap grid grid-2" style="align-items:start;gap:48px">
+    <div class="reveal">
+      <p class="eyebrow">Booking</p>
+      <h2 data-en="Check dates and book.">Tjek datoer og book.</h2>
+      <p class="lead" data-en="How booking works is not decided. The booking block is built as a swappable slot, so the choice does not force a rebuild of the rest of the site.">Hvordan booking foregår, er ikke afgjort. Booking-blokken er bygget som en udskiftelig slot, så valget ikke tvinger resten af siden om.</p>
+      <div class="notice" style="margin-top:20px" data-en="Open decision (spec section 6): operator only, parallel own channel, or no operator. No recommendation made.">Åben beslutning (kravspec. afsnit 6): kun operatør, parallel egen kanal eller uden operatør. Ingen anbefaling er truffet.</div>
+    </div>
+    <div class="booking reveal">
+      <div class="opt"><b data-en="Model A · Operator’s booking">Model A · Operatørens booking</b><span class="muted" data-en="Button links to the operator’s booking page.">Knap linker til operatørens bookingside.</span><a class="btn btn-primary" href="#" aria-disabled="true" data-en="Book with the operator">Book hos operatøren</a></div>
+      <div class="opt"><b data-en="Model B · Own request, passed on">Model B · Egen forespørgsel, videregives</b><span class="muted" data-en="Request form below. Needs the operator’s written acceptance.">Forespørgselsformular nedenfor. Kræver operatørens skriftlige accept.</span></div>
+      <form class="form" onsubmit="return false" style="margin-top:14px">
+        <div class="two"><label><span data-en="Arrival">Ankomst</span><input class="field" type="date"></label><label><span data-en="Departure">Afrejse</span><input class="field" type="date"></label></div>
+        <div class="two"><label><span data-en="Guests">Gæster</span><select class="field"><option>2</option><option>4</option><option>7</option></select></label><label>E-mail<input class="field" type="email" placeholder="navn@eksempel.dk"></label></div>
+        <label><span data-en="Message">Besked</span><textarea class="field"></textarea></label>
+        <button class="btn btn-primary" type="button" data-en="Send request (prototype)">Send forespørgsel (prototype)</button>
+        <span class="faint" data-en="Quick reply promised. Consent text for GDPR to follow.">Hurtigt svar lovet. Samtykketekst til GDPR følger.</span>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- A1 · Anmeldelser -->
+<section class="section">
+  <div class="wrap center reveal">
+    <p class="eyebrow" data-en="Guests">Gæster</p>
+    <h2 data-en="Reviews will appear here.">Anmeldelser kommer her.</h2>
+    <p class="lead" data-en="No reviews yet. The block stays hidden until real ones exist; nothing is invented.">Ingen anmeldelser endnu. Blokken skjules, til der findes rigtige; intet opfindes.</p>
+  </div>
+</section>
+
+<!-- A1 · FAQ -->
+<section class="section band-soft" id="faq">
+  <div class="wrap narrow">
+    <div class="reveal" style="margin-bottom:24px"><p class="eyebrow">FAQ</p><h2 data-en="Good to know.">Godt at vide.</h2></div>
+    <div class="faq reveal">
+      <details open><summary data-en="How do I get access to the apartment?">Hvordan kommer jeg ind i lejligheden?</summary><p data-en="Access follows the operator’s shared lock solution. No door codes are ever shown on this site.">Adgang følger operatørens fælles låseløsning. Dørkoder vises aldrig på dette website.</p></details>
+      <details><summary data-en="Is there internet?">Er der internet?</summary><p data-en="Wi-Fi is planned, with details on a sign in the apartment. Speed not yet confirmed.">Wi-Fi er planlagt, med oplysninger på et skilt i lejligheden. Hastighed er ikke bekræftet.</p></details>
+      <details><summary data-en="Are there cameras?">Er der kameraer?</summary><p data-en="No cameras. Door sensors register when doors open. This will be stated clearly to guests.">Ingen kameraer. Dørsensorer registrerer, når dørene åbnes. Det oplyses tydeligt til gæster.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- A2 · Nyhedsbrev / giv besked -->
+<section class="section">
+  <div class="wrap narrow center reveal">
+    <h2 data-en="Be told when dates open.">Få besked, når datoer åbner.</h2>
+    <form class="row-flex" style="justify-content:center;margin-top:18px" onsubmit="return false">
+      <input class="field" type="email" placeholder="E-mail" style="max-width:300px" aria-label="E-mail">
+      <button class="btn btn-primary" type="button" data-en="Notify me">Giv mig besked</button>
+    </form>
+  </div>
+</section>
+
+<script src="app.js"></script>
+<script src="plan.js"></script>
+<script>
+document.addEventListener('gl:ready', function () {
+  GL.buildGallery(document.getElementById('home-gallery'), [
+    {k:'lejligheden/lejligheden-05', cls:'big', cap:'Stue og spisebord', alt:'Stue med spisebord og brændeovn'},
+    {k:'lejligheden/lejligheden-07', cap:'Soveværelse'},
+    {k:'lejligheden/lejligheden-12', cap:'Soveværelse'},
+    {k:'lejligheden/lejligheden-32', cls:'wide', cap:'Soveværelse med terrassedør'},
+    {k:'lejligheden/lejligheden-16', cap:'Køkken'},
+    {k:'lejligheden/lejligheden-09', cap:'Bad'}
+  ]);
+});
+</script>
+</body>
+</html>

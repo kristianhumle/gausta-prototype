@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gæsteområde · Gausta Lodge 52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="site">
+<section class="section">
+  <div class="wrap grid grid-2" style="gap:56px;align-items:center">
+    <div class="stack">
+      <p class="eyebrow">B · <span data-en="Guest area">Gæsteområde</span></p>
+      <h1 style="font-size:clamp(2rem,4vw,3rem)" data-en="Everything for your stay, on your phone.">Alt til opholdet, på din telefon.</h1>
+      <p class="lead" data-en="One permanent link or QR code in the apartment. Mobile first, and the key guides work without coverage.">Ét permanent link eller QR-kode i lejligheden. Mobil først, og de vigtigste vejledninger virker uden dækning.</p>
+      <div class="notice bad" data-en="No access codes, ever. A permanent link can be forwarded or reused, so door codes and Wi-Fi passwords never appear on the page.">Ingen adgangskoder, aldrig. Et permanent link kan videresendes eller genbruges, så dørkoder og Wi-Fi-kode står aldrig på siden.</div>
+      <div class="notice info" data-en="Privacy: door sensors register when doors open. There are no cameras. Wording and GDPR assessment are open.">Privatliv: dørsensorer registrerer, når dørene åbnes. Der er ingen kameraer. Ordlyd og GDPR-vurdering er åbne punkter.</div>
+      <div class="row-flex"><span class="pill-tag good" data-en="Works offline (planned)">Virker offline (planlagt)</span><span class="pill-tag">da · en</span></div>
+    </div>
+    <div class="phone" aria-label="Eksempel på gæsteområde på mobil">
+      <div class="screen">
+        <div class="row-flex" style="justify-content:space-between"><b style="font-family:var(--font-display)">Gausta Lodge 52</b><span class="pill-tag warn" data-en="Offline copy">Offline-kopi</span></div>
+        <div class="card" style="background:var(--accent-weak);border-color:transparent"><b data-en="Welcome">Velkommen</b><p class="muted" style="font-size:.88rem" data-en="Arrival, house rules and how things work.">Ankomst, husregler og hvordan tingene virker.</p></div>
+        <a class="tile" href="#"><span data-icon="door"></span><div><b data-en="Arrival and departure">Ankomst og afrejse</b><small data-en="Checklist on departure">Tjekliste ved afrejse</small></div></a>
+        <a class="tile" href="#"><span data-icon="wrench"></span><div><b data-en="How things work">Sådan virker det</b><small data-en="Dishwasher, washer, hob, heating, TV">Opvask, vask, komfur, varme, TV</small></div></a>
+        <a class="tile" href="#"><span data-icon="search"></span><div><b data-en="Inventory">Inventar</b><small data-en="Search by room">Søg pr. rum</small></div></a>
+        <a class="tile" href="#"><span data-icon="wifi"></span><div><b>Wi-Fi</b><small data-en="Scan the sign in the apartment">Scan skiltet i lejligheden</small></div></a>
+        <a class="tile" href="#"><span data-icon="bell"></span><div><b data-en="Report a fault">Meld en fejl</b><small data-en="Goes to the owner or operator">Går til ejer eller operatør</small></div></a>
+        <a class="tile" href="omraadet.html#nu"><span data-icon="mountain"></span><div><b>Gausta nu</b><small data-en="Reuses the public live data">Genbruger de offentlige live-data</small></div></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section band-soft">
+  <div class="wrap grid grid-2" style="gap:40px;align-items:start">
+    <div>
+      <p class="eyebrow">B2</p>
+      <h2 data-en="Search the inventory.">Søg i inventaret.</h2>
+      <p class="muted" data-en="Built from the operator’s accessory list (S15 appendix 1) once confirmed.">Bygges på operatørens tilbehørsliste (S15 bilag 1), når den er bekræftet.</p>
+      <input class="field" type="search" placeholder="Søg: kedel, ski, strygejern …" aria-label="Søg i inventar">
+      <div class="card" style="margin-top:14px"><div class="list-row"><span class="grow">Eksempel: Gryder og pander</span><span class="pill-tag">Køkken</span></div><div class="list-row"><span class="grow">Eksempel: Ekstra dyner</span><span class="pill-tag">Soveværelse</span></div></div>
+    </div>
+    <div>
+      <p class="eyebrow">B3</p>
+      <h2 data-en="Report a fault.">Meld en fejl.</h2>
+      <form class="form card" onsubmit="return false">
+        <label><span data-en="What is wrong?">Hvad er galt?</span><select class="field"><option>Varme</option><option>Vand</option><option>Køkken</option><option>Andet</option></select></label>
+        <label><span data-en="Describe">Beskriv</span><textarea class="field"></textarea></label>
+        <button class="btn btn-primary" type="button" data-en="Send (prototype)">Send (prototype)</button>
+      </form>
+    </div>
+  </div>
+</section>
+<script src="app.js"></script>
+</body>
+</html>

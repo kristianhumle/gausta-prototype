@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Designsystem · Gausta Lodge 52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="materials">
+<main class="section" style="border:0">
+<div class="wrap">
+  <p class="eyebrow">Designsystem · Fundament</p>
+  <h1 style="font-size:clamp(2rem,4vw,3rem)">Fundamentet, hele websitet bygger på.</h1>
+  <p class="lead">Farve, typografi, afstande, årstider, ikoner, bevægelse og tone, samlet ét sted. Elementdelen (de genbrugelige komponenter) ligger i <a href="sideelementer.html">Sideelementer</a>.</p>
+  <div class="notice" style="margin-top:20px"><b>Udkast v0, 2. oktober 2026.</b> Alle værdier er foreløbige og afventer dit visuelle input. Siden henter hex-værdier live fra <code class="token">styles.css</code>, så swatches er de rigtige tokens og kan ikke drive fra koden.</div>
+  <div class="toc"><a href="#farve">Farve</a><a href="#aarstider">Årstider</a><a href="#type">Typografi</a><a href="#layout">Layout og breakpoints</a><a href="#ikoner">Ikoner</a><a href="#kontroller">Kontroller</a><a href="#bevaegelse">Bevægelse</a><a href="#tone">Tone og regler</a></div>
+
+  <h2 id="farve" style="margin-top:56px">Farve</h2>
+  <p class="muted">Neutraler er faste. Accenten, himlen og bjergene skifter med årstid (TK3). Der er ingen mørk tilstand. Aktive værdier vises for den årstid, du har valgt i toppen.</p>
+  <h3 style="margin-top:24px">Neutraler og tekst</h3>
+  <div class="grid grid-4" id="sw-neutral"></div>
+  <h3 style="margin-top:28px">Accent for den aktive årstid</h3>
+  <div class="grid grid-4" id="sw-accent"></div>
+  <h3 style="margin-top:28px">Semantisk status</h3>
+  <p class="muted">Reserverede betydninger, aldrig dekoration. Accenten er den neutrale/aktive tilstand.</p>
+  <div class="grid grid-4" id="sw-status"></div>
+  <div class="row-flex" style="margin-top:16px"><span class="pill-tag good">Bekræftet</span><span class="pill-tag bad">Alarm / forfalden</span><span class="pill-tag warn">Estimat / skal verificeres</span><span class="pill-tag accent">Aktiv</span><span class="verify">skal verificeres</span></div>
+
+  <h2 id="aarstider" style="margin-top:72px">Årstider</h2>
+  <p class="muted">Fire paletter fra de samme tokens. Skifter automatisk efter dato (forår mar til maj, sommer jun til aug, efterår sep til nov, vinter dec til feb), kan overstyres manuelt. Illustrationen er en pladsholder indtil rigtige årstidsfotos findes.</p>
+  <div class="grid grid-4" id="season-grid"></div>
+
+  <h2 id="type" style="margin-top:72px">Typografi</h2>
+  <p class="muted">Foreløbig parring: <b>Fraunces</b> (display, varm serif) og <b>Inter</b> (brødtekst og UI). Mono til tal og datostempler. Skal bekræftes eller erstattes.</p>
+  <div class="card stack">
+    <div><span class="eyebrow">.eyebrow · .72rem · 650 · +.14em</span></div>
+    <div><code class="token">h1 · clamp(2.3 til 3.8rem) · 560 · 1.04</code><h1>Din base ved foden af fjeldet</h1></div>
+    <div><code class="token">h2 · clamp(1.7 til 2.4rem) · 560 · 1.1</code><h2>Godt at vide</h2></div>
+    <div><code class="token">h3 · 1.2rem · Inter 620</code><h3>Faciliteter</h3></div>
+    <div><code class="token">.lead · clamp(1.05 til 1.2rem) · muted</code><p class="lead">En fjeldlejlighed til ski, vandring og langsomme dage på Gausta.</p></div>
+    <div><code class="token">body · 1rem · 1.6</code><p>Boligens oplysninger følger boligfilen, ikke annoncen.</p></div>
+    <div><code class="token">.mono · tabular-nums</code><p class="mono">66 m² · 7 senge · ca. 960 m.o.h. · 2026-10-02</p></div>
+  </div>
+
+  <h2 id="layout" style="margin-top:72px">Layout, radius og breakpoints</h2>
+  <div class="grid grid-3">
+    <div class="card"><code class="token">--maxw 1120px</code><p class="muted">Indholdsbredde, 28px sidemargen (20px på lille mobil). <code class="token">.narrow</code> 760px til tekst.</p></div>
+    <div class="card"><code class="token">--radius 14px / --radius-sm 10px</code><div class="row-flex" style="margin-top:10px"><div style="width:64px;height:40px;border:1px solid var(--border);border-radius:14px;background:var(--elevated)"></div><div style="width:64px;height:40px;border:1px solid var(--border);border-radius:10px;background:var(--elevated)"></div><div style="width:64px;height:40px;border:1px solid var(--border);border-radius:99px;background:var(--elevated)"></div></div></div>
+    <div class="card"><code class="token">--nav-h 64px</code><p class="muted">Sticky header. Scroll-offset følger denne værdi.</p></div>
+  </div>
+  <div class="card" style="margin-top:20px"><b>Mobil først (TK2).</b>
+    <ul class="checklist" style="margin-top:12px">
+      <li><b>≤ 860px:</b> menu bliver hamburger, alle grids bliver én kolonne, footer 2 kolonner, faktalinje 2 kolonner.</li>
+      <li><b>≤ 520px:</b> mindre sidemargen, hero-knapper i fuld bredde.</li>
+      <li>Fluid type via <code class="token">clamp()</code>, ingen faste mobilstørrelser. Alle sider kræver viewport-meta.</li>
+      <li>Gæsteområdet (B) skal tåle dårlig dækning: cachet side eller PDF som reserve (B4).</li>
+    </ul></div>
+
+  <h2 style="margin-top:56px">Elevation</h2>
+  <div class="row-flex"><div class="card" style="box-shadow:var(--shadow-sm);width:200px"><code class="token">--shadow-sm</code></div><div class="card" style="box-shadow:var(--shadow);width:200px"><code class="token">--shadow</code></div></div>
+
+  <h2 id="ikoner" style="margin-top:72px">Ikoner</h2>
+  <p class="muted">Én linjefamilie: 24×24, 1,6px streg, runde ender, ingen fyldning, <code class="token">currentColor</code>. Defineret i <code class="token">app.js</code>.</p>
+  <div class="card"><div class="grid" id="icon-grid" style="grid-template-columns:repeat(auto-fill,minmax(96px,1fr))"></div></div>
+
+  <h2 id="kontroller" style="margin-top:72px">Kontroller</h2>
+  <div class="grid grid-2">
+    <div class="card stack"><code class="token">.btn</code><div class="row-flex"><button class="btn btn-primary">Primær</button><button class="btn btn-ghost">Ghost</button><button class="btn btn-primary btn-lg">Stor</button><button class="btn btn-primary" disabled>Deaktiveret</button></div>
+      <code class="token">.filter</code><div class="row-flex"><button class="filter" aria-pressed="true">Aktiv</button><button class="filter" aria-pressed="false">Alle</button></div></div>
+    <div class="card stack"><code class="token">.field / .form</code><input class="field" placeholder="Tekstfelt"><select class="field"><option>Valg</option></select><code class="token">.notice</code><div class="notice">Information med amber kant (skal verificeres)</div></div>
+  </div>
+
+  <h2 id="bevaegelse" style="margin-top:72px">Bevægelse</h2>
+  <ul class="checklist">
+    <li><b>.reveal:</b> fade og 14px løft, når sektioner kommer til syne.</li>
+    <li><b>Overgange:</b> ca. .15s på hover for links, knapper og kort.</li>
+    <li><b>Reduceret bevægelse:</b> respekteres overalt, indhold bliver stående.</li>
+    <li>Ingen dekorativ animation. Bevægelse skal forklare noget.</li>
+  </ul>
+
+  <h2 id="tone" style="margin-top:72px">Tone og regler</h2>
+  <div class="grid grid-3">
+    <div class="card"><h3>Ærlig og konkret</h3><p class="muted">Kun bekræftede fakta på siden. Alt andet får mærket <span class="verify">skal verificeres</span>. Annoncens "3 soveværelser" og "utsikt" bruges ikke.</p></div>
+    <div class="card"><h3>Dato og kilde</h3><p class="muted">Hvert tal i back-office vises med dato og kilde. Estimater mærkes som estimat.</p></div>
+    <div class="card"><h3>Ingen adgangskoder</h3><p class="muted">Dørkoder og Wi-Fi-kode står aldrig på websitet. Det permanente link kan videresendes.</p></div>
+    <div class="card"><h3>Ingen fotos før møblering</h3><p class="muted">Billedpladsholdere indtil boligen er møbleret (TK6). Ingen kopier af annoncens billeder.</p></div>
+    <div class="card"><h3>Dansk og engelsk</h3><p class="muted">Al tekst pr. sprog fra start. Strukturen skal kunne udvides med norsk og tysk (TK1).</p></div>
+    <div class="card"><h3>Roligt og sensommerligt</h3><p class="muted">Primært skandinaver. Tonen er varm og jordnær, ikke reklameagtig. Foreløbig retning, afventer dit input.</p></div>
+  </div>
+</div>
+</main>
+<script src="app.js"></script>
+<script>
+(function () {
+  function css(el, v) { return getComputedStyle(el).getPropertyValue(v).trim(); }
+  function sw(cont, items, el) {
+    cont.innerHTML = items.map(function (i) {
+      return '<div class="swatch"><div class="chip" style="background:var(' + i[0] + ')"></div><div class="meta"><code>' + i[0] + '</code><div>' + i[1] + '</div><div class="hex">' + css(el, i[0]).toUpperCase() + '</div></div></div>';
+    }).join('');
+  }
+  function render() {
+    var r = document.documentElement;
+    sw(document.getElementById('sw-neutral'), [['--bg','Base'],['--surface','Kort, felter'],['--elevated','Hævet flade'],['--border','Hårfine streger'],['--text','Primær tekst'],['--muted','Sekundær tekst'],['--faint','Tertiær tekst']], r);
+    sw(document.getElementById('sw-accent'), [['--accent','Accent (knapper, aktiv)'],['--accent-text','Accent som tekst'],['--accent-weak','Accent-tone'],['--sky-top','Himmel top'],['--sky-bot','Himmel bund'],['--r1','Bjerg 1'],['--r2','Bjerg 2'],['--r3','Bjerg 3']], r);
+    sw(document.getElementById('sw-status'), [['--good','Bekræftet / ok'],['--coral','Alarm / forfalden'],['--amber','Estimat / skal verificeres']], r);
+  }
+  function seasons() {
+    var names = {spring:'Forår',summer:'Sommer',autumn:'Efterår',winter:'Vinter'};
+    var g = document.getElementById('season-grid'), h = '';
+    ['spring','summer','autumn','winter'].forEach(function (s) {
+      [1].forEach(function () {
+        h += '<div class="pv" data-season="' + s + '"><div class="pv-hero"><div class="eyebrow" style="margin:0 0 6px">' + names[s] + '</div><div class="pv-title">Gausta Lodge 52</div>' + (window.GL ? '<svg viewBox="0 0 1440 260" preserveAspectRatio="none">' + GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, '') + '</svg>' : '') + '</div><div class="pv-body"><div class="row-flex"><button class="btn btn-primary btn-sm">Book</button><span class="pill-tag accent">Aktiv</span></div><span class="faint">Brødtekst i ' + names[s].toLowerCase() + '</span></div></div>';
+      });
+    });
+    g.innerHTML = h;
+  }
+  function icons() {
+    document.getElementById('icon-grid').innerHTML = Object.keys(GL.ICONS).map(function (n) {
+      return '<div style="text-align:center;padding:10px 4px">' + GL.icon(n) + '<div class="faint" style="margin-top:6px;font-size:.72rem">' + n + '</div></div>';
+    }).join('');
+  }
+  document.addEventListener('gl:ready', function () { render(); seasons(); icons(); });
+  document.addEventListener('click', function (e) { if (e.target.closest('.js-season-seg button')) setTimeout(render, 0); });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Lejligheden · Gausta Lodge 52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="site">
+<section class="hero compact" data-photo="lejligheden/lejligheden-21">
+  <div class="wrap">
+    <p class="eyebrow" data-en="The apartment">Lejligheden</p>
+    <h1 data-en="Two bedrooms, a TV room and a 25 m² terrace.">To soveværelser, en TV-stue og 25 m² terrasse.</h1>
+    <p class="lead" data-en="Ground floor, room for up to seven.">Stueplan, plads til op til syv.</p>
+  </div>
+  <div class="hero-art" data-hero-art></div>
+</section>
+
+<!-- A1 · Interaktiv plantegning (koncept B, valgt) -->
+<section class="section" id="plan">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px">
+      <p class="eyebrow" data-en="Floor plan">Plantegning</p>
+      <h2 data-en="Walk through the apartment.">Gå gennem lejligheden.</h2>
+      <p class="lead" data-en="Each room on the plan shows its photos.">Hvert rum på planen viser sine billeder.</p>
+      <p style="margin-top:10px"><span class="proto-tag">Prototypebilleder</span></p>
+    </div>
+    <div data-plan="panel"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap layout-aside">
+    <div class="stack">
+      <p><span class="proto-tag">Prototypebilleder</span> <span class="muted">Midlertidige billeder. Rumnavne er gæt ud fra billedet og skal bekræftes.</span></p>
+      <div class="row-flex" data-filter-group="#lej-gallery">
+        <button class="filter" data-f="all" aria-pressed="true" data-en="All">Alle</button>
+        <button class="filter" data-f="stue" aria-pressed="false" data-en="Living">Stue</button>
+        <button class="filter" data-f="koekken" aria-pressed="false" data-en="Kitchen">Køkken</button>
+        <button class="filter" data-f="sove" aria-pressed="false" data-en="Bedrooms">Soveværelser</button>
+        <button class="filter" data-f="bad" aria-pressed="false" data-en="Bath">Bad</button>
+        <button class="filter" data-f="entre" aria-pressed="false" data-en="Hall and ski room">Entré og skirum</button>
+        <button class="filter" data-f="ude" aria-pressed="false" data-en="Outside">Udendørs</button>
+        <button class="filter" data-f="depot" aria-pressed="false" data-en="Storage">Depot</button>
+      </div>
+      <div class="tiles reveal" id="lej-gallery" data-gallery-group></div>
+
+      <div class="ph-img reveal" style="min-height:140px">Video (kommer)</div>
+
+      <h2 style="margin-top:32px" data-en="Facilities">Faciliteter</h2>
+      <p class="muted" data-en="Only confirmed items are listed. The inventory is maintained once and reused in the guest area (TK4).">Kun bekræftede punkter vises. Inventaret vedligeholdes ét sted og genbruges i gæsteområdet (TK4).</p>
+      <ul class="checklist reveal">
+        <li data-en="Ground-floor apartment with 25 m² terrace">Stueplan med 25 m² terrasse</li>
+        <li data-en="Two bedrooms and a TV room, 7 beds in total">To soveværelser og TV-stue, 7 sengepladser i alt</li>
+        <li data-en="One bathroom">Ét badeværelse</li>
+        <li data-en="Wi-Fi (planned; details on sign in the apartment)">Wi-Fi (planlagt; oplysninger på skilt i lejligheden)</li>
+        <li>Skirum / tørring <span class="verify">skal verificeres</span></li>
+        <li>Opvaskemaskine, vaskemaskine, komfur <span class="verify">skal verificeres</span></li>
+      </ul>
+      <div class="notice info reveal" data-en="Door sensors register when the doors open. There are no cameras.">Dørsensorer registrerer, når dørene åbnes. Der er ingen kameraer.</div>
+    </div>
+    <aside class="booking">
+      <h3 data-en="Book or enquire">Book eller forespørg</h3>
+      <p class="muted" data-en="Same swappable booking slot as the front page.">Samme udskiftelige booking-slot som forsiden.</p>
+      <a class="btn btn-primary" style="width:100%" href="index.html#booking" data-en="Go to booking">Gå til booking</a>
+      <hr style="border:0;border-top:1px solid var(--border);margin:18px 0">
+      <div class="list-row"><span class="grow muted" data-en="Price">Pris</span><span class="verify">fastsættes af operatør?</span></div>
+      <div class="list-row"><span class="grow muted" data-en="Check-in / out">Ind- / udtjekning</span><span class="verify">skal afklares</span></div>
+    </aside>
+  </div>
+</section>
+<script src="app.js"></script>
+<script src="plan.js"></script>
+<script>
+document.addEventListener('gl:ready', function () {
+  var L = function (n, cat, cap, cls) { return {k:'lejligheden/lejligheden-' + (n < 10 ? '0' : '') + n, cat:cat, cap:cap, cls:cls || ''}; };
+  GL.buildGallery(document.getElementById('lej-gallery'), [
+    L(5,'stue','Stue og spisebord','big'), L(21,'stue','Stue'), L(19,'stue','Stue'),
+    L(30,'stue','Stue','tall'), L(34,'stue','Stue'), L(27,'stue','Stue'), L(24,'stue','Tv-hjørne'),
+    L(11,'stue','Sofabord'), L(14,'stue','Stue'), L(15,'stue','Stue'), L(4,'stue','Brændeovn'),
+    L(3,'koekken','Køkken og spisebord'), L(16,'koekken','Køkken'), L(31,'koekken','Køkken','wide2'), L(18,'koekken','Køkkenkrog'), L(1,'koekken','Detalje'),
+    L(7,'sove','Soveværelse'), L(12,'sove','Soveværelse'), L(29,'sove','Soveværelse','tall'), L(32,'sove','Soveværelse med terrassedør'), L(10,'sove','Køjeseng'),
+    L(6,'bad','Bad, detalje'), L(9,'bad','Bad med vaskemaskine'), L(22,'bad','Håndklæder'), L(23,'bad','Bad'),
+    L(13,'entre','Skirum'), L(17,'entre','Entré'), L(2,'entre','Gang'), L(28,'entre','Entré'), L(25,'stue','Terrassedør med gardin'),
+    L(8,'ude','Bygningen udefra'), L(26,'ude','Indgang'),
+    L(20,'depot','Depot'), L(33,'depot','Depot')
+  ], {caps:true});
+});
+</script>
+</body>
+</html>

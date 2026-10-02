@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Back-office · Gausta Lodge 52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="site">
+<div class="sample-banner">EKSEMPELDATA: tallene på denne side er opfundne for at vise layoutet. Ingen er reelle.</div>
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow">C · Back-office</p>
+    <h1 style="font-size:clamp(2rem,4vw,3rem)">Marked, pris og drift.</h1>
+    <p class="lead">Login kræves (ejer, evt. medhjælper). Hvert tal skal vises med dato og kilde (C5).</p>
+
+    <h2 style="margin-top:40px;font-size:1.5rem">C1 · Egen udlejningsperformance</h2>
+    <div class="grid grid-4" style="margin-top:16px">
+      <div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
+      <div class="kpi"><div class="label">Gns. døgnpris</div><b>0.000 kr</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
+      <div class="kpi"><div class="label">RevPAR</div><b>000 kr</b><span class="stamp">eksempel · beregnet</span></div>
+      <div class="kpi"><div class="label">Forudbestilling</div><b>00 dage</b><span class="stamp">eksempel · kilde: operatør</span></div>
+    </div>
+    <div class="card" style="margin-top:20px">
+      <div class="row-flex" style="justify-content:space-between"><h3 style="margin:0">Omsætning pr. måned</h3><span class="stamp">eksempel · år til år kan lægges ovenpå</span></div>
+      <div class="bars" style="margin:14px 0 30px"><div style="height:30%"><span>N</span></div><div style="height:55%"><span>D</span></div><div style="height:80%"><span>J</span></div><div style="height:90%"><span>F</span></div><div style="height:65%"><span>M</span></div><div style="height:40%"><span>A</span></div><div style="height:25%"><span>M</span></div><div style="height:35%"><span>J</span></div></div>
+    </div>
+
+    <h2 style="margin-top:48px;font-size:1.5rem">C2 · Konkurrentovervågning</h2>
+    <div class="table-wrap" style="margin-top:16px"><table class="table">
+      <tr><th>Ejendom</th><th class="r">Pris/nat</th><th class="r">Belægning</th><th>Sidst hentet</th></tr>
+      <tr><td>Eksempel-lejlighed 1</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
+      <tr><td>Eksempel-lejlighed 2</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
+    </table></div>
+    <p class="faint" style="margin-top:8px">Belægning kan kun udledes af tilgængelighed og vises altid som estimat. Datakilder skal følge platformenes vilkår (åbent punkt).</p>
+
+    <h2 style="margin-top:48px;font-size:1.5rem">C7 · Sensorer</h2>
+    <div class="grid grid-2" style="margin-top:16px;gap:20px">
+      <div class="card">
+        <div class="list-row"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen · 21 °C · 48 % (eksempel)</div></div><span class="stamp">00:00</span></div>
+        <div class="list-row"><span class="dot good"></span><div class="grow"><b>Terrasse</b><div class="meta">Temperatur · fugt · lys (eksempel)</div></div><span class="stamp">00:00</span></div>
+        <div class="list-row"><span class="dot warn"></span><div class="grow"><b>Hoveddør</b><div class="meta">Åbnet 00:00 · batteri 00 % (eksempel)</div></div><span class="stamp">00:00</span></div>
+        <div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel på alarmtilstand)</div></div><span class="stamp">00:00</span></div>
+      </div>
+      <div class="stack">
+        <div class="notice bad"><b>Alarm (eksempel):</b> terrassedør åben, udendørs under frysepunktet.</div>
+        <div class="notice info">Historik skal gemmes af os (fx hvert 5. minut): UniFi leverer kun aktuelle målinger.</div>
+        <div class="notice">Forudsætninger åbne: hjemmegateway (Site Magic), internetabonnement og Alarm Manager-funktioner. Se spec. C7.</div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="app.js"></script>
+</body>
+</html>
