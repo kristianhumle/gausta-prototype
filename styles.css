@@ -443,3 +443,11 @@ textarea.field { min-height: 96px; resize: vertical; }
   .plan-thumbs button { width: 60px; height: 46px; }
 }
 @media (hover: none) { .plan-svg .room:hover .pr { fill: var(--plan-fill); } .plan-svg .room.on .pr { fill: var(--plan-hl); } }
+
+/* clickable season cards (same effect as the header season selector) */
+[data-season-card] { cursor: pointer; transition: transform .15s, border-color .15s, box-shadow .15s; }
+[data-season-card]:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: var(--shadow); }
+[data-season-card] .season-state { display: inline-flex; align-items: center; gap: 6px; font-size: .78rem; font-weight: 650; color: var(--accent-text); margin-top: 12px; }
+[data-season-card] .season-state::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid currentColor; }
+[data-season-card].current .season-state::before { background: currentColor; }
+@media (prefers-reduced-motion: reduce) { [data-season-card], [data-season-card]:hover { transition: none; transform: none; } }

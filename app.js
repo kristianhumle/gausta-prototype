@@ -85,7 +85,10 @@
     root.setAttribute('data-season', currentSeason());
     document.querySelectorAll('.js-season-seg button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === currentSeason())); });
     applyHeroPhotos();
-    document.querySelectorAll('[data-season-card]').forEach(function (c) { c.classList.toggle('current', c.dataset.seasonCard === currentSeason()); });
+    document.querySelectorAll('[data-season-card]').forEach(function (c) {
+      var on = c.dataset.seasonCard === currentSeason();
+      c.classList.toggle('current', on); c.setAttribute('aria-pressed', String(on));
+    });
   }
 
   // photos: prototype-only, converted to web sizes under assets/web/<folder>/<name>[-s].webp
@@ -202,6 +205,8 @@
 
   function wire() {
     document.addEventListener('click', function (e) {
+      var sc = e.target.closest('[data-season-card]');
+      if (sc) { state.season = sc.dataset.seasonCard; sstore('gl.season', state.season); applySeason(); }
       var sb = e.target.closest('.js-season-seg button');
       if (sb) { state.season = sb.dataset.v; sstore('gl.season', state.season); applySeason(); }
       var lbA = e.target.closest('a[data-lightbox]');
@@ -214,6 +219,11 @@
         group.querySelectorAll('.filter').forEach(function (x) { x.setAttribute('aria-pressed', String(x === f)); });
         if (target) target.querySelectorAll('[data-cat]').forEach(function (it) { it.style.display = (val === 'all' || it.dataset.cat.split(' ').indexOf(val) > -1) ? '' : 'none'; });
       }
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      var sc = e.target.closest && e.target.closest('[data-season-card]');
+      if (sc && e.target === sc) { e.preventDefault(); sc.click(); }
     });
     document.addEventListener('change', function (e) {
       if (e.target.classList.contains('js-lang')) { state.lang = e.target.value; store('gl.lang', state.lang); applyLang(); }
@@ -237,6 +247,7 @@
     buildShell();
     document.querySelectorAll('[data-hero-art]').forEach(function (el) { el.innerHTML = GL.heroArt(); });
     document.querySelectorAll('[data-icon]').forEach(function (el) { el.insertAdjacentHTML('afterbegin', icon(el.getAttribute('data-icon'))); });
+    document.querySelectorAll('[data-season-card]').forEach(function (c) { c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); });
     applySeason(); applyLang(); wire();
     document.dispatchEvent(new Event('gl:ready'));
   }
