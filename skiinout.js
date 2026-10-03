@@ -44,7 +44,7 @@
         '<button type="button" class="filter" data-f="both" aria-pressed="true">Begge</button>' +
         ROUTES.map(function (r) { return '<button type="button" class="filter" data-f="' + r.id + '" aria-pressed="false">' + GL.icon(r.icon) + r.name + '</button>'; }).join('') +
       '</div>' +
-      '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + (drawn ? ' style="aspect-ratio:' + GL.DRAWN.W + '/' + GL.DRAWN.H + '"' : '') + '>' + base +
+      '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + ' style="aspect-ratio:' + (drawn ? GL.DRAWN.W + '/' + GL.DRAWN.H : '2000/1577') + '">' + base +
         '<svg class="sio-svg" viewBox="0 0 1000 ' + v.vh + '" preserveAspectRatio="none" aria-hidden="true">' +
           ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(v, r) + '"/><path class="dash" d="' + line(v, r) + '"/></g>'; }).join('') +
         '</svg>' +
