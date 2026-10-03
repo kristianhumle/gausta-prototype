@@ -160,15 +160,6 @@
     { href: 'backoffice.html', da: 'Back-office', en: 'Back-office', zone: 'C' }
   ];
 
-  // sæsonvarianter (forsøg): a = nuværende (standard), b til d er forsøg. Vælges med ?tema=b eller via Sideelementer.
-  GL.setVariant = function (v) {
-    v = /^[a-d]$/.test(v || '') ? v : 'a';
-    if (v === 'a') root.removeAttribute('data-variant'); else root.setAttribute('data-variant', v);
-    sstore('gl.variant', v);
-    var b = document.querySelector('.variant-badge'); if (b) b.remove();
-    if (v !== 'a') document.body.insertAdjacentHTML('beforeend', '<div class="variant-badge">Sæsonvariant ' + v.toUpperCase() + ' (forsøg) · <a href="?tema=a">tilbage til A</a></div>');
-    document.dispatchEvent(new Event('gl:variant'));
-  };
   var AREA = [
     { href: 'omraadet.html', id: 'omraadet', da: 'Oversigt', en: 'Overview' },
     { href: 'taet-paa.html', id: 'taet-paa', da: 'Tæt på', en: 'Nearby' },
@@ -290,8 +281,6 @@
     document.querySelectorAll('[data-icon]').forEach(function (el) { el.insertAdjacentHTML('afterbegin', icon(el.getAttribute('data-icon'))); });
     document.querySelectorAll('[data-season-card]').forEach(function (c) { c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); });
     document.querySelectorAll('[data-area-subnav]').forEach(function (n) { n.innerHTML = GL.areaSubnav(n.getAttribute('data-area-subnav')); });
-    var qv = new URLSearchParams(location.search).get('tema'); if (qv && /^[a-dA-D]$/.test(qv)) sstore('gl.variant', qv.toLowerCase());
-    GL.setVariant(sstore('gl.variant') || 'a');
     applySeason(); applyLang(); wire();
     document.dispatchEvent(new Event('gl:ready'));
   }
