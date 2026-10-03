@@ -2,7 +2,7 @@
    Afstande (50 til 100 m) er ejerens angivelse (Brugeroplysning, 3. oktober 2026), cirka, skal verificeres på stedet.
    Luftfoto og kort er prototypebilleder (tredjepartsmateriale) og skal erstattes eller godkendes før endelig brug.
    Langrendskortet: GKT, Løypene i Gaustablikk-området, februar 2019 (skal kontrolleres mod nyeste kort).
-   Cirklerne på langrends- og slalomkortet er ejerens markering af tilgangen (Rød 15, 10 og 6; grøn 3). */
+   Cirklerne på udsnittene af langrends- og slalomkortet er ejerens markering af tilgangen (Rød 15, 10 og 6; grøn 3). */
 (function () {
   'use strict';
   // ---------- luftfoto og tegnet kort (koordinater som andel af billedet) ----------
@@ -12,7 +12,7 @@
     tegnet: { vh: 809.4, label: { x: 741 / 1994, y: 1000 / 1614 }, poi: { x: 978.5 / 1994, y: 644.5 / 1614 }, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
   };
   // forløb tegnet ud fra luftfotoet (px i det 1994 x 1614 store udsnit); cirka, skal verificeres
-  var TRACKS = { langrend: [[720, 176], [690, 152], [650, 128], [600, 112], [555, 118], [515, 140], [480, 180], [445, 218], [400, 238], [350, 236], [300, 214], [250, 170], [205, 115], [165, 62], [130, 15], [105, -20]], slalom: [[860, 190], [910, 230], [960, 290], [1010, 350], [1060, 415], [1110, 475], [1160, 535], [1205, 600], [1245, 665], [1280, 725], [1305, 775], [1370, 860], [1440, 930], [1500, 1000], [1580, 1090], [1660, 1150], [1770, 1200], [1900, 1240], [2000, 1252]] };
+  var TRACKS = { langrend: [[720, 176], [690, 152], [650, 128], [600, 112], [555, 118], [515, 140], [480, 180], [445, 218], [400, 238], [350, 236], [300, 214], [250, 170], [205, 115], [165, 62], [130, 15], [105, -20]], slalom: [[688, -30], [705, 12], [735, 52], [775, 100], [815, 145], [850, 182], [860, 190], [910, 230], [960, 290], [1010, 350], [1060, 415], [1110, 475], [1160, 535], [1205, 600], [1245, 665], [1280, 725], [1305, 775], [1370, 860], [1440, 930], [1500, 1000], [1580, 1090], [1660, 1150], [1770, 1200], [1900, 1240], [2000, 1252]] };
   function smooth(p, n) { for (var k = 0; k < n; k++) { var o = [p[0]]; for (var i = 0; i < p.length - 1; i++) { var a = p[i], b = p[i + 1]; o.push([0.75 * a[0] + 0.25 * b[0], 0.75 * a[1] + 0.25 * b[1]], [0.25 * a[0] + 0.75 * b[0], 0.25 * a[1] + 0.75 * b[1]]); } o.push(p[p.length - 1]); p = o; } return p; }
   // udsnittet i luftfotoet er 2000 x 1577 og hører til det tegnede kort via skala 1,038 og forskydning (136, 40)
   function trackPath(kind, id, v) {
@@ -28,8 +28,8 @@
     { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
     { id: 'slalom', name: 'Slalom', icon: 'snow', dist: '50 til 100 m', text: 'Her kommer du på slalompisten.', pos: 'above' }
   ];
-  // ---------- langrendskort (PDF-koordinater i pt; udsnit x 0-595.276, y 75-841.89) ----------
-  var LK = { x0: 0, y0: 75, w: 595.276, h: 766.89, access: [224.72, 486.76], r50: 6.45, r100: 12.9,
+  // ---------- langrendskort (PDF-koordinater i pt; udsnit omkring tilgangen: x 120-340, y 380-545) ----------
+  var LK = { x0: 120, y0: 380, w: 220, h: 165, access: [224.72, 486.76], r50: 6.45, r100: 12.9,
     paths: ["M399.34 438.35 C398.84 434.80 396.38 432.53 395.78 430.95 C395.19 429.37 393.22 428.98 391.54 428.78 C389.86 428.58 377.53 429.08 373.18 428.98 C368.84 428.88 363.15 427.04 363.15 427.04 C361.09 426.06 359.13 424.82 357.46 423.37 C355.59 421.77 352.84 418.55 351.59 416.95 L350.33 414.78 C349.01 412.39 347.59 410.35 344.50 409.03 C341.40 407.70 338.84 408.50 336.72 409.29 C334.59 410.09 327.79 411.33 323.45 411.41 C319.96 411.48 319.25 410.99 318.90 408.87 C318.54 406.74 322.39 405.60 323.97 404.62 C326.48 403.05 329.20 400.80 331.14 399.30 C333.09 397.80 335.27 395.33 335.59 392.66 C335.91 389.99 343.92 379.25 348.05 374.42 C352.18 369.59 356.21 360.78 356.82 359.23 C357.64 357.16 357.72 355.49 357.72 353.94 C357.72 351.32 356.50 349.93 355.60 348.46 C354.70 346.99 352.82 345.03 351.43 344.62 C350.04 344.21 347.18 344.87 344.40 344.95 C341.62 345.03 337.70 343.56 336.31 342.74 C334.92 341.92 332.63 341.92 331.32 341.92 C330.01 341.92 326.17 342.17 324.05 341.35 C321.92 340.53 320.61 340.37 318.90 340.78 C317.18 341.19 317.43 341.11 314.89 341.43 C312.36 341.76 307.62 343.23 305.74 343.80 C303.86 344.37 298.71 345.68 296.26 346.25 C293.81 346.83 287.67 347.64 286.20 348.05 C284.73 348.46 278.93 350.59 276.39 350.83 C273.86 351.08 268.96 351.32 265.44 351.32 C261.93 351.32 260.95 352.06 259.80 353.20 C258.66 354.35 257.76 357.94 256.29 361.78 C254.82 365.63 252.69 367.34 251.55 367.67 C250.40 368.00 247.71 368.49 245.50 369.88 C243.29 371.27 243.29 374.13 243.62 376.91 C243.95 379.69 243.70 382.55 242.88 384.43 C242.07 386.31 235.93 386.63 233.89 386.88 C231.85 387.12 227.92 387.53 226.32 388.53 C225.22 389.21 224.18 391.57 222.94 393.27 C221.69 394.97 218.40 399.80 216.26 402.84 C214.13 405.88 212.93 407.94 212.21 410.62 C211.52 412.79 209.55 416.74 207.67 419.21 C205.80 421.67 203.30 424.26 203.30 424.26 C202.69 425.30 202.13 426.10 201.67 426.60 C200.51 427.86 200.69 427.23 199.52 429.66 C198.36 432.08 199.34 435.59 199.61 437.47 C199.88 439.36 199.52 444.58 199.43 446.91 C199.35 449.16 199.71 451.38 200.16 453.57 C200.57 455.57 200.66 458.11 201.76 459.85 C202.39 460.84 203.29 462.19 205.08 465.25 C206.87 468.30 209.29 466.94 213.82 467.86 C216.53 468.40 216.83 470.52 216.87 472.91 C216.89 474.04 216.84 475.25 217.40 476.28 C218.06 477.50 220.52 478.65 219.80 480.31 C219.26 481.55 216.77 481.40 217.35 483.20 C217.54 483.82 218.20 484.35 217.40 484.91 C216.87 485.27 215.73 485.17 215.06 485.48 C212.17 486.78 216.54 491.36 217.42 493.13 C218.63 495.53 216.03 498.59 214.30 500.00 C211.87 501.98 208.32 501.51 210.24 505.48 C211.49 508.06 216.37 509.11 218.16 509.74 C219.95 510.37 222.19 511.18 225.87 511.98 C229.54 512.79 234.65 514.32 236.44 514.23 C238.24 514.14 240.12 514.41 240.57 515.22 C241.78 517.41 244.38 518.32 246.13 519.92 C246.87 520.60 247.25 521.42 247.83 522.19 C248.39 522.94 248.94 523.80 249.56 524.49 C250.12 525.12 250.89 525.25 251.42 525.86 C251.93 526.44 252.19 527.35 252.43 528.07 C252.80 529.20 252.89 530.36 253.35 531.39 C253.58 532.56 254.21 534.64 254.75 535.46", "M230.19 491.33 C228.48 491.05 226.57 488.75 225.43 487.22 C224.28 485.69 220.09 479.57 220.09 479.57"] };
   function pct(v) { return (v * 100).toFixed(2) + '%'; }
   function line(v, r) {
@@ -85,32 +85,25 @@
       '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. Slalompistens og langrendsløjpens forløb (blå og lilla) er tegnet ud fra luftfotoet og ejerens beskrivelse, cirka, skal verificeres. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
 
-  function xf(x) { return ((x - LK.x0) / LK.w); }
-  function yf(y) { return ((y - LK.y0) / LK.h); }
+  var GAUSTA_KART = 'https://www.gausta.com/kart/';
+  function kartLink(label) {
+    return '<p class="sio-more"><a class="btn btn-ghost btn-sm" href="' + GAUSTA_KART + '" target="_blank" rel="noopener">' + label + ' <span aria-hidden="true">↗</span></a><span class="faint"> Åbner gausta.com i en ny fane</span></p>';
+  }
   function langrendPanel() {
-    var ax = xf(LK.access[0]), ay = yf(LK.access[1]);
-    return '<div class="zm-bar" role="group" aria-label="Zoom på kortet">' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="in" aria-label="Zoom ind">+</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="out" aria-label="Zoom ud">−</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="home">Vis tilgangen</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="all">Hele kortet</button>' +
-        '<a class="btn btn-ghost btn-sm" data-lightbox data-cap="Løypene i Gaustablikk-området (GKT, februar 2019)" href="assets/web/kort/langrend.webp">Åbn i stort format</a>' +
+    var ax = (LK.access[0] - LK.x0) / LK.w, ay = (LK.access[1] - LK.y0) / LK.h;
+    return '<div class="sio-map sio-excerpt" style="aspect-ratio:4/3">' +
+        '<img src="assets/web/kort/langrend-udsnit.webp" alt="Udsnit af løjpekortet omkring tilgangen til Rød 15, 10 og 6, med ringe på 50 og 100 meter." loading="lazy">' +
+        '<svg class="sio-svg" viewBox="' + LK.x0 + ' ' + LK.y0 + ' ' + LK.w + ' ' + LK.h + '" preserveAspectRatio="none" aria-hidden="true">' +
+          '<g class="track" data-route="langrend">' + LK.paths.map(function (d) { return '<path class="trk-halo" d="' + d + '"/>'; }).join('') + LK.paths.map(function (d) { return '<path class="trk" d="' + d + '"/>'; }).join('') + '</g>' +
+          '<circle class="zm-ring" cx="' + LK.access[0] + '" cy="' + LK.access[1] + '" r="' + LK.r100 + '"/>' +
+          '<circle class="zm-ring" cx="' + LK.access[0] + '" cy="' + LK.access[1] + '" r="' + LK.r50 + '"/>' +
+        '</svg>' +
+        '<span class="sio-dot" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay) + '"></span>' +
+        '<span class="sio-chip above" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay) + '">' + GL.icon('wave') + '<span><b>Tilgang til Rød 15, 10 og 6</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
-      '<div class="zm-vp" tabindex="0" aria-label="Løjpekort over Gaustablikk-området med tilgangen til Rød 15, 10 og 6 markeret. Træk for at flytte, brug knapperne for at zoome.">' +
-        '<div class="zm-st">' +
-          '<img src="assets/web/kort/langrend.webp" alt="" draggable="false">' +
-          '<svg class="zm-svg" viewBox="' + LK.x0 + ' ' + LK.y0 + ' ' + LK.w + ' ' + LK.h + '" preserveAspectRatio="none" aria-hidden="true">' +
-            LK.paths.map(function (d) { return '<path class="zm-halo" d="' + d + '"/>'; }).join('') +
-            LK.paths.map(function (d) { return '<path class="zm-trail" d="' + d + '"/>'; }).join('') +
-            '<circle class="zm-ring" cx="' + LK.access[0] + '" cy="' + LK.access[1] + '" r="' + LK.r100 + '"/>' +
-            '<circle class="zm-ring" cx="' + LK.access[0] + '" cy="' + LK.access[1] + '" r="' + LK.r50 + '"/>' +
-          '</svg>' +
-          '<div class="zm-at" style="left:' + pct(ax) + ';top:' + pct(ay) + '"><span class="zm-pin"></span>' +
-            '<div class="zm-chip"><b>Tilgang til Rød 15, 10 og 6</b><em>Lejligheden: 50 til 100 m herfra</em></div></div>' +
-        '</div>' +
-      '</div>' +
-      '<p class="faint sio-note">Cirklen er ejerens markering af tilgangen (3. oktober 2026). De stiplede ringe er 50 m og 100 m efter kortets målestok, og lejligheden ligger inden for dem. Kort: GKT (Gausta-Kvitåvatn Turistservice), februar 2019, prototypebillede, skal kontrolleres mod nyeste kort og godkendes før endelig brug.</p>' +
-      '<div class="sio-cards"><div class="card">' +
+      kartLink('Se hele løjpekortet hos Gausta') +
+      '<p class="faint sio-note">Udsnit af løjpekortet fra GKT (Gausta-Kvitåvatn Turistservice, februar 2019). Cirklen er ejerens markering af tilgangen (3. oktober 2026). De stiplede ringe er 50 m og 100 m efter kortets målestok, og lejligheden ligger inden for dem. Prototypebillede, skal kontrolleres mod nyeste kort og godkendes før endelig brug.</p>' +
+      '<div class="sio-cards"><div class="card" data-route="langrend">' +
         '<div class="ico-box">' + GL.icon('wave') + '</div><div class="kicker">Langrend · tilgang fra lejligheden</div>' +
         '<div class="sio-dist">50 til 100 m</div><h3>Rød 15, 10 og 6</h3>' +
         '<div class="list-row"><span class="grow muted">Rød 6</span><span>Skipsfjell, 6,2 km</span></div>' +
@@ -121,23 +114,16 @@
       '</div></div>';
   }
 
-  var SK = { w: 1849, h: 1120, fx: 0.2544, fy: 0.4976 };
+  var SK = { fx: 0.5, fy: 0.4944 };   // cirklen i udsnittet (720 x 540 px af alpinkortet)
   function slalomPanel() {
-    return '<div class="zm-bar" role="group" aria-label="Zoom på kortet">' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="in" aria-label="Zoom ind">+</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="out" aria-label="Zoom ud">−</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="home">Vis tilgangen</button>' +
-        '<button type="button" class="btn btn-ghost btn-sm" data-z="all">Hele kortet</button>' +
-        '<a class="btn btn-ghost btn-sm" data-lightbox data-cap="Gausta Skisenter, løjpekort 2025/2026" href="assets/web/kort/slalom.webp">Åbn i stort format</a>' +
+    return '<div class="sio-map sio-excerpt" style="aspect-ratio:4/3">' +
+        '<img src="assets/web/kort/slalom-udsnit.webp" alt="Udsnit af Gausta Skisenters pistekort omkring tilgangen til alpinpisten, grøn 3." loading="lazy">' +
+        '<span class="sio-dot" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '"></span>' +
+        '<span class="sio-chip above" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
-      '<div class="zm-vp" tabindex="0" aria-label="Pistekort over Gausta Skisenter med tilgangen til alpinpisten, grøn 3, markeret. Træk for at flytte, brug knapperne for at zoome.">' +
-        '<div class="zm-st"><img src="assets/web/kort/slalom.webp" alt="" draggable="false">' +
-          '<div class="zm-at" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '"><span class="zm-pulse"></span><span class="zm-pin"></span>' +
-            '<div class="zm-chip"><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></div></div>' +
-        '</div>' +
-      '</div>' +
-      '<p class="faint sio-note">Cirklen er ejerens markering af tilgangen (3. oktober 2026). Pistekortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Kort: Gausta Skisenter, løjpekort 2025/2026, prototypebillede, skal godkendes før endelig brug.</p>' +
-      '<div class="sio-cards"><div class="card">' +
+      kartLink('Se hele pistekortet hos Gausta') +
+      '<p class="faint sio-note">Udsnit af Gausta Skisenters løjpekort 2025/2026. Cirklen er ejerens markering af tilgangen (3. oktober 2026). Kortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Prototypebillede, skal godkendes før endelig brug.</p>' +
+      '<div class="sio-cards"><div class="card" data-route="slalom">' +
         '<div class="ico-box">' + GL.icon('snow') + '</div><div class="kicker">Slalom · tilgang fra lejligheden</div>' +
         '<div class="sio-dist">50 til 100 m</div><h3>Nr. 3 Kofferten</h3>' +
         '<div class="list-row"><span class="grow muted">Niveau</span><span>Veldig lett (grøn)</span></div>' +
@@ -145,50 +131,6 @@
         '<div class="list-row"><span class="grow muted">Højdeforskel</span><span>150 m</span></div>' +
         '<p class="faint" style="margin:10px 0 0">Kildepåstand: kortets oversigt over bakker (Gausta Skisenter, 2025/2026). Skal kontrolleres mod det nyeste kort. Nr. 3 er den bakke, tilgangen fører til, ikke nødvendigvis den eneste, man kan køre.</p>' +
       '</div></div>';
-  }
-
-  // ---------- zoom og træk ----------
-  function zoomMap(root, cfg) {
-    var vp = root.querySelector('.zm-vp'), st = root.querySelector('.zm-st'), ratio = cfg.ratio, MAXK = cfg.maxK;
-    var k = 1, tx = 0, ty = 0, vw = 0, vh = 0, sw = 0, sh = 0, ptr = {}, last = null;
-    function measure() { vw = vp.clientWidth; vh = vp.clientHeight; sw = vw; sh = vw * ratio; st.style.width = sw + 'px'; st.style.height = sh + 'px'; }
-    function apply() {
-      var minK = Math.min(1, vh / sh); k = Math.max(minK, Math.min(MAXK, k));
-      var cw = sw * k, ch = sh * k;
-      tx = cw <= vw ? (vw - cw) / 2 : Math.min(0, Math.max(vw - cw, tx));
-      ty = ch <= vh ? (vh - ch) / 2 : Math.min(0, Math.max(vh - ch, ty));
-      st.style.transform = 'translate(' + tx + 'px,' + ty + 'px) scale(' + k + ')';
-      st.style.setProperty('--inv', String(1 / k));
-    }
-    function zoomAt(cx, cy, nk) { var wx = (cx - tx) / k, wy = (cy - ty) / k; k = nk; tx = cx - wx * k; ty = cy - wy * k; apply(); }
-    function home() { k = cfg.k; var fx = cfg.fx, fy = cfg.fy - cfg.up; tx = vw / 2 - fx * sw * k; ty = vh / 2 - fy * sh * k; apply(); }
-    function all() { k = 0.01; apply(); }
-    measure(); home();
-    new ResizeObserver(function () { var wasHome = true; measure(); home(); }).observe(vp);
-    root.querySelector('.zm-bar').addEventListener('click', function (e) {
-      var b = e.target.closest('[data-z]'); if (!b) return;
-      var z = b.dataset.z; if (z === 'in') zoomAt(vw / 2, vh / 2, k * 1.5); else if (z === 'out') zoomAt(vw / 2, vh / 2, k / 1.5); else if (z === 'home') home(); else all();
-    });
-    vp.addEventListener('wheel', function (e) { if (!(e.ctrlKey || e.metaKey)) return; e.preventDefault(); var r = vp.getBoundingClientRect(); zoomAt(e.clientX - r.left, e.clientY - r.top, k * (e.deltaY < 0 ? 1.15 : 1 / 1.15)); }, { passive: false });
-    vp.addEventListener('pointerdown', function (e) { vp.setPointerCapture(e.pointerId); ptr[e.pointerId] = { x: e.clientX, y: e.clientY }; last = null; vp.classList.add('drag'); });
-    vp.addEventListener('pointermove', function (e) {
-      if (!ptr[e.pointerId]) return;
-      var ids = Object.keys(ptr);
-      if (ids.length === 1) { tx += e.clientX - ptr[e.pointerId].x; ty += e.clientY - ptr[e.pointerId].y; ptr[e.pointerId] = { x: e.clientX, y: e.clientY }; apply(); }
-      else if (ids.length === 2) {
-        ptr[e.pointerId] = { x: e.clientX, y: e.clientY };
-        var a = ptr[ids[0]], b = ptr[ids[1]], dist = Math.hypot(a.x - b.x, a.y - b.y), r = vp.getBoundingClientRect();
-        if (last) zoomAt((a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top, k * dist / last);
-        last = dist;
-      }
-    });
-    function up(e) { delete ptr[e.pointerId]; last = null; if (!Object.keys(ptr).length) vp.classList.remove('drag'); }
-    vp.addEventListener('pointerup', up); vp.addEventListener('pointercancel', up);
-    vp.addEventListener('keydown', function (e) {
-      var s = 60; if (e.key === 'ArrowLeft') tx += s; else if (e.key === 'ArrowRight') tx -= s; else if (e.key === 'ArrowUp') ty += s; else if (e.key === 'ArrowDown') ty -= s;
-      else if (e.key === '+' || e.key === '=') return zoomAt(vw / 2, vh / 2, k * 1.5); else if (e.key === '-') return zoomAt(vw / 2, vh / 2, k / 1.5); else return;
-      e.preventDefault(); apply();
-    });
   }
 
   function render(el) {
@@ -201,8 +143,6 @@
       if (id === cur) return; cur = id;
       [].forEach.call(el.querySelectorAll('.sio-tab'), function (b) { b.setAttribute('aria-selected', String(b.dataset.t === id)); });
       body.innerHTML = (id === 'foto' || id === 'tegnet') ? photoPanel(id) : id === 'langrend' ? langrendPanel() : slalomPanel();
-      if (id === 'langrend') zoomMap(body, { ratio: LK.h / LK.w, fx: xf(LK.access[0]), fy: yf(LK.access[1]), k: 2.8, up: 0.035, maxK: 6 });
-      if (id === 'slalom') zoomMap(body, { ratio: SK.h / SK.w, fx: SK.fx, fy: SK.fy, k: 2.2, up: 0, maxK: 3.2 });
       if (id === 'foto' || id === 'tegnet') {
         var map = body.querySelector('.sio-map');
         var focus = function (f) {

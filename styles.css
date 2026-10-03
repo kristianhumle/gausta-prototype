@@ -620,3 +620,8 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sio-homelabel b { display: block; font: 700 12px/1.25 var(--font-body); }
 .sio-homelabel em { display: block; font: 500 11px/1.25 var(--font-mono); font-style: normal; color: #5e625e; }
 @media (max-width: 520px) { .sio-homelabel { padding: 4px 8px 5px; transform: translate(-50%, 20px); } .sio-homelabel b { font-size: 10.5px; } .sio-homelabel em { font-size: 9.5px; } }
+
+/* faste udsnit af løjpe- og pistekort med link til Gausta */
+.sio-excerpt img { width: 100%; height: 100%; object-fit: cover; }
+.sio-more { margin: 14px 0 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.sio-excerpt .zm-ring { fill: rgba(255,255,255,.2); }
