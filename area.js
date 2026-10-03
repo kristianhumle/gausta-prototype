@@ -1,144 +1,201 @@
-/* Området: oversigtselement (første udkast). Fælles kort med lag, tre indgangskort og
-   "Gausta nu" som lille widget. Kortet er et skematisk SVG, ikke målfast.
-   ALLE punkter, placeringer, afstande og sæsoner er pladsholdere (skal verificeres).
-   Kun punkternes NAVNE kommer fra kravspecifikationen (A3, A4). */
+/* Området: oversigtselement. To kort (Gausta tæt på, Rjukan og omegn) med lag, zoom til centrene, panel,
+   tre indgangskort og "Gausta nu" som lille widget.
+   Kortgrundlag: veje, bygninger og vand omtegnet fra åbne kortdata (OpenStreetMap, ODbL), se area-map-data.js.
+   Pister, lifte og langrendsløjper vises bevidst ikke her (de hører til Ski-in / ski-out).
+   Alle placeringer, åbningstider og beskrivelser er kildepåstande og skal verificeres. */
 (function () {
   'use strict';
+  var MAPS = {
+    close: { label: 'Gausta', head: 'Gausta, tæt på lejligheden', zoomLabel: 'Zoom til Gaustablikk', clusterName: 'Gaustablikk-centret',
+      cats: [{ id: 'mad', name: 'Mad og drikke', icon: 'fork' }, { id: 'indkoeb', name: 'Indkøb', icon: 'bag' }, { id: 'udstyr', name: 'Skiudlejning', icon: 'snow' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }],
+      groups: { hotel: { name: 'Gaustablikk Fjellresort', pos: [59.8801, 8.7342], members: ['bjork', 'blikk', 'kirks', 'lobby', 'wellness'] }, food: { name: 'Gausta Food Court og butikker', pos: [59.8812, 8.7359], members: ['stova', 'pose', 'sport1', 'bakeri'] } } },
+    wide: { label: 'Rjukan og omegn', head: 'Rjukan og omegn, i bil', zoomLabel: 'Zoom til Rjukan', clusterName: 'Rjukan',
+      cats: [{ id: 'by', name: 'Byen', icon: 'city' }, { id: 'kultur', name: 'Kultur', icon: 'museum' }, { id: 'natur', name: 'Natur', icon: 'tree' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }], groups: {} }
+  };
+  var CAT_NAME = {};
+  Object.keys(MAPS).forEach(function (k) { MAPS[k].cats.forEach(function (c) { CAT_NAME[k + ':' + c.id] = c.name; }); });
+  var NICE = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
 
-  var LAYERS = [
-    { id: 'ski',      name: 'Ski',                   area: 'taet',  icon: 'snow' },
-    { id: 'mad',      name: 'Mad og indkøb',         area: 'taet',  icon: 'home' },
-    { id: 'udstyr',   name: 'Udstyr og skole',       area: 'taet',  icon: 'wrench' },
-    { id: 'oplevelse',name: 'Oplevelser',            area: 'oplev', icon: 'mountain' },
-    { id: 'rute',     name: 'Ruter',                 area: 'oplev', icon: 'map' }
-  ];
-  var AREAS = { taet: 'Tæt på', oplev: 'Oplevelser' };
-  var SEASON_NAME = { spring: 'Forår', summer: 'Sommer', autumn: 'Efterår', winter: 'Vinter' };
-  var SEASON_ICON = { spring: 'flower', summer: 'sun', autumn: 'leaf', winter: 'snow' };
-  var ALL = ['spring', 'summer', 'autumn', 'winter'];
-
-  // x,y i kortets koordinater (600 x 420). seasons = gæt, skal verificeres.
-  var POIS = [
-    { id: 'slalom',   name: 'Slalompister',     layer: 'ski',       x: 205, y: 120, seasons: ['winter'] },
-    { id: 'langrend', name: 'Langrendsløjper',  layer: 'ski',       x: 395, y: 150, seasons: ['winter'] },
-    { id: 'butik',    name: 'Nærmeste butik',   layer: 'mad',       x: 255, y: 290, seasons: ALL },
-    { id: 'resto',    name: 'Restauranter',     layer: 'mad',       x: 345, y: 270, seasons: ALL },
-    { id: 'udlejning',name: 'Skiudlejning',     layer: 'udstyr',    x: 215, y: 215, seasons: ['winter'] },
-    { id: 'skiskole', name: 'Skiskole',         layer: 'udstyr',    x: 165, y: 175, seasons: ['winter'] },
-    { id: 'toppen',   name: 'Gaustatoppen',     layer: 'oplevelse', x: 300, y: 45,  seasons: ['summer', 'autumn'] },
-    { id: 'rjukan',   name: 'Rjukan',           layer: 'oplevelse', x: 520, y: 370, seasons: ALL },
-    { id: 'vemork',   name: 'Vemork',           layer: 'oplevelse', x: 455, y: 335, seasons: ALL },
-    { id: 'spa',      name: 'Rjukan Spa',       layer: 'oplevelse', x: 560, y: 325, seasons: ALL },
-    { id: 'vandring', name: 'Vandrerute',       layer: 'rute',      x: 120, y: 80,  seasons: ['spring', 'summer', 'autumn'] },
-    { id: 'cykel',    name: 'Cykelrute',        layer: 'rute',      x: 470, y: 225, seasons: ['summer'] }
-  ];
-  var HOME = { x: 300, y: 215 };
-  function layer(id) { return LAYERS.filter(function (l) { return l.id === id; })[0]; }
-  function poi(id) { return POIS.filter(function (p) { return p.id === id; })[0]; }
-  function season() { return document.documentElement.getAttribute('data-season') || 'autumn'; }
-  function nested(name, x, y, size) {
-    return '<svg class="ico" x="' + (x - size / 2) + '" y="' + (y - size / 2) + '" width="' + size + '" height="' + size + '" viewBox="0 0 24 24">' + (GL.ICONS[name] || '') + '</svg>';
-  }
-
-  function mapSvg(on) {
-    var s = '<svg class="map-svg" viewBox="0 0 600 420" role="group" aria-label="Skematisk kort over området">' +
-      '<rect class="m-bg" width="600" height="420"/>' +
-      '<path class="m-r1" d="M0 120L90 70l70 40 90-60 80 55 70-45 110 70 90-40v330H0z"/>' +
-      '<path class="m-r2" d="M0 200l100-45 90 35 110-55 100 60 90-35 110 60v200H0z"/>' +
-      '<path class="m-lake" d="M70 330c30-22 90-26 130-8 28 12 10 38-30 44-50 8-110-4-100-36z"/>' +
-      // road toward Rjukan, ski slopes, trails
-      '<path class="m-road" d="M300 215C330 255 380 300 440 330S520 360 560 395"/>' +
-      '<path class="m-slope" d="M205 120L225 190M190 130L205 195M220 112L245 185"/>' +
-      '<path class="m-trail" d="M300 215C350 200 380 170 395 150S430 120 470 110"/>' +
-      '<path class="m-trail" d="M300 215C230 190 170 130 120 80"/>' +
-      '<text class="m-note" x="590" y="412" text-anchor="end">Skematisk kort, ikke målfast. Placeringer er pladsholdere.</text>' +
-      '<text class="m-note" x="14" y="24">N ↑</text>';
-    POIS.forEach(function (p) {
-      var l = layer(p.layer);
-      if (on.indexOf(l.id) === -1) return;
-      var inSeason = p.seasons.indexOf(season()) > -1;
-      s += '<g class="poi' + (inSeason ? '' : ' off') + '" data-poi="' + p.id + '" tabindex="0" role="button" aria-label="' + p.name + (inSeason ? '' : ', ude af sæson nu') + '">' +
-        '<circle class="poi-hit" cx="' + p.x + '" cy="' + p.y + '" r="22"/><circle class="poi-dot" cx="' + p.x + '" cy="' + p.y + '" r="15"/>' + nested(l.icon, p.x, p.y, 17) +
-        '<text class="poi-label" x="' + p.x + '" y="' + (p.y + 30) + '" text-anchor="middle">' + p.name + '</text></g>';
-    });
-    s += '<g class="home"><circle cx="' + HOME.x + '" cy="' + HOME.y + '" r="19"/>' + nested('home', HOME.x, HOME.y, 22) +
-      '<text class="poi-label home-label" x="' + HOME.x + '" y="' + (HOME.y + 36) + '" text-anchor="middle">Lejligheden</text></g></svg>';
-    return s;
-  }
-
-  function seasonRow(p) {
-    var cur = season();
-    return ALL.map(function (k) {
-      var on = p.seasons.indexOf(k) > -1;
-      return '<span class="season-chip' + (on ? ' on' : '') + (k === cur ? ' now' : '') + '" data-tip="' + SEASON_NAME[k] + (on ? '' : ' (ikke i sæson)') + '">' + GL.icon(SEASON_ICON[k]) + '</span>';
-    }).join('');
-  }
+  function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
+  function km(m) { return m >= 1000 ? (m / 1000).toFixed(1).replace('.', ',') + ' km' : Math.round(m / 10) * 10 + ' m'; }
 
   function render(el) {
-    var touch = matchMedia('(hover: none)').matches, verb = touch ? 'Tryk' : 'Klik';
-    var counts = { taet: 0, oplev: 0 };
-    POIS.forEach(function (p) { counts[layer(p.layer).area]++; });
-    var on = LAYERS.map(function (l) { return l.id; }), sel = null;
+    if (!window.GL || !GL.AREAMAP) { el.textContent = 'Kortdata mangler (area-map-data.js).'; return; }
+    var DATA = GL.AREAMAP, cur = 'close', S = {}, touch = matchMedia('(hover: none)').matches, verb = touch ? 'Tryk' : 'Klik';
+    Object.keys(MAPS).forEach(function (k) { S[k] = { mode: 'all', cats: MAPS[k].cats.map(function (c) { return c.id; }), sel: null, vb: DATA[k].views.all.slice() }; });
+    var counts = { close: DATA.close.pois.length, wide: DATA.wide.pois.length };
 
     el.innerHTML =
-      '<nav class="subnav" aria-label="Undersider i Området">' +
-        '<a href="#" aria-current="page">Oversigt</a><a href="#" aria-disabled="true">Tæt på</a><a href="#" aria-disabled="true">Oplevelser</a><a href="#" aria-disabled="true">Nu og events <span class="soon">lav prioritet</span></a>' +
-      '</nav>' +
-      '<div class="area-head"><p class="eyebrow">Området</p><h3 class="area-title">Gausta og omegn</h3><p class="muted" style="margin:0">' + verb + ' på et punkt på kortet. Slå lag til og fra herunder. Punkter ude af sæson er nedtonede.' + (touch ? ' Kortet kan trækkes til siden.' : '') + '</p></div>' +
-      '<div class="plan-pills layers" role="group" aria-label="Lag på kortet">' + LAYERS.map(function (l) {
-        return '<button type="button" class="filter" data-l="' + l.id + '" aria-pressed="true">' + GL.icon(l.icon) + l.name + '</button>';
-      }).join('') + '</div>' +
-      '<div class="plan-split area-split"><div class="map-wrap">' + mapSvg(on) + '</div><div class="plan-panel area-panel" aria-live="polite"></div></div>' +
+      '<nav class="subnav" aria-label="Undersider i Området"><a href="#" aria-current="page">Oversigt</a><a href="#" aria-disabled="true">Tæt på</a><a href="#" aria-disabled="true">Oplevelser</a><a href="#" aria-disabled="true">Nu og events <span class="soon">lav prioritet</span></a></nav>' +
+      '<div class="area-head"><p class="eyebrow">Området</p><h3 class="area-title">Kort over området</h3>' +
+        '<p class="muted" style="margin:0">' + verb + ' på et sted på kortet. Skift mellem de to kort, slå lag til og fra, og zoom ind på centrene.</p></div>' +
+      '<div class="plan-pills am-switch" role="group" aria-label="Vælg kort">' + Object.keys(MAPS).map(function (k, i) { return '<button type="button" class="filter" data-map="' + k + '" aria-pressed="' + (i === 0) + '">' + MAPS[k].label + '</button>'; }).join('') + '</div>' +
+      '<div class="plan-pills layers am-layers" role="group" aria-label="Lag på kortet"></div>' +
+      '<div class="plan-split am-grid"><div class="am-col"><div class="am-wrap" id="am-wrap"></div>' +
+        '<div class="am-bar"><button type="button" class="btn btn-ghost btn-sm" data-v="all">Hele kortet</button><button type="button" class="btn btn-ghost btn-sm" data-v="zoom"></button>' +
+        '<span class="faint am-ski">Pister, lifte og langrendsløjper vises ikke her: <a href="#e-skiinout">se Ski-in / ski-out</a></span></div></div>' +
+        '<div class="plan-panel area-panel" aria-live="polite"></div></div>' +
       '<div class="grid grid-3 area-cards">' +
-        '<div class="card"><div class="ico-box">' + GL.icon('pin') + '</div><div class="kicker">A3 · ' + counts.taet + ' punkter</div><h3>Tæt på lejligheden</h3><p class="muted">Pister, løjper, butik, restauranter, skiudlejning og skiskole. Afstande og køretider i klart sprog.</p><span class="card-link soon">Åbn Tæt på (kommer)</span></div>' +
-        '<div class="card"><div class="ico-box">' + GL.icon('mountain') + '</div><div class="kicker">A4 · ' + counts.oplev + ' punkter</div><h3>Oplevelser</h3><p class="muted">Gaustatoppen, Rjukan, Vemork, Spa samt vandre- og cykelruter. Filtreres efter årstid.</p><span class="card-link soon">Åbn Oplevelser (kommer)</span></div>' +
+        '<div class="card"><div class="ico-box">' + GL.icon('pin') + '</div><div class="kicker">A3 · ' + counts.close + ' steder</div><h3>Tæt på lejligheden</h3><p class="muted">Restauranter, butikker, skiudlejning, padel og sauna på Gausta. Afstande i klart sprog.</p><span class="card-link soon">Åbn Tæt på (kommer)</span></div>' +
+        '<div class="card"><div class="ico-box">' + GL.icon('mountain') + '</div><div class="kicker">A4 · ' + counts.wide + ' steder</div><h3>Oplevelser</h3><p class="muted">Rjukan, Vemork, Rjukanbadet, Gaustatoppen og mere. Køretid fra lejligheden.</p><span class="card-link soon">Åbn Oplevelser (kommer)</span></div>' +
         '<div class="card"><div class="ico-box">' + GL.icon('cal') + '</div><div class="kicker">A5 + A6</div><h3>Nu og events</h3><p class="muted">Forhold lige nu og kalenderen over, hvad der sker. Laveste prioritet.</p><span class="card-link soon">Åbn Nu og events (kommer)</span></div>' +
       '</div>' +
       '<div class="now-widget"><div class="now-head"><b>Gausta nu</b><span class="stamp">Sidst opdateret: aldrig (prototype)</span></div>' +
         '<div class="now-grid"><div><small>Temperatur</small><b class="num">n/a</b></div><div><small>Snedybde</small><b class="num">n/a</b></div><div><small>Åbne lifte</small><b class="num">n/a</b></div><div><small>Vejforhold</small><b class="num">n/a</b></div></div>' +
         '<div class="faint" style="margin-top:8px">Kilder er ikke valgt. Ved nedbrud vises "sidst opdateret kl. ...". <a href="#" aria-disabled="true">Se alle forhold (kommer)</a></div></div>';
 
-    var map = el.querySelector('.map-wrap'), panel = el.querySelector('.area-panel');
+    var wrap = el.querySelector('#am-wrap'), panel = el.querySelector('.area-panel'), layersEl = el.querySelector('.am-layers'), pinsEl, svgEl, scaleEl, items = [];
 
+    function dataOf() { return DATA[cur]; }
+    function poi(id) { return dataOf().pois.filter(function (p) { return p.id === id; })[0]; }
+    function catOn(p) { return S[cur].cats.indexOf(p.c) > -1; }
+
+    // ---------- grundkort (SVG) ----------
+    function baseSvg() {
+      var d = dataOf(), v = S[cur].vb, order = ['t', 'd', 'c', 'b', 'a'], r = d.roads;
+      var s = '<svg class="am-svg" viewBox="' + v.join(' ') + '" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Kort over ' + MAPS[cur].label + ', omtegnet fra åbne kortdata. Veje, bygninger og vand.">' +
+        '<rect class="am-bg" x="-600" y="-600" width="2200" height="2200"/>' +
+        '<path class="am-water" fill-rule="evenodd" d="' + d.water.join(' ') + '"/>' +
+        '<path class="am-stream" d="' + d.streams.join(' ') + '"/>';
+      order.forEach(function (c) { if (r[c]) s += '<path class="am-rc am-rc-' + c + '" d="' + r[c].join(' ') + '"/>'; });
+      order.forEach(function (c) { if (r[c]) s += '<path class="am-rf am-rf-' + c + '" d="' + r[c].join(' ') + '"/>'; });
+      if (d.blds.length) s += '<path class="am-bld" d="' + d.blds.join(' ') + '"/>';
+      return s + '</svg>';
+    }
+
+    // ---------- elementer oven på kortet (HTML, konstant størrelse) ----------
+    function build() {
+      var d = dataOf(), m = MAPS[cur]; items = [];
+      var h = baseSvg() + '<div class="am-pins"></div><div class="am-scale"><i></i><span></span></div><div class="am-attr">Kortdata © OpenStreetMap contributors</div>';
+      wrap.style.aspectRatio = d.w + ' / ' + d.h; wrap.innerHTML = h;
+      svgEl = wrap.querySelector('.am-svg'); pinsEl = wrap.querySelector('.am-pins'); scaleEl = wrap.querySelector('.am-scale');
+      function add(kind, x, y, html, cls, data) { var n = document.createElement(kind === 'label' || kind === 'apt' ? 'span' : 'button'); if (n.tagName === 'BUTTON') n.type = 'button'; n.className = cls; n.innerHTML = html; Object.keys(data || {}).forEach(function (k) { n.setAttribute('data-' + k, data[k]); }); pinsEl.appendChild(n); var it = { el: n, kind: kind, x: x, y: y, data: data || {} }; items.push(it); return it; }
+      d.names.forEach(function (nm) { if (cur === 'close' && nm[0] !== 'Kvitåvatn') return; if (cur === 'wide' && nm[0] !== 'Møsvatn') return; add('label', nm[1], nm[2], nm[0], 'am-water-label', {}); });
+      add('apt', d.apt[0], d.apt[1], GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span>', 'am-apt', {});
+      add('cluster', d.cluster[0], d.cluster[1], GL.icon('pin') + '<span class="am-n"></span><span class="am-l">' + m.clusterName + '</span>', 'am-pin am-cluster', { id: 'cluster', aria: m.clusterName });
+      Object.keys(m.groups).forEach(function (gid) {
+        var g = m.groups[gid], mem = d.pois.filter(function (p) { return g.members.indexOf(p.id) > -1; });
+        var gx = mem.reduce(function (a, p) { return a + p.x; }, 0) / mem.length, gy = mem.reduce(function (a, p) { return a + p.y; }, 0) / mem.length;
+        mem.forEach(function (p) { p.g = gid; });
+        add('group', gx, gy, GL.icon('home') + '<span class="am-n"></span><span class="am-l">' + g.name + '</span>', 'am-pin am-group', { id: gid, aria: g.name });
+      });
+      d.pois.forEach(function (p) {
+        var cat = m.cats.filter(function (c) { return c.id === p.c; })[0];
+        add('poi', p.x, p.y, GL.icon(cat.icon) + '<span class="am-l">' + esc(p.n) + '</span>', 'am-pin', { id: p.id, aria: p.n });
+      });
+      items.forEach(function (it) { if (it.data.aria) it.el.setAttribute('aria-label', it.data.aria); });
+    }
+
+    function memberPois(sel) {
+      var d = dataOf();
+      if (sel === 'cluster') return d.pois.filter(function (p) { return p.cl && catOn(p); });
+      var g = MAPS[cur].groups[sel]; return g ? d.pois.filter(function (p) { return g.members.indexOf(p.id) > -1 && catOn(p); }) : [];
+    }
+    function layout() {
+      var d = dataOf(), st = S[cur], v = st.vb, mode = st.mode, W = wrap.clientWidth || 1;
+      svgEl.setAttribute('viewBox', v.join(' '));
+      items.forEach(function (it) {
+        var pad = 15 * v[2] / W, inside = it.x >= v[0] + pad && it.x <= v[0] + v[2] - pad && it.y >= v[1] + pad && it.y <= v[1] + v[3] - pad, show = inside;
+        it.el.style.left = ((it.x - v[0]) / v[2] * 100).toFixed(3) + '%'; it.el.style.top = ((it.y - v[1]) / v[3] * 100).toFixed(3) + '%';
+        if (it.kind === 'cluster') { var n = memberPois('cluster').length; show = show && mode === 'all' && n > 0; it.el.querySelector('.am-n').textContent = n; }
+        else if (it.kind === 'group') { var k = memberPois(it.data.id).length; show = show && mode === 'zoom' && k > 0; it.el.querySelector('.am-n').textContent = k; }
+        else if (it.kind === 'poi') {
+          var p = poi(it.data.id); show = show && catOn(p);
+          if (p.cl && mode === 'all') show = false;
+          if (p.g && mode === 'zoom') show = false;
+          it.el.classList.toggle('am-lab', !p.cl || mode === 'zoom');
+        }
+        it.el.classList.toggle('am-hide', !show);
+        var sp = st.sel && st.sel !== 'cluster' && poi(st.sel), on = st.sel && (it.data.id === st.sel || (it.kind === 'group' && sp && sp.g === it.data.id)); it.el.classList.toggle('sel', !!on);
+      });
+      // etiketter vælger side, så de ikke dækker hinanden
+      var vis = items.filter(function (i) { return (i.kind === 'poi' || i.kind === 'group' || i.kind === 'cluster') && !i.el.classList.contains('am-hide'); }).map(function (i) { return { it: i, px: (i.x - v[0]) / v[2] * W, py: (i.y - v[1]) / v[3] * (wrap.clientHeight || 1) }; });
+      vis.forEach(function (a) {
+        var lw = ((a.it.data.aria || '').length * 6.6 + 24), edgeR = a.px + lw > W - 8, edgeL = a.px - lw < 8, rN = false, lN = false;
+        vis.forEach(function (b) { if (b === a || Math.abs(b.py - a.py) > 24) return; var dx = b.px - a.px; if (dx > 0 && dx < 150) rN = true; if (dx < 0 && dx > -150) lN = true; });
+        var rFree = !edgeR && !rN, lFree = !edgeL && !lN, side = rFree ? 'r' : lFree ? 'l' : 'h', selSide = !edgeR ? 'r' : 'l';
+        a.it.el.classList.toggle('am-lab-l', side === 'l' || (side === 'h' && selSide === 'l'));
+        a.it.el.classList.toggle('am-lab-h', side === 'h');
+      });
+      // målestok
+      var mPerUnit = 1 / d.unitsPerM, unitsPerPx = v[2] / W, mPerPx = mPerUnit * unitsPerPx, pick = NICE[0];
+      NICE.forEach(function (m) { if (m / mPerPx >= 60 && m / mPerPx <= 150 && pick === NICE[0]) pick = m; });
+      if (pick === NICE[0]) NICE.forEach(function (m) { if (m / mPerPx <= 150) pick = m; });
+      scaleEl.querySelector('i').style.width = (pick / mPerPx).toFixed(0) + 'px'; scaleEl.querySelector('span').textContent = pick >= 1000 ? (pick / 1000) + ' km' : pick + ' m';
+      el.querySelectorAll('.am-bar [data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === mode)); b.classList.toggle('on', b.dataset.v === mode); });
+    }
+
+    var anim = null;
+    function go(mode, instant) {
+      var st = S[cur], to = dataOf().views[mode].slice(), from = st.vb.slice(); st.mode = mode;
+      if (anim) cancelAnimationFrame(anim);
+      if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches) { st.vb = to; layout(); return; }
+      var t0 = performance.now(), dur = 480;
+      (function step(t) {
+        var k = Math.min(1, (t - t0) / dur), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+        st.vb = from.map(function (a, i) { return a + (to[i] - a) * e; }); layout();
+        if (k < 1) anim = requestAnimationFrame(step); else anim = null;
+      })(t0);
+    }
+
+    // ---------- panel ----------
     function panelEmpty() {
-      panel.innerHTML = '<div class="slot"><b>Vælg et punkt</b>' + verb + ' på kortet for at se afstand, årstider og link. Alle detaljer er pladsholdere.</div>';
+      var d = dataOf();
+      panel.innerHTML = '<div class="slot"><b>' + MAPS[cur].head + '</b>' + verb + ' på et sted eller på ' + MAPS[cur].clusterName + ' for at zoome ind. Alle oplysninger er kildepåstande og skal verificeres.</div>' +
+        '<div class="am-list">' + d.pois.filter(catOn).map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
+    }
+    function panelList(sel, title) {
+      var mem = memberPois(sel);
+      panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + mem.length + ' steder</span></div><h3 style="margin:0 0 10px">' + title + '</h3>' +
+        '<div class="am-list">' + mem.map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
     }
     function panelPoi(p) {
-      var l = layer(p.layer), inNow = p.seasons.indexOf(season()) > -1;
-      panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + AREAS[l.area] + '</span><span class="pill-tag">' + l.name + '</span>' +
-        '<span class="pill-tag ' + (inNow ? 'good' : 'warn') + '">' + (inNow ? 'I sæson nu' : 'Ude af sæson nu') + '</span></div>' +
-        '<h3 style="margin:0 0 10px">' + p.name + '</h3>' +
-        '<div class="list-row" style="padding:8px 0"><span class="grow muted">Afstand fra lejligheden</span><span class="verify">skal verificeres</span></div>' +
-        '<div class="list-row" style="padding:8px 0"><span class="grow muted">Tid (gå, ski eller bil)</span><span class="verify">skal verificeres</span></div>' +
-        '<div class="list-row" style="padding:8px 0"><span class="grow muted">Årstider</span><span class="season-row">' + seasonRow(p) + '</span></div>' +
-        '<p class="plan-desc">Kort beskrivelse på dansk og engelsk kommer her. Link til officiel side kommer.</p>' +
-        '<div class="row-flex"><span class="card-link soon">Se i ' + AREAS[l.area] + ' (kommer)</span></div>';
+      var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
+      panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
+        '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
+        (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '<div class="faint" style="margin:-2px 0 4px">Målt i luftlinje fra Skipsfjellvegen 52. Skal verificeres.</div>') +
+        '<p class="plan-desc">' + esc(p.t) + '</p>' + (p.h ? '<p class="faint">' + esc(p.h) + '</p>' : '') +
+        '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '<span class="verify">position fra ' + esc(p.src) + ', skal verificeres</span></div>';
     }
-    function redraw() {
-      map.innerHTML = mapSvg(on);
-      if (sel) { var g = map.querySelector('[data-poi="' + sel + '"]'); if (g) g.classList.add('sel'); }
+    function select(sel, kind) {
+      var st = S[cur]; st.sel = sel;
+      if (kind === 'cluster') { go('zoom'); panelList('cluster', MAPS[cur].clusterName); }
+      else if (kind === 'group') panelList(sel, MAPS[cur].groups[sel].name);
+      else if (kind === 'poi') { var pp = poi(sel); if (pp.cl && st.mode === 'all') go('zoom'); panelPoi(pp); }
+      else panelEmpty();
+      layout();
+      if (sel && matchMedia('(max-width: 860px)').matches) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
-    function pick(id, scroll) {
-      sel = id; redraw(); panelPoi(poi(id));
-      if (scroll && matchMedia('(max-width: 860px)').matches) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    function layersUi() {
+      layersEl.innerHTML = MAPS[cur].cats.map(function (c) { return '<button type="button" class="filter" data-l="' + c.id + '" aria-pressed="' + (S[cur].cats.indexOf(c.id) > -1) + '">' + GL.icon(c.icon) + c.name + '</button>'; }).join('');
+      el.querySelector('.am-bar [data-v="zoom"]').textContent = MAPS[cur].zoomLabel;
     }
-    el.querySelector('.layers').addEventListener('click', function (e) {
-      var b = e.target.closest('.filter'); if (!b) return;
-      var id = b.dataset.l, i = on.indexOf(id);
-      if (i > -1) on.splice(i, 1); else on.push(id);
-      b.setAttribute('aria-pressed', String(on.indexOf(id) > -1));
-      if (sel && on.indexOf(poi(sel).layer) === -1) { sel = null; panelEmpty(); }
-      redraw();
+    function showMap(k) {
+      cur = k; layersUi(); build(); layout(); S[k].sel = null; panelEmpty();
+      [].forEach.call(el.querySelectorAll('.am-switch .filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.map === k)); });
+    }
+
+    // ---------- hændelser ----------
+    el.querySelector('.am-switch').addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b && b.dataset.map !== cur) showMap(b.dataset.map); });
+    layersEl.addEventListener('click', function (e) {
+      var b = e.target.closest('.filter'); if (!b) return; var id = b.dataset.l, cs = S[cur].cats, i = cs.indexOf(id);
+      if (i > -1) cs.splice(i, 1); else cs.push(id);
+      b.setAttribute('aria-pressed', String(cs.indexOf(id) > -1));
+      if (S[cur].sel && S[cur].sel !== 'cluster' && !MAPS[cur].groups[S[cur].sel] && poi(S[cur].sel) && !catOn(poi(S[cur].sel))) { S[cur].sel = null; panelEmpty(); }
+      layout();
     });
-    map.addEventListener('click', function (e) { var g = e.target.closest('.poi'); if (g) pick(g.dataset.poi, true); });
-    map.addEventListener('keydown', function (e) { if (e.key !== 'Enter' && e.key !== ' ') return; var g = e.target.closest('.poi'); if (g) { e.preventDefault(); pick(g.dataset.poi, true); } });
+    el.querySelector('.am-bar').addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (b) { go(b.dataset.v); if (b.dataset.v === 'zoom' && !S[cur].sel) { S[cur].sel = 'cluster'; panelList('cluster', MAPS[cur].clusterName); layout(); } } });
+    wrap.addEventListener('click', function (e) {
+      var b = e.target.closest('.am-pin'); if (!b) return; var id = b.dataset.id;
+      if (id === 'cluster') select('cluster', 'cluster'); else if (MAPS[cur].groups[id]) select(id, 'group'); else select(id, 'poi');
+    });
+    panel.addEventListener('click', function (e) { var b = e.target.closest('[data-poi]'); if (b) select(b.dataset.poi, 'poi'); });
+    window.addEventListener('resize', function () { layout(); });
     el.addEventListener('click', function (e) { if (e.target.closest('a[aria-disabled="true"], .subnav a')) e.preventDefault(); });
-    // follow the season selector: redraw map (dimming) and the open panel
-    new MutationObserver(function () { redraw(); if (sel) panelPoi(poi(sel)); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
-    panelEmpty();
+
+    showMap('close');
   }
 
-  document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-area-hub]'), render);
-  });
+  document.addEventListener('gl:ready', function () { [].forEach.call(document.querySelectorAll('[data-area-hub]'), render); });
 })();

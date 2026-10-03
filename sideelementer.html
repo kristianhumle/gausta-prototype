@@ -119,10 +119,10 @@
 
   <div class="spec-block" id="e-area"><div class="spec-head"><h3>Området: oversigtsside</h3><div class="row-flex"><span class="pill-tag">område · A3, A4, A5, A6</span><span class="status research">Research</span></div></div>
     <div class="spec-body">
-      <div class="notice" style="margin-bottom:22px"><b>Første udkast.</b> Kortet er skematisk (ikke målfast). Alle punkter, placeringer, afstande og sæsoner er pladsholdere og skal verificeres. Kun punkternes navne kommer fra kravspecifikationen. Undersiderne findes ikke endnu.</div>
+      <div class="notice" style="margin-bottom:22px"><b>Kort fra åbne data.</b> Veje, bygninger og vand er omtegnet fra OpenStreetMap (© OpenStreetMap contributors) som egne SVG-former, uden eksterne kald. Stedernes placering, åbningstider og beskrivelser er kildepåstande og skal verificeres senere. Køretider er beregnet 3. oktober 2026 på kortdata (OSRM). Pister, lifte og langrendsløjper vises bevidst ikke her, men i <a href="#e-skiinout">Ski-in / ski-out</a>.</div>
       <div data-area-hub></div>
     </div>
-    <div class="spec-note"><b>Besluttet 2. oktober 2026:</b> A3 (Tæt på, praktisk) og A4 (Oplevelser, inspiration) deles efter formål, ikke afstand. Nu og events (A5 + A6) er én side og har laveste prioritet. Egne sider pr. oplevelse kommer senere. Menupunktet hedder "Området". <b>Elementet:</b> fane-række til undersider, fælles kort med lag (slå til og fra), punkter ude af sæson er nedtonede og følger årstidsvælgeren i toppen, tre indgangskort og "Gausta nu" som lille widget. <b>Åbent:</b> rigtigt kort og kortleverandør (teknisk specifikation), datakilder til live-data, punktdata (afstand, tid, link) fra den fælles indholdskilde (TK4).</div></div>
+    <div class="spec-note"><b>Besluttet 3. oktober 2026:</b> to kort i stedet for ét: <b>Gausta</b> (tæt på: mad og drikke, indkøb, skiudlejning, aktiviteter som padel og sauna) og <b>Rjukan og omegn</b> (byen, kultur, natur, aktiviteter, med køretid). Man skifter mellem dem, slår lag til og fra og zoomer ind på centrene (Gaustablikk, Rjukan). Steder tæt på hinanden samles (hotellet, Food Court). A3 (Tæt på) og A4 (Oplevelser) deles efter formål, Nu og events (A5 + A6) er én side med lav prioritet, og menupunktet hedder "Området". <b>Fundet:</b> padel, flydende sauna, restauranter, butikker, skiudlejning, Vemork og Gaustatoppen findes i kortdata. Rjukan Spa findes ikke under det navn (det nærmeste er Rjukanbadet), og Rjukan Klatrepark skal tjekkes (kilden siger lukket på ubestemt tid). <b>Åbent:</b> endelig verificering af steder, rigtigt levende kort og kortleverandør i den tekniske specifikation (åbne kortdata kan hostes selv), datakilder til live-data (TK4).</div></div>
 
   <div class="spec-block" id="e-faq"><div class="spec-head"><h3>FAQ-harmonika</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="faq"><details open><summary>Hvordan kommer jeg ind?</summary><p>Svar tekst.</p></details><details><summary>Er der kameraer?</summary><p>Svar tekst.</p></details></div></div>
@@ -158,6 +158,7 @@
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
+<script src="area-map-data.js"></script>
 <script src="area.js"></script>
 <script src="skiinout-draw.js"></script>
 <script src="skiinout.js"></script>

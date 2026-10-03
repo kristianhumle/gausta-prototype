@@ -32,6 +32,12 @@
     wave: '<path d="M2 15c3-4 5 4 8 0s5 4 8 0 3 0 4-1"/>',
     lock: '<rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 018 0v3"/>',
     wifioff: '<path d="M3 3l18 18M8.500 16a5 5 0 017 0M5 12.500a10 10 0 015-2.600M19 12.500a10 10 0 00-3-2.200"/>',
+    fork: '<path d="M6 3v7a2.500 2.500 0 002.500 2.500V21M8.500 3v6M11 3v7a2.500 2.500 0 01-2.500 2.500M17 3c-2 2-2.500 6-1 9h1V21"/>',
+    bag: '<path d="M5 8h14l-1 12H6zM9 8a3 3 0 016 0"/>',
+    racket: '<path d="M14.500 3.500a5 5 0 110 10 5 5 0 010-10zM11 12L4.500 18.500 6 20l6.500-6.500"/>',
+    museum: '<path d="M3 10l9-6 9 6M5.500 10v8M9.500 10v8M14.500 10v8M18.500 10v8M3 20h18"/>',
+    tree: '<path d="M12 3l5 8h-3l4 6H6l4-6H7zM12 17v4"/>',
+    city: '<path d="M4 20V9l5-3v14M9 20V6l7 3v11M16 20h4v-8l-4-2"/>',
     camera: '<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.500"/>'
   };
   function icon(name, cls) {

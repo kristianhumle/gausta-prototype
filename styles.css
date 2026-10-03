@@ -668,3 +668,56 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wx-cmp td, .wx-cmp th { font-size: .82rem; vertical-align: top; }
 .wx-cmp th:first-child, .wx-cmp td:first-child { white-space: nowrap; font-weight: 650; }
 .wx-pick { background: var(--accent-weak); }
+
+/* Området: rigtige kort (omtegnet fra åbne kortdata) */
+.am-grid { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); align-items: start; }
+.am-col { min-width: 0; }
+.am-wrap { position: relative; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
+.am-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.am-bg { fill: #fbfaf6; }
+.am-water { fill: #cfe2ee; stroke: #93bad3; stroke-width: 1px; stroke-linejoin: round; }
+.am-stream { fill: none; stroke: #93bad3; stroke-width: 1.2px; stroke-linecap: round; }
+.am-rc, .am-rf, .am-stream, .am-water { vector-effect: non-scaling-stroke; }
+.am-rc, .am-rf { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+.am-rc { stroke: #7a7a84; }
+.am-rf { stroke: #fff; }
+.am-rc-a { stroke-width: 6px; } .am-rf-a { stroke-width: 4.4px; }
+.am-rc-b { stroke-width: 5px; } .am-rf-b { stroke-width: 3.6px; }
+.am-rc-c { stroke-width: 4px; } .am-rf-c { stroke-width: 2.8px; }
+.am-rc-d { stroke-width: 3px; } .am-rf-d { stroke-width: 1.9px; }
+.am-rc-t { stroke-width: 1.6px; stroke-dasharray: 4 3; opacity: .7; } .am-rf-t { stroke: none; }
+.am-bld { fill: #e4dfd3; stroke: #8b8880; stroke-width: .35; stroke-linejoin: round; }
+.am-pins { position: absolute; inset: 0; pointer-events: none; }
+.am-pins > * { pointer-events: auto; }
+.am-pin { position: absolute; transform: translate(-50%, -50%); width: 34px; height: 34px; border-radius: 50%; background: var(--surface); border: 2px solid var(--accent); color: var(--accent-text); display: grid; place-items: center; cursor: pointer; box-shadow: var(--shadow-sm); padding: 0; transition: opacity .2s; }
+.am-pin .ico { width: 18px; height: 18px; }
+.am-pin:hover, .am-pin.sel { background: var(--accent); color: #fff; z-index: 3; }
+.am-group { width: 40px; height: 40px; }
+.am-cluster { width: 48px; height: 48px; border-width: 3px; }
+.am-cluster .ico { width: 22px; height: 22px; }
+.am-n { position: absolute; top: -7px; right: -7px; min-width: 21px; height: 21px; border-radius: 99px; background: var(--accent); color: #fff; font: 700 .72rem/21px var(--font-body); text-align: center; border: 2px solid #fff; padding: 0 3px; box-sizing: content-box; }
+.am-l { position: absolute; left: calc(100% + 6px); top: 50%; transform: translateY(-50%); white-space: nowrap; font: 600 .74rem/1.2 var(--font-body); background: rgba(255,255,255,.94); color: #1c1f1d; padding: 3px 8px; border-radius: 99px; box-shadow: var(--shadow-sm); pointer-events: none; display: none; }
+.am-cluster .am-l, .am-group .am-l, .am-pin.am-lab .am-l, .am-pin.sel .am-l { display: block; }
+.am-apt { position: absolute; transform: translate(-50%, -50%); width: 40px; height: 40px; border-radius: 50%; background: var(--accent); color: #fff; border: 3px solid #fff; box-shadow: 0 0 0 2px rgba(0,0,0,.3); display: grid; place-items: center; z-index: 2; }
+.am-apt .ico { width: 20px; height: 20px; }
+.am-l-apt { display: block; top: calc(100% + 10px); left: 50%; transform: translateX(-50%); font-weight: 700; }
+.am-hide { opacity: 0; pointer-events: none !important; }
+.am-water-label { position: absolute; transform: translate(-50%, -50%); font: italic 500 .8rem var(--font-body); color: #4f7f9d; letter-spacing: .06em; pointer-events: none !important; }
+.am-scale { position: absolute; right: 10px; bottom: 28px; font: 600 .7rem var(--font-mono); color: #1c1f1d; background: rgba(255,255,255,.85); padding: 3px 8px 4px; border-radius: 6px; pointer-events: none; }
+.am-scale i { display: block; height: 6px; border: 2px solid #1c1f1d; border-top: 0; margin-bottom: 2px; }
+.am-attr { position: absolute; right: 8px; bottom: 6px; font-size: .66rem; background: rgba(255,255,255,.85); color: #444; padding: 1px 7px; border-radius: 5px; pointer-events: none; }
+.am-bar { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.am-bar .btn.on { background: var(--accent); border-color: var(--accent); color: #fff; }
+.am-ski { margin-left: 4px; }
+.am-list { display: grid; gap: 6px; margin-top: 12px; }
+.am-list button { text-align: left; font: inherit; display: flex; justify-content: space-between; gap: 12px; align-items: baseline; padding: 9px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; }
+.am-list button:hover { border-color: var(--accent); }
+.am-list button span { font-size: .78rem; white-space: nowrap; }
+.am-switch { margin-bottom: 8px; }
+@media (max-width: 860px) { .am-grid { grid-template-columns: 1fr; } }
+@media (max-width: 520px) { .am-pin { width: 32px; height: 32px; } .am-l { font-size: .68rem; padding: 2px 6px; } .am-pin.am-lab:not(.sel) .am-l { display: none; } }
+
+.am-pin.am-lab-l .am-l { left: auto; right: calc(100% + 6px); }
+.am-pin.am-lab-h:not(.sel):not(:hover) .am-l { display: none; }
+.am-pin:hover .am-l { display: block; z-index: 4; }
+.area-panel .verify { white-space: normal; }
