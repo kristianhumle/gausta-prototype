@@ -12,9 +12,9 @@
   --muted: #5E625E;
   --faint: #8A8D88;
   /* semantic status (reserved meanings, never decoration) */
-  --good: #2E8F62;
-  --coral: #D2503A;
-  --amber: #B07A22;
+  --good: #236F4C;
+  --coral: #AA402E;
+  --amber: #835B19;
   /* shape and layout */
   --radius: 14px;
   --radius-sm: 10px;
@@ -748,10 +748,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 .card .verify, .sio-cards .verify { white-space: normal; display: inline-block; }
 
 /* ===== Årstidstema B (valgt 3. oktober 2026): baggrund, flader, kanter og tekst får årstidens tone ===== */
-:root, [data-season="autumn"] { --bg:#F7EEE2;--surface:#FFFBF4;--elevated:#EDDFCB;--border:#DCC9AD;--text:#261A0F;--muted:#745F49;--faint:#9C8670; }
-[data-season="winter"] { --bg:#EDF2F7;--surface:#FAFCFF;--elevated:#E1EAF3;--border:#CBD9E7;--text:#13202D;--muted:#50627A;--faint:#7A8BA0; }
-[data-season="spring"] { --bg:#F0F5E8;--surface:#FBFDF6;--elevated:#E3EDD3;--border:#CFDDBA;--text:#1A2314;--muted:#55674A;--faint:#7F9072; }
-[data-season="summer"] { --bg:#E9F4F2;--surface:#F9FEFD;--elevated:#D8ECE8;--border:#BFDDD7;--text:#10211E;--muted:#4A6963;--faint:#77928C; }
+:root, [data-season="autumn"] { --bg:#F7EEE2;--surface:#FFFBF4;--elevated:#EDDFCB;--border:#DCC9AD;--text:#261A0F;--muted:#745F49;--faint:#706050; }
+[data-season="winter"] { --bg:#EDF2F7;--surface:#FAFCFF;--elevated:#E1EAF3;--border:#CBD9E7;--text:#13202D;--muted:#50627A;--faint:#5A6777; }
+[data-season="spring"] { --bg:#F0F5E8;--surface:#FBFDF6;--elevated:#E3EDD3;--border:#CFDDBA;--text:#1A2314;--muted:#55674A;--faint:#5F6B55; }
+[data-season="summer"] { --bg:#E9F4F2;--surface:#F9FEFD;--elevated:#D8ECE8;--border:#BFDDD7;--text:#10211E;--muted:#4A6963;--faint:#576B66; }
 
 /* ===== Webcams (sideelementer, e-webcams) ===== */
 .wc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start; }
