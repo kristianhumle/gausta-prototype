@@ -375,9 +375,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 /* photo hero (when a photo exists for the season/page) */
 .hero::after { content: ""; position: absolute; inset: 0; z-index: 1; pointer-events: none; background: var(--hero-motif, none), var(--hero-tint, transparent); background-size: var(--motif-size, auto), auto; }
 .hero.has-photo { background-color: #111; background-size: cover; background-position: center; }
-.hero.has-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,.50), rgba(0,0,0,.20) 55%, rgba(0,0,0,.55)); }
+.hero.has-photo::before { content: ""; position: absolute; inset: 0; z-index: 1; background: linear-gradient(180deg, rgba(0,0,0,.58), rgba(0,0,0,.55) 70%, rgba(0,0,0,.50)); }
 .hero.has-photo h1, .hero.has-photo .lead, .hero.has-photo .eyebrow { color: #fff; }
-.hero.has-photo .lead { opacity: .92; }
+.hero.has-photo h1, .hero.has-photo .lead, .hero.has-photo .eyebrow { text-shadow: 0 1px 6px rgba(0,0,0,.35); }
 .hero.has-photo .btn-ghost { color: #fff; border-color: rgba(255,255,255,.55); }
 .hero.has-photo .btn-ghost:hover { background: rgba(255,255,255,.14); }
 .hero.has-photo .hero-art { display: none; }
