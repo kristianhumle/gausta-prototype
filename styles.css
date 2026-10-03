@@ -614,3 +614,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sio-pills .filter[data-f="langrend"][aria-pressed="true"] { background: var(--c-lang); border-color: var(--c-lang); color: #fff; }
 .sio-pills .filter[data-f="slalom"][aria-pressed="true"] { background: var(--c-sla); border-color: var(--c-sla); color: #fff; }
 .sio-pills .filter[aria-pressed="true"] .ico { color: #fff; }
+
+/* adresse under 'Lejligheden' */
+.sio-homelabel { text-align: center; line-height: 1.25; padding: 6px 12px 7px; border-radius: 12px; font: inherit; }
+.sio-homelabel b { display: block; font: 700 12px/1.25 var(--font-body); }
+.sio-homelabel em { display: block; font: 500 11px/1.25 var(--font-mono); font-style: normal; color: #5e625e; }
+@media (max-width: 520px) { .sio-homelabel { padding: 4px 8px 5px; transform: translate(-50%, 20px); } .sio-homelabel b { font-size: 10.5px; } .sio-homelabel em { font-size: 9.5px; } }

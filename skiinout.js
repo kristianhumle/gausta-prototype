@@ -9,7 +9,7 @@
   // luftfoto: 2000 x 1577. tegnet kort: samme udsnit som terrænkortet, 1994 x 1614 (punkterne er overført fra luftfotoet ved billedregistrering).
   var VIEWS = {
     foto:   { vh: 788,   poi: { x: 0.5368, y: 0.4182 }, home: { x: 0.4225, y: 0.563 }, pulse: 0.5377, pts: { langrend: { x: 0.4125, y: 0.132 }, slalom: { x: 0.6925, y: 0.499 } } },
-    tegnet: { vh: 809.4, poi: { x: 978.5 / 1994, y: 644.5 / 1614 }, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
+    tegnet: { vh: 809.4, label: { x: 741 / 1994, y: 1000 / 1614 }, poi: { x: 978.5 / 1994, y: 644.5 / 1614 }, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
   };
   // forløb tegnet ud fra luftfotoet (px i det 1994 x 1614 store udsnit); cirka, skal verificeres
   var TRACKS = { langrend: [[720, 176], [690, 152], [650, 128], [600, 112], [555, 118], [515, 140], [480, 180], [445, 218], [400, 238], [350, 236], [300, 214], [250, 170], [205, 115], [165, 62], [130, 15], [105, -20]], slalom: [[860, 190], [910, 230], [960, 290], [1010, 350], [1060, 415], [1110, 475], [1160, 535], [1205, 600], [1245, 665], [1280, 725], [1305, 775], [1370, 860], [1440, 930], [1500, 1000], [1580, 1090], [1660, 1150], [1770, 1200], [1900, 1240], [2000, 1252]] };
@@ -62,7 +62,7 @@
           ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(v, r) + '"/><path class="dash" d="' + line(v, r) + '"/></g>'; }).join('') +
         '</svg>' +
         '<span class="sio-home" style="left:' + pct(v.home.x) + ';top:' + pct(v.pulse) + '"></span>' +
-        '<span class="sio-homelabel" style="left:' + pct(v.home.x) + ';top:' + pct(v.home.y) + '">Lejligheden</span>' +
+        '<span class="sio-homelabel" style="left:' + pct((v.label || v.home).x) + ';top:' + pct((v.label || v.home).y) + '"><b>Lejligheden</b><em>Skipsfjellvegen 52</em></span>' +
         ROUTES.map(function (r) {
           var p = v.pts[r.id];
           return '<span class="sio-dot" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '"></span>' +
