@@ -54,10 +54,11 @@
     { id: 'winter', da: 'Vinter', en: 'Winter' }
   ];
   function seasonFromDate(d) {
+    // tilpasset Gausta (ca. 960 m.o.h.), besluttet 3. oktober 2026: forår mar-apr, sommer maj-aug, efterår sep-okt, vinter nov-feb
     var m = d.getMonth() + 1;
-    if (m >= 3 && m <= 5) return 'spring';
-    if (m >= 6 && m <= 8) return 'summer';
-    if (m >= 9 && m <= 11) return 'autumn';
+    if (m >= 3 && m <= 4) return 'spring';
+    if (m >= 5 && m <= 8) return 'summer';
+    if (m >= 9 && m <= 10) return 'autumn';
     return 'winter';
   }
 
