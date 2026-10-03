@@ -784,3 +784,41 @@ textarea.field { min-height: 96px; resize: vertical; }
 
 .vp-frame { --heading: initial; --header-bg: initial; --band-bg: initial; --footer-bg: initial; --footer-fg: initial; --footer-muted: initial; --footer-faint: initial; --footer-border: initial; --hero-tint: initial; --hero-motif: initial; --card-top-w: initial; --card-top-c: initial; --motif-size: initial; }
 .vp-frame[data-variant="a"] { --bg: #F7F5F0; --surface: #FFFFFF; --elevated: #EFEBE3; --border: #DDD7CB; --text: #1C1F1D; --muted: #5E625E; --faint: #8A8D88; }
+
+/* ===== Webcams (sideelementer, e-webcams) ===== */
+.wc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start; }
+.wc-ver { border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; background: var(--surface); }
+.wc-ver h4 { margin: 0 0 2px; font-size: 1rem; }
+.wc-ver .tagline { color: var(--muted); font-size: .84rem; margin: 0 0 12px; }
+.wc-frame { position: relative; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--border); }
+.wc-img { position: relative; aspect-ratio: 16 / 9; background: linear-gradient(var(--sky-top), var(--sky-bot)); overflow: hidden; border-radius: var(--radius-sm); }
+.wc-frame .wc-img { border-radius: 0; }
+.wc-img svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.wc-img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
+.wc-ph { position: absolute; left: 8px; bottom: 8px; font-size: .66rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: color-mix(in srgb, var(--surface) 82%, transparent); color: var(--muted); padding: 3px 7px; border-radius: 99px; border: 1px dashed var(--border); }
+.wc-badge { position: absolute; top: 8px; right: 8px; font-size: .68rem; font-weight: 700; padding: 3px 9px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); }
+.wc-badge.wc-live, .wc-badge.wc-frisk { color: var(--good); border-color: color-mix(in srgb, var(--good) 45%, var(--border)); }
+.wc-badge.wc-sæson, .wc-badge.wc-gammel { color: var(--amber); border-color: color-mix(in srgb, var(--amber) 45%, var(--border)); }
+.wc-badge.wc-fejl { color: var(--coral); border-color: color-mix(in srgb, var(--coral) 45%, var(--border)); }
+.wc-cap { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; margin-top: 10px; }
+.wc-src { font-size: .8rem; color: var(--muted); margin: 4px 0 10px; }
+.wc-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.wc-tabs [role="tab"] { border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 99px; padding: 6px 13px; font: inherit; font-size: .84rem; cursor: pointer; }
+.wc-tabs [role="tab"][aria-selected="true"] { background: var(--accent-weak); color: var(--accent-text); border-color: transparent; font-weight: 650; }
+.wc-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+.wc-strip a { text-decoration: none; color: inherit; display: block; }
+.wc-strip .wc-img { border: 1px solid var(--border); }
+.wc-strip small { display: block; margin-top: 4px; font-size: .74rem; color: var(--muted); line-height: 1.3; }
+.wc-live-poster { position: relative; }
+.wc-play { position: absolute; inset: 0; display: grid; place-items: center; }
+.wc-play span { width: 54px; height: 54px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 88%, transparent); display: grid; place-items: center; box-shadow: var(--shadow-sm); }
+.wc-play svg { position: static; width: 22px; height: 22px; fill: var(--accent); }
+.wc-stale .wc-img svg, .wc-stale .wc-img img { opacity: .5; filter: grayscale(.7); }
+.wc-state-msg { font-size: .82rem; margin-top: 8px; color: var(--text); }
+.wc-state-msg b { font-weight: 650; }
+.wc-cmp td, .wc-cmp th { font-size: .82rem; vertical-align: top; }
+.wc-cmp th:first-child, .wc-cmp td:first-child { font-weight: 650; }
+.wc-pick { background: var(--accent-weak); }
+@media (max-width: 600px) { .wc-strip { grid-template-columns: 1fr; } }
+.wc-strip .wc-ph { font-size: .52rem; padding: 1px 5px; left: 4px; bottom: 4px; letter-spacing: .04em; }
+.wc-strip .wc-badge { font-size: .6rem; padding: 1px 6px; top: 4px; right: 4px; }
