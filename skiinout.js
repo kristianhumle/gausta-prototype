@@ -5,36 +5,54 @@
    Cirklerne på langrends- og slalomkortet er ejerens markering af tilgangen (Rød 15, 10 og 6; grøn 3). */
 (function () {
   'use strict';
-  // ---------- luftfoto (koordinater som andel af billedet 2000 x 1577) ----------
-  var HOME = { x: 0.4225, y: 0.563 };
+  // ---------- luftfoto og tegnet kort (koordinater som andel af billedet) ----------
+  // luftfoto: 2000 x 1577. tegnet kort: samme udsnit som terrænkortet, 1994 x 1614 (punkterne er overført fra luftfotoet ved billedregistrering).
+  var VIEWS = {
+    foto:   { vh: 788,   home: { x: 0.4225, y: 0.563 }, pulse: 0.5377, pts: { langrend: { x: 0.4125, y: 0.132 }, slalom: { x: 0.6925, y: 0.499 } } },
+    tegnet: { vh: 809.4, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
+  };
   var ROUTES = [
-    { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', x: 0.4125, y: 0.132, text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
-    { id: 'slalom', name: 'Slalom', icon: 'snow', dist: '50 til 100 m', x: 0.6925, y: 0.499, text: 'Her kommer du på slalompisten.', pos: 'above' }
+    { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
+    { id: 'slalom', name: 'Slalom', icon: 'snow', dist: '50 til 100 m', text: 'Her kommer du på slalompisten.', pos: 'above' }
   ];
   // ---------- langrendskort (PDF-koordinater i pt; udsnit x 0-595.276, y 75-841.89) ----------
   var LK = { x0: 0, y0: 75, w: 595.276, h: 766.89, access: [224.72, 486.76], r50: 6.45, r100: 12.9,
     paths: ["M399.34 438.35 C398.84 434.80 396.38 432.53 395.78 430.95 C395.19 429.37 393.22 428.98 391.54 428.78 C389.86 428.58 377.53 429.08 373.18 428.98 C368.84 428.88 363.15 427.04 363.15 427.04 C361.09 426.06 359.13 424.82 357.46 423.37 C355.59 421.77 352.84 418.55 351.59 416.95 L350.33 414.78 C349.01 412.39 347.59 410.35 344.50 409.03 C341.40 407.70 338.84 408.50 336.72 409.29 C334.59 410.09 327.79 411.33 323.45 411.41 C319.96 411.48 319.25 410.99 318.90 408.87 C318.54 406.74 322.39 405.60 323.97 404.62 C326.48 403.05 329.20 400.80 331.14 399.30 C333.09 397.80 335.27 395.33 335.59 392.66 C335.91 389.99 343.92 379.25 348.05 374.42 C352.18 369.59 356.21 360.78 356.82 359.23 C357.64 357.16 357.72 355.49 357.72 353.94 C357.72 351.32 356.50 349.93 355.60 348.46 C354.70 346.99 352.82 345.03 351.43 344.62 C350.04 344.21 347.18 344.87 344.40 344.95 C341.62 345.03 337.70 343.56 336.31 342.74 C334.92 341.92 332.63 341.92 331.32 341.92 C330.01 341.92 326.17 342.17 324.05 341.35 C321.92 340.53 320.61 340.37 318.90 340.78 C317.18 341.19 317.43 341.11 314.89 341.43 C312.36 341.76 307.62 343.23 305.74 343.80 C303.86 344.37 298.71 345.68 296.26 346.25 C293.81 346.83 287.67 347.64 286.20 348.05 C284.73 348.46 278.93 350.59 276.39 350.83 C273.86 351.08 268.96 351.32 265.44 351.32 C261.93 351.32 260.95 352.06 259.80 353.20 C258.66 354.35 257.76 357.94 256.29 361.78 C254.82 365.63 252.69 367.34 251.55 367.67 C250.40 368.00 247.71 368.49 245.50 369.88 C243.29 371.27 243.29 374.13 243.62 376.91 C243.95 379.69 243.70 382.55 242.88 384.43 C242.07 386.31 235.93 386.63 233.89 386.88 C231.85 387.12 227.92 387.53 226.32 388.53 C225.22 389.21 224.18 391.57 222.94 393.27 C221.69 394.97 218.40 399.80 216.26 402.84 C214.13 405.88 212.93 407.94 212.21 410.62 C211.52 412.79 209.55 416.74 207.67 419.21 C205.80 421.67 203.30 424.26 203.30 424.26 C202.69 425.30 202.13 426.10 201.67 426.60 C200.51 427.86 200.69 427.23 199.52 429.66 C198.36 432.08 199.34 435.59 199.61 437.47 C199.88 439.36 199.52 444.58 199.43 446.91 C199.35 449.16 199.71 451.38 200.16 453.57 C200.57 455.57 200.66 458.11 201.76 459.85 C202.39 460.84 203.29 462.19 205.08 465.25 C206.87 468.30 209.29 466.94 213.82 467.86 C216.53 468.40 216.83 470.52 216.87 472.91 C216.89 474.04 216.84 475.25 217.40 476.28 C218.06 477.50 220.52 478.65 219.80 480.31 C219.26 481.55 216.77 481.40 217.35 483.20 C217.54 483.82 218.20 484.35 217.40 484.91 C216.87 485.27 215.73 485.17 215.06 485.48 C212.17 486.78 216.54 491.36 217.42 493.13 C218.63 495.53 216.03 498.59 214.30 500.00 C211.87 501.98 208.32 501.51 210.24 505.48 C211.49 508.06 216.37 509.11 218.16 509.74 C219.95 510.37 222.19 511.18 225.87 511.98 C229.54 512.79 234.65 514.32 236.44 514.23 C238.24 514.14 240.12 514.41 240.57 515.22 C241.78 517.41 244.38 518.32 246.13 519.92 C246.87 520.60 247.25 521.42 247.83 522.19 C248.39 522.94 248.94 523.80 249.56 524.49 C250.12 525.12 250.89 525.25 251.42 525.86 C251.93 526.44 252.19 527.35 252.43 528.07 C252.80 529.20 252.89 530.36 253.35 531.39 C253.58 532.56 254.21 534.64 254.75 535.46", "M230.19 491.33 C228.48 491.05 226.57 488.75 225.43 487.22 C224.28 485.69 220.09 479.57 220.09 479.57"] };
   function pct(v) { return (v * 100).toFixed(2) + '%'; }
-  function line(r) {
-    var x0 = HOME.x * 1000, y0 = HOME.y * 788, x1 = r.x * 1000, y1 = r.y * 788;
+  function line(v, r) {
+    var p = v.pts[r.id], x0 = v.home.x * 1000, y0 = v.home.y * v.vh, x1 = p.x * 1000, y1 = p.y * v.vh;
     return 'M' + x0.toFixed(1) + ' ' + y0.toFixed(1) + 'L' + x1.toFixed(1) + ' ' + y1.toFixed(1);
   }
-
-  function photoPanel() {
+  function drawnBase() {
+    var D = GL.DRAWN; if (!D) return '';
+    return '<svg class="sio-base" viewBox="0 0 ' + D.W + ' ' + D.H + '" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Tegnet kort over området omkring lejligheden med veje og bygninger.">' +
+      '<rect class="sd-bg" width="' + D.W + '" height="' + D.H + '"/>' +
+      D.roads.map(function (d) { return '<path class="sd-rc" d="' + d + '"/>'; }).join('') +
+      D.roads.map(function (d) { return '<path class="sd-rf" d="' + d + '"/>'; }).join('') +
+      D.blds.map(function (p) { return '<polygon class="sd-b" points="' + p + '"/>'; }).join('') +
+      '<polygon class="sd-apt" points="' + D.apt + '"/>' +
+      D.labels.map(function (l) { return '<text class="sd-l" transform="translate(' + l[1] + ' ' + l[2] + ') rotate(' + l[3] + ')" text-anchor="middle">' + l[0] + '</text>'; }).join('') +
+      '<text class="sd-n" x="34" y="70">N ↑</text>' +
+      '<text class="sd-n" x="' + (D.W - 30) + '" y="' + (D.H - 28) + '" text-anchor="end">Tegnet kort, ikke målfast</text></svg>';
+  }
+  function photoPanel(kind) {
+    var v = VIEWS[kind], drawn = kind === 'tegnet';
+    var base = drawn ? drawnBase() :
+      '<img src="assets/web/kort/ski-in-out.webp" srcset="assets/web/kort/ski-in-out-m.webp 900w, assets/web/kort/ski-in-out.webp 1600w" sizes="(max-width: 860px) 100vw, 900px" alt="Luftfoto af området omkring lejligheden. Stiplede linjer viser 50 til 100 meter til langrendsløjpen og 50 til 100 meter til slalompisten." loading="lazy">';
     return '<div class="plan-pills sio-pills" role="group" aria-label="Vis rute">' +
         '<button type="button" class="filter" data-f="both" aria-pressed="true">Begge</button>' +
         ROUTES.map(function (r) { return '<button type="button" class="filter" data-f="' + r.id + '" aria-pressed="false">' + GL.icon(r.icon) + r.name + '</button>'; }).join('') +
       '</div>' +
-      '<div class="sio-map" data-focus="both">' +
-        '<img src="assets/web/kort/ski-in-out.webp" srcset="assets/web/kort/ski-in-out-m.webp 900w, assets/web/kort/ski-in-out.webp 1600w" sizes="(max-width: 860px) 100vw, 900px" alt="Luftfoto af området omkring lejligheden. Stiplede linjer viser 50 til 100 meter til langrendsløjpen og 50 til 100 meter til slalompisten." loading="lazy">' +
-        '<svg class="sio-svg" viewBox="0 0 1000 788" preserveAspectRatio="none" aria-hidden="true">' +
-          ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(r) + '"/><path class="dash" d="' + line(r) + '"/></g>'; }).join('') +
+      '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + (drawn ? ' style="aspect-ratio:' + GL.DRAWN.W + '/' + GL.DRAWN.H + '"' : '') + '>' + base +
+        '<svg class="sio-svg" viewBox="0 0 1000 ' + v.vh + '" preserveAspectRatio="none" aria-hidden="true">' +
+          ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(v, r) + '"/><path class="dash" d="' + line(v, r) + '"/></g>'; }).join('') +
         '</svg>' +
-        '<span class="sio-home" style="left:' + pct(HOME.x) + ';top:' + pct(0.5377) + '"></span>' +
-        '<span class="sio-homelabel" style="left:' + pct(HOME.x) + ';top:' + pct(HOME.y) + '">Lejligheden</span>' +
+        '<span class="sio-home" style="left:' + pct(v.home.x) + ';top:' + pct(v.pulse) + '"></span>' +
+        '<span class="sio-homelabel" style="left:' + pct(v.home.x) + ';top:' + pct(v.home.y) + '">Lejligheden</span>' +
         ROUTES.map(function (r) {
-          return '<span class="sio-dot" data-route="' + r.id + '" style="left:' + pct(r.x) + ';top:' + pct(r.y) + '"></span>' +
-            '<button type="button" class="sio-chip ' + r.pos + '" data-route="' + r.id + '" style="left:' + pct(r.x) + ';top:' + pct(r.y) + '" aria-label="' + r.name + ', ' + r.dist + ' fra lejligheden">' +
+          var p = v.pts[r.id];
+          return '<span class="sio-dot" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '"></span>' +
+            '<button type="button" class="sio-chip ' + r.pos + '" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '" aria-label="' + r.name + ', ' + r.dist + ' fra lejligheden">' +
             GL.icon(r.icon) + '<span><b>' + r.name + '</b><em>' + r.dist + '</em></span></button>';
         }).join('') +
       '</div>' +
@@ -45,7 +63,7 @@
             '<span class="verify">cirka, skal verificeres på stedet</span></div>';
         }).join('') +
       '</div>' +
-      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.</p>';
+      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
 
   function xf(x) { return ((x - LK.x0) / LK.w); }
@@ -155,7 +173,7 @@
   }
 
   function render(el) {
-    var tabs = [['foto', 'Luftfoto'], ['langrend', 'Langrendskort'], ['slalom', 'Slalomkort']];
+    var tabs = [['foto', 'Luftfoto'], ['tegnet', 'Tegnet kort'], ['langrend', 'Langrendskort'], ['slalom', 'Slalomkort']];
     el.innerHTML = '<div class="subnav sio-tabs" role="tablist" aria-label="Vælg kort">' +
       tabs.map(function (t, i) { return '<button type="button" role="tab" class="sio-tab" data-t="' + t[0] + '" aria-selected="' + (i === 0) + '">' + t[1] + '' + '</button>'; }).join('') + '</div>' +
       '<div class="sio-body"></div>';
@@ -163,10 +181,10 @@
     function show(id) {
       if (id === cur) return; cur = id;
       [].forEach.call(el.querySelectorAll('.sio-tab'), function (b) { b.setAttribute('aria-selected', String(b.dataset.t === id)); });
-      body.innerHTML = id === 'foto' ? photoPanel() : id === 'langrend' ? langrendPanel() : slalomPanel();
+      body.innerHTML = (id === 'foto' || id === 'tegnet') ? photoPanel(id) : id === 'langrend' ? langrendPanel() : slalomPanel();
       if (id === 'langrend') zoomMap(body, { ratio: LK.h / LK.w, fx: xf(LK.access[0]), fy: yf(LK.access[1]), k: 2.8, up: 0.035, maxK: 6 });
       if (id === 'slalom') zoomMap(body, { ratio: SK.h / SK.w, fx: SK.fx, fy: SK.fy, k: 2.2, up: 0, maxK: 3.2 });
-      if (id === 'foto') {
+      if (id === 'foto' || id === 'tegnet') {
         var map = body.querySelector('.sio-map');
         var focus = function (f) {
           map.setAttribute('data-focus', f);

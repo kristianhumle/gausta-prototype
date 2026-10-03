@@ -568,3 +568,16 @@ textarea.field { min-height: 96px; resize: vertical; }
 .zm-pulse { position: absolute; left: -26px; top: -26px; width: 52px; height: 52px; border-radius: 50%; border: 3px solid var(--accent); animation: sio-pulse2 2.4s ease-out infinite; }
 @keyframes sio-pulse2 { 0% { transform: scale(.45); opacity: 1; } 100% { transform: scale(1.4); opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .zm-pulse { animation: none; opacity: .7; } }
+
+/* tegnet kort (egne linjer, samme udtryk som plantegningen) */
+.sio-map.sio-draw { background: var(--surface); }
+.sio-base { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.sd-bg { fill: var(--surface); }
+.sd-rc { fill: none; stroke: var(--text); stroke-opacity: .55; stroke-width: 36px; stroke-linecap: round; stroke-linejoin: round; }
+.sd-rf { fill: none; stroke: var(--surface); stroke-width: 29px; stroke-linecap: round; stroke-linejoin: round; }
+.sd-b { fill: var(--elevated); stroke: var(--text); stroke-opacity: .5; stroke-width: 3px; stroke-linejoin: round; }
+.sd-apt { fill: var(--accent); stroke: var(--text); stroke-width: 4px; stroke-linejoin: round; }
+.sd-l { font: 600 34px var(--font-body); fill: var(--muted); paint-order: stroke; stroke: var(--surface); stroke-width: 8px; stroke-linejoin: round; }
+.sd-n { font: 400 28px var(--font-mono); fill: var(--faint); }
+.sio-draw .sio-svg .halo { stroke: #fff; stroke-opacity: .95; stroke-width: 8px; }
+.sio-draw .sio-svg .dash { stroke: var(--accent-text); stroke-width: 3.5px; }
