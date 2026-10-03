@@ -155,7 +155,8 @@
 
   var PAGES = [
     { href: 'lejligheden.html', da: 'Lejligheden', en: 'The apartment' },
-    { href: 'omraadet.html', da: 'Området', en: 'The area' }
+    { href: 'ski-in-ski-out.html', da: 'Ski-in/ski-out', en: 'Ski-in/ski-out' },
+    { href: 'omraadet.html', da: 'Gausta og omegn', en: 'Gausta and surroundings' }
   ];
 
   var AREA = [
@@ -166,7 +167,7 @@
   ];
   function areaIds() { return AREA.map(function (x) { return x.id; }); }
   GL.areaSubnav = function (cur) {
-    return '<nav class="subnav area-subnav" aria-label="Undersider i Området">' + AREA.map(function (x) {
+    return '<nav class="subnav area-subnav" aria-label="Undersider i Gausta og omegn">' + AREA.map(function (x) {
       if (x.soon) return '<a href="#" aria-disabled="true">' + t(x.da, x.en) + ' <span class="soon">kommer, lav prioritet</span></a>';
       return '<a href="' + x.href + '"' + (x.id === cur ? ' aria-current="page"' : '') + '>' + t(x.da, x.en) + '</a>';
     }).join('') + '</nav>';
@@ -183,7 +184,7 @@
     }).join('');
   }
   var MATERIALS = [
-    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser'] },
+    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'ski-in-ski-out'] },
     { href: 'moodboard.html', label: 'Moodboard', match: ['moodboard'] },
     { href: 'designsystem.html', label: 'Designsystem', match: ['designsystem'] },
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
@@ -228,7 +229,7 @@
         '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>Gausta Lodge 52</span></a>' +
         '<p class="muted" style="margin-top:12px;max-width:34ch;font-size:.92rem">' + t('Fjeldlejlighed på Gausta, Telemark. Arbejdsnavn, endeligt navn og domæne er ikke valgt.', 'Mountain apartment at Gausta, Telemark. Working name; final name and domain not chosen.') + '</p></div>' +
         '<div><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About') + '</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">FAQ</a></div>' +
-        '<div><h4>' + t('Området', 'The area') + '</h4><a href="omraadet.html">' + t('Kort og afstande', 'Map and distances') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="omraadet.html#events">' + t('Events', 'Events') + '</a></div>' +
+        '<div><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="omraadet.html">' + t('Kort og afstande', 'Map and distances') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="omraadet.html#events">' + t('Events', 'Events') + '</a></div>' +
         '<div><h4>' + t('Prototype-zoner', 'Prototype zones') + '</h4><a href="designsystem.html">' + t('Designsystem', 'Design system') + '</a></div>' +
         '</div><div class="legal"><span>© 2026 Gausta Lodge 52 · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
       document.body.insertAdjacentHTML('beforeend', f);

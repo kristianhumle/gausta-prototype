@@ -26,8 +26,8 @@
     var counts = { close: DATA.close.pois.length, wide: DATA.wide.pois.length };
 
     el.innerHTML =
-      '<nav class="subnav" aria-label="Undersider i Området"><a href="#" aria-current="page">Oversigt</a><a href="#" aria-disabled="true">Tæt på</a><a href="#" aria-disabled="true">Oplevelser</a><a href="#" aria-disabled="true">Nu og events <span class="soon">lav prioritet</span></a></nav>' +
-      '<div class="area-head"><p class="eyebrow">Området</p><h3 class="area-title">Kort over området</h3>' +
+      '<nav class="subnav" aria-label="Undersider i Gausta og omegn"><a href="#" aria-current="page">Oversigt</a><a href="#" aria-disabled="true">Tæt på</a><a href="#" aria-disabled="true">Oplevelser</a><a href="#" aria-disabled="true">Nu og events <span class="soon">lav prioritet</span></a></nav>' +
+      '<div class="area-head"><p class="eyebrow">Gausta og omegn</p><h3 class="area-title">Kort over området</h3>' +
         '<p class="muted" style="margin:0">' + verb + ' på et sted på kortet. Skift mellem de to kort, slå lag til og fra, og zoom ind på centrene.</p></div>' +
       '<div class="plan-pills am-switch" role="group" aria-label="Vælg kort">' + Object.keys(MAPS).map(function (k, i) { return '<button type="button" class="filter" data-map="' + k + '" aria-pressed="' + (i === 0) + '">' + MAPS[k].label + '</button>'; }).join('') + '</div>' +
       '<div class="plan-pills layers am-layers" role="group" aria-label="Lag på kortet"></div>' +
