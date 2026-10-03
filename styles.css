@@ -581,3 +581,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sd-n { font: 400 28px var(--font-mono); fill: var(--faint); }
 .sio-draw .sio-svg .halo { stroke: #fff; stroke-opacity: .95; stroke-width: 8px; }
 .sio-draw .sio-svg .dash { stroke: var(--accent-text); stroke-width: 3.5px; }
+
+/* fælleshus (smørebod): markering uden afstand */
+.sio-dot.poi { width: 14px; height: 14px; background: #fff; border: 3px solid var(--accent); }
+.sio-chip.poi { cursor: default; padding: 6px 11px 6px 8px; pointer-events: none; }
+.sio-chip.below { transform: translate(-50%, 14px); }
+.sd-fh { fill: var(--accent-weak); stroke: var(--accent-text); stroke-opacity: .95; stroke-width: 5px; }
+@media (max-width: 520px) { .sio-chip.poi { padding: 4px 8px 4px 6px; } }

@@ -8,9 +8,10 @@
   // ---------- luftfoto og tegnet kort (koordinater som andel af billedet) ----------
   // luftfoto: 2000 x 1577. tegnet kort: samme udsnit som terrænkortet, 1994 x 1614 (punkterne er overført fra luftfotoet ved billedregistrering).
   var VIEWS = {
-    foto:   { vh: 788,   home: { x: 0.4225, y: 0.563 }, pulse: 0.5377, pts: { langrend: { x: 0.4125, y: 0.132 }, slalom: { x: 0.6925, y: 0.499 } } },
-    tegnet: { vh: 809.4, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
+    foto:   { vh: 788,   poi: { x: 0.5368, y: 0.4182 }, home: { x: 0.4225, y: 0.563 }, pulse: 0.5377, pts: { langrend: { x: 0.4125, y: 0.132 }, slalom: { x: 0.6925, y: 0.499 } } },
+    tegnet: { vh: 809.4, poi: { x: 978.5 / 1994, y: 644.5 / 1614 }, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
   };
+  var FH_POLY = '913,663 997,579 1044,626 960,710';   // fælleshuset (smørebod) i det tegnede kort
   var ROUTES = [
     { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
     { id: 'slalom', name: 'Slalom', icon: 'snow', dist: '50 til 100 m', text: 'Her kommer du på slalompisten.', pos: 'above' }
@@ -29,7 +30,7 @@
       '<rect class="sd-bg" width="' + D.W + '" height="' + D.H + '"/>' +
       D.roads.map(function (d) { return '<path class="sd-rc" d="' + d + '"/>'; }).join('') +
       D.roads.map(function (d) { return '<path class="sd-rf" d="' + d + '"/>'; }).join('') +
-      D.blds.map(function (p) { return '<polygon class="sd-b" points="' + p + '"/>'; }).join('') +
+      D.blds.map(function (p) { return '<polygon class="sd-b' + (p === FH_POLY ? ' sd-fh' : '') + '" points="' + p + '"/>'; }).join('') +
       '<polygon class="sd-apt" points="' + D.apt + '"/>' +
       D.labels.map(function (l) { return '<text class="sd-l" transform="translate(' + l[1] + ' ' + l[2] + ') rotate(' + l[3] + ')" text-anchor="middle">' + l[0] + '</text>'; }).join('') +
       '<text class="sd-n" x="34" y="70">N ↑</text>' +
@@ -55,15 +56,20 @@
             '<button type="button" class="sio-chip ' + r.pos + '" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '" aria-label="' + r.name + ', ' + r.dist + ' fra lejligheden">' +
             GL.icon(r.icon) + '<span><b>' + r.name + '</b><em>' + r.dist + '</em></span></button>';
         }).join('') +
+        '<span class="sio-dot poi" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '"></span>' +
+        '<span class="sio-chip poi below" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '">' + GL.icon('wrench') + '<span><b>Fælleshus</b><em>Smørebod</em></span></span>' +
       '</div>' +
-      '<div class="grid grid-2 sio-cards">' +
+      '<div class="grid grid-3 sio-cards">' +
         ROUTES.map(function (r) {
           return '<div class="card" data-route="' + r.id + '"><div class="ico-box">' + GL.icon(r.icon) + '</div><div class="kicker">Fra lejligheden</div>' +
             '<div class="sio-dist">' + r.dist + '</div><h3>' + r.name + '</h3><p class="muted">' + r.text + '</p>' +
             '<span class="verify">cirka, skal verificeres på stedet</span></div>';
         }).join('') +
+        '<div class="card" data-keep="1"><div class="ico-box">' + GL.icon('wrench') + '</div><div class="kicker">På stedet</div>' +
+          '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod og stativer, som beboerne kan bruge. Markeret på kortet, uden afstand.</p>' +
+          '<span class="verify">kildepåstand fra salgsannoncen, skal verificeres</span></div>' +
       '</div>' +
-      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
+      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
 
   function xf(x) { return ((x - LK.x0) / LK.w); }
@@ -189,7 +195,7 @@
         var focus = function (f) {
           map.setAttribute('data-focus', f);
           [].forEach.call(body.querySelectorAll('.sio-pills .filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.f === f)); });
-          [].forEach.call(body.querySelectorAll('.sio-cards .card'), function (c) { c.classList.toggle('dim', f !== 'both' && c.dataset.route !== f); });
+          [].forEach.call(body.querySelectorAll('.sio-cards .card'), function (c) { c.classList.toggle('dim', !c.dataset.keep && f !== 'both' && c.dataset.route !== f); });
         };
         body.querySelector('.sio-pills').addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b) focus(b.dataset.f); });
         map.addEventListener('click', function (e) { var c = e.target.closest('.sio-chip'); if (c) focus(map.getAttribute('data-focus') === c.dataset.route ? 'both' : c.dataset.route); });
