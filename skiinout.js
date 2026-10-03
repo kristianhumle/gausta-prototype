@@ -11,6 +11,18 @@
     foto:   { vh: 788,   poi: { x: 0.5368, y: 0.4182 }, home: { x: 0.4225, y: 0.563 }, pulse: 0.5377, pts: { langrend: { x: 0.4125, y: 0.132 }, slalom: { x: 0.6925, y: 0.499 } } },
     tegnet: { vh: 809.4, poi: { x: 978.5 / 1994, y: 644.5 / 1614 }, home: { x: 741 / 1994, y: 870 / 1614 }, pulse: 840 / 1614, pts: { langrend: { x: 720 / 1994, y: 176 / 1614 }, slalom: { x: 1302 / 1994, y: 777 / 1614 } } }
   };
+  // forløb tegnet ud fra luftfotoet (px i det 1994 x 1614 store udsnit); cirka, skal verificeres
+  var TRACKS = { langrend: [[720, 176], [690, 152], [650, 128], [600, 112], [555, 118], [515, 140], [480, 180], [445, 218], [400, 238], [350, 236], [300, 214], [250, 170], [205, 115], [165, 62], [130, 15], [105, -20]], slalom: [[860, 190], [910, 230], [960, 290], [1010, 350], [1060, 415], [1110, 475], [1160, 535], [1205, 600], [1245, 665], [1280, 725], [1305, 775], [1370, 860], [1440, 930], [1500, 1000], [1580, 1090], [1660, 1150], [1770, 1200], [1900, 1240], [2000, 1252]] };
+  function smooth(p, n) { for (var k = 0; k < n; k++) { var o = [p[0]]; for (var i = 0; i < p.length - 1; i++) { var a = p[i], b = p[i + 1]; o.push([0.75 * a[0] + 0.25 * b[0], 0.75 * a[1] + 0.25 * b[1]], [0.25 * a[0] + 0.75 * b[0], 0.25 * a[1] + 0.75 * b[1]]); } o.push(p[p.length - 1]); p = o; } return p; }
+  // udsnittet i luftfotoet er 2000 x 1577 og hører til det tegnede kort via skala 1,038 og forskydning (136, 40)
+  function trackPath(kind, id, v) {
+    var pts = smooth(TRACKS[id], 3).map(function (q) {
+      var fx = q[0] / 1994, fy = q[1] / 1614;
+      if (kind === 'foto') { fx = ((q[0] + 136) / 1.038) / 2000; fy = ((q[1] + 40) / 1.038) / 1577; }
+      return (fx * 1000).toFixed(1) + ' ' + (fy * v.vh).toFixed(1);
+    });
+    return 'M' + pts.join(' L');
+  }
   var FH_POLY = '913,663 997,579 1044,626 960,710';   // fælleshuset (smørebod) i det tegnede kort
   var ROUTES = [
     { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
@@ -46,6 +58,7 @@
       '</div>' +
       '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + ' style="aspect-ratio:' + (drawn ? GL.DRAWN.W + '/' + GL.DRAWN.H : '2000/1577') + '">' + base +
         '<svg class="sio-svg" viewBox="0 0 1000 ' + v.vh + '" preserveAspectRatio="none" aria-hidden="true">' +
+          ROUTES.map(function (r) { var d = trackPath(kind, r.id, v); return '<g class="track" data-route="' + r.id + '"><path class="trk-halo" d="' + d + '"/><path class="trk" d="' + d + '"/></g>'; }).join('') +
           ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(v, r) + '"/><path class="dash" d="' + line(v, r) + '"/></g>'; }).join('') +
         '</svg>' +
         '<span class="sio-home" style="left:' + pct(v.home.x) + ';top:' + pct(v.pulse) + '"></span>' +
@@ -69,7 +82,7 @@
           '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod og stativer, som beboerne kan bruge. Markeret på kortet, uden afstand.</p>' +
           '<span class="verify">kildepåstand fra salgsannoncen, skal verificeres</span></div>' +
       '</div>' +
-      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
+      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. Slalompistens og langrendsløjpens forløb (blå og lilla) er tegnet ud fra luftfotoet og ejerens beskrivelse, cirka, skal verificeres. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
 
   function xf(x) { return ((x - LK.x0) / LK.w); }

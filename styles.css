@@ -588,3 +588,29 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sio-chip.below { transform: translate(-50%, 14px); }
 .sd-fh { fill: var(--accent-weak); stroke: var(--accent-text); stroke-opacity: .95; stroke-width: 5px; }
 @media (max-width: 520px) { .sio-chip.poi { padding: 4px 8px 4px 6px; } }
+
+/* farvekodning: langrend (lilla) og slalom (blå) */
+:root { --c-lang: #8b3fe0; --c-sla: #1a6fdc; }
+.sio-svg .trk-halo { fill: none; stroke: #fff; stroke-opacity: .92; stroke-width: 11px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.sio-svg .trk { fill: none; stroke-width: 6px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+.sio-svg .track[data-route="langrend"] .trk { stroke: var(--c-lang); }
+.sio-svg .track[data-route="slalom"] .trk { stroke: var(--c-sla); }
+.sio-dot[data-route="langrend"] { background: var(--c-lang); }
+.sio-dot[data-route="slalom"] { background: var(--c-sla); }
+.sio-chip[data-route="langrend"] { box-shadow: var(--shadow), inset 5px 0 0 var(--c-lang); padding-left: 14px; }
+.sio-chip[data-route="slalom"] { box-shadow: var(--shadow), inset 5px 0 0 var(--c-sla); padding-left: 14px; }
+.sio-chip[data-route="langrend"] .ico { color: var(--c-lang); }
+.sio-chip[data-route="slalom"] .ico { color: var(--c-sla); }
+.sio-cards .card[data-route="langrend"] { border-top: 4px solid var(--c-lang); }
+.sio-cards .card[data-route="slalom"] { border-top: 4px solid var(--c-sla); }
+.sio-cards .card[data-route="langrend"] .ico-box { color: var(--c-lang); background: color-mix(in srgb, var(--c-lang) 12%, transparent); }
+.sio-cards .card[data-route="slalom"] .ico-box { color: var(--c-sla); background: color-mix(in srgb, var(--c-sla) 12%, transparent); }
+.sio-map[data-focus="langrend"] .track[data-route="slalom"], .sio-map[data-focus="slalom"] .track[data-route="langrend"] { opacity: .2; }
+
+.sio-pills .filter { display: inline-flex; align-items: center; gap: 7px; }
+.sio-pills .filter .ico { width: 16px; height: 16px; }
+.sio-pills .filter[data-f="langrend"] .ico { color: var(--c-lang); }
+.sio-pills .filter[data-f="slalom"] .ico { color: var(--c-sla); }
+.sio-pills .filter[data-f="langrend"][aria-pressed="true"] { background: var(--c-lang); border-color: var(--c-lang); color: #fff; }
+.sio-pills .filter[data-f="slalom"][aria-pressed="true"] { background: var(--c-sla); border-color: var(--c-sla); color: #fff; }
+.sio-pills .filter[aria-pressed="true"] .ico { color: #fff; }
