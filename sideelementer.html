@@ -16,7 +16,7 @@
   <p class="lead">Ét sted for hver byggeklods. Hvert element vises levende, med status og de krav i kravspecifikationen, det opfylder. Det er katalogets formål at fungere som input til den tekniske og designmæssige specifikation.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span></div>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-live">Gausta nu</a><a href="#e-booking">Booking-slot</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-live">Gausta nu</a><a href="#e-booking">Booking-slot</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
   </div>
 
   <div class="spec-block" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
@@ -67,6 +67,13 @@
     </div>
     <div class="spec-note"><b>Valgt:</b> koncept B (papirplan med sidepanel) valgt 2. oktober 2026. Koncept A (blueprint med modal) og C (rundtur) er fravalgt. <b>Mobil:</b> én kolonne, knappen "Tilbage til planen", 60 × 46 px miniaturer, stryg i det store billede. <b>Åbent:</b> rigtige billeder pr. rum (nu gæt), målfast tegning, flere etager hvis relevant. <b>Tilgængelighed:</b> Tab, Enter, piletaster og Esc virker. <b>Teknisk:</b> én SVG og én rumdatafil, så billeder og tekster kan hentes fra den fælles indholdskilde (TK4).</div></div>
 
+  <div class="spec-block" id="e-area"><div class="spec-head"><h3>Området: oversigtsside</h3><div class="row-flex"><span class="pill-tag">område · A3, A4, A5, A6</span><span class="status research">Research</span></div></div>
+    <div class="spec-body">
+      <div class="notice" style="margin-bottom:22px"><b>Første udkast.</b> Kortet er skematisk (ikke målfast). Alle punkter, placeringer, afstande og sæsoner er pladsholdere og skal verificeres. Kun punkternes navne kommer fra kravspecifikationen. Undersiderne findes ikke endnu.</div>
+      <div data-area-hub></div>
+    </div>
+    <div class="spec-note"><b>Besluttet 2. oktober 2026:</b> A3 (Tæt på, praktisk) og A4 (Oplevelser, inspiration) deles efter formål, ikke afstand. Nu og events (A5 + A6) er én side og har laveste prioritet. Egne sider pr. oplevelse kommer senere. Menupunktet hedder "Området". <b>Elementet:</b> fane-række til undersider, fælles kort med lag (slå til og fra), punkter ude af sæson er nedtonede og følger årstidsvælgeren i toppen, tre indgangskort og "Gausta nu" som lille widget. <b>Åbent:</b> rigtigt kort og kortleverandør (teknisk specifikation), datakilder til live-data, punktdata (afstand, tid, link) fra den fælles indholdskilde (TK4).</div></div>
+
   <div class="spec-block" id="e-faq"><div class="spec-head"><h3>FAQ-harmonika</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="faq"><details open><summary>Hvordan kommer jeg ind?</summary><p>Svar tekst.</p></details><details><summary>Er der kameraer?</summary><p>Svar tekst.</p></details></div></div>
     <div class="spec-note"><b>Krav:</b> A1 FAQ. Brug native details/summary for tilgængelighed og offline.</div></div>
@@ -101,6 +108,7 @@
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
+<script src="area.js"></script>
 <script>document.addEventListener('gl:ready', function(){ var cd=document.getElementById('ctl-demo'); if(cd){ cd.innerHTML=document.querySelector('.controls').innerHTML.replace('hide-sm',''); }  document.getElementById('hero-demo').innerHTML = GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, ''); });</script>
 </body>
 </html>

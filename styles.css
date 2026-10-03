@@ -462,3 +462,55 @@ textarea.field { min-height: 96px; resize: vertical; }
   .plan-pills::-webkit-scrollbar { display: none; }
   .plan-pills .filter { flex: none; white-space: nowrap; }
 }
+
+/* Området: oversigtselement (første udkast) */
+.subnav { display: flex; gap: 4px; flex-wrap: wrap; border-bottom: 1px solid var(--border); margin-bottom: 22px; }
+.subnav a { text-decoration: none; color: var(--muted); font-size: .92rem; font-weight: 550; padding: 10px 14px; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap; }
+.subnav a[aria-current="page"] { color: var(--text); border-bottom-color: var(--accent); }
+.subnav a[aria-disabled="true"] { opacity: .6; cursor: default; }
+.subnav .soon, .card-link.soon { font-size: .7rem; font-weight: 650; color: var(--faint); }
+.card-link { display: inline-block; margin-top: 14px; font-size: .86rem; font-weight: 600; color: var(--accent-text); }
+.card-link.soon { font-size: .8rem; }
+.area-head { margin-bottom: 14px; }
+.area-title { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 560; margin: 0 0 6px; }
+.layers .filter { display: inline-flex; align-items: center; gap: 7px; }
+.layers .filter .ico { width: 16px; height: 16px; }
+.layers .filter[aria-pressed="false"] { opacity: .55; }
+.map-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
+.map-svg { width: 100%; height: auto; display: block; }
+.map-svg .m-bg { fill: var(--sky-bot); }
+.map-svg .m-r1 { fill: var(--r1); opacity: .75; }
+.map-svg .m-r2 { fill: var(--r2); opacity: .6; }
+.map-svg .m-lake { fill: var(--accent-weak); stroke: var(--accent); stroke-opacity: .35; }
+.map-svg .m-road { fill: none; stroke: var(--text); stroke-opacity: .35; stroke-width: 3; stroke-dasharray: 2 6; stroke-linecap: round; }
+.map-svg .m-slope { fill: none; stroke: #fff; stroke-opacity: .9; stroke-width: 5; stroke-linecap: round; }
+.map-svg .m-trail { fill: none; stroke: var(--accent); stroke-opacity: .6; stroke-width: 2.4; stroke-dasharray: 7 5; }
+.map-svg .m-note { fill: var(--muted); font: 400 10.5px var(--font-mono); opacity: .8; }
+.map-svg .poi { cursor: pointer; outline: none; }
+.map-svg .poi-hit { fill: transparent; }
+.map-svg .poi-dot { fill: var(--surface); stroke: var(--accent); stroke-width: 2.2; transition: fill .15s; }
+.map-svg .poi .ico { color: var(--accent-text); stroke-width: 1.8; }
+.map-svg .poi:hover .poi-dot, .map-svg .poi:focus-visible .poi-dot, .map-svg .poi.sel .poi-dot { fill: var(--accent); }
+.map-svg .poi:hover .ico, .map-svg .poi:focus-visible .ico, .map-svg .poi.sel .ico { color: #fff; }
+.map-svg .poi.off { opacity: .38; }
+.map-svg .poi-label { fill: var(--text); font: 600 11.5px var(--font-body); paint-order: stroke; stroke: var(--sky-bot); stroke-width: 3.5px; stroke-linejoin: round; pointer-events: none; }
+.map-svg .home circle { fill: var(--accent); stroke: #fff; stroke-width: 3; }
+.map-svg .home .ico { color: #fff; }
+.map-svg .home-label { font-weight: 700; }
+.season-row { display: inline-flex; gap: 6px; }
+.season-chip { position: relative; display: inline-grid; place-items: center; width: 30px; height: 30px; border-radius: 50%; border: 1px solid var(--border); color: var(--faint); opacity: .5; }
+.season-chip.on { opacity: 1; color: var(--accent-text); background: var(--accent-weak); border-color: transparent; }
+.season-chip.now { outline: 2px solid var(--accent); outline-offset: 1px; }
+.season-chip .ico { width: 16px; height: 16px; }
+.area-cards { margin-top: 28px; }
+.area-cards .card h3 { font-size: 1.1rem; }
+.now-widget { margin-top: 20px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px 18px; }
+.now-head { display: flex; justify-content: space-between; gap: 10px; align-items: baseline; flex-wrap: wrap; margin-bottom: 10px; }
+.now-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.now-grid small { color: var(--muted); font-size: .76rem; }
+.now-grid b { display: block; font-family: var(--font-display); font-size: 1.3rem; font-weight: 560; }
+@media (max-width: 860px) { .now-grid { grid-template-columns: repeat(2, 1fr); } .subnav { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; } }
+@media (max-width: 620px) {
+  .map-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .map-svg { min-width: 540px; }
+}
