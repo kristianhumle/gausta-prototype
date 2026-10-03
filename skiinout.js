@@ -2,7 +2,7 @@
    Afstande (50 til 100 m) er ejerens angivelse (Brugeroplysning, 3. oktober 2026), cirka, skal verificeres på stedet.
    Luftfoto og kort er prototypebilleder (tredjepartsmateriale) og skal erstattes eller godkendes før endelig brug.
    Langrendskortet: GKT, Løypene i Gaustablikk-området, februar 2019 (skal kontrolleres mod nyeste kort).
-   Cirklen på langrendskortet er ejerens markering af tilgangen til Rød 15, 10 og 6. */
+   Cirklerne på langrends- og slalomkortet er ejerens markering af tilgangen (Rød 15, 10 og 6; grøn 3). */
 (function () {
   'use strict';
   // ---------- luftfoto (koordinater som andel af billedet 2000 x 1577) ----------
@@ -84,13 +84,35 @@
       '</div></div>';
   }
 
+  var SK = { w: 1849, h: 1120, fx: 0.2544, fy: 0.4976 };
   function slalomPanel() {
-    return '<div class="slot"><b>Slalomkort afventer din markering</b>Alpinkortet (Gausta Skisenter 2025/2026) er klar. Marker, hvor lejligheden er, og hvor man kommer på slalompisten, så tegner jeg det her. Alpinkortet er et illustreret panorama, så markeringen bliver kun cirka.</div>';
+    return '<div class="zm-bar" role="group" aria-label="Zoom på kortet">' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-z="in" aria-label="Zoom ind">+</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-z="out" aria-label="Zoom ud">−</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-z="home">Vis tilgangen</button>' +
+        '<button type="button" class="btn btn-ghost btn-sm" data-z="all">Hele kortet</button>' +
+        '<a class="btn btn-ghost btn-sm" data-lightbox data-cap="Gausta Skisenter, løjpekort 2025/2026" href="assets/web/kort/slalom.webp">Åbn i stort format</a>' +
+      '</div>' +
+      '<div class="zm-vp" tabindex="0" aria-label="Pistekort over Gausta Skisenter med tilgangen til alpinpisten, grøn 3, markeret. Træk for at flytte, brug knapperne for at zoome.">' +
+        '<div class="zm-st"><img src="assets/web/kort/slalom.webp" alt="" draggable="false">' +
+          '<div class="zm-at" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '"><span class="zm-pulse"></span><span class="zm-pin"></span>' +
+            '<div class="zm-chip"><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></div></div>' +
+        '</div>' +
+      '</div>' +
+      '<p class="faint sio-note">Cirklen er ejerens markering af tilgangen (3. oktober 2026). Pistekortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Kort: Gausta Skisenter, løjpekort 2025/2026, prototypebillede, skal godkendes før endelig brug.</p>' +
+      '<div class="sio-cards"><div class="card">' +
+        '<div class="ico-box">' + GL.icon('snow') + '</div><div class="kicker">Slalom · tilgang fra lejligheden</div>' +
+        '<div class="sio-dist">50 til 100 m</div><h3>Nr. 3 Kofferten</h3>' +
+        '<div class="list-row"><span class="grow muted">Niveau</span><span>Veldig lett (grøn)</span></div>' +
+        '<div class="list-row"><span class="grow muted">Længde</span><span>1000 m</span></div>' +
+        '<div class="list-row"><span class="grow muted">Højdeforskel</span><span>150 m</span></div>' +
+        '<p class="faint" style="margin:10px 0 0">Kildepåstand: kortets oversigt over bakker (Gausta Skisenter, 2025/2026). Skal kontrolleres mod det nyeste kort. Nr. 3 er den bakke, tilgangen fører til, ikke nødvendigvis den eneste, man kan køre.</p>' +
+      '</div></div>';
   }
 
   // ---------- zoom og træk ----------
-  function zoomMap(root) {
-    var vp = root.querySelector('.zm-vp'), st = root.querySelector('.zm-st'), ratio = LK.h / LK.w, MAXK = 6;
+  function zoomMap(root, cfg) {
+    var vp = root.querySelector('.zm-vp'), st = root.querySelector('.zm-st'), ratio = cfg.ratio, MAXK = cfg.maxK;
     var k = 1, tx = 0, ty = 0, vw = 0, vh = 0, sw = 0, sh = 0, ptr = {}, last = null;
     function measure() { vw = vp.clientWidth; vh = vp.clientHeight; sw = vw; sh = vw * ratio; st.style.width = sw + 'px'; st.style.height = sh + 'px'; }
     function apply() {
@@ -102,7 +124,7 @@
       st.style.setProperty('--inv', String(1 / k));
     }
     function zoomAt(cx, cy, nk) { var wx = (cx - tx) / k, wy = (cy - ty) / k; k = nk; tx = cx - wx * k; ty = cy - wy * k; apply(); }
-    function home() { k = 2.8; var fx = xf(LK.access[0]), fy = yf(LK.access[1]) - 0.035; tx = vw / 2 - fx * sw * k; ty = vh / 2 - fy * sh * k; apply(); }
+    function home() { k = cfg.k; var fx = cfg.fx, fy = cfg.fy - cfg.up; tx = vw / 2 - fx * sw * k; ty = vh / 2 - fy * sh * k; apply(); }
     function all() { k = 0.01; apply(); }
     measure(); home();
     new ResizeObserver(function () { var wasHome = true; measure(); home(); }).observe(vp);
@@ -135,14 +157,15 @@
   function render(el) {
     var tabs = [['foto', 'Luftfoto'], ['langrend', 'Langrendskort'], ['slalom', 'Slalomkort']];
     el.innerHTML = '<div class="subnav sio-tabs" role="tablist" aria-label="Vælg kort">' +
-      tabs.map(function (t, i) { return '<button type="button" role="tab" class="sio-tab" data-t="' + t[0] + '" aria-selected="' + (i === 0) + '">' + t[1] + (t[0] === 'slalom' ? ' <span class="soon">afventer</span>' : '') + '</button>'; }).join('') + '</div>' +
+      tabs.map(function (t, i) { return '<button type="button" role="tab" class="sio-tab" data-t="' + t[0] + '" aria-selected="' + (i === 0) + '">' + t[1] + '' + '</button>'; }).join('') + '</div>' +
       '<div class="sio-body"></div>';
     var body = el.querySelector('.sio-body'), cur = null;
     function show(id) {
       if (id === cur) return; cur = id;
       [].forEach.call(el.querySelectorAll('.sio-tab'), function (b) { b.setAttribute('aria-selected', String(b.dataset.t === id)); });
       body.innerHTML = id === 'foto' ? photoPanel() : id === 'langrend' ? langrendPanel() : slalomPanel();
-      if (id === 'langrend') zoomMap(body);
+      if (id === 'langrend') zoomMap(body, { ratio: LK.h / LK.w, fx: xf(LK.access[0]), fy: yf(LK.access[1]), k: 2.8, up: 0.035, maxK: 6 });
+      if (id === 'slalom') zoomMap(body, { ratio: SK.h / SK.w, fx: SK.fx, fy: SK.fy, k: 2.2, up: 0, maxK: 3.2 });
       if (id === 'foto') {
         var map = body.querySelector('.sio-map');
         var focus = function (f) {
