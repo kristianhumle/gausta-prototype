@@ -660,7 +660,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wx-axis { font-size: 10px; fill: var(--faint); font-family: var(--font-mono); }
 .wx-days { list-style: none; padding: 0; margin: 4px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(74px, 1fr)); gap: 8px; }
 .wx-day { display: grid; justify-items: center; gap: 4px; padding: 10px 6px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); text-align: center; }
-.wx-dn { font-size: .78rem; font-weight: 650; text-transform: capitalize; }
+.wx-dn { font-size: .78rem; font-weight: 650; } .wx-dn::first-letter { text-transform: uppercase; }
 .wx-dt { font-size: .86rem; } .wx-dt span { color: var(--muted); }
 .wx-dp { font-size: .72rem; color: var(--accent-text); min-height: 1em; font-family: var(--font-mono); }
 .wx-banner { background: color-mix(in srgb, var(--amber) 14%, transparent); border: 1px solid color-mix(in srgb, var(--amber) 45%, var(--border)); color: var(--text); padding: 10px 12px; border-radius: var(--radius-sm); font-size: .84rem; margin-bottom: 10px; }

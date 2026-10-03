@@ -110,7 +110,7 @@
       var s = e.s6 || e.s12 || e.s1;
       if (s && diff < m.noonDiff) { m.noonDiff = diff; m.noon = s; }
     });
-    return order.slice(0, 7).map(function (k) { return map[k]; });
+    return order.slice(0, 5).map(function (k) { return map[k]; });
   }
   var dayRows = days();
   var daysHtml = dayRows.map(function (m, i) {
@@ -149,7 +149,7 @@
       var loaded = out.getAttribute('data-loaded') === '1';
       if (loaded) { out.innerHTML = ''; out.setAttribute('data-loaded', '0'); btn.textContent = 'Indlæs Yr-widget (kontakter yr.no)'; return; }
       out.innerHTML =
-        '<iframe title="Yr: vejrkort for Gaustablikk Fjellresort" src="https://www.yr.no/en/content/' + ID + '/card.html" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:230px;border:1px solid var(--border);border-radius:10px;background:var(--surface)"></iframe>' +
+        '<iframe title="Yr: vejrkort for Gaustablikk Fjellresort" src="https://www.yr.no/en/content/' + ID + '/card.html" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:330px;border:1px solid var(--border);border-radius:10px;background:var(--surface)"></iframe>' +
         '<img alt="Yr: meteogram for Gaustablikk Fjellresort, 3 dage" src="https://www.yr.no/en/content/' + ID + '/meteogram.svg" loading="lazy" referrerpolicy="no-referrer" style="width:100%;height:auto;margin-top:10px;border:1px solid var(--border);border-radius:10px;background:#fff">';
       out.setAttribute('data-loaded', '1');
       btn.textContent = 'Fjern widget';

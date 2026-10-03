@@ -19,6 +19,19 @@
   <div class="hero-art" data-hero-art></div>
 </section>
 
+<!-- A3 · Ski-in / ski-out (modul fra Sideelementer) -->
+<section class="section" id="ski-in-out">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px">
+      <p class="eyebrow">Ski-in / ski-out</p>
+      <h2 data-en="From the door to the trail and the slope.">Fra døren til løjpe og pist.</h2>
+      <p class="lead" data-en="About 50 to 100 m to both the cross-country trail and the slalom slope.">Cirka 50 til 100 m til både langrendsløjpen og slalompisten.</p>
+      <p style="margin-top:10px"><span class="proto-tag">Prototypebilleder</span> <span class="muted" style="font-size:.9rem">Afstande er ejerens angivelse og skal verificeres på stedet.</span></p>
+    </div>
+    <div data-skiinout></div>
+  </div>
+</section>
+
 <section class="section">
   <div class="wrap grid grid-2" style="gap:40px;align-items:start">
     <div>
@@ -29,10 +42,11 @@
     <div>
       <p class="eyebrow" data-en="Nearby">Tæt på</p>
       <h2 data-en="Distances.">Afstande.</h2>
-      <p class="muted" data-en="Values are placeholders until verified on site. Never taken from the listing alone.">Værdier er pladsholdere, til de er verificeret på stedet. Aldrig alene fra annoncen.</p>
+      <p class="muted" data-en="Slope and trail distances are the owner’s estimate. Other values are placeholders until verified on site.">Afstande til pist og løjpe er ejerens angivelse (cirka). Øvrige værdier er pladsholdere, til de er verificeret på stedet.</p>
       <div class="reveal">
-        <div class="list-row"><span data-icon="snow"></span><div class="grow"><b data-en="Slalom slopes">Slalompister</b><div class="meta" data-en="Ski-in / ski-out to be confirmed">Ski-in / ski-out skal bekræftes</div></div><span class="verify">skal verificeres</span></div>
-        <div class="list-row"><span data-icon="wave"></span><div class="grow"><b data-en="Cross-country trails">Langrendsløjper</b><div class="meta" data-en="Access from the apartment">Adgang fra lejligheden</div></div><span class="verify">skal verificeres</span></div>
+        <div class="list-row"><span data-icon="snow"></span><div class="grow"><b data-en="Slalom slope">Slalompiste</b><div class="meta"><a href="#ski-in-out" data-en="Ski-in / ski-out, see the map">Ski-in / ski-out, se kortet</a></div></div><span class="num">50 til 100 m</span></div>
+        <div class="list-row"><span data-icon="wave"></span><div class="grow"><b data-en="Cross-country trail">Langrendsløjpe</b><div class="meta"><a href="#ski-in-out" data-en="Access to red 15, 10 and 6">Tilgang til Rød 15, 10 og 6</a></div></div><span class="num">50 til 100 m</span></div>
+        <div class="list-row"><span data-icon="wrench"></span><div class="grow"><b data-en="Common house with ski wax room">Fælleshus med smørebod</b><div class="meta" data-en="Source: the sales listing">Kildepåstand: salgsannoncen</div></div><span class="verify">skal verificeres</span></div>
         <div class="list-row"><span data-icon="home"></span><div class="grow"><b data-en="Nearest shop">Nærmeste butik</b></div><span class="verify">skal verificeres</span></div>
         <div class="list-row"><span data-icon="pin"></span><div class="grow"><b data-en="Restaurants, ski rental, ski school">Restauranter, skiudlejning, skiskole</b></div><span class="verify">skal verificeres</span></div>
       </div>
@@ -101,6 +115,8 @@
   </div>
 </section>
 <script src="app.js"></script>
+<script src="skiinout-draw.js"></script>
+<script src="skiinout.js"></script>
 <script>
 document.addEventListener('gl:ready', function () {
   var items = [], add = function (f, n, cap, cls) { items.push({k: f + '/' + f + '-' + (n < 10 ? '0' : '') + n, cat: f, cap: cap, cls: cls || ''}); };
