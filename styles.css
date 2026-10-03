@@ -259,7 +259,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .bars div span { position: absolute; bottom: -22px; left: 50%; transform: translateX(-50%); font-size: .7rem; color: var(--faint); font-family: var(--font-mono); }
 .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--faint); flex: none; }
 .dot.good { background: var(--good); } .dot.warn { background: var(--amber); } .dot.bad { background: var(--coral); }
-.sample-banner { background: var(--amber); color: #1a1405; text-align: center; font-size: .82rem; font-weight: 650; padding: 8px 12px; }
+.sample-banner { background: var(--amber); color: #FFFFFF; text-align: center; font-size: .82rem; font-weight: 650; padding: 8px 12px; }
 
 /* footer */
 .footer { border-top: 1px solid var(--footer-border, var(--border)); padding: 48px 0 32px; background: var(--footer-bg, var(--surface)); color: var(--footer-fg, var(--text)); }
