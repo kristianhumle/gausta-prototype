@@ -625,3 +625,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sio-excerpt img { width: 100%; height: 100%; object-fit: cover; }
 .sio-more { margin: 14px 0 0; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
 .sio-excerpt .zm-ring { fill: rgba(255,255,255,.2); }
+
+/* etiketter på udsnittene: over ringen (langrend) og under ikonrækken (slalom) */
+.sio-chip.above0 { transform: translate(-50%, -100%); }
+.sio-chip.below0 { transform: translate(-50%, 0); }

@@ -99,7 +99,7 @@
           '<circle class="zm-ring" cx="' + LK.access[0] + '" cy="' + LK.access[1] + '" r="' + LK.r50 + '"/>' +
         '</svg>' +
         '<span class="sio-dot" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay) + '"></span>' +
-        '<span class="sio-chip above" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay) + '">' + GL.icon('wave') + '<span><b>Tilgang til Rød 15, 10 og 6</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
+        '<span class="sio-chip above0" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay - LK.r100 / LK.h - 0.025) + '">' + GL.icon('wave') + '<span><b>Tilgang til Rød 15, 10 og 6</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
       kartLink('Se hele løjpekortet hos Gausta') +
       '<p class="faint sio-note">Udsnit af løjpekortet fra GKT (Gausta-Kvitåvatn Turistservice, februar 2019). Cirklen er ejerens markering af tilgangen (3. oktober 2026). De stiplede ringe er 50 m og 100 m efter kortets målestok, og lejligheden ligger inden for dem. Prototypebillede, skal kontrolleres mod nyeste kort og godkendes før endelig brug.</p>' +
@@ -119,7 +119,7 @@
     return '<div class="sio-map sio-excerpt" style="aspect-ratio:4/3">' +
         '<img src="assets/web/kort/slalom-udsnit.webp" alt="Udsnit af Gausta Skisenters pistekort omkring tilgangen til alpinpisten, grøn 3." loading="lazy">' +
         '<span class="sio-dot" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '"></span>' +
-        '<span class="sio-chip above" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
+        '<span class="sio-chip below0" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy + 0.085) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
       kartLink('Se hele pistekortet hos Gausta') +
       '<p class="faint sio-note">Udsnit af Gausta Skisenters løjpekort 2025/2026. Cirklen er ejerens markering af tilgangen (3. oktober 2026). Kortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Prototypebillede, skal godkendes før endelig brug.</p>' +
