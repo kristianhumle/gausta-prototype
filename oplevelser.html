@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Oplevelser · Gausta Lodge 52</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="site">
+<section class="hero compact" data-photo-map="winter=vinter/vinter-09;summer=sommer/sommer-04;autumn=efteraar/efteraar-01">
+  <div class="wrap">
+    <p class="eyebrow">Området · Oplevelser</p>
+    <h1>Værd at tage ud efter.</h1>
+    <p class="lead">Rjukan, Vemork, Rjukanbadet, Gaustatoppen og mere. Køretid fra lejligheden.</p>
+  </div>
+  <div class="hero-art" data-hero-art></div>
+</section>
+<div class="wrap" style="padding-top:18px"><div data-area-subnav="oplevelser"></div></div>
+
+<section class="section band-soft" id="kort">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px"><p class="eyebrow">Kort</p><h2>Rjukan og omegn.</h2>
+      <p><span class="proto-tag">Kort fra åbne data</span> <span class="muted" style="font-size:.9rem">Steder og oplysninger er kildepåstande og skal verificeres.</span></p></div>
+    <div data-area-hub data-map="wide" data-chrome="min" data-ski-href="taet-paa.html#ski-in-out"></div>
+  </div>
+</section>
+
+<section class="section" id="steder">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px"><p class="eyebrow">Steder</p><h2>Oplevelser, sorteret efter køretid.</h2></div>
+    <div data-area-list="wide" data-style="cards"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="wrap">
+    <p class="eyebrow" data-en="Gausta through the year">Gausta gennem året</p>
+    <h2 data-en="Photos by season.">Billeder efter årstid.</h2>
+    <p><span class="proto-tag">Prototypebilleder</span> <span class="muted">Midlertidige billeder. Forår mangler.</span></p>
+    <div class="row-flex" style="margin:18px 0" data-filter-group="#area-gallery">
+      <button class="filter" data-f="all" aria-pressed="true" data-en="All">Alle</button>
+      <button class="filter" data-f="vinter" aria-pressed="false" data-en="Winter">Vinter</button>
+      <button class="filter" data-f="sommer" aria-pressed="false" data-en="Summer">Sommer</button>
+      <button class="filter" data-f="efteraar" aria-pressed="false" data-en="Autumn">Efterår</button>
+      <button class="filter" data-f="omraadet" aria-pressed="false" data-en="Around the cabin">Omkring huset</button>
+    </div>
+    <div class="tiles reveal" id="area-gallery" data-gallery-group></div>
+  </div>
+</section>
+<script src="app.js"></script>
+<script src="area-map-data.js"></script>
+<script src="area.js"></script>
+<script>
+document.addEventListener('gl:ready', function () {
+  var items = [], add = function (f, n, cap, cls) { items.push({k: f + '/' + f + '-' + (n < 10 ? '0' : '') + n, cat: f, cap: cap, cls: cls || ''}); };
+  add('vinter',9,'Vinter','wide2'); add('vinter',3,'Langrend'); add('vinter',4,'Vinter'); add('vinter',5,'Løjpe'); add('vinter',1,'Løjpe','tall'); add('vinter',2,'Vinter','tall'); add('vinter',7,'Vinteraften'); add('vinter',6,'Områdekort'); add('vinter',8,'Vinter'); add('vinter',10,'Vinter'); add('vinter',11,'Ved liften'); add('vinter',12,'Solnedgang');
+  add('sommer',2,'Sommer','wide2'); add('sommer',1,'Terrasse','tall'); add('sommer',3,'Vandring'); add('sommer',4,'På fjeldet'); add('sommer',5,'Grussti');
+  add('efteraar',1,'Efterår','wide2'); add('efteraar',2,'Efterår','tall'); add('efteraar',3,'Sø'); add('efteraar',4,'Dal');
+  add('omraadet',1,'Hytte'); add('omraadet',2,'Dal og sø'); add('omraadet',3,'Vej');
+  GL.buildGallery(document.getElementById('area-gallery'), items, {caps: true});
+});
+</script>
+</body>
+</html>

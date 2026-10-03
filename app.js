@@ -158,8 +158,32 @@
     { href: 'gaest.html', da: 'Gæsteområde', en: 'Guest area', zone: 'B' },
     { href: 'backoffice.html', da: 'Back-office', en: 'Back-office', zone: 'C' }
   ];
+  var AREA = [
+    { href: 'omraadet.html', id: 'omraadet', da: 'Oversigt', en: 'Overview' },
+    { href: 'taet-paa.html', id: 'taet-paa', da: 'Tæt på', en: 'Nearby' },
+    { href: 'oplevelser.html', id: 'oplevelser', da: 'Oplevelser', en: 'Experiences' },
+    { id: 'nu', da: 'Nu og events', en: 'Now and events', soon: true }
+  ];
+  function areaIds() { return AREA.map(function (x) { return x.id; }); }
+  GL.areaSubnav = function (cur) {
+    return '<nav class="subnav area-subnav" aria-label="Undersider i Området">' + AREA.map(function (x) {
+      if (x.soon) return '<a href="#" aria-disabled="true">' + t(x.da, x.en) + ' <span class="soon">kommer, lav prioritet</span></a>';
+      return '<a href="' + x.href + '"' + (x.id === cur ? ' aria-current="page"' : '') + '>' + t(x.da, x.en) + '</a>';
+    }).join('') + '</nav>';
+  };
+  function navHtml(pid) {
+    return PAGES.map(function (p) {
+      var zone = p.zone ? '<span class="zone">' + p.zone + '</span>' : '';
+      if (p.href === 'omraadet.html') {
+        var inArea = areaIds().indexOf(pid) > -1;
+        return '<div class="nav-group"><a href="omraadet.html"' + (inArea ? ' aria-current="page"' : '') + ' aria-haspopup="true">' + t(p.da, p.en) + '<span class="caret" aria-hidden="true"></span></a><div class="nav-sub">' +
+          AREA.map(function (x) { return x.soon ? '<span class="nav-soon">' + t(x.da, x.en) + ' <em>kommer</em></span>' : '<a href="' + x.href + '"' + (x.id === pid ? ' aria-current="page"' : '') + '>' + t(x.da, x.en) + '</a>'; }).join('') + '</div></div>';
+      }
+      return '<a href="' + p.href + '"' + (p.href === pid + '.html' ? ' aria-current="page"' : '') + '>' + t(p.da, p.en) + zone + '</a>';
+    }).join('');
+  }
   var MATERIALS = [
-    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'gaest', 'backoffice'] },
+    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'gaest', 'backoffice'] },
     { href: 'moodboard.html', label: 'Moodboard', match: ['moodboard'] },
     { href: 'designsystem.html', label: 'Designsystem', match: ['designsystem'] },
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] }
@@ -191,7 +215,7 @@
     } else {
       html += '<header class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Lodge 52</span></a>' +
         '<nav class="nav" id="nav" aria-label="Hovedmenu">' +
-        PAGES.map(function (p) { return '<a href="' + p.href + '"' + (p.href === pid + '.html' ? ' aria-current="page"' : '') + '>' + t(p.da, p.en) + (p.zone ? '<span class="zone">' + p.zone + '</span>' : '') + '</a>'; }).join('') + seasonSeg('nav-season') + '</nav>' +
+        navHtml(pid) + seasonSeg('nav-season') + '</nav>' +
         controlsHtml('<a class="btn btn-primary btn-sm hide-sm" href="index.html#booking">' + t('Book', 'Book') + '</a><button class="btn btn-ghost btn-sm menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false">' + icon('menu') + '</button>') +
         '</div></header>';
     }
@@ -254,6 +278,7 @@
     document.querySelectorAll('[data-hero-art]').forEach(function (el) { el.innerHTML = GL.heroArt(); });
     document.querySelectorAll('[data-icon]').forEach(function (el) { el.insertAdjacentHTML('afterbegin', icon(el.getAttribute('data-icon'))); });
     document.querySelectorAll('[data-season-card]').forEach(function (c) { c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); });
+    document.querySelectorAll('[data-area-subnav]').forEach(function (n) { n.innerHTML = GL.areaSubnav(n.getAttribute('data-area-subnav')); });
     applySeason(); applyLang(); wire();
     document.dispatchEvent(new Event('gl:ready'));
   }

@@ -721,3 +721,25 @@ textarea.field { min-height: 96px; resize: vertical; }
 .am-pin.am-lab-h:not(.sel):not(:hover) .am-l { display: none; }
 .am-pin:hover .am-l { display: block; z-index: 4; }
 .area-panel .verify { white-space: normal; }
+
+/* rullemenu for Området */
+.nav-group { position: relative; display: flex; align-items: center; }
+.nav-group > a { display: inline-flex; align-items: center; gap: 7px; }
+.caret { width: 6px; height: 6px; border-right: 1.6px solid currentColor; border-bottom: 1.6px solid currentColor; transform: rotate(45deg) translateY(-2px); opacity: .6; }
+.nav-sub { display: none; position: absolute; top: 100%; left: 0; min-width: 220px; margin-top: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); box-shadow: var(--shadow); padding: 6px; z-index: 70; flex-direction: column; }
+.nav-sub::before { content: ""; position: absolute; left: 0; right: 0; top: -9px; height: 9px; }
+.nav-group:hover .nav-sub, .nav-group:focus-within .nav-sub { display: flex; }
+.nav-sub a, .nav-soon { padding: 9px 12px; border-radius: 8px; white-space: nowrap; font-size: .94rem; }
+.nav-sub a { color: var(--muted); text-decoration: none; }
+.nav-sub a:hover { background: var(--elevated); color: var(--text); }
+.nav-sub a[aria-current="page"] { color: var(--text); background: var(--elevated); }
+.nav-soon { color: var(--faint); }
+.nav-soon em { font-style: normal; font-size: .68rem; font-weight: 650; margin-left: 6px; }
+.area-subnav { margin: 0 0 4px; }
+@media (max-width: 1120px) {
+  .nav-group { flex-direction: column; align-items: stretch; }
+  .nav-sub { display: flex; position: static; margin: 0; box-shadow: none; border: 0; background: transparent; padding: 0 0 4px 14px; min-width: 0; }
+  .nav-sub::before { display: none; }
+  .caret { display: none; }
+}
+.card .verify, .sio-cards .verify { white-space: normal; display: inline-block; }
