@@ -119,7 +119,7 @@
     return '<div class="sio-map sio-excerpt" style="aspect-ratio:4/3">' +
         '<img src="assets/web/kort/slalom-udsnit.webp" alt="Udsnit af Gausta Skisenters pistekort omkring tilgangen til alpinpisten, grøn 3." loading="lazy">' +
         '<span class="sio-dot" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy) + '"></span>' +
-        '<span class="sio-chip below0" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy + 0.085) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
+        '<span class="sio-chip below0" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy + 0.068) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
       kartLink('Se hele pistekortet hos Gausta') +
       '<p class="faint sio-note">Udsnit af Gausta Skisenters løjpekort 2025/2026. Cirklen er ejerens markering af tilgangen (3. oktober 2026). Kortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Prototypebillede, skal godkendes før endelig brug.</p>' +
@@ -134,7 +134,7 @@
   }
 
   function render(el) {
-    var tabs = [['foto', 'Luftfoto'], ['tegnet', 'Tegnet kort'], ['langrend', 'Langrendskort'], ['slalom', 'Slalomkort']];
+    var tabs = [['tegnet', 'Kort'], ['foto', 'Luftfoto'], ['langrend', 'Langrendskort'], ['slalom', 'Slalomkort']];
     el.innerHTML = '<div class="subnav sio-tabs" role="tablist" aria-label="Vælg kort">' +
       tabs.map(function (t, i) { return '<button type="button" role="tab" class="sio-tab" data-t="' + t[0] + '" aria-selected="' + (i === 0) + '">' + t[1] + '' + '</button>'; }).join('') + '</div>' +
       '<div class="sio-body"></div>';
@@ -155,7 +155,7 @@
       }
     }
     el.querySelector('.sio-tabs').addEventListener('click', function (e) { var b = e.target.closest('.sio-tab'); if (b) show(b.dataset.t); });
-    show('foto');
+    show('tegnet');
   }
   document.addEventListener('gl:ready', function () { [].forEach.call(document.querySelectorAll('[data-skiinout]'), render); });
 })();
