@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Designsystem · Gausta Home</title>
+<title>Designsystem · gaustahome.com</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
@@ -17,7 +17,7 @@
   <h1 style="font-size:clamp(2rem,4vw,3rem)">Fundamentet, hele websitet bygger på.</h1>
   <p class="lead">Farve, typografi, afstande, årstider, ikoner, bevægelse og tone, samlet ét sted. Elementdelen (de genbrugelige komponenter) ligger i <a href="sideelementer.html">Sideelementer</a>.</p>
   <div class="notice" style="margin-top:20px"><b>Udkast v0, 2. oktober 2026.</b> Alle værdier er foreløbige og afventer dit visuelle input. Siden henter hex-værdier live fra <code class="token">styles.css</code>, så swatches er de rigtige tokens og kan ikke drive fra koden.</div>
-  <div class="toc"><a href="#farve">Farve</a><a href="#aarstider">Årstider</a><a href="#type">Typografi</a><a href="#layout">Layout og breakpoints</a><a href="#ikoner">Ikoner</a><a href="#kontroller">Kontroller</a><a href="#bevaegelse">Bevægelse</a><a href="#tone">Tone og regler</a></div>
+  <div class="toc"><a href="#farve">Farve</a><a href="#aarstider">Årstider</a><a href="#type">Typografi</a><a href="#logo">Logo</a><a href="#layout">Layout og breakpoints</a><a href="#ikoner">Ikoner</a><a href="#kontroller">Kontroller</a><a href="#bevaegelse">Bevægelse</a><a href="#tone">Tone og regler</a></div>
 
   <h2 id="farve" style="margin-top:56px">Farve</h2>
   <p class="muted">Accent, himmel, bjerge, baggrund, flader, kanter og tekstfarver får årstidens tone (TK3, tema B, valgt 3. oktober 2026). Tekstfarverne skal kontrolleres for kontrast (WCAG), før det rigtige site bygges. Der er ingen mørk tilstand. Aktive værdier vises for den årstid, du har valgt i toppen.</p>
@@ -44,6 +44,29 @@
     <div><code class="token">.lead · clamp(1.05 til 1.2rem) · muted</code><p class="lead">En fjeldlejlighed til ski, vandring og langsomme dage på Gausta.</p></div>
     <div><code class="token">body · 1rem · 1.6</code><p>Boligens oplysninger følger boligfilen, ikke annoncen.</p></div>
     <div><code class="token">.mono · tabular-nums</code><p class="mono">66 m² · 7 senge · ca. 960 m.o.h. · 2026-10-02</p></div>
+  </div>
+
+  <h2 id="logo" style="margin-top:72px">Logo</h2>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg-a" viewBox="0 0 64 64"><path d="M6 50 L24 20 L33 35 L41 26 L58 50 Z" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><polygon points="24,20 19.2,28 28.8,28" style="fill:var(--accent)" stroke="none"/></symbol></svg>
+  <p class="muted">Logo A (Fjeld), valgt 5. oktober 2026: et bjerg i tekstfarven med en lille sneblink i årstidens accentfarve. Teksten er <b>gaustahome.com</b>, sat i Fraunces 600. De tre andre udkast (B, C og D) er slettet.</p>
+  <div class="card">
+    <div class="lgrow2">
+      <div class="lgbig"><svg class="lg" viewBox="0 0 64 64" width="120" height="120" aria-hidden="true"><use href="#lg-a"/></svg></div>
+      <div class="lglock"><div class="lgbar"><svg class="lg" viewBox="0 0 64 64" width="30" height="30" aria-hidden="true"><use href="#lg-a"/></svg><span class="lgword">gaustahome.com</span></div>
+        <div class="lgbar sm"><svg class="lg" viewBox="0 0 64 64" width="22" height="22" aria-hidden="true"><use href="#lg-a"/></svg><span class="lgword">gaustahome.com</span></div>
+        <div class="lgfav"><span>Favicon</span><img src="assets/logo/favicon-32.png" width="16" height="16" alt=""><img src="assets/logo/favicon-32.png" width="24" height="24" alt=""><img src="assets/logo/favicon-32.png" width="32" height="32" alt=""><img src="assets/logo/apple-touch-icon.png" width="48" height="48" alt="" style="border-radius:10px"><span>iPhone</span></div></div>
+    </div>
+    <div class="lgchips"><div class="lgchip" data-season="winter"><svg class="lg" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><use href="#lg-a"/></svg><small>Vinter</small></div><div class="lgchip" data-season="spring"><svg class="lg" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><use href="#lg-a"/></svg><small>Forår</small></div><div class="lgchip" data-season="summer"><svg class="lg" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><use href="#lg-a"/></svg><small>Sommer</small></div><div class="lgchip" data-season="autumn"><svg class="lg" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><use href="#lg-a"/></svg><small>Efterår</small></div><div class="lgdark"><svg class="lg" viewBox="0 0 64 64" width="34" height="34" aria-hidden="true"><use href="#lg-a"/></svg><small>Én farve, mørk</small></div></div>
+    <h3 style="margin-top:22px;font-size:1rem">Regler</h3>
+    <ul class="wx-facts" style="font-size:.9rem">
+      <li><b>Farver:</b> bjerget i tekstfarven, sneblinken i årstidens accent. På mørk baggrund og i én farve er begge dele lyse.</li>
+      <li><b>Mindste størrelse:</b> symbolet 16 px. Under 24 px bruges kun symbolet, uden tekst.</li>
+      <li><b>Frirum:</b> mindst symbolets sneblink (ca. en fjerdedel af symbolets bredde) hele vejen rundt.</li>
+      <li><b>Ikke tilladt:</b> andre farver, skygger, effekter, at strække eller rotere logoet.</li>
+      <li><b>Tekst:</b> altid små bogstaver, "gaustahome.com". Teksten er sat i skrifttypen Fraunces og <b>skal laves om til vektorkurver</b>, før logoet bruges uden for denne side.</li>
+    </ul>
+    <h3 style="margin-top:18px;font-size:1rem">Filer</h3>
+    <p style="margin:0;font-size:.9rem"><a href="assets/logo/logo-a-fjeld.svg" target="_blank" rel="noopener">logo-a-fjeld.svg</a> (kun symbol) · <a href="assets/logo/favicon.svg" target="_blank" rel="noopener">favicon.svg</a> · <a href="assets/logo/favicon.ico" target="_blank" rel="noopener">favicon.ico</a> · <a href="assets/logo/apple-touch-icon.png" target="_blank" rel="noopener">apple-touch-icon.png</a> · <a href="assets/logo/favicon-512.png" target="_blank" rel="noopener">favicon-512.png</a></p>
   </div>
 
   <h2 id="layout" style="margin-top:72px">Layout, radius og breakpoints</h2>
@@ -113,7 +136,7 @@
     var g = document.getElementById('season-grid'), h = '';
     ['spring','summer','autumn','winter'].forEach(function (s) {
       [1].forEach(function () {
-        h += '<div class="pv" data-season="' + s + '"><div class="pv-hero"><div class="eyebrow" style="margin:0 0 6px">' + names[s] + '</div><div class="pv-title">Gausta Home</div>' + (window.GL ? '<svg viewBox="0 0 1440 260" preserveAspectRatio="none">' + GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, '') + '</svg>' : '') + '</div><div class="pv-body"><div class="row-flex"><button class="btn btn-primary btn-sm">Book</button><span class="pill-tag accent">Aktiv</span></div><span class="faint">Brødtekst i ' + names[s].toLowerCase() + '</span></div></div>';
+        h += '<div class="pv" data-season="' + s + '"><div class="pv-hero"><div class="eyebrow" style="margin:0 0 6px">' + names[s] + '</div><div class="pv-title">gaustahome.com</div>' + (window.GL ? '<svg viewBox="0 0 1440 260" preserveAspectRatio="none">' + GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, '') + '</svg>' : '') + '</div><div class="pv-body"><div class="row-flex"><button class="btn btn-primary btn-sm">Book</button><span class="pill-tag accent">Aktiv</span></div><span class="faint">Brødtekst i ' + names[s].toLowerCase() + '</span></div></div>';
       });
     });
     g.innerHTML = h;

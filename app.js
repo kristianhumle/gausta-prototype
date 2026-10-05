@@ -1,4 +1,4 @@
-/* Gausta Home · prototype shell
+/* gaustahome.com · prototype shell
    Renders the materials bar, site header and footer, and wires language and season. Danish is the source text in the HTML; English is carried in
    data-en attributes and swapped in (TK1: text stored per language). */
 (function () {
@@ -186,7 +186,6 @@
   var MATERIALS = [
     { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'ski-in-ski-out'] },
     { href: 'moodboard.html', label: 'Moodboard', match: ['moodboard'] },
-    { href: 'logo-udkast.html', label: 'Logo', match: ['logo-udkast'] },
     { href: 'designsystem.html', label: 'Designsystem', match: ['designsystem'] },
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
     { href: 'gaest.html', label: 'Gæsteområde', match: ['gaest'] },
@@ -215,9 +214,9 @@
       '<span class="spacer"></span><span class="status">Udkast v0 · billeder er kun til prototypen</span></div></div>';
     var html = bar;
     if (shell === 'materials') {
-      html += '<div class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Home</span></a><div class="nav" style="margin-left:auto;justify-content:flex-end">' + '</div>' + controlsHtml() + '</div></div>';
+      html += '<div class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>gaustahome.com</span></a><div class="nav" style="margin-left:auto;justify-content:flex-end">' + '</div>' + controlsHtml() + '</div></div>';
     } else {
-      html += '<header class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Home</span></a>' +
+      html += '<header class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>gaustahome.com</span></a>' +
         '<nav class="nav" id="nav" aria-label="Hovedmenu">' +
         navHtml(pid) + seasonSeg('nav-season') + '</nav>' +
         controlsHtml('<a class="btn btn-primary btn-sm hide-sm" href="index.html#booking">' + t('Book', 'Book') + '</a><button class="btn btn-ghost btn-sm menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false">' + icon('menu') + '</button>') +
@@ -227,12 +226,12 @@
 
     if (shell !== 'materials') {
       var f = '<footer class="footer"><div class="wrap"><div class="cols">' +
-        '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>Gausta Home</span></a>' +
+        '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>gaustahome.com</span></a>' +
         '<p class="muted" style="margin-top:12px;max-width:34ch;font-size:.92rem">' + t('Fjeldlejlighed på Gausta, Telemark. Arbejdsnavn, endeligt navn og domæne er ikke valgt.', 'Mountain apartment at Gausta, Telemark. Working name; final name and domain not chosen.') + '</p></div>' +
         '<div><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About') + '</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">FAQ</a></div>' +
         '<div><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="omraadet.html">' + t('Kort og afstande', 'Map and distances') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="omraadet.html#events">' + t('Events', 'Events') + '</a></div>' +
         '<div><h4>' + t('Prototype-zoner', 'Prototype zones') + '</h4><a href="designsystem.html">' + t('Designsystem', 'Design system') + '</a></div>' +
-        '</div><div class="legal"><span>© 2026 Gausta Home · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
+        '</div><div class="legal"><span>© 2026 gaustahome.com · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
       document.body.insertAdjacentHTML('beforeend', f);
     }
   }

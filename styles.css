@@ -1,4 +1,4 @@
-/* Gausta Home · prototype design system
+/* gaustahome.com · prototype design system
    Single source of truth. Tokens are provisional (v0, 2. oktober 2026) and
    will be replaced by the user's visual input. Four seasons, light only. */
 
@@ -881,16 +881,11 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sh-og-small .sh-og-img { background-size: cover; background-position: center; min-height: 96px; }
 
 /* ===== Logo-udkast (logo-udkast.html) ===== */
-.lggrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px; }
-.lgcard { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); padding: 18px; }
-.lgcard h3 { margin: 0 0 4px; font-size: 1.05rem; }
-.lgrow { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
-@media (max-width: 480px) { .lgrow { grid-template-columns: 1fr; } }
 .lgbig { width: 150px; height: 150px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); color: var(--text); }
 .lg { color: var(--text); flex: none; }
 .lglock { display: grid; gap: 8px; }
 .lgbar { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); }
-.lgbar .lg { color: var(--accent); }
+.lgbar .lg { color: var(--text); }
 .lgword { font-family: var(--font-display); font-weight: 600; font-size: 1.1rem; letter-spacing: -.01em; color: var(--text); }
 .lgbar.sm .lgword { font-size: .92rem; }
 .lgfav { display: flex; align-items: center; gap: 12px; font-size: .74rem; color: var(--muted); padding: 4px 4px; }
@@ -951,3 +946,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .sp-spark polyline { fill: none; stroke: var(--plan-hlink, var(--accent)); stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
 .sp-note { margin: 14px 0 0; line-height: 1.55; font-size: .88rem; }
 @media (max-width: 860px) { .sp-split { grid-template-columns: 1fr; } }
+
+.lgrow2 { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; }
+@media (max-width: 480px) { .lgrow2 { grid-template-columns: 1fr; } }
+.lgfav img { display: block; }
