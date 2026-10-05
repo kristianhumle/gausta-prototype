@@ -196,13 +196,24 @@
     return '<span class="pr-logo ' + (cls || '') + '">' + esc(i.medie) + '</span>';
   }
   function pageLang() { return (document.documentElement.getAttribute('lang') || 'da').slice(0, 2); }
+  // Mediets hjemland som lille ikon (flag for DK, NO, SE, UK, ellers globus). Brugeroplysning 6. oktober 2026.
+  var FLAGS = {
+    DK: ['Danmark', '<rect width="28" height="20" fill="#C8102E"/><rect x="8" width="4" height="20" fill="#fff"/><rect y="8" width="28" height="4" fill="#fff"/>'],
+    NO: ['Norge', '<rect width="28" height="20" fill="#BA0C2F"/><rect x="7" width="6" height="20" fill="#fff"/><rect y="7" width="28" height="6" fill="#fff"/><rect x="8.5" width="3" height="20" fill="#00205B"/><rect y="8.5" width="28" height="3" fill="#00205B"/>'],
+    SE: ['Sverige', '<rect width="28" height="20" fill="#006AA7"/><rect x="8" width="4" height="20" fill="#FECC02"/><rect y="8" width="28" height="4" fill="#FECC02"/>'],
+    UK: ['Storbritannien', '<rect width="28" height="20" fill="#012169"/><path d="M0 0L28 20M28 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L28 20M28 0L0 20" stroke="#C8102E" stroke-width="1.6"/><rect x="11" width="6" height="20" fill="#fff"/><rect y="7" width="28" height="6" fill="#fff"/><rect x="12" width="4" height="20" fill="#C8102E"/><rect y="8" width="28" height="4" fill="#C8102E"/>']
+  };
+  function origin(i) {
+    var c = ['DK', 'NO', 'SE', 'UK'].filter(function (k) { return i.lande.indexOf(k) > -1; })[0];
+    if (c) return '<span class="pr-flag" role="img" title="' + FLAGS[c][0] + '" aria-label="Medie fra ' + FLAGS[c][0] + '"><svg viewBox="0 0 28 20" width="22" height="16" aria-hidden="true" focusable="false">' + FLAGS[c][1] + '</svg></span>';
+    return '<span class="pr-flag pr-flag-globe" role="img" title="Øvrig" aria-label="Medie fra øvrige lande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="4" ry="9.5"/><path d="M2.5 12h19M4 7h16M4 17h16"/></svg></span>';
+  }
+  // Kun åbenhedsmærker bevares (inviteret tur, evt. særligt mærke). Sprog og betalingsmur er fjernet.
   function badges(i) {
     var b = [];
-    if (i.sprog !== pageLang()) b.push('<span class="pr-b">' + SPROG[i.sprog] + '</span>');
-    if (i.betalingsmur) b.push('<span class="pr-b">Betalingsmur</span>');
     if (i.pressetur) b.push('<span class="pr-b pr-b-warn" title="Artiklen oplyser, at journalisten var inviteret">Inviteret tur</span>');
     if (i.maerke) b.push('<span class="pr-b pr-b-warn">' + esc(i.maerke) + '</span>');
-    return b.join('');
+    return b.length ? '<div class="pr-badges">' + b.join('') + '</div>' : '';
   }
   function readLink(i) {
     return '<a class="pr-read" href="' + esc(i.url) + '" target="_blank" rel="noopener">Læs hos ' + esc(i.medie) + ' <span aria-hidden="true">↗</span></a>';
@@ -229,11 +240,11 @@
       '<div class="pr-car-btns"><button type="button" class="pr-car-btn" data-car="prev" aria-label="Forrige omtaler">←</button>' +
       '<button type="button" class="pr-car-btn" data-car="next" aria-label="Næste omtaler">→</button></div></div>' +
       '<ul class="pr-track" tabindex="0">' + items.map(function (i, k) {
-        return '<li class="pr-card" aria-roledescription="omtale" aria-label="' + (k + 1) + ' af ' + items.length + '">' + logo(i) +
+        return '<li class="pr-card" aria-roledescription="omtale" aria-label="' + (k + 1) + ' af ' + items.length + '">' + origin(i) + logo(i) +
           '<div class="pr-meta">' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
           '<h5' + langAttr(i) + '>' + esc(i.titel) + '</h5>' +
           quotes(i) +
-          '<div class="pr-foot"><div class="pr-badges">' + badges(i) + '</div>' + readLink(i) + '</div></li>';
+          '<div class="pr-foot">' + badges(i) + readLink(i) + '</div></li>';
       }).join('') + '</ul><div class="pr-dots" role="group" aria-label="Vælg side"></div>' +
       '<a class="pr-all" href="' + esc(all) + '">Se alle omtaler</a></section>';
   }
@@ -292,8 +303,8 @@
         return '<button type="button" class="filter" data-pr-season="' + s + '" aria-pressed="' + (s === v4season) + '">' + (s === 'Alle' ? 'Hele året' : SAESON[s]) + '</button>';
       }).join('') + '</div></div>' +
       '<ul class="pr-list">' + (list.length ? list.map(function (i) {
-        return '<li>' + logo(i, 'pr-logo-sm') + '<div class="grow"><div class="pr-meta">' + esc(i.medie) + ' · ' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
-          '<b' + langAttr(i) + '>' + esc(i.titel) + '</b>' + quotes(i, 'pr-q-sm') + '<div class="pr-badges">' + badges(i) + '</div></div>' + readLink(i) + '</li>';
+        return '<li>' + origin(i) + logo(i, 'pr-logo-sm') + '<div class="grow"><div class="pr-meta">' + esc(i.medie) + ' · ' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
+          '<b' + langAttr(i) + '>' + esc(i.titel) + '</b>' + quotes(i, 'pr-q-sm') + badges(i) + '</div>' + readLink(i) + '</li>';
       }).join('') : '<li class="muted">Ingen omtaler med det filter.</li>') + '</ul>';
   }
 
