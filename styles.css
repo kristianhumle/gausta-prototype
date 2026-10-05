@@ -845,3 +845,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 .pr-q-sm { margin: 6px 0 8px; }
 .pr-q-sm p { font-size: .95rem; }
 .pr-sum { margin: 4px 0 6px; font-size: .86rem; color: var(--muted); }
+/* Omtale i medier på forsiden (index.html#omtale) */
+.pr-home-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 18px 32px; flex-wrap: wrap; margin-bottom: 22px; }
+.pr-home-head .lead { margin-bottom: 0; }
+.pr-home-market { display: grid; gap: 6px; font-size: .8rem; }
+.pr-home-market .filter { font-size: .8rem; padding: 5px 12px; }
+.pr-home-note { font-size: .78rem; margin: 14px 0 0; }

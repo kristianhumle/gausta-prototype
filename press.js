@@ -167,7 +167,6 @@
   var SPROG = { da: 'Dansk', en: 'Engelsk', no: 'Norsk', sv: 'Svensk' };
   var SAESON = { vinter: 'Vinter', sommer: 'Sommer' };
   var MDR = ['jan.', 'feb.', 'mar.', 'apr.', 'maj', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
-  var PAGE_LANG = 'da';
   var KEY = 'gl-press-market';
 
   var market = 'DK';
@@ -192,9 +191,10 @@
     if (f) return '<span class="pr-logo pr-logo-img ' + (DARK[i.logo] ? 'pr-logo-dark ' : '') + (cls || '') + '"><img src="assets/web/logos/' + f + '" alt="' + esc(i.medie) + '" loading="lazy" decoding="async"></span>';
     return '<span class="pr-logo ' + (cls || '') + '">' + esc(i.medie) + '</span>';
   }
+  function pageLang() { return (document.documentElement.getAttribute('lang') || 'da').slice(0, 2); }
   function badges(i) {
     var b = [];
-    if (i.sprog !== PAGE_LANG) b.push('<span class="pr-b">' + SPROG[i.sprog] + '</span>');
+    if (i.sprog !== pageLang()) b.push('<span class="pr-b">' + SPROG[i.sprog] + '</span>');
     if (i.betalingsmur) b.push('<span class="pr-b">Betalingsmur</span>');
     if (i.pressetur) b.push('<span class="pr-b pr-b-warn" title="Artiklen oplyser, at journalisten var inviteret">Inviteret tur</span>');
     if (i.maerke) b.push('<span class="pr-b pr-b-warn">' + esc(i.maerke) + '</span>');
@@ -203,7 +203,7 @@
   function readLink(i) {
     return '<a class="pr-read" href="' + esc(i.url) + '" target="_blank" rel="noopener">Læs hos ' + esc(i.medie) + ' <span aria-hidden="true">↗</span></a>';
   }
-  function langAttr(i) { return i.sprog !== PAGE_LANG ? ' lang="' + (i.sprog === 'no' ? 'nb' : i.sprog) + '"' : ''; }
+  function langAttr(i) { return i.sprog !== pageLang() ? ' lang="' + (i.sprog === 'no' ? 'nb' : i.sprog) + '"' : ''; }
   // Citat(er) fra artiklen. Mangler de, vises vores resumé i stedet.
   function quotes(i, cls) {
     if (i.citat && i.citat.length) {
@@ -216,7 +216,8 @@
   }
 
   /* ---------- Version 1: kort med logo som karrusel (forside) ---------- */
-  function v1(r) {
+  function v1(r, el) {
+    var all = (el.closest('[data-press-root]') || el).getAttribute('data-all-href') || '#e-press-v4';
     var items = r.items.filter(function (i) { return i.fremhaevet; });
     return fallbackNote(r) +
       '<section class="pr-car" aria-roledescription="karrusel" aria-label="Omtale af Gausta i medier">' +
@@ -230,7 +231,7 @@
           quotes(i) +
           '<div class="pr-foot"><div class="pr-badges">' + badges(i) + '</div>' + readLink(i) + '</div></li>';
       }).join('') + '</ul><div class="pr-dots" role="group" aria-label="Vælg side"></div>' +
-      '<a class="pr-all" href="#e-press-v4">Se alle omtaler</a></section>';
+      '<a class="pr-all" href="' + esc(all) + '">Se alle omtaler</a></section>';
   }
 
   function wireCarousel(root) {
@@ -299,7 +300,8 @@
     document.querySelectorAll('[data-press]').forEach(function (el) {
       var k = el.getAttribute('data-press');
       if (only && k !== only) return;
-      el.innerHTML = r.items.length ? RENDER[k](r) : '';
+      el.innerHTML = r.items.length ? RENDER[k](r, el) : '';
+      var host = el.closest('[data-press-hide-empty]'); if (host) host.hidden = !r.items.length;
       if (k === 'v1') wireCarousel(el);
     });
     document.querySelectorAll('[data-press-market] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-m') === market)); });
@@ -311,17 +313,20 @@
   }
 
   function init() {
-    var root = document.getElementById('e-press');
-    if (!root) return;
+    var roots = document.querySelectorAll('[data-press-root]');
+    if (!roots.length) return;
     document.querySelectorAll('[data-press-market]').forEach(function (g) {
       g.innerHTML = MARKETS.map(function (m) { return '<button type="button" class="filter" data-m="' + m[0] + '">' + m[1] + '</button>'; }).join('');
     });
-    root.addEventListener('click', function (e) {
+    function onClick(e) {
       var t = e.target.closest('button'); if (!t) return;
       if (t.hasAttribute('data-m')) { market = t.getAttribute('data-m'); v4type = 'Alle'; try { localStorage.setItem(KEY, market); } catch (x) {} render(); }
       else if (t.hasAttribute('data-pr-type')) { v4type = t.getAttribute('data-pr-type'); render('v4'); }
       else if (t.hasAttribute('data-pr-season')) { v4season = t.getAttribute('data-pr-season'); render('v4'); }
-    });
+    }
+    roots.forEach(function (root) { root.addEventListener('click', onClick); });
+    // Sprogskift (app.js sætter lang på <html>) opdaterer sprogmærkerne.
+    new MutationObserver(function () { render(); }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
     window.addEventListener('resize', function () { if (carUpdate) carUpdate(); });
     render();
   }

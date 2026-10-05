@@ -122,12 +122,19 @@
   </div>
 </section>
 
-<!-- A1 · Anmeldelser -->
-<section class="section">
-  <div class="wrap center reveal">
-    <p class="eyebrow" data-en="Guests">Gæster</p>
-    <h2 data-en="Reviews will appear here.">Anmeldelser kommer her.</h2>
-    <p class="lead" data-en="No reviews yet. The block stays hidden until real ones exist; nothing is invented.">Ingen anmeldelser endnu. Blokken skjules, til der findes rigtige; intet opfindes.</p>
+<!-- A10 · Omtale i medier (erstatter pladsholderen "Anmeldelser kommer her", 5. oktober 2026) -->
+<section class="section" id="omtale" data-press-root data-press-hide-empty data-all-href="sideelementer.html#e-press-v4">
+  <div class="wrap">
+    <div class="reveal pr-home-head">
+      <div>
+        <p class="eyebrow" data-en="In the media">Omtale i medier</p>
+        <h2 data-en="Gausta in the media.">Gausta i medierne.</h2>
+        <p class="lead" data-en="What travel and ski media write about Gausta as a destination. Not reviews of the apartment.">Hvad rejse- og skimedier skriver om Gausta som rejsemål. Ikke anmeldelser af lejligheden.</p>
+      </div>
+      <div class="pr-home-market"><span class="faint" data-en="Show coverage for">Vis omtale for</span><div class="row-flex" role="group" aria-label="Vælg land" data-press-market></div></div>
+    </div>
+    <div class="reveal" data-press="v1"></div>
+    <p class="faint pr-home-note" data-en="Prototype: selection not approved, quotes not checked, logos on trial (rights not cleared).">Prototype: udvalget er ikke godkendt, citaterne er ikke tjekket, og logoerne er på prøve (rettigheder ikke afklaret).</p>
   </div>
 </section>
 
@@ -158,6 +165,7 @@
 <script src="weather-data.js"></script>
 <script src="weather.js"></script>
 <script src="plan.js"></script>
+<script src="press.js"></script>
 <script>
 document.addEventListener('gl:ready', function () {
   GL.buildGallery(document.getElementById('home-gallery'), [
