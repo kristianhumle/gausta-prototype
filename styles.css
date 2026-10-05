@@ -1,4 +1,4 @@
-/* Gausta Lodge 52 · prototype design system
+/* Gausta Home · prototype design system
    Single source of truth. Tokens are provisional (v0, 2. oktober 2026) and
    will be replaced by the user's visual input. Four seasons, light only. */
 
@@ -110,7 +110,9 @@ html[lang="en"] [data-lang-hide="en"], html[lang="da"] [data-lang-hide="da"] { d
 }
 .header .wrap { height: 100%; display: flex; align-items: center; gap: 22px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; color: var(--text); font-family: var(--font-display); font-weight: 600; font-size: 1.12rem; letter-spacing: -.01em; white-space: nowrap; }
-.brand svg { width: 28px; height: 28px; color: var(--accent); }
+.brand svg { width: 28px; height: 28px; color: var(--text); }
+.brand svg .cap { fill: var(--accent); }
+.footer .brand svg .cap { fill: currentColor; }
 .nav { display: flex; gap: 4px; margin-left: 12px; flex: 1; }
 .nav a { white-space: nowrap; text-decoration: none; color: var(--muted); padding: 8px 12px; border-radius: var(--radius-sm); font-size: .94rem; font-weight: 500; }
 .nav a:hover { color: var(--text); background: var(--elevated); }

@@ -4,9 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Designsystem · Gausta Lodge 52</title>
+<title>Designsystem · Gausta Home</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo/favicon.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon.png">
 <link rel="stylesheet" href="styles.css">
 </head>
 <body data-shell="materials">
@@ -112,7 +113,7 @@
     var g = document.getElementById('season-grid'), h = '';
     ['spring','summer','autumn','winter'].forEach(function (s) {
       [1].forEach(function () {
-        h += '<div class="pv" data-season="' + s + '"><div class="pv-hero"><div class="eyebrow" style="margin:0 0 6px">' + names[s] + '</div><div class="pv-title">Gausta Lodge 52</div>' + (window.GL ? '<svg viewBox="0 0 1440 260" preserveAspectRatio="none">' + GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, '') + '</svg>' : '') + '</div><div class="pv-body"><div class="row-flex"><button class="btn btn-primary btn-sm">Book</button><span class="pill-tag accent">Aktiv</span></div><span class="faint">Brødtekst i ' + names[s].toLowerCase() + '</span></div></div>';
+        h += '<div class="pv" data-season="' + s + '"><div class="pv-hero"><div class="eyebrow" style="margin:0 0 6px">' + names[s] + '</div><div class="pv-title">Gausta Home</div>' + (window.GL ? '<svg viewBox="0 0 1440 260" preserveAspectRatio="none">' + GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, '') + '</svg>' : '') + '</div><div class="pv-body"><div class="row-flex"><button class="btn btn-primary btn-sm">Book</button><span class="pill-tag accent">Aktiv</span></div><span class="faint">Brødtekst i ' + names[s].toLowerCase() + '</span></div></div>';
       });
     });
     g.innerHTML = h;

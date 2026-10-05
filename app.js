@@ -1,4 +1,4 @@
-/* Gausta Lodge 52 · prototype shell
+/* Gausta Home · prototype shell
    Renders the materials bar, site header and footer, and wires language and season. Danish is the source text in the HTML; English is carried in
    data-en attributes and swapped in (TK1: text stored per language). */
 (function () {
@@ -45,7 +45,7 @@
   }
   window.GL = { icon: icon, ICONS: ICONS };
 
-  var LOGO = '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 26l9-15 5 8 4-5 8 12z"/><path d="M10.500 14l1.500 2 1.500-2"/></svg>';
+  var LOGO = '<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 50 L24 20 L33 35 L41 26 L58 50 Z"/><polygon class="cap" points="24,20 19.2,28 28.8,28" stroke="none"/></svg>';
 
   var SEASONS = [
     { id: 'spring', da: 'Forår', en: 'Spring' },
@@ -215,9 +215,9 @@
       '<span class="spacer"></span><span class="status">Udkast v0 · billeder er kun til prototypen</span></div></div>';
     var html = bar;
     if (shell === 'materials') {
-      html += '<div class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Lodge 52</span></a><div class="nav" style="margin-left:auto;justify-content:flex-end">' + '</div>' + controlsHtml() + '</div></div>';
+      html += '<div class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Home</span></a><div class="nav" style="margin-left:auto;justify-content:flex-end">' + '</div>' + controlsHtml() + '</div></div>';
     } else {
-      html += '<header class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Lodge 52</span></a>' +
+      html += '<header class="header"><div class="wrap"><a class="brand" href="index.html">' + LOGO + '<span>Gausta Home</span></a>' +
         '<nav class="nav" id="nav" aria-label="Hovedmenu">' +
         navHtml(pid) + seasonSeg('nav-season') + '</nav>' +
         controlsHtml('<a class="btn btn-primary btn-sm hide-sm" href="index.html#booking">' + t('Book', 'Book') + '</a><button class="btn btn-ghost btn-sm menu-btn" id="menu-btn" aria-label="Menu" aria-expanded="false">' + icon('menu') + '</button>') +
@@ -227,12 +227,12 @@
 
     if (shell !== 'materials') {
       var f = '<footer class="footer"><div class="wrap"><div class="cols">' +
-        '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>Gausta Lodge 52</span></a>' +
+        '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>Gausta Home</span></a>' +
         '<p class="muted" style="margin-top:12px;max-width:34ch;font-size:.92rem">' + t('Fjeldlejlighed på Gausta, Telemark. Arbejdsnavn, endeligt navn og domæne er ikke valgt.', 'Mountain apartment at Gausta, Telemark. Working name; final name and domain not chosen.') + '</p></div>' +
         '<div><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About') + '</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">FAQ</a></div>' +
         '<div><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="omraadet.html">' + t('Kort og afstande', 'Map and distances') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="omraadet.html#events">' + t('Events', 'Events') + '</a></div>' +
         '<div><h4>' + t('Prototype-zoner', 'Prototype zones') + '</h4><a href="designsystem.html">' + t('Designsystem', 'Design system') + '</a></div>' +
-        '</div><div class="legal"><span>© 2026 Gausta Lodge 52 · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
+        '</div><div class="legal"><span>© 2026 Gausta Home · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
       document.body.insertAdjacentHTML('beforeend', f);
     }
   }

@@ -6,7 +6,7 @@
   if (!root) return;
 
   var URL_SHARED = 'https://gaustahome.com/';
-  var TITLE = 'Gausta Lodge 52';
+  var TITLE = 'Gausta Home';
   var TEXT = 'Se lejligheden ved Gausta i Telemark.';
   var status = root.querySelector('[data-share-status]');
   var canShare = typeof navigator.share === 'function';
