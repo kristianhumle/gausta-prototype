@@ -52,11 +52,7 @@
     var v = VIEWS[kind], drawn = kind === 'tegnet';
     var base = drawn ? drawnBase() :
       '<img src="assets/web/kort/ski-in-out.webp" srcset="assets/web/kort/ski-in-out-m.webp 900w, assets/web/kort/ski-in-out.webp 1600w" sizes="(max-width: 860px) 100vw, 900px" alt="Luftfoto af området omkring lejligheden. Stiplede linjer viser 50 til 100 meter til langrendsløjpen og 50 til 100 meter til slalompisten." loading="lazy">';
-    return '<div class="plan-pills sio-pills" role="group" aria-label="Vis rute">' +
-        '<button type="button" class="filter" data-f="both" aria-pressed="true">Begge</button>' +
-        ROUTES.map(function (r) { return '<button type="button" class="filter" data-f="' + r.id + '" aria-pressed="false">' + GL.icon(r.icon) + r.name + '</button>'; }).join('') +
-      '</div>' +
-      '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + ' style="aspect-ratio:' + (drawn ? GL.DRAWN.W + '/' + GL.DRAWN.H : '2000/1577') + '">' + base +
+    return '<div class="sio-map' + (drawn ? ' sio-draw' : '') + '" data-focus="both"' + ' style="aspect-ratio:' + (drawn ? GL.DRAWN.W + '/' + GL.DRAWN.H : '2000/1577') + '">' + base +
         '<svg class="sio-svg" viewBox="0 0 1000 ' + v.vh + '" preserveAspectRatio="none" aria-hidden="true">' +
           ROUTES.map(function (r) { var d = trackPath(kind, r.id, v); return '<g class="track" data-route="' + r.id + '"><path class="trk-halo" d="' + d + '"/><path class="trk" d="' + d + '"/></g>'; }).join('') +
           ROUTES.map(function (r) { return '<g class="route" data-route="' + r.id + '"><path class="halo" d="' + line(v, r) + '"/><path class="dash" d="' + line(v, r) + '"/></g>'; }).join('') +
@@ -66,8 +62,8 @@
         ROUTES.map(function (r) {
           var p = v.pts[r.id];
           return '<span class="sio-dot" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '"></span>' +
-            '<button type="button" class="sio-chip ' + r.pos + '" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '" aria-label="' + r.name + ', ' + r.dist + ' fra lejligheden">' +
-            GL.icon(r.icon) + '<span><b>' + r.name + '</b><em>' + r.dist + '</em></span></button>';
+            '<span class="sio-chip ' + r.pos + '" data-route="' + r.id + '" style="left:' + pct(p.x) + ';top:' + pct(p.y) + '">' +
+            GL.icon(r.icon) + '<span><b>' + r.name + '</b><em>' + r.dist + '</em></span></span>';
         }).join('') +
         '<span class="sio-dot poi" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '"></span>' +
         '<span class="sio-chip poi below" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '">' + GL.icon('cabin') + '<span><b>Fælleshus</b><em>Smørebod</em></span></span>' +
@@ -75,12 +71,10 @@
       '<div class="grid grid-3 sio-cards">' +
         ROUTES.map(function (r) {
           return '<div class="card" data-route="' + r.id + '"><div class="ico-box">' + GL.icon(r.icon) + '</div><div class="kicker">Fra lejligheden</div>' +
-            '<div class="sio-dist">' + r.dist + '</div><h3>' + r.name + '</h3><p class="muted">' + r.text + '</p>' +
-            '<span class="verify">cirka, skal verificeres på stedet</span></div>';
+            '<div class="sio-dist">' + r.dist + '</div><h3>' + r.name + '</h3><p class="muted">' + r.text + '</p></div>';
         }).join('') +
         '<div class="card" data-keep="1"><div class="ico-box">' + GL.icon('cabin') + '</div><div class="kicker">På stedet</div>' +
-          '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod og stativer, som beboerne kan bruge. Markeret på kortet, uden afstand.</p>' +
-          '<span class="verify">kildepåstand fra salgsannoncen, skal verificeres</span></div>' +
+          '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod og stativer, som beboerne kan bruge. Markeret på kortet, uden afstand.</p></div>' +
       '</div>' +
       '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. Slalompistens og langrendsløjpens forløb (blå og lilla) er tegnet ud fra luftfotoet og ejerens beskrivelse, cirka, skal verificeres. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
@@ -102,15 +96,12 @@
         '<span class="sio-chip above0" data-route="langrend" style="left:' + pct(ax) + ';top:' + pct(ay - LK.r100 / LK.h - 0.025) + '">' + GL.icon('wave') + '<span><b>Tilgang til Rød 15, 10 og 6</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
       kartLink('Se hele løjpekortet hos Gausta') +
-      '<p class="faint sio-note">Udsnit af løjpekortet fra GKT (Gausta-Kvitåvatn Turistservice, februar 2019). Cirklen er ejerens markering af tilgangen (3. oktober 2026). De stiplede ringe er 50 m og 100 m efter kortets målestok, og lejligheden ligger inden for dem. Prototypebillede, skal kontrolleres mod nyeste kort og godkendes før endelig brug.</p>' +
       '<div class="sio-cards"><div class="card" data-route="langrend">' +
         '<div class="ico-box">' + GL.icon('wave') + '</div><div class="kicker">Langrend · tilgang fra lejligheden</div>' +
         '<div class="sio-dist">50 til 100 m</div><h3>Rød 15, 10 og 6</h3>' +
         '<div class="list-row"><span class="grow muted">Rød 6</span><span>Skipsfjell, 6,2 km</span></div>' +
         '<div class="list-row"><span class="grow muted">Rød 10</span><span>Skipsfjell, Nordhaddefjell, Langetjønn, 9,5 km</span></div>' +
         '<div class="list-row"><span class="grow muted">Rød 15</span><span>Skipsfjell, Jotehaug, Klokksjåvatn, Langetjønn, 13,6 km</span></div>' +
-        '<div class="list-row"><span class="grow muted">Niveau</span><span>Røde løjper er krevende, delstrækninger ved Langetjønn og Vatnedalen middels</span></div>' +
-        '<p class="faint" style="margin:10px 0 0">Kildepåstand: kortets forklaring (GKT, februar 2019). Skal kontrolleres mod nyeste løjpekort. Alle løjper er præpareret til fristil, undtagen de grønne.</p>' +
       '</div></div>';
   }
 
@@ -143,16 +134,6 @@
       if (id === cur) return; cur = id;
       [].forEach.call(el.querySelectorAll('.sio-tab'), function (b) { b.setAttribute('aria-selected', String(b.dataset.t === id)); });
       body.innerHTML = (id === 'foto' || id === 'tegnet') ? photoPanel(id) : id === 'langrend' ? langrendPanel() : slalomPanel();
-      if (id === 'foto' || id === 'tegnet') {
-        var map = body.querySelector('.sio-map');
-        var focus = function (f) {
-          map.setAttribute('data-focus', f);
-          [].forEach.call(body.querySelectorAll('.sio-pills .filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.f === f)); });
-          [].forEach.call(body.querySelectorAll('.sio-cards .card'), function (c) { c.classList.toggle('dim', !c.dataset.keep && f !== 'both' && c.dataset.route !== f); });
-        };
-        body.querySelector('.sio-pills').addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b) focus(b.dataset.f); });
-        map.addEventListener('click', function (e) { var c = e.target.closest('.sio-chip'); if (c) focus(map.getAttribute('data-focus') === c.dataset.route ? 'both' : c.dataset.route); });
-      }
     }
     el.querySelector('.sio-tabs').addEventListener('click', function (e) { var b = e.target.closest('.sio-tab'); if (b) show(b.dataset.t); });
     show('tegnet');
