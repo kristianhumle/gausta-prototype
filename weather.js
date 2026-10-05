@@ -64,7 +64,7 @@
     var wasStale = own.classList.contains('wx-stale');
     var ts = D.ts;
     var cur = ts[0];
-    var cs = sym(cur.s1 || cur.s6);
+    var cs = own._rain ? { txt: 'Regn', kind: 'rain', night: false } : sym(cur.s1 || cur.s6);
 
     /* Næste 24 timer: temperatur og nedbør time for time, så længe tidsskridtet er 1 time. */
     var hourly = [];
@@ -75,16 +75,16 @@
     var DEMO_RAIN = [0, 0, 0, 0.3, 0.8, 1.4, 2.2, 1.6, 0.9, 0.4, 0.2, 0, 0, 0.1, 0.3, 0.6, 0.4, 0.2, 0, 0, 0, 0, 0, 0, 0];
     if (own._rain) hourly = hourly.map(function (h, i) { var o = {}; for (var k in h) o[k] = h[k]; o.p1 = DEMO_RAIN[i] || 0; return o; });
     function chart() {
-      var W = Math.round(Math.max(300, Math.min(1000, own.clientWidth || 560))), H = Math.round(Math.max(150, Math.min(190, (own.clientWidth || 560) * 0.22))), pl = 30, pr = 8, pt = 12, pb = 24, n = hourly.length;
+      var avail = own.clientWidth || 560, cw = avail > 720 ? avail - 224 : avail, W = Math.round(Math.max(300, Math.min(1000, cw))), H = Math.round(Math.max(150, Math.min(190, cw * 0.26))), pl = 30, pr = (hourly.some(function (h) { return h.p1 > 0; }) ? 40 : 8), pt = 12, pb = 24, n = hourly.length;
       var T = hourly.map(function (h) { return h.T; });
       var tmin = Math.floor(Math.min.apply(null, T) - 1), tmax = Math.ceil(Math.max.apply(null, T) + 1);
-      var pmax = Math.max(2, Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; })));
+      var pmax = Math.max(2, Math.ceil(Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; })))), anyRain = hourly.some(function (h) { return h.p1 > 0; }), barMax = (H - pt - pb) * 0.55;
       function x(i) { return pl + (W - pl - pr) * i / (n - 1); }
       function y(v) { return pt + (H - pt - pb) * (1 - (v - tmin) / (tmax - tmin)); }
       var path = hourly.map(function (h, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(h.T).toFixed(1); }).join(' ');
       var bars = hourly.map(function (h, i) {
         var p = h.p1 || 0; if (!p) return '';
-        var bh = (H - pt - pb) * 0.45 * (p / pmax);
+        var bh = barMax * (p / pmax);
         return '<rect x="' + (x(i) - 3).toFixed(1) + '" y="' + (H - pb - bh).toFixed(1) + '" width="6" height="' + bh.toFixed(1) + '" rx="1.5" class="wx-bar"/>';
       }).join('');
       var grid = '', labels = '';
@@ -95,6 +95,10 @@
       hourly.forEach(function (h, i) {
         if (i % 4 === 0) labels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 6) + '" text-anchor="middle" class="wx-axis">' + fmtTime.format(dt(h.t)).slice(0, 2) + '</text>';
       });
+      if (anyRain) {
+        grid += '<line x1="' + pl + '" y1="' + (H - pb - barMax).toFixed(1) + '" x2="' + (W - pr) + '" y2="' + (H - pb - barMax).toFixed(1) + '" class="wx-grid wx-grid-r"/>';
+        labels += '<text x="' + (W - pr + 6) + '" y="' + (H - pb - barMax + 3).toFixed(1) + '" class="wx-axis wx-axis-r">' + pmax + ' mm</text><text x="' + (W - pr + 6) + '" y="' + (H - pb + 3) + '" class="wx-axis wx-axis-r">0</text>';
+      }
       var dots = hourly.map(function (h, i) { return i % 4 === 0 ? '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(h.T).toFixed(1) + '" r="2.6" class="wx-pt"/>' : ''; }).join('');
       return '<svg viewBox="0 0 ' + W + ' ' + H + '" class="wx-chart" role="img" aria-label="Temperatur og nedbør de næste 24 timer">' + grid + bars + '<path d="' + path + '" class="wx-line"/>' + dots + labels + '</svg>';
     }
@@ -115,6 +119,7 @@
       return order.slice(0, 5).map(function (k) { return map[k]; });
     }
     var dayRows = days();
+    if (own._rain) { dayRows[0].noon = 'rain'; dayRows[0].p = DEMO_RAIN.reduce(function (a, b) { return a + b; }, 0); }
     var daysHtml = dayRows.map(function (m, i) {
       var s = sym((m.noon || '').replace('_night', '_day'));
       return '<li class="wx-day"><span class="wx-dn">' + (i === 0 ? 'I dag' : fmtDay.format(m.d)) + '</span>' + icon(s.kind, false, 24) +
@@ -130,8 +135,8 @@
       '<div class="wx-now">' + icon(cs.kind, cs.night, 64) +
       '<div class="wx-big"><b class="num">' + r1(cur.T) + '°</b><span>' + cs.txt + '</span></div>' +
       '<dl class="wx-meta"><div><dt>Vind</dt><dd>' + r1(cur.ws) + ' m/s fra ' + compass(cur.wd) + '</dd></div><div><dt>Skydække</dt><dd>' + r0(cur.c) + ' %</dd></div><div><dt>Nedbør, næste 6 t</dt><dd>' + r1(p6) + ' mm</dd></div></dl></div>' +
-      '<p class="wx-sub">Næste 24 timer</p>' + chart() + '<p class="wx-cap">Klokkeslæt (lokal tid) · søjler: nedbør pr. time' + (hourly.some(function (h) { return h.p1 > 0; }) ? ' (højeste ' + r1(Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; }))) + ' mm)' : '') + (own._rain ? ' · <b>EKSEMPEL: nedbøren er opfundet</b>' : '') + '</p>' +
-      '<p class="wx-sub">Næste dage</p><ul class="wx-days">' + daysHtml + '</ul>' +
+      '<div class="wx-split"><div class="wx-gcol"><p class="wx-sub">Næste 24 timer</p>' + chart() + '<p class="wx-cap">Klokkeslæt (lokal tid) · søjler: nedbør pr. time' + (hourly.some(function (h) { return h.p1 > 0; }) ? ' (højeste ' + r1(Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; }))) + ' mm)' : '') + (own._rain ? ' · <b>EKSEMPEL: nedbøren er opfundet</b>' : '') + '</p>' +
+      '</div><div class="wx-dcol"><p class="wx-sub">Næste dage</p><ul class="wx-days">' + daysHtml + '</ul></div></div>' +
       '<div class="live-foot"><span class="stamp">Data: MET Norway</span>' +
       '<span class="wx-btns"><button type="button" class="btn btn-ghost btn-sm wx-rain" aria-pressed="' + (own._rain ? 'true' : 'false') + '">' + (own._rain ? 'Skjul eksempel med nedbør' : 'Vis eksempel med nedbør') + '</button>' +
       '<button type="button" class="btn btn-ghost btn-sm wx-sim" aria-pressed="false">Simulér nedbrud</button></span></div>';
