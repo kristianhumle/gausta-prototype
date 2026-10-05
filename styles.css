@@ -972,3 +972,5 @@ textarea.field { min-height: 96px; resize: vertical; }
 .alt-mock b { display: block; }
 .alt-mock small { color: var(--muted); display: block; }
 .alt-mock-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-weak); color: var(--accent-text); flex: none; }
+
+.soon-link { color: var(--accent-text); font-weight: 600; opacity: .75; border-bottom: 1px dashed currentColor; cursor: default; }
