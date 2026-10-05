@@ -18,7 +18,7 @@
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
   <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
   <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
@@ -46,9 +46,25 @@
     <div class="spec-body"><div class="row-flex" id="ctl-demo"></div></div>
     <div class="spec-note"><b>Idé:</b> Årstidsvælgeren er en segmenteret knap med kun ikoner (forår, sommer, efterår, vinter). Navnet vises som tekst ved hover eller tastaturfokus. Den følger datoen fra start, og et manuelt valg gælder kun til browseren lukkes. Sproget er en drop-down, så der kan komme norsk og tysk på uden at ændre designet. Der er ingen mørk tilstand. <b>Krav:</b> TK1, TK3. <b>Mobil:</b> årstidsvælgeren flytter ind i menuen.<br><b>Godkendt endeligt af ejeren 5. oktober 2026</b> (Brugeroplysning). Ændres kun efter udtrykkelig besked.</div></div>
 
-  <div class="spec-block" id="e-hero"><div class="spec-head"><h3>Hero</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status research">Research</span></div></div>
-    <div class="spec-body"><div class="pv"><div class="pv-hero" style="padding:24px 24px 0"><p class="eyebrow">Gausta · Telemark</p><div class="pv-title" style="font-size:2rem">Din base ved foden af fjeldet</div><svg viewBox="0 0 1440 260" preserveAspectRatio="none" id="hero-demo" style="height:90px"></svg></div></div></div>
-    <div class="spec-note"><b>Status:</b> prototypen bruger A (illustreret landskab). Retning A/B/C ligger på <a href="moodboard.html">Moodboardet</a>, valg afventer dit input. <b>Krav:</b> TK3, TK6 (ingen fotos før møblering).</div></div>
+  <div class="spec-block approved" id="e-hero"><div class="spec-head"><h3>Hero</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status approved">✓ Godkendt</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin:0 0 12px;font-size:.9rem">Her vises <b>den rigtige hero</b> fra forsiden (samme kode som siden). Vælg årstid for at se, hvordan baggrunden skifter.</p>
+      <div class="plan-pills" role="group" aria-label="Vis årstid" data-hero-seasons style="margin-bottom:12px"><button type="button" class="filter" data-s="spring" aria-pressed="false">Forår</button><button type="button" class="filter" data-s="summer" aria-pressed="false">Sommer</button><button type="button" class="filter" data-s="autumn" aria-pressed="true">Efterår</button><button type="button" class="filter" data-s="winter" aria-pressed="false">Vinter</button></div>
+      <div class="hdr-label">Desktop (skaleret til at passe)</div>
+      <div class="hdr-frame hdr-desktop" data-w="1240" data-h="560"><iframe src="index.html" title="Hero, desktop" loading="lazy" scrolling="no" data-hdr="section.hero" style="width:1240px;height:560px;transform-origin:0 0"></iframe></div>
+      <div class="hdr-label">Mobil (under 860 px)</div>
+      <div class="hdr-frame hdr-mobile"><iframe src="index.html" title="Hero, mobil" loading="lazy" scrolling="no" data-hdr="section.hero" style="height:620px"></iframe></div>
+      <div class="table-wrap" style="margin-top:18px"><table class="table">
+        <tr><th>Del</th><th>Indhold</th></tr>
+        <tr><td>Overlinje</td><td>Gausta · Telemark · ca. 960 m.o.h.</td></tr>
+        <tr><td>Overskrift</td><td>Din base ved foden af fjeldet.</td></tr>
+        <tr><td>Indledning</td><td>En fjeldlejlighed til ski, vandring og langsomme dage på Gausta. Årstidens indhold, aktuelle forhold og alt til opholdet samlet ét sted.</td></tr>
+        <tr><td>Knapper</td><td><b>Se ledige datoer</b> (primær, til bookingsektionen) og <b>Se lejligheden</b> (sekundær)</td></tr>
+        <tr><td>Baggrund</td><td>Foto pr. årstid (efterår, sommer, vinter) med mørk overlægning, så teksten kan læses. <b>Forår</b> har intet foto og viser det illustrerede landskab</td></tr>
+        <tr><td>Mobil</td><td>Knapperne fylder hele bredden</td></tr>
+      </table></div>
+    </div>
+    <div class="spec-note"><b>Godkendt 5. oktober 2026</b> (Brugeroplysning), i den form prototypen viser. Ændres kun efter udtrykkelig besked. <b>Forbehold:</b> baggrundsbillederne er <b>prototypebilleder</b> (rettigheder uafklarede), og forårets illustration afløses først, når der findes et forårsfoto. <b>Krav:</b> A1, TK3 (årstidstema), TK6 (ingen fotos af boligen før den er møbleret). Overskrift, tekst og knapper skal komme fra indholdskilden (TK4) og findes på dansk og engelsk (TK1).</div></div>
 
   <div class="spec-block" id="e-facts"><div class="spec-head"><h3>Faktalinje</h3><div class="row-flex"><span class="pill-tag">forside, lejlighed · TK7</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="facts" style="margin-top:0;box-shadow:none"><div><b>66 m²</b><span>BRA-i</span></div><div><b>7</b><span>Senge</span></div><div><b>2 + TV</b><span>Soveværelser</span></div><div><b>1</b><span>Bad</span></div><div><b>25 m²</b><span>Terrasse</span></div><div><b>Stueplan</b><span>Etage</span></div></div></div>
@@ -360,17 +376,27 @@
 <script>document.addEventListener('gl:ready', function(){ var cd=document.getElementById('ctl-demo'); if(cd){ cd.innerHTML=document.querySelector('.controls').innerHTML.replace('hide-sm',''); }  document.getElementById('hero-demo').innerHTML = GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, ''); });</script>
 <script>
 (function(){
+  function fit(){ [].forEach.call(document.querySelectorAll('.hdr-desktop'),function(b){ var w=+b.dataset.w,h=+b.dataset.h,s=Math.min(1,b.clientWidth/w),f=b.querySelector('iframe'); f.style.transform='scale('+s+')'; b.style.height=Math.round(h*s)+'px'; }); }
   function tidy(f){
     try {
       var d=f.contentDocument; if(!d||!d.body) return;
-      [].forEach.call(d.body.children,function(c){ if(!c.matches('header.header')) c.style.display='none'; });
+      var keep=f.getAttribute('data-hdr')||'header.header';
+      [].forEach.call(d.body.children,function(c){ if(!c.matches(keep)) c.style.display='none'; });
       d.documentElement.style.overflow='hidden';
       d.addEventListener('click',function(e){ var a=e.target.closest('a'); if(a) e.preventDefault(); });
+      if(keep!=='header.header'){ var el=d.querySelector(keep); if(el){ var h=Math.ceil(el.getBoundingClientRect().height); f.style.height=h+'px'; var b=f.parentElement; if(b.classList.contains('hdr-desktop')) b.dataset.h=h; fit(); } }
     } catch(e){}
   }
-  function fit(){ [].forEach.call(document.querySelectorAll('.hdr-desktop'),function(b){ var w=+b.dataset.w,h=+b.dataset.h,s=Math.min(1,b.clientWidth/w),f=b.querySelector('iframe'); f.style.transform='scale('+s+')'; b.style.height=Math.round(h*s)+'px'; }); }
   fit(); window.addEventListener('resize',fit);
   [].forEach.call(document.querySelectorAll('iframe[data-hdr]'),function(f){ f.addEventListener('load',function(){ tidy(f); }); if(f.contentDocument&&f.contentDocument.readyState==='complete') tidy(f); });
+  var prevSeason=null; try{ prevSeason=sessionStorage.getItem('gl.season'); }catch(e){}
+  var sw=document.querySelector('[data-hero-seasons]');
+  if(sw) sw.addEventListener('click',function(e){
+    var b=e.target.closest('button[data-s]'); if(!b) return;
+    [].forEach.call(sw.querySelectorAll('button'),function(x){ x.setAttribute('aria-pressed',String(x===b)); });
+    [].forEach.call(document.querySelectorAll('iframe[data-hdr="section.hero"]'),function(f){ try{ var s=f.contentDocument.querySelector('.js-season-seg button[data-v="'+b.dataset.s+'"]'); if(s) s.click(); }catch(x){} });
+    try{ if(prevSeason===null) sessionStorage.removeItem('gl.season'); else sessionStorage.setItem('gl.season',prevSeason); }catch(x){}
+  });
 })();
 </script>
 </body>
