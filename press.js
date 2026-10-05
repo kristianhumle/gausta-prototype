@@ -1,6 +1,6 @@
 /* Omtale i medier (A10): sideelementer.html#e-press og forsiden (#omtale).
    SKITSE. Kravet til produktion står i teknisk/omtale-i-medier.md, afsnit 12; ved uenighed gælder det.
-   Valgt 5. oktober 2026 (Brugeroplysning): version 1 (kort med logo, nu som karrusel) og version 4 (liste med filter).
+   Valgt 5. oktober 2026 (Brugeroplysning): version 1 (kort med logo, nu som karrusel) og liste med filter (vist som version 2).
    Data er et UDVALG fra kandidatlisten (teknisk/omtale-i-medier-kandidater.md, 5. oktober 2026), IKKE godkendt af ejeren.
    Hver omtale viser overskrift og citat(er) fra artiklen (Brugeroplysning 5. oktober 2026: citater frem for eget resumé).
    Citaterne er ordrette ifølge en automatisk læsning, under 15 ord, og skal tjekkes i browser. "…" markerer, at citatet
@@ -283,7 +283,7 @@
     update();
   }
 
-  /* ---------- Version 4: liste med filter (egen side) ---------- */
+  /* ---------- Version 2 (intern nøgle v4): liste med filter (egen side) ---------- */
   function v4(r) {
     var types = ['Alle'].concat(r.items.map(function (i) { return i.type; }).filter(function (t, k, a) { return a.indexOf(t) === k; }));
     var seasons = ['Alle', 'vinter', 'sommer'];
