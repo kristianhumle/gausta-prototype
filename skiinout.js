@@ -113,14 +113,11 @@
         '<span class="sio-chip below0" data-route="slalom" style="left:' + pct(SK.fx) + ';top:' + pct(SK.fy + 0.068) + '">' + GL.icon('snow') + '<span><b>Tilgang til alpinpisten, grøn 3</b><em>Lejligheden: 50 til 100 m herfra</em></span></span>' +
       '</div>' +
       kartLink('Se hele pistekortet hos Gausta') +
-      '<p class="faint sio-note">Udsnit af Gausta Skisenters løjpekort 2025/2026. Cirklen er ejerens markering af tilgangen (3. oktober 2026). Kortet er et tegnet panorama og ikke målfast, så placeringen er cirka. Prototypebillede, skal godkendes før endelig brug.</p>' +
       '<div class="sio-cards"><div class="card" data-route="slalom">' +
         '<div class="ico-box">' + GL.icon('snow') + '</div><div class="kicker">Slalom · tilgang fra lejligheden</div>' +
         '<div class="sio-dist">50 til 100 m</div><h3>Nr. 3 Kofferten</h3>' +
         '<div class="list-row"><span class="grow muted">Niveau</span><span>Veldig lett (grøn)</span></div>' +
         '<div class="list-row"><span class="grow muted">Længde</span><span>1000 m</span></div>' +
-        '<div class="list-row"><span class="grow muted">Højdeforskel</span><span>150 m</span></div>' +
-        '<p class="faint" style="margin:10px 0 0">Kildepåstand: kortets oversigt over bakker (Gausta Skisenter, 2025/2026). Skal kontrolleres mod det nyeste kort. Nr. 3 er den bakke, tilgangen fører til, ikke nødvendigvis den eneste, man kan køre.</p>' +
       '</div></div>';
   }
 
