@@ -1,16 +1,14 @@
-/* Temperatur nu og kort prognose: to varianter til sideelementer.html.
-   Variant 1: Yr-widget (iframe, klik for at indlæse).
-   Variant 2: egen visning på MET Norway Locationforecast (snapshot i prototypen,
-   i produktion hentes serverside og caches). Ingen tredjepartskald fra besøgende i variant 2. */
+/* Temperatur nu og kort prognose (A5). VALGT 5. oktober 2026: egen visning på MET Norway Locationforecast (variant 2).
+   Data: weather-data.js (snapshot i prototypen; i produktion hentes og caches de serverside, G24 og N19).
+   Mount-punkter: [data-weather="full"] (temperatur, 24 timer, 5 dage) og [data-weather="tile"] (lille flise til "Gausta nu").
+   Variant 1 (Yr-widget, iframe) er kun bevaret som historik i en skjult sektion i Sideelementer. */
 (function () {
   'use strict';
   var TZ = 'Europe/Oslo';
-  var dataEl = document.getElementById('wx-data');
-  var own = document.getElementById('wx-own');
+  var D = window.GL && GL.WEATHER;
+  var mounts = document.querySelectorAll('[data-weather]');
   var yrBox = document.getElementById('wx-yr');
-  if (!dataEl || !own) return;
-  var D;
-  try { D = JSON.parse(dataEl.textContent); } catch (e) { own.textContent = 'Kunne ikke læse snapshot.'; return; }
+  if (!D) { [].forEach.call(mounts, function (m) { m.textContent = 'Vejrdata mangler.'; }); return; }
 
   /* Symbolkoder fra MET: dansk tekst og ikonart. MET leverer kun koder, ikke tekst. */
   var SYM = {
@@ -62,84 +60,93 @@
   function r1(x) { return (Math.round(x * 10) / 10).toString().replace('.', ','); }
   function r0(x) { return Math.round(x); }
 
-  var ts = D.ts;
-  var cur = ts[0];
-  var cs = sym(cur.s1 || cur.s6);
+  function full(own) {
+    var ts = D.ts;
+    var cur = ts[0];
+    var cs = sym(cur.s1 || cur.s6);
 
-  /* Næste 24 timer: temperatur og nedbør time for time, så længe tidsskridtet er 1 time. */
-  var hourly = [];
-  for (var i = 0; i < ts.length && hourly.length < 25; i++) {
-    if (i > 0 && (dt(ts[i].t) - dt(ts[i - 1].t)) > 3600 * 1000) break;
-    hourly.push(ts[i]);
-  }
-  function chart() {
-    var W = 560, H = 150, pl = 30, pr = 8, pt = 14, pb = 34, n = hourly.length;
-    var T = hourly.map(function (h) { return h.T; });
-    var tmin = Math.floor(Math.min.apply(null, T) - 1), tmax = Math.ceil(Math.max.apply(null, T) + 1);
-    var pmax = Math.max(2, Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; })));
-    function x(i) { return pl + (W - pl - pr) * i / (n - 1); }
-    function y(v) { return pt + (H - pt - pb) * (1 - (v - tmin) / (tmax - tmin)); }
-    var path = hourly.map(function (h, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(h.T).toFixed(1); }).join(' ');
-    var bars = hourly.map(function (h, i) {
-      var p = h.p1 || 0; if (!p) return '';
-      var bh = (H - pt - pb) * 0.45 * (p / pmax);
-      return '<rect x="' + (x(i) - 3).toFixed(1) + '" y="' + (H - pb - bh).toFixed(1) + '" width="6" height="' + bh.toFixed(1) + '" rx="1.5" class="wx-bar"/>';
+    /* Næste 24 timer: temperatur og nedbør time for time, så længe tidsskridtet er 1 time. */
+    var hourly = [];
+    for (var i = 0; i < ts.length && hourly.length < 25; i++) {
+      if (i > 0 && (dt(ts[i].t) - dt(ts[i - 1].t)) > 3600 * 1000) break;
+      hourly.push(ts[i]);
+    }
+    function chart() {
+      var W = 560, H = 150, pl = 30, pr = 8, pt = 14, pb = 34, n = hourly.length;
+      var T = hourly.map(function (h) { return h.T; });
+      var tmin = Math.floor(Math.min.apply(null, T) - 1), tmax = Math.ceil(Math.max.apply(null, T) + 1);
+      var pmax = Math.max(2, Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; })));
+      function x(i) { return pl + (W - pl - pr) * i / (n - 1); }
+      function y(v) { return pt + (H - pt - pb) * (1 - (v - tmin) / (tmax - tmin)); }
+      var path = hourly.map(function (h, i) { return (i ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(h.T).toFixed(1); }).join(' ');
+      var bars = hourly.map(function (h, i) {
+        var p = h.p1 || 0; if (!p) return '';
+        var bh = (H - pt - pb) * 0.45 * (p / pmax);
+        return '<rect x="' + (x(i) - 3).toFixed(1) + '" y="' + (H - pb - bh).toFixed(1) + '" width="6" height="' + bh.toFixed(1) + '" rx="1.5" class="wx-bar"/>';
+      }).join('');
+      var grid = '', labels = '';
+      [tmin, Math.round((tmin + tmax) / 2), tmax].forEach(function (v) {
+        grid += '<line x1="' + pl + '" y1="' + y(v).toFixed(1) + '" x2="' + (W - pr) + '" y2="' + y(v).toFixed(1) + '" class="wx-grid"/>';
+        labels += '<text x="' + (pl - 6) + '" y="' + (y(v) + 3).toFixed(1) + '" text-anchor="end" class="wx-axis">' + v + '°</text>';
+      });
+      hourly.forEach(function (h, i) {
+        if (i % 4 === 0) labels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 14) + '" text-anchor="middle" class="wx-axis">' + fmtTime.format(dt(h.t)).slice(0, 2) + '</text>';
+      });
+      var dots = hourly.map(function (h, i) { return i % 4 === 0 ? '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(h.T).toFixed(1) + '" r="2.6" class="wx-pt"/>' : ''; }).join('');
+      return '<svg viewBox="0 0 ' + W + ' ' + H + '" class="wx-chart" role="img" aria-label="Temperatur og nedbør de næste 24 timer">' + grid + bars + '<path d="' + path + '" class="wx-line"/>' + dots + labels + '<text x="' + (W - pr) + '" y="' + (H - 2) + '" text-anchor="end" class="wx-axis">klokkeslæt (lokal tid) · søjler: nedbør pr. time</text></svg>';
+    }
+
+    /* Dage: min/max, symbol ved middag, nedbør pr. døgn (time-værdier hvor de findes, ellers 6-timers-værdier). */
+    function days() {
+      var map = {}, order = [];
+      ts.forEach(function (e) {
+        var d = dt(e.t), k = fmtKey.format(d);
+        if (!map[k]) { map[k] = { k: k, d: d, min: 99, max: -99, p: 0, noon: null, noonDiff: 99 }; order.push(k); }
+        var m = map[k];
+        m.min = Math.min(m.min, e.T); m.max = Math.max(m.max, e.T);
+        if (e.p1 != null && e.s1) m.p += e.p1; else if (e.p6 != null) m.p += e.p6;
+        var hr = parseInt(fmtTime.format(d).slice(0, 2), 10), diff = Math.abs(hr - 13);
+        var s = e.s6 || e.s12 || e.s1;
+        if (s && diff < m.noonDiff) { m.noonDiff = diff; m.noon = s; }
+      });
+      return order.slice(0, 5).map(function (k) { return map[k]; });
+    }
+    var dayRows = days();
+    var daysHtml = dayRows.map(function (m, i) {
+      var s = sym((m.noon || '').replace('_night', '_day'));
+      return '<li class="wx-day"><span class="wx-dn">' + (i === 0 ? 'I dag' : fmtDay.format(m.d)) + '</span>' + icon(s.kind, false, 30) +
+        '<span class="wx-dt"><b>' + r0(m.max) + '°</b> <span>' + r0(m.min) + '°</span></span><span class="wx-dp">' + (m.p >= 0.1 ? r1(m.p) + ' mm' : '') + '</span></li>';
     }).join('');
-    var grid = '', labels = '';
-    [tmin, Math.round((tmin + tmax) / 2), tmax].forEach(function (v) {
-      grid += '<line x1="' + pl + '" y1="' + y(v).toFixed(1) + '" x2="' + (W - pr) + '" y2="' + y(v).toFixed(1) + '" class="wx-grid"/>';
-      labels += '<text x="' + (pl - 6) + '" y="' + (y(v) + 3).toFixed(1) + '" text-anchor="end" class="wx-axis">' + v + '°</text>';
+
+    var p6 = ts[0].p6 != null ? ts[0].p6 : 0;
+    own.innerHTML =
+      '<div class="wx-head"><div><b>Gausta, lejligheden</b><span class="muted"> ca. ' + D.alt + ' m · ' + String(D.lat).replace('.', ',') + ' N, ' + String(D.lon).replace('.', ',') + ' Ø</span></div>' +
+      '<span class="stamp">Hentet ' + fmtFull.format(dt(D.updated_at)) + ' (snapshot)</span></div>' +
+      '<div class="wx-banner" hidden>Kilden svarer ikke. Viser seneste hentede data fra ' + fmtFull.format(dt(D.updated_at)) + '. Tal skjules efter 12 timer uden ny hentning.</div>' +
+      '<div class="wx-now">' + icon(cs.kind, cs.night, 64) +
+      '<div class="wx-big"><b class="num">' + r1(cur.T) + '°</b><span>' + cs.txt + '</span></div>' +
+      '<dl class="wx-meta"><div><dt>Vind</dt><dd>' + r1(cur.ws) + ' m/s fra ' + compass(cur.wd) + '</dd></div><div><dt>Skydække</dt><dd>' + r0(cur.c) + ' %</dd></div><div><dt>Nedbør, næste 6 t</dt><dd>' + r1(p6) + ' mm</dd></div></dl></div>' +
+      '<p class="wx-sub">Næste 24 timer</p>' + chart() +
+      '<p class="wx-sub">Næste dage</p><ul class="wx-days">' + daysHtml + '</ul>' +
+      '<div class="live-foot"><span class="stamp">Data: MET Norway (CC BY 4.0), Locationforecast 2.0</span>' +
+      '<button type="button" class="btn btn-ghost btn-sm wx-sim" aria-pressed="false">Simulér nedbrud</button></div>';
+
+    var sim = own.querySelector('.wx-sim'), banner = own.querySelector('.wx-banner');
+    if (sim) sim.addEventListener('click', function () {
+      var on = sim.getAttribute('aria-pressed') !== 'true';
+      sim.setAttribute('aria-pressed', on ? 'true' : 'false');
+      sim.textContent = on ? 'Fjern nedbrud' : 'Simulér nedbrud';
+      own.classList.toggle('wx-stale', on);
+      banner.hidden = !on;
     });
-    hourly.forEach(function (h, i) {
-      if (i % 4 === 0) labels += '<text x="' + x(i).toFixed(1) + '" y="' + (H - 14) + '" text-anchor="middle" class="wx-axis">' + fmtTime.format(dt(h.t)).slice(0, 2) + '</text>';
-    });
-    var dots = hourly.map(function (h, i) { return i % 4 === 0 ? '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(h.T).toFixed(1) + '" r="2.6" class="wx-pt"/>' : ''; }).join('');
-    return '<svg viewBox="0 0 ' + W + ' ' + H + '" class="wx-chart" role="img" aria-label="Temperatur og nedbør de næste 24 timer">' + grid + bars + '<path d="' + path + '" class="wx-line"/>' + dots + labels + '<text x="' + (W - pr) + '" y="' + (H - 2) + '" text-anchor="end" class="wx-axis">klokkeslæt (lokal tid) · søjler: nedbør pr. time</text></svg>';
   }
 
-  /* Dage: min/max, symbol ved middag, nedbør pr. døgn (time-værdier hvor de findes, ellers 6-timers-værdier). */
-  function days() {
-    var map = {}, order = [];
-    ts.forEach(function (e) {
-      var d = dt(e.t), k = fmtKey.format(d);
-      if (!map[k]) { map[k] = { k: k, d: d, min: 99, max: -99, p: 0, noon: null, noonDiff: 99 }; order.push(k); }
-      var m = map[k];
-      m.min = Math.min(m.min, e.T); m.max = Math.max(m.max, e.T);
-      if (e.p1 != null && e.s1) m.p += e.p1; else if (e.p6 != null) m.p += e.p6;
-      var hr = parseInt(fmtTime.format(d).slice(0, 2), 10), diff = Math.abs(hr - 13);
-      var s = e.s6 || e.s12 || e.s1;
-      if (s && diff < m.noonDiff) { m.noonDiff = diff; m.noon = s; }
-    });
-    return order.slice(0, 5).map(function (k) { return map[k]; });
+  function tile(own) {
+    var c = D.ts[0], sy = sym(c.s1 || c.s6);
+    own.innerHTML = '<small>Vejr</small><b class="num">' + r1(c.T) + '°</b><small>' + sy.txt + ', vind ' + r1(c.ws) + ' m/s</small><small class="verify">snapshot ' + fmtFull.format(dt(D.updated_at)) + ', MET</small>';
   }
-  var dayRows = days();
-  var daysHtml = dayRows.map(function (m, i) {
-    var s = sym((m.noon || '').replace('_night', '_day'));
-    return '<li class="wx-day"><span class="wx-dn">' + (i === 0 ? 'I dag' : fmtDay.format(m.d)) + '</span>' + icon(s.kind, false, 30) +
-      '<span class="wx-dt"><b>' + r0(m.max) + '°</b> <span>' + r0(m.min) + '°</span></span><span class="wx-dp">' + (m.p >= 0.1 ? r1(m.p) + ' mm' : '') + '</span></li>';
-  }).join('');
 
-  var p6 = ts[0].p6 != null ? ts[0].p6 : 0;
-  own.innerHTML =
-    '<div class="wx-head"><div><b>Gausta, lejligheden</b><span class="muted"> ca. ' + D.alt + ' m · ' + String(D.lat).replace('.', ',') + ' N, ' + String(D.lon).replace('.', ',') + ' Ø</span></div>' +
-    '<span class="stamp" id="wx-stamp">Hentet ' + fmtFull.format(dt(D.updated_at)) + ' (snapshot)</span></div>' +
-    '<div class="wx-banner" id="wx-banner" hidden>Kilden svarer ikke. Viser seneste hentede data fra ' + fmtFull.format(dt(D.updated_at)) + '. Tal skjules efter 12 timer uden ny hentning.</div>' +
-    '<div class="wx-now">' + icon(cs.kind, cs.night, 64) +
-    '<div class="wx-big"><b class="num">' + r1(cur.T) + '°</b><span>' + cs.txt + '</span></div>' +
-    '<dl class="wx-meta"><div><dt>Vind</dt><dd>' + r1(cur.ws) + ' m/s fra ' + compass(cur.wd) + '</dd></div><div><dt>Skydække</dt><dd>' + r0(cur.c) + ' %</dd></div><div><dt>Nedbør, næste 6 t</dt><dd>' + r1(p6) + ' mm</dd></div></dl></div>' +
-    '<p class="wx-sub">Næste 24 timer</p>' + chart() +
-    '<p class="wx-sub">Næste dage</p><ul class="wx-days">' + daysHtml + '</ul>' +
-    '<div class="live-foot"><span class="stamp">Data: MET Norway (CC BY 4.0), Locationforecast 2.0</span>' +
-    '<button type="button" class="btn btn-ghost btn-sm wx-sim" id="wx-sim" aria-pressed="false">Simulér nedbrud</button></div>';
-
-  var sim = document.getElementById('wx-sim'), banner = document.getElementById('wx-banner');
-  if (sim) sim.addEventListener('click', function () {
-    var on = sim.getAttribute('aria-pressed') !== 'true';
-    sim.setAttribute('aria-pressed', on ? 'true' : 'false');
-    sim.textContent = on ? 'Fjern nedbrud' : 'Simulér nedbrud';
-    own.classList.toggle('wx-stale', on);
-    banner.hidden = !on;
-  });
+  [].forEach.call(mounts, function (m) { (m.getAttribute('data-weather') === 'tile' ? tile : full)(m); });
 
   /* Variant 1: Yr-widget indlæses først ved klik, fordi iframe og billede kontakter yr.no med besøgendes IP. */
   if (yrBox) {

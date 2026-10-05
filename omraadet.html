@@ -43,12 +43,13 @@
     <p class="eyebrow">A5 · Gausta nu</p>
     <h2 data-en="Conditions right now.">Forholdene lige nu.</h2>
     <div class="live reveal" style="margin-top:20px">
-      <div><small data-en="Weather">Vejr</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+      <div data-weather="tile"></div>
       <div><small data-en="Snow depth and grooming">Snedybde og præparering</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
       <div><small data-en="Lifts and slopes open">Åbne lifte og pister</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
       <div><small>Webcam</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
     </div>
-    <div class="live-foot"><span class="stamp">Sidst opdateret: aldrig (prototype)</span></div>
+    <div class="card reveal" style="margin-top:20px"><div data-weather="full"></div></div>
+    <div class="live-foot"><span class="stamp">Vejr: snapshot fra MET. Øvrige felter er ikke koblet endnu (prototype).</span></div>
   </div>
 </section>
 <section class="section band-soft" id="events">
@@ -70,6 +71,8 @@
   </div>
 </section>
 <script src="app.js"></script>
+<script src="weather-data.js"></script>
+<script src="weather.js"></script>
 <script src="area-map-data.js"></script>
 <script src="area.js"></script>
 </body>

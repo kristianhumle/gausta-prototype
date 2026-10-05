@@ -90,7 +90,7 @@
       <h2 data-en="Conditions right now.">Forholdene lige nu.</h2>
     </div>
     <div class="live reveal">
-      <div><small data-en="Temperature">Temperatur</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
+      <div data-weather="tile"></div>
       <div><small data-en="Snow depth">Snedybde</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
       <div><small data-en="Lifts open">Åbne lifte</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
       <div><small data-en="Road conditions">Vejforhold</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
@@ -155,6 +155,8 @@
 </section>
 
 <script src="app.js"></script>
+<script src="weather-data.js"></script>
+<script src="weather.js"></script>
 <script src="plan.js"></script>
 <script>
 document.addEventListener('gl:ready', function () {
