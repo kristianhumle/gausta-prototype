@@ -15,10 +15,10 @@
       photos: [[L(10),'Køjeseng']] },
     { id: 'bad', name: 'Bad', dim: '4 m²', desc: 'Badeværelse med bruser, vask og vaskemaskine.', poly: [[750,312],[860,312],[860,390],[750,390]], label: [805,342], pin: [845,327],
       photos: [[L(9),'Bad med vaskemaskine'],[L(23),'Bad'],[L(6),'Bad, detalje'],[L(22),'Håndklæder']] },
-    { id: 'kstue', name: 'Køkken og stue', dim: '34 m²', desc: 'Åbent køkken og opholdsstue med spisebord, brændeovn, sofa og store vinduer. Herfra er der adgang til terrassen.', poly: [[552,318],[750,318],[750,660],[552,660]], label: [650,490], pin: [574,372],
-      photos: [[L(5),'Stue og spisebord'],[L(3),'Køkken og spisebord'],[L(16),'Køkken'],[L(31),'Køkken'],[L(18),'Køkkenkrog'],[L(21),'Stue'],[L(19),'Stue'],[L(30),'Stue'],[L(34),'Stue'],[L(14),'Stue'],[L(15),'Stue'],[L(4),'Brændeovn'],[L(11),'Sofabord'],[L(25),'Terrassedør med gardin'],[L(1),'Detalje']] },
-    { id: 'stuesov', name: 'TV-stue / soveværelse', lines: ['TV-stue /','soveværelse'], dim: '10 m²', desc: 'TV-stue med sofa og tv, som også kan bruges som ekstra soveværelse.', poly: [[750,416],[860,416],[860,640],[750,640]], label: [805,500], pin: [845,431],
-      photos: [[L(24),'Tv-hjørne'],[L(27),'Sofa og tv'],[L(12),'Seng og tv'],[L(32),'Seng med terrassedør']] },
+    { id: 'kstue', name: 'Køkken og stue', dim: '34 m²', desc: 'Åbent køkken og opholdsstue med spisebord, brændeovn, sofa og store vinduer.', poly: [[552,318],[750,318],[750,660],[552,660]], label: [650,490], pin: [574,372],
+      photos: [[L(5),'Stue og spisebord'],[L(3),'Køkken og spisebord'],[L(16),'Køkken'],[L(31),'Køkken'],[L(18),'Køkkenkrog'],[L(21),'Stue'],[L(19),'Stue'],[L(30),'Stue'],[L(34),'Stue'],[L(14),'Stue'],[L(15),'Stue'],[L(4),'Brændeovn'],[L(11),'Sofabord'],[L(1),'Detalje']] },
+    { id: 'stuesov', name: 'TV-stue / soveværelse', lines: ['TV-stue /','soveværelse'], dim: '10 m²', desc: 'TV-stue med sofa og tv, som også kan bruges som ekstra soveværelse. Herfra er der adgang til terrassen gennem terrassedøren.', poly: [[750,416],[860,416],[860,640],[750,640]], label: [805,500], pin: [845,431],
+      photos: [[L(24),'Tv-hjørne'],[L(27),'Sofa og tv'],[L(12),'Seng og tv'],[L(32),'Seng med terrassedør'],[L(25),'Terrassedør med gardin']] },
     { id: 'terrasse', name: 'Terrasse', dim: '25 m²', desc: 'Terrasse med plads til udemøbler og sol det meste af dagen.', poly: [[552,660],[860,660],[860,815],[552,815]], label: [705,738], pin: [705,775],
       photos: [['sommer/sommer-01','Terrassen om sommeren']] },
     { id: 'outside', name: 'Uden for planen', short: 'Uden for planen', dim: '', desc: 'Bygningen udefra, indgangen og depotrum uden for selve lejligheden.', photos: [[L(8),'Bygningen udefra'],[L(26),'Indgang udefra'],[L(20),'Depot'],[L(33),'Depot']] }
@@ -52,7 +52,7 @@
       '<path class="pw" d="M668 212V318M552 318H668M750 212V590M750 312H860M750 416H860" stroke-width="3" fill="none"/>' +
       '<rect class="pwf" x="668" y="318" width="26" height="82"/>' +
       '<rect class="pwf" x="750" y="390" width="110" height="26"/>' +
-      '<rect class="pwf" x="688" y="588" width="22" height="36"/>' +
+      '<rect class="pwf" x="688" y="622" width="22" height="36"/>' +
       // kitchen counter
       '<path class="pf" d="M552 318H668V346H552z"/><circle class="pf" cx="568" cy="332" r="5"/><circle class="pf" cx="590" cy="332" r="5"/><rect class="pf" x="640" y="325" width="14" height="14"/>' +
       // windows
@@ -62,7 +62,8 @@
       '<rect class="gap" x="665" y="240" width="7" height="40"/><path class="pdoor" d="M668 240A40 40 0 0 1 668 280"/>' +
       '<rect class="gap" x="747" y="240" width="7" height="40"/><path class="pdoor" d="M750 240A40 40 0 0 0 750 280"/>' +
       '<rect class="gap" x="747" y="322" width="7" height="34"/><path class="pdoor" d="M750 322A34 34 0 0 0 750 356"/>' +
-      '<rect class="gap" x="712" y="586" width="36" height="7"/><path class="pdoor" d="M748 590A36 36 0 0 1 712 626"/>' +
+      // terrassedør i TV-stuen (sydvæggen): hul i væggen, døren svinger ud mod terrassen
+      '<rect class="gap" x="785" y="657" width="40" height="7"/><path class="pdoor" d="M825 660A40 40 0 0 1 785 700"/>' +
       '</g>' +
       // terrace railing
       '<path class="prail" d="M552 660V815H860V660"/>' +
