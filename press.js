@@ -1,4 +1,5 @@
-/* Omtale i medier (A10): sideelementer.html#e-press.
+/* Omtale i medier (A10): sideelementer.html#e-press og forsiden (#omtale).
+   SKITSE. Kravet til produktion står i teknisk/omtale-i-medier.md, afsnit 12; ved uenighed gælder det.
    Valgt 5. oktober 2026 (Brugeroplysning): version 1 (kort med logo, nu som karrusel) og version 4 (liste med filter).
    Data er et UDVALG fra kandidatlisten (teknisk/omtale-i-medier-kandidater.md, 5. oktober 2026), IKKE godkendt af ejeren.
    Hver omtale viser overskrift og citat(er) fra artiklen (Brugeroplysning 5. oktober 2026: citater frem for eget resumé).
