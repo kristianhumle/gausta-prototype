@@ -8,10 +8,10 @@
   var more = box.querySelector('[data-live-more]');
   var NAMES = { winter: 'Vinter (nov til feb)', spring: 'Forår (mar til apr)', summer: 'Sommer (maj til aug)', autumn: 'Efterår (sep til okt)' };
   var MORE = {
-    winter: 'Bag "Vejr, webcam og mere" i vinter: langrend, dagslys, Gaustabanen.',
-    spring: 'Bag "Vejr, webcam og mere" i forår: vejforhold, langrend, Gaustabanen. UV og solnedgang er samlet i flisen \"Sol i dag\".',
-    summer: 'Sommer har kun tre fliser, efter at nedbør og torden og sommeraktiviteter er fjernet. Her kan en fjerde vælges. UV og solnedgang er samlet i flisen \"Sol i dag\".',
-    autumn: 'Bag "Vejr, webcam og mere" i efterår: dagslys. Første sne på toppen erstatter flisen \"Sol i dag\", når der er sne. UV og solnedgang er ellers samlet i den flise.'
+    winter: 'Bag "Vejr, webcam og mere" i vinter: langrend, solnedgang, Gaustabanen.',
+    spring: 'Bag "Vejr, webcam og mere" i forår: langrend, Gaustabanen, toppen af Gaustatoppen.',
+    summer: 'Bag "Vejr, webcam og mere" i sommer: ingenting ud over vejret og webcams.',
+    autumn: 'Bag "Vejr, webcam og mere" i efterår: ingenting ud over vejret og webcams. Første sne på toppen erstatter flisen \"Sol i dag\", når der er sne.'
   };
   function set(s) {
     box.setAttribute('data-live', s);
