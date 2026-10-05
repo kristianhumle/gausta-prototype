@@ -186,6 +186,7 @@
   var MATERIALS = [
     { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'ski-in-ski-out'] },
     { href: 'moodboard.html', label: 'Moodboard', match: ['moodboard'] },
+    { href: 'logo-udkast.html', label: 'Logo', match: ['logo-udkast'] },
     { href: 'designsystem.html', label: 'Designsystem', match: ['designsystem'] },
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
     { href: 'gaest.html', label: 'Gæsteområde', match: ['gaest'] },
