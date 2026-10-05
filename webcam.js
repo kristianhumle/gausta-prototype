@@ -1,9 +1,8 @@
-/* Webcams: seks måder at vise dem på (sideelementer.html, e-webcams).
+/* Webcams: to måder at vise dem på (sideelementer.html, e-webcams): version 2 (stillbillede) og version 3 (faner).
    Pladsholder-scener er tegnet af designets egne farver (ingen tredjepartsbilleder).
-   Tre rigtige kilder kan indlæses, alle først ved klik, så siden ikke kontakter tredjepart af sig selv:
+   To rigtige kilder kan indlæses, begge først ved klik, så siden ikke kontakter tredjepart af sig selv:
    1) Statens vegvesen, Fv 37 Jønjiljo (stillbillede, NLOD)
-   2) Gaustabanen, toppen af Gaustatoppen (stillbillede fra ipcamlive, opdateres hvert 10. sekund)
-   3) Gausta LIVE (YouTube, Norway Live) via youtube-nocookie.com */
+   2) Gaustabanen, toppen af Gaustatoppen (stillbillede fra ipcamlive, opdateres hvert 10. sekund) */
 (function () {
   'use strict';
   var root = document.getElementById('e-webcams');
@@ -13,7 +12,6 @@
     veg: { url: 'https://kamera.atlas.vegvesen.no/api/images/0829010_1', alt: 'Vejkamera Fv 37 Jønjiljo, Statens vegvesen', refresh: 0, label: 'Indlæs rigtigt billede (kontakter Statens vegvesen)', idle: 'Eksempel: ikke hentet endnu' },
     top: { url: 'https://g0.ipcamlive.com/player/snapshot.php?alias=gabakontortopp', alt: 'Gaustatoppen, kamera fra Gaustabanen', refresh: 10000, label: 'Indlæs live-billede fra Gaustatoppen (kontakter Gaustabanen)', idle: 'Ikke hentet endnu' }
   };
-  var YT_ID = 'NGGIyXwoSiU';
   var timeFmt = new Intl.DateTimeFormat('da-DK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   var tabTimers = [];
 
@@ -131,26 +129,5 @@
       });
     });
     show('top');
-  }
-
-  /* Version 5: rigtig live-stream (Gausta LIVE, YouTube) indlæses først ved klik, via youtube-nocookie.com. */
-  var live = root.querySelector('[data-live]');
-  if (live) {
-    var lb = live.querySelector('button');
-    var poster = live.querySelector('[data-live-poster]');
-    var msg = live.querySelector('[data-live-msg]');
-    var posterHtml = poster.innerHTML;
-    lb.addEventListener('click', function () {
-      var on = poster.getAttribute('data-loaded') === '1';
-      if (on) {
-        poster.innerHTML = posterHtml; poster.setAttribute('data-loaded', '0');
-        lb.textContent = 'Indlæs live (kontakter YouTube)'; msg.hidden = true;
-        return;
-      }
-      poster.innerHTML = '<div class="wc-frame"><div class="wc-img"><iframe title="Gausta LIVE (Norway Live på YouTube)" src="https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe></div></div>';
-      poster.setAttribute('data-loaded', '1');
-      lb.textContent = 'Fjern afspiller';
-      msg.hidden = false;
-    });
   }
 })();

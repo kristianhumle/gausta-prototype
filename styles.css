@@ -773,20 +773,6 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wc-tabs { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
 .wc-tabs [role="tab"] { border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 99px; padding: 6px 13px; font: inherit; font-size: .84rem; cursor: pointer; }
 .wc-tabs [role="tab"][aria-selected="true"] { background: var(--accent-weak); color: var(--accent-text); border-color: transparent; font-weight: 650; }
-.wc-strip { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-.wc-strip a { text-decoration: none; color: inherit; display: block; }
-.wc-strip .wc-img { border: 1px solid var(--border); }
-.wc-strip small { display: block; margin-top: 4px; font-size: .74rem; color: var(--muted); line-height: 1.3; }
-.wc-live-poster { position: relative; }
-.wc-play { position: absolute; inset: 0; display: grid; place-items: center; }
-.wc-play span { width: 54px; height: 54px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 88%, transparent); display: grid; place-items: center; box-shadow: var(--shadow-sm); }
-.wc-play svg { position: static; width: 22px; height: 22px; fill: var(--accent); }
-.wc-stale .wc-img svg, .wc-stale .wc-img img { opacity: .5; filter: grayscale(.7); }
-.wc-state-msg { font-size: .82rem; margin-top: 8px; color: var(--text); }
-.wc-state-msg b { font-weight: 650; }
 .wc-cmp td, .wc-cmp th { font-size: .82rem; vertical-align: top; }
 .wc-cmp th:first-child, .wc-cmp td:first-child { font-weight: 650; }
 .wc-pick { background: var(--accent-weak); }
-@media (max-width: 600px) { .wc-strip { grid-template-columns: 1fr; } }
-.wc-strip .wc-ph { font-size: .52rem; padding: 1px 5px; left: 4px; bottom: 4px; letter-spacing: .04em; }
-.wc-strip .wc-badge { font-size: .6rem; padding: 1px 6px; top: 4px; right: 4px; }
