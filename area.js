@@ -147,11 +147,13 @@
       var d = dataOf();
       panel.innerHTML = '<div class="slot"><b>' + MAPS[cur].head + '</b>' + verb + ' på et sted eller på ' + MAPS[cur].clusterName + ' for at zoome ind. Alle oplysninger er kildepåstande og skal verificeres.</div>' +
         '<div class="am-list">' + d.pois.filter(catOn).map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
+      panel.scrollTop = 0;
     }
     function panelList(sel, title) {
       var mem = memberPois(sel);
       panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + mem.length + ' steder</span></div><h3 style="margin:0 0 10px">' + title + '</h3>' +
         '<div class="am-list">' + mem.map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
+      panel.scrollTop = 0;
     }
     function panelPoi(p) {
       var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
@@ -160,6 +162,7 @@
         (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '<div class="faint" style="margin:-2px 0 4px">Målt i luftlinje fra Skipsfjellvegen 52. Skal verificeres.</div>') +
         '<p class="plan-desc">' + esc(p.t) + '</p>' + (p.h ? '<p class="faint">' + esc(p.h) + '</p>' : '') +
         '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '<span class="verify">position fra ' + esc(p.src) + ', skal verificeres</span></div>';
+      panel.scrollTop = 0;
     }
     function select(sel, kind) {
       var st = S[cur]; st.sel = sel;

@@ -688,7 +688,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wx-pick { background: var(--accent-weak); }
 
 /* Området: rigtige kort (omtegnet fra åbne kortdata) */
-.am-grid { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); align-items: start; }
+.am-grid { grid-template-columns: minmax(0, 2.3fr) minmax(0, 1fr); align-items: stretch; }
+/* Listen til højre er aldrig højere end kortet: panelet bidrager ikke til rækkens højde (contain: size), fylder den og ruller */
+.am-grid > .area-panel { contain: size; overflow-y: auto; overscroll-behavior: contain; min-height: 0; padding-right: 6px; scrollbar-width: thin; }
 .am-col { min-width: 0; }
 .am-wrap { position: relative; border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; background: var(--surface); }
 .am-svg { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
@@ -732,7 +734,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .am-list button:hover { border-color: var(--accent); }
 .am-list button span { font-size: .78rem; white-space: nowrap; }
 .am-switch { margin-bottom: 8px; }
-@media (max-width: 860px) { .am-grid { grid-template-columns: 1fr; } }
+@media (max-width: 860px) { .am-grid { grid-template-columns: 1fr; } .am-grid > .area-panel { contain: none; max-height: 420px; } }
 @media (max-width: 520px) { .am-pin { width: 32px; height: 32px; } .am-l { font-size: .68rem; padding: 2px 6px; } .am-pin.am-lab:not(.sel) .am-l { display: none; } }
 
 .am-pin.am-lab-l .am-l { left: auto; right: calc(100% + 6px); }
