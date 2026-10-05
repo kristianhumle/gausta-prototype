@@ -776,3 +776,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wc-cmp td, .wc-cmp th { font-size: .82rem; vertical-align: top; }
 .wc-cmp th:first-child, .wc-cmp td:first-child { font-weight: 650; }
 .wc-pick { background: var(--accent-weak); }
+
+.wc-list .wc-grp td { background: var(--elevated); font-weight: 650; font-size: .78rem; letter-spacing: .04em; text-transform: uppercase; color: var(--muted); }
+.wc-list td { word-break: break-word; }
+.wc-all > summary { cursor: pointer; }
+.wc-list .pill-tag { white-space: nowrap; padding: 2px 8px; font-size: .7rem; }
+.wc-list td, .wc-list th { padding: 7px 10px; }
