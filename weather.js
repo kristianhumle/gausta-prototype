@@ -72,8 +72,10 @@
       if (i > 0 && (dt(ts[i].t) - dt(ts[i - 1].t)) > 3600 * 1000) break;
       hourly.push(ts[i]);
     }
+    var DEMO_RAIN = [0, 0, 0, 0.3, 0.8, 1.4, 2.2, 1.6, 0.9, 0.4, 0.2, 0, 0, 0.1, 0.3, 0.6, 0.4, 0.2, 0, 0, 0, 0, 0, 0, 0];
+    if (own._rain) hourly = hourly.map(function (h, i) { var o = {}; for (var k in h) o[k] = h[k]; o.p1 = DEMO_RAIN[i] || 0; return o; });
     function chart() {
-      var W = Math.round(Math.max(300, Math.min(1000, own.clientWidth || 560))), H = 138, pl = 30, pr = 8, pt = 12, pb = 24, n = hourly.length;
+      var W = Math.round(Math.max(300, Math.min(1000, own.clientWidth || 560))), H = Math.round(Math.max(150, Math.min(190, (own.clientWidth || 560) * 0.22))), pl = 30, pr = 8, pt = 12, pb = 24, n = hourly.length;
       var T = hourly.map(function (h) { return h.T; });
       var tmin = Math.floor(Math.min.apply(null, T) - 1), tmax = Math.ceil(Math.max.apply(null, T) + 1);
       var pmax = Math.max(2, Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; })));
@@ -115,23 +117,27 @@
     var dayRows = days();
     var daysHtml = dayRows.map(function (m, i) {
       var s = sym((m.noon || '').replace('_night', '_day'));
-      return '<li class="wx-day"><span class="wx-dn">' + (i === 0 ? 'I dag' : fmtDay.format(m.d)) + '</span>' + icon(s.kind, false, 30) +
+      return '<li class="wx-day"><span class="wx-dn">' + (i === 0 ? 'I dag' : fmtDay.format(m.d)) + '</span>' + icon(s.kind, false, 24) +
         '<span class="wx-dt"><b>' + r0(m.max) + '°</b> <span>' + r0(m.min) + '°</span></span><span class="wx-dp">' + (m.p >= 0.1 ? r1(m.p) + ' mm' : '') + '</span></li>';
     }).join('');
 
     var p6 = ts[0].p6 != null ? ts[0].p6 : 0;
+    if (own._rain) p6 = DEMO_RAIN.slice(0, 6).reduce(function (a, b) { return a + b; }, 0);
     own.innerHTML =
       '<div class="wx-head"><div><b>Gausta</b></div>' +
-      '<span class="stamp">Hentet ' + fmtFull.format(dt(D.updated_at)) + ' (snapshot)</span></div>' +
+      '<span class="stamp">Hentet ' + fmtFull.format(dt(D.updated_at)) + '</span></div>' +
       '<div class="wx-banner" hidden>Kilden svarer ikke. Viser seneste hentede data fra ' + fmtFull.format(dt(D.updated_at)) + '. Tal skjules efter 12 timer uden ny hentning.</div>' +
       '<div class="wx-now">' + icon(cs.kind, cs.night, 64) +
       '<div class="wx-big"><b class="num">' + r1(cur.T) + '°</b><span>' + cs.txt + '</span></div>' +
       '<dl class="wx-meta"><div><dt>Vind</dt><dd>' + r1(cur.ws) + ' m/s fra ' + compass(cur.wd) + '</dd></div><div><dt>Skydække</dt><dd>' + r0(cur.c) + ' %</dd></div><div><dt>Nedbør, næste 6 t</dt><dd>' + r1(p6) + ' mm</dd></div></dl></div>' +
-      '<p class="wx-sub">Næste 24 timer</p>' + chart() + '<p class="wx-cap">Klokkeslæt (lokal tid) · søjler: nedbør pr. time</p>' +
+      '<p class="wx-sub">Næste 24 timer</p>' + chart() + '<p class="wx-cap">Klokkeslæt (lokal tid) · søjler: nedbør pr. time' + (hourly.some(function (h) { return h.p1 > 0; }) ? ' (højeste ' + r1(Math.max.apply(null, hourly.map(function (h) { return h.p1 || 0; }))) + ' mm)' : '') + (own._rain ? ' · <b>EKSEMPEL: nedbøren er opfundet</b>' : '') + '</p>' +
       '<p class="wx-sub">Næste dage</p><ul class="wx-days">' + daysHtml + '</ul>' +
       '<div class="live-foot"><span class="stamp">Data: MET Norway</span>' +
-      '<button type="button" class="btn btn-ghost btn-sm wx-sim" aria-pressed="false">Simulér nedbrud</button></div>';
+      '<span class="wx-btns"><button type="button" class="btn btn-ghost btn-sm wx-rain" aria-pressed="' + (own._rain ? 'true' : 'false') + '">' + (own._rain ? 'Skjul eksempel med nedbør' : 'Vis eksempel med nedbør') + '</button>' +
+      '<button type="button" class="btn btn-ghost btn-sm wx-sim" aria-pressed="false">Simulér nedbrud</button></span></div>';
 
+    var rainBtn = own.querySelector('.wx-rain');
+    if (rainBtn) rainBtn.addEventListener('click', function () { own._rain = !own._rain; full(own); });
     var sim = own.querySelector('.wx-sim'), banner = own.querySelector('.wx-banner');
     if (wasStale && sim) { sim.setAttribute('aria-pressed', 'true'); sim.textContent = 'Fjern nedbrud'; own.classList.add('wx-stale'); banner.hidden = false; }
     if (sim) sim.addEventListener('click', function () {

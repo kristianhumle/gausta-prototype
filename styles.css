@@ -671,15 +671,16 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wx-chart { width: 100%; height: auto; display: block; }
 .wx-line { fill: none; stroke: var(--accent); stroke-width: 2.2; stroke-linejoin: round; stroke-linecap: round; }
 .wx-pt { fill: var(--surface); stroke: var(--accent); stroke-width: 1.8; }
-.wx-bar { fill: var(--accent); opacity: .35; }
+.wx-bar { fill: var(--accent); opacity: .5; }
 .wx-grid { stroke: var(--border); stroke-width: 1; }
 .wx-axis { font-size: 9.5px; fill: var(--faint); font-family: var(--font-mono); }
+.wx-btns { display: inline-flex; flex-wrap: wrap; gap: 8px; }
 .wx-cap { margin: 2px 0 0; font-size: .72rem; line-height: 1.3; color: var(--faint); font-family: var(--font-mono); }
-.wx-days { list-style: none; padding: 0; margin: 4px 0 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(74px, 1fr)); gap: 8px; }
-.wx-day { display: grid; justify-items: center; gap: 4px; padding: 10px 6px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); text-align: center; }
-.wx-dn { font-size: .78rem; font-weight: 650; } .wx-dn::first-letter { text-transform: uppercase; }
-.wx-dt { font-size: .86rem; } .wx-dt span { color: var(--muted); }
-.wx-dp { font-size: .72rem; color: var(--accent-text); min-height: 1em; font-family: var(--font-mono); }
+.wx-days { list-style: none; padding: 0; margin: 4px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(66px, 84px)); justify-content: start; gap: 8px; }
+.wx-day { display: grid; justify-items: center; gap: 2px; padding: 6px 4px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--bg); text-align: center; }
+.wx-dn { font-size: .72rem; font-weight: 650; } .wx-dn::first-letter { text-transform: uppercase; }
+.wx-dt { font-size: .78rem; } .wx-dt span { color: var(--muted); }
+.wx-dp { font-size: .66rem; color: var(--accent-text); min-height: 1em; font-family: var(--font-mono); }
 .wx-banner { background: color-mix(in srgb, var(--amber) 14%, transparent); border: 1px solid color-mix(in srgb, var(--amber) 45%, var(--border)); color: var(--text); padding: 10px 12px; border-radius: var(--radius-sm); font-size: .84rem; margin-bottom: 10px; }
 .wx-stale .wx-now, .wx-stale .wx-chart, .wx-stale .wx-days { opacity: .55; filter: grayscale(.6); }
 .wx-cmp td, .wx-cmp th { font-size: .82rem; vertical-align: top; }
