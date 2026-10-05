@@ -16,7 +16,7 @@
   <p class="lead">Ét sted for hver byggeklods. Hvert element vises levende, med status og de krav i kravspecifikationen, det opfylder. Det er katalogets formål at fungere som input til den tekniske og designmæssige specifikation.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span></div>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-booking">Booking-slot</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
   </div>
 
   <div class="spec-block" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
@@ -183,6 +183,61 @@
     <div class="spec-note"><b>Krav:</b> A5 "Gausta nu" (kamera-del) og gæsteområdet. <b>Kilder:</b> <a href="../teknisk/datakilder/08-webcams.md">webcam-analysen</a>, læst 3. oktober 2026. <b>Vigtigt:</b> Gaustabanens topkamera kan ikke indlejres (kilden spærrer for andre sider). Gaustas pistebilleder var 6 til 10 dage gamle 3. oktober (off-season). I testen hentes Gaustabanens stillbillede direkte fra kildens (ikke-officielle) billed-URL, og rettighederne er uafklarede. Statens vegvesens vejbilleder har åben licens (NLOD, kreditering skal verificeres). YouTube-streamen (fanen Live) kan indlejres, men skifter scene ca. hvert 15. sekund, kontakter YouTube efter klik, og Norway Live skriver kun, at indholdet kan vises videre og at man kan kontakte dem. <b>Regel (forslag):</b> skjul billeder ældre end 2 timer, og vis et fast foto og et link i stedet. <b>Åbent:</b> hvilke kameraer, og om vejbilleder skal ligge i gæsteområdet.</div>
   </div>
 
+  <div class="spec-block" id="e-press"><div class="spec-head"><h3>Omtale i medier: fem måder at vise det på</h3><div class="row-flex"><span class="pill-tag">forside, Gausta og omegn · A10</span><span class="status research">Research</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin-top:0"><b>Udkast 5. oktober 2026:</b> fem versioner af, hvordan omtale af <b>Gausta som destination</b> kan vises. Alle bruger de samme data og samme regler: besøgende vælger land, redaktøren angiver i CMS, hvilke lande hver omtale vises til, og findes der ingen for landet, vises de internationale. Indholdet er et <b>udvalg fra <a href="../teknisk/omtale-i-medier-kandidater.md">kandidatlisten</a>, ikke godkendt</b>. Resuméer er egne ord. Citaterne er korte og skal tjekkes, før de bruges. Logoer er <b>pladsholdere</b> (mediets navn som tekst), indtil rettigheden er afklaret.</p>
+      <div class="pr-market"><span class="muted">Land (fælles for alle versioner):</span><div class="row-flex" role="group" aria-label="Vælg land" data-press-market></div><span class="muted" data-press-count></span></div>
+
+      <div class="wc-ver pr-ver" id="e-press-v1" style="margin-bottom:18px">
+        <h4>Version 1: kort med logo</h4>
+        <p class="tagline">Forsiden. Tre til fire udvalgte omtaler som kort med logo, resumé og link.</p>
+        <div data-press="v1"></div>
+        <ul class="wx-facts"><li><b>Fordel:</b> giver mest information og tillid. Følger specifikationen direkte.</li><li><b>Ulempe:</b> fylder meget, og dansk og svensk omtale er tynd (nichemedier og blogs).</li></ul>
+      </div>
+
+      <div class="pr-grid">
+        <div class="wc-ver pr-ver" id="e-press-v2">
+          <h4>Version 2: fremhævet citat</h4>
+          <p class="tagline">Forsiden eller Gausta og omegn. Ét kort citat ad gangen med medie og link. Ingen automatisk rotation.</p>
+          <div data-press="v2"></div>
+          <ul class="wx-facts"><li><b>Fordel:</b> stærkt visuelt udtryk og lidt plads. Godt sammen med en hero.</li><li><b>Ulempe:</b> bygger på citater, som kræver en rettighedsvurdering. Citater fra inviterede ture skal mærkes ved citatet.</li></ul>
+        </div>
+
+        <div class="wc-ver pr-ver" id="e-press-v3">
+          <h4>Version 3: logobånd "Gausta er omtalt i"</h4>
+          <p class="tagline">Et diskret bånd med logoer, der linker til artiklerne, og et link til alle omtaler.</p>
+          <div data-press="v3"></div>
+          <ul class="wx-facts"><li><b>Fordel:</b> mindst plads og hurtigst genkendelse. Passer også på Ski-in/ski-out.</li><li><b>Ulempe:</b> afhænger helt af rigtige logoer (rettighed uafklaret) og forklarer ikke, hvad der står. Kan let ligne en anbefaling af lejligheden.</li></ul>
+        </div>
+
+        <div class="wc-ver pr-ver" id="e-press-v5">
+          <h4>Version 5: følger årstiden</h4>
+          <p class="tagline">Om vinteren skiområdet, resten af året Gaustatoppen. Prøv sæsonvælgeren i toppen.</p>
+          <div data-press="v5"></div>
+          <ul class="wx-facts"><li><b>Fordel:</b> passer til årstidsdesignet, og omtalen af Gaustatoppen (udsigt, vandring) er stærkest om sommeren.</li><li><b>Ulempe:</b> kræver et felt for årstid pr. omtale i CMS. Få omtaler pr. land og årstid.</li></ul>
+        </div>
+      </div>
+
+      <div class="wc-ver pr-ver" id="e-press-v4" style="margin-top:18px">
+        <h4>Version 4: liste med filter (egen side under Gausta og omegn)</h4>
+        <p class="tagline">Alle omtaler for landet, med filter på type og årstid. Sprogmærke, når artiklen ikke er på dansk.</p>
+        <div data-press="v4"></div>
+        <ul class="wx-facts"><li><b>Fordel:</b> plads til alle omtaler og ærlig mærkning (betalingsmur, inviteret tur, dato).</li><li><b>Ulempe:</b> en side, som få finder uden et link fra forsiden. Gamle artikler bliver synlige.</li></ul>
+      </div>
+
+      <h4 style="margin:26px 0 8px">Sammenligning</h4>
+      <div style="overflow-x:auto"><table class="wc-cmp"><thead><tr><th></th><th>1 Kort</th><th>2 Citat</th><th>3 Logobånd</th><th>4 Liste</th><th>5 Årstid</th></tr></thead><tbody>
+        <tr><td>Placering</td><td>Forside</td><td>Forside, omegn</td><td>Forside, ski-side</td><td>Egen side</td><td>Forside</td></tr>
+        <tr><td>Plads</td><td>Stor</td><td>Lille</td><td>Mindst</td><td>Hel side</td><td>Mellem</td></tr>
+        <tr><td>Kræver rigtige logoer</td><td>Nej (navn virker)</td><td>Nej</td><td><b>Ja</b></td><td>Nej</td><td>Nej</td></tr>
+        <tr><td>Kræver citater</td><td>Nej</td><td><b>Ja</b></td><td>Nej</td><td>Nej</td><td><b>Ja</b></td></tr>
+        <tr><td>Virker med få omtaler (DK, SE)</td><td>Ja</td><td>Ja</td><td>Svagt</td><td>Ja</td><td>Svagt</td></tr>
+        <tr><td>Ekstra CMS-felt</td><td>Nej</td><td>Citat</td><td>Nej</td><td>Nej</td><td>Citat og årstid</td></tr>
+      </tbody></table></div>
+      <div class="notice" style="margin-top:14px"><b>Forslag (Inference):</b> version 1 på forsiden og version 4 som egen side, med version 3 som lille bånd på Ski-in/ski-out, når logoerne er afklaret. Version 2 og 5 kan bruges, hvis du vælger at vise citater.</div>
+    </div>
+    <div class="spec-note"><b>Krav:</b> A10. <b>Regler fra <a href="../teknisk/omtale-i-medier.md">definitionen</a>:</b> sektionen hedder "omtale af Gausta", ikke anmeldelser af lejligheden. Ingen stjernescore (Skiresort.info vises uden score). Links åbner i ny fane. Faste data bygget ind ved publicering, ingen kald til medierne (N19). <b>Mærker:</b> sprog, betalingsmur og "Inviteret tur", når artiklen selv oplyser, at journalisten var inviteret. <b>Landevalget</b> huskes i browseren (prototype: lokal lagring). Valget "Andet land" viser fallback til internationale omtaler. <b>Åbent:</b> skal inviterede ture med, skal citater vises, og logo-rettigheder.</div></div>
+
   <div class="spec-block" id="e-booking"><div class="spec-head"><h3>Booking-slot</h3><div class="row-flex"><span class="pill-tag">forside, lejlighed · A2</span><span class="status research">Research</span></div></div>
     <div class="spec-body"><div class="grid grid-2"><div class="booking"><div class="opt"><b>Model A</b><span class="muted">Link til operatørens booking</span></div><a class="btn btn-primary" href="#" aria-disabled="true">Book hos operatøren</a></div><div class="booking"><div class="opt"><b>Model B</b><span class="muted">Egen forespørgsel, videregives til operatør</span></div><button class="btn btn-primary">Send forespørgsel</button></div></div></div>
     <div class="spec-note"><b>Beslutning åben (spec. afsnit 6):</b> A, B eller C afhænger af analysen og operatøraftalen. Komponenten er bygget, så indholdet kan skiftes uden at siden bygges om. Ingen anbefaling.</div></div>
@@ -258,6 +313,7 @@
 <script src="weather-data.js"></script>
 <script src="weather.js"></script>
 <script src="webcam.js"></script>
+<script src="press.js"></script>
 <script>document.addEventListener('gl:ready', function(){ var cd=document.getElementById('ctl-demo'); if(cd){ cd.innerHTML=document.querySelector('.controls').innerHTML.replace('hide-sm',''); }  document.getElementById('hero-demo').innerHTML = GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, ''); });</script>
 </body>
 </html>
