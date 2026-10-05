@@ -838,3 +838,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 @media (max-width: 600px) { .pr-list > li { flex-direction: column; gap: 6px; } .pr-list > li > .pr-logo { width: auto; } }
 .pr-list > li > .pr-logo:not(.pr-logo-img) { white-space: normal; height: auto; min-height: 26px; }
 .pr-logo-img.pr-logo-dark { background: #1C1F1D; padding: 4px 8px; border-radius: 6px; }
+.pr-q { margin: 6px 0 0; padding: 0 0 0 10px; border-left: 3px solid var(--accent); }
+.pr-q p { margin: 0; font-family: var(--font-display); font-size: 1.02rem; line-height: 1.35; color: var(--text); }
+.pr-q + .pr-q { margin-top: 8px; }
+.pr-card .pr-q p { color: var(--text); font-size: 1.02rem; }
+.pr-q-sm { margin: 6px 0 8px; }
+.pr-q-sm p { font-size: .95rem; }
+.pr-sum { margin: 4px 0 6px; font-size: .86rem; color: var(--muted); }
