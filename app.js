@@ -97,6 +97,7 @@
       var on = c.dataset.seasonCard === currentSeason();
       c.classList.toggle('current', on); c.setAttribute('aria-pressed', String(on));
     });
+    document.dispatchEvent(new Event('gl:season'));
   }
 
   // photos: prototype-only, converted to web sizes under assets/web/<folder>/<name>[-s].webp

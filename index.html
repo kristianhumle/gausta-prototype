@@ -55,16 +55,16 @@
 
 <!-- A1 · Årstidskort fjernet 6. oktober 2026 (ejerens beslutning). Elementet er i Research i sideelementer.html (#e-season). Den fjernede sektion er gemt i backup/aarstidskort-2026-10-06/. Se parkerede-ideer.md. -->
 
-<!-- A1 · Galleri (pladsholdere) -->
-<section class="section band-soft">
+<!-- A1 · Galleri: generel pladsholder med stemningsbilleder fra Gausta. Følger årstidsvælgeren (gallery.js). Ikke kun om lejligheden. -->
+<section class="section band-soft" id="galleri">
   <div class="wrap">
     <div class="reveal" style="margin-bottom:28px">
       <p class="eyebrow" data-en="Gallery">Galleri</p>
-      <h2 data-en="See the apartment.">Se lejligheden.</h2>
+      <h2 data-gal-label data-en="Autumn at Gausta." data-da="Efterår på Gausta.">Efterår på Gausta.</h2>
       <p><span class="proto-tag">Prototypebilleder</span> <span class="muted" data-en="Temporary photos for the prototype. Final high-resolution photos replace them later.">Midlertidige billeder til prototypen. Endelige billeder i høj opløsning erstatter dem senere.</span></p>
     </div>
-    <div class="gallery reveal" id="home-gallery" data-gallery-group></div>
-    <p style="margin-top:20px"><a href="lejligheden.html" data-en="All apartment details →">Alle detaljer om lejligheden →</a></p>
+    <div class="gallery reveal" id="home-gallery" data-gallery-set="atmosphere" data-gallery-caps data-gallery-group></div>
+    <p style="margin-top:20px"><a href="omraadet.html" data-en="More about the area →">Mere om området →</a></p>
   </div>
 </section>
 
@@ -152,17 +152,6 @@
 <script src="weather.js"></script>
 <script src="plan.js"></script>
 <script src="press.js"></script>
-<script>
-document.addEventListener('gl:ready', function () {
-  GL.buildGallery(document.getElementById('home-gallery'), [
-    {k:'lejligheden/lejligheden-05', cls:'big', cap:'Stue og spisebord', alt:'Stue med spisebord og brændeovn'},
-    {k:'lejligheden/lejligheden-07', cap:'Soveværelse'},
-    {k:'lejligheden/lejligheden-12', cap:'Soveværelse'},
-    {k:'lejligheden/lejligheden-32', cls:'wide', cap:'Soveværelse med terrassedør'},
-    {k:'lejligheden/lejligheden-16', cap:'Køkken'},
-    {k:'lejligheden/lejligheden-09', cap:'Bad'}
-  ]);
-});
-</script>
+<script src="gallery.js"></script>
 </body>
 </html>

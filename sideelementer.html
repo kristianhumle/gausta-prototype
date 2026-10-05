@@ -84,13 +84,48 @@
     </div>
     <div class="spec-note"><b>Hvorfor fjernet (Inference):</b> kortene gentog årstidsvælgeren i toppen og førte ikke til noget indhold. <b>Hvis de kommer tilbage:</b> de skal <b>linke til en sæsonspecifik side</b>, der uddyber aktiviteterne i sæsonen (indhold, aktivitetsliste, hvad der er åbent, afstande, events, praktisk, booking). Kortene skifter så ikke længere sidens tema, for det gør årstidsvælgeren. Kortene viser den aktuelle årstid (efter dato). <b>Krav:</b> A1 årstidsfortælling, TK3, A4, A5, A6, N5 (SEO), TK4 (indhold som data). <b>Fuld dokumentation til senere udvikling:</b> <code class="token">06-website/parkerede-ideer.md</code> (afsnittet Sæsonsider). Den fjernede forsidesektion er gemt i <code class="token">prototype/backup/aarstidskort-2026-10-06</code>.</div></div>
 
-  <div class="spec-block" id="e-gallery"><div class="spec-head"><h3>Galleri med pladsholdere</h3><div class="row-flex"><span class="pill-tag">forside, lejlighed · A1</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><div class="gallery" style="grid-auto-rows:90px"><div class="ph-img big">Hovedbillede</div><div class="ph-img">Rum 1</div><div class="ph-img">Rum 2</div><div class="ph-img wide">Terrasse</div></div></div>
-    <div class="spec-note"><b>Krav:</b> TK6 hurtig indlæsning, ingen fotos før møblering. <b>Åbent:</b> lightbox, video og plantegning som egne varianter (foreslået).</div></div>
+  <div class="spec-block" id="e-gallery"><div class="spec-head"><h3>Galleri (generel pladsholder)</h3><div class="row-flex"><span class="pill-tag">forside, område, oplevelser, gæst · A1</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin:0 0 12px;font-size:.9rem">Her vises <b>det rigtige galleri</b> fra forsiden (samme kode som siden). Det er en <b>generel pladsholder</b>, ikke et lejlighedsgalleri, og det <b>følger årstidsvælgeren</b>. Vælg årstid for at se billederne skifte.</p>
+      <div class="plan-pills" role="group" aria-label="Vis årstid" data-hero-seasons style="margin-bottom:12px"><button type="button" class="filter" data-s="spring" aria-pressed="false">Forår</button><button type="button" class="filter" data-s="summer" aria-pressed="false">Sommer</button><button type="button" class="filter" data-s="autumn" aria-pressed="true">Efterår</button><button type="button" class="filter" data-s="winter" aria-pressed="false">Vinter</button></div>
+      <div class="hdr-label">Desktop (skaleret til at passe)</div>
+      <div class="hdr-frame hdr-desktop" data-w="1240" data-h="700"><iframe src="index.html" title="Galleri, desktop" loading="lazy" scrolling="no" data-hdr="section#galleri" style="width:1240px;height:700px;transform-origin:0 0"></iframe></div>
+      <div class="hdr-label">Mobil (under 860 px)</div>
+      <div class="hdr-frame hdr-mobile"><iframe src="index.html" title="Galleri, mobil" loading="lazy" scrolling="no" data-hdr="section#galleri" style="height:700px"></iframe></div>
+      <div class="table-wrap" style="margin-top:18px"><table class="table">
+        <tr><th>Emne</th><th>Beskrivelse</th></tr>
+        <tr><td>Formål</td><td>Vise <b>stemning fra Gausta og omegn</b>. Kan bruges overalt hvor der skal billeder: forsiden, Området, Oplevelser, Ski-in/ski-out, gæsteområdet og senere sæsonsider. Ikke kun billeder af lejligheden (dem har plantegningen og lejlighedssiden)</td></tr>
+        <tr><td>Årstidsvælgeren</td><td>Billedsættet skifter med den valgte årstid. Overskriften skifter også ("Efterår på Gausta."). Skiftet sker straks, uden at siden genindlæses</td></tr>
+        <tr><td>Billedsæt</td><td>Vinter (7 billeder), sommer (4), efterår (4). <b>Forår har ingen billeder</b> og viser pladsholdere ("Forår: billede mangler")</td></tr>
+        <tr><td>Layout</td><td>Gitter med 4 kolonner (2 på mobil). Mønstre, så gitteret altid fyldes: 4 billeder (stor, lille, lille, bred) eller 7 (de 4 plus bred, lille, lille). Høje billeder kan fylde to rækker</td></tr>
+        <tr><td>Billedtekst og forstørrelse</td><td>Billedtekst vises på billedet. Klik forstørrer i en lightbox med tastaturstyring</td></tr>
+        <tr><td>Genbrug</td><td><code class="token">&lt;div class="gallery" data-gallery-set="atmosphere" data-gallery-caps&gt;&lt;/div&gt;</code> (filen <code class="token">gallery.js</code>). Nye billedsæt tilføjes som data, fx "området" eller "oplevelser"</td></tr>
+      </table></div>
+    </div>
+    <div class="spec-note"><b>Ændret 6. oktober 2026</b> (Brugeroplysning): galleriet på forsiden viser nu <b>generelle stemningsbilleder fra Gausta</b> i stedet for billeder af lejligheden, er <b>tilknyttet årstidsvælgeren</b>, og elementet her viser det rigtige galleri. <b>Krav:</b> A1, TK3 (årstid), TK6 (hurtig indlæsning, ingen fotos af boligen før møblering), TK4 (billeder som data). <b>Forbehold:</b> alle billeder er <b>prototypebilleder</b> (rettigheder uafklarede), og <b>billedteksterne er gæt</b> ud fra billederne og skal bekræftes. <b>Åbent:</b> endelige billeder pr. årstid (forår mangler helt), alt-tekster, video og plantegning som egne varianter (foreslået), og flere billedsæt til de øvrige sider.</div></div>
 
-  <div class="spec-block" id="e-live"><div class="spec-head"><h3>"Gausta nu" live-data</h3><div class="row-flex"><span class="pill-tag">forside, område, gæst · A5</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><div class="live"><div><small>Temperatur</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div><div><small>Snedybde</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div><div><small>Åbne lifte</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div><div><small>Vejforhold</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div></div><div class="live-foot"><span class="stamp">Sidst opdateret: aldrig</span></div></div>
-    <div class="spec-note"><b>Krav:</b> A5 med fallback "sidst opdateret kl. …" ved nedbrud. Datakilder er endnu ikke valgt (tekniske specifikation).</div></div>
+  <div class="spec-block" id="e-live"><div class="spec-head"><h3>"Gausta nu" live-data, pr. årstid</h3><div class="row-flex"><span class="pill-tag">forside, område, gæst · A5</span><span class="status research">Research</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin-top:0">Forslag til, hvad "Gausta nu" viser i de fire årstider, så der ikke står snedybde om sommeren. <b>Skift årstid øverst på siden</b> (de fire ikoner), så skifter fliserne. Seks fliser pr. årstid, det vigtigste først. Alle værdier er pladsholdere (n/a), undtagen vejret, som viser et rigtigt snapshot fra MET. Webcams har deres eget felt under "Webcams".</p>
+      <div class="live live-season"><div data-seasons="winter spring summer autumn" data-weather="tile"></div><div data-seasons="winter spring"><small>Snedybde på pisterne</small><b class="num">n/a</b><small class="src">Kilde: Gausta (G25) · <span class="st dec">besluttet</span></small></div><div data-seasons="winter spring"><small>Åbne lifte og pister</small><b class="num">n/a</b><small class="src">Kilde: Gausta eller Fnugg · <span class="st prop">forslag</span></small></div><div data-seasons="winter"><small>Langrend: præparering</small><b class="num">n/a</b><small class="src">Kilde: Sporet, link · <span class="st prop">forslag</span></small></div><div data-seasons="winter"><small>Skredvarsel</small><b class="num">n/a</b><small class="src">Kilde: Varsom, link · <span class="st prop">forslag</span></small></div><div data-seasons="winter spring autumn"><small>Vejforhold og vinterdæk</small><b class="num">n/a</b><small class="src">Kilde: Statens vegvesen, link · <span class="st prop">forslag</span></small></div><div data-seasons="spring"><small>Sidste skidag i sæsonen</small><b class="num">dato</b><small class="src">Kilde: Gausta (dato skal verificeres) · <span class="st ver">verificeres</span></small></div><div data-seasons="spring summer autumn"><small>Dagslys: solnedgang</small><b class="num">kl.</b><small class="src">Beregnes, ingen datakilde · <span class="st calc">beregnes</span></small></div><div data-seasons="summer"><small>Nedbør og torden, 24 t</small><b class="num">n/a</b><small class="src">Kilde: MET Norway · <span class="st prop">forslag</span></small></div><div data-seasons="summer"><small>UV-indeks</small><b class="num">n/a</b><small class="src">Kilde: MET Nowcast · <span class="st ver">verificeres</span></small></div><div data-seasons="summer"><small>Gaustabanen i dag</small><b class="num">åben</b><small class="src">Kilde: Gaustabanen, link · <span class="st prop">forslag</span></small></div><div data-seasons="summer"><small>Sommeraktiviteter åbne</small><b class="num">n/a</b><small class="src">Kilde: Gausta, manuelt · <span class="st prop">forslag</span></small></div><div data-seasons="autumn"><small>Nattefrost i nat</small><b class="num">n/a</b><small class="src">Kilde: MET Norway · <span class="st prop">forslag</span></small></div><div data-seasons="autumn"><small>Første sne på toppen</small><b class="num">n/a</b><small class="src">Kilde: NVE, modelleret (kun når der er sne) · <span class="st prop">forslag</span></small></div><div data-seasons="autumn"><small>Nedtælling til skisæsonen</small><b class="num">dage</b><small class="src">Kilde: Gausta (dato skal verificeres) · <span class="st ver">verificeres</span></small></div></div>
+      <div class="live-foot"><span class="stamp">Sidst opdateret: aldrig (eksempel)</span><span class="muted" style="font-size:.8rem">Årstidsvinduer: vinter nov til feb, forår mar til apr, sommer maj til aug, efterår sep til okt</span></div>
+
+      <h4 style="margin:26px 0 8px">Hvilke fliser hører til hvilken årstid</h4>
+      <div class="table-wrap"><table class="table wc-cmp">
+        <tr><th>Flise</th><th class="c">Vinter</th><th class="c">Forår</th><th class="c">Sommer</th><th class="c">Efterår</th><th>Kilde</th><th>Status</th></tr>
+        <tr><td>Temperatur og vejr</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td>MET Norway</td><td>Besluttet (G24)</td></tr><tr><td>Snedybde på pisterne</td><td class="c">✓</td><td class="c">✓</td><td class="c"></td><td class="c"></td><td>Gausta</td><td>Besluttet (G25), vej afgøres i sæson</td></tr><tr><td>Åbne lifte og pister</td><td class="c">✓</td><td class="c">✓</td><td class="c"></td><td class="c"></td><td>Gausta eller Fnugg</td><td>Forslag</td></tr><tr><td>Langrend: præparering</td><td class="c">✓</td><td class="c"></td><td class="c"></td><td class="c"></td><td>Sporet (link)</td><td>Forslag</td></tr><tr><td>Skredvarsel</td><td class="c">✓</td><td class="c"></td><td class="c"></td><td class="c"></td><td>Varsom (link)</td><td>Forslag</td></tr><tr><td>Vejforhold og vinterdæk</td><td class="c">✓</td><td class="c">✓</td><td class="c"></td><td class="c">✓</td><td>Statens vegvesen (link)</td><td>Forslag</td></tr><tr><td>Sidste skidag i sæsonen</td><td class="c"></td><td class="c">✓</td><td class="c"></td><td class="c"></td><td>Gausta</td><td>Dato skal verificeres</td></tr><tr><td>Dagslys: solnedgang</td><td class="c"></td><td class="c">✓</td><td class="c">✓</td><td class="c">✓</td><td>Beregnes</td><td>Forslag</td></tr><tr><td>Nedbør og torden, 24 t</td><td class="c"></td><td class="c"></td><td class="c">✓</td><td class="c"></td><td>MET Norway</td><td>Forslag</td></tr><tr><td>UV-indeks</td><td class="c"></td><td class="c"></td><td class="c">✓</td><td class="c"></td><td>MET Nowcast</td><td>Skal verificeres</td></tr><tr><td>Gaustabanen i dag</td><td class="c"></td><td class="c"></td><td class="c">✓</td><td class="c"></td><td>Gaustabanen (link)</td><td>Forslag</td></tr><tr><td>Sommeraktiviteter åbne</td><td class="c"></td><td class="c"></td><td class="c">✓</td><td class="c"></td><td>Gausta, manuelt</td><td>Forslag</td></tr><tr><td>Nattefrost i nat</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">✓</td><td>MET Norway</td><td>Forslag</td></tr><tr><td>Første sne på toppen</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">✓</td><td>NVE, modelleret</td><td>Forslag</td></tr><tr><td>Nedtælling til skisæsonen</td><td class="c"></td><td class="c"></td><td class="c"></td><td class="c">✓</td><td>Gausta</td><td>Dato skal verificeres</td></tr>
+      </table></div>
+
+      <h4 style="margin:22px 0 6px">Regler (forslag), så siden aldrig viser noget meningsløst</h4>
+      <ul class="wx-facts" style="font-size:.9rem">
+        <li><b>Data slår kalenderen.</b> Skisæsonen følger ikke årstidsvinduerne: Gausta åbner normalt i slutningen af oktober, og lifterne kører til ca. begyndelsen af maj (kildepåstand, Skiinfo). "Åbne lifte" og "Snedybde" vises derfor, så længe Gausta melder åbent eller sne, også om efteråret og i maj.</li>
+        <li><b>Aldrig "0 cm" uden for sæson.</b> Snedybde og lifte skjules, når sæsonen er lukket og der ikke er sne. I stedet vises "Nedtælling til skisæsonen" (efterår) eller "Sidste skidag" (forår).</li>
+        <li><b>Gammel data skjules.</b> Er en kilde ældre end en grænse (forslag 12 timer for vejr og sne), skjules flisen, eller den viser "sidst opdateret". Pladsholdere (n/a) vises kun i prototypen.</li>
+        <li><b>Maksimalt seks fliser,</b> i prioriteret rækkefølge. Resten ligger bag "Vejr, webcam og mere".</li>
+        <li><b>Hver flise har en kildehenvisning</b> (G25) og tidsstempel.</li>
+      </ul>
+    </div>
+    <div class="spec-note"><b>Krav:</b> A5 med fallback "sidst opdateret kl. ...". <b>Besluttet:</b> MET til temperatur og vejr (G24), Gausta til snedybde (G25), webcams indlejret (G27). <b>Åbent:</b> lifte og pister (Gausta eller Fnugg), UV-indeks, datoer for sæsonstart og sidste skidag (skal verificeres), om Gaustabanen skal vises året rundt, og grænsen for gammel data.</div></div>
 
   <div class="spec-block" id="e-weather"><div class="spec-head"><h3>Temperatur nu og kort prognose</h3><div class="row-flex"><span class="pill-tag">forside, område, gæst · A5 · datakilde B1</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body">
@@ -381,25 +416,30 @@
 <script>
 (function(){
   function fit(){ [].forEach.call(document.querySelectorAll('.hdr-desktop'),function(b){ var w=+b.dataset.w,h=+b.dataset.h,s=Math.min(1,b.clientWidth/w),f=b.querySelector('iframe'); f.style.transform='scale('+s+')'; b.style.height=Math.round(h*s)+'px'; }); }
+  function resize(f){ var keep=f.getAttribute('data-hdr')||'header.header'; if(keep==='header.header') return; try{ var el=f.contentDocument.querySelector(keep); if(!el) return; var h=Math.ceil(el.getBoundingClientRect().height); f.style.height=h+'px'; var b=f.parentElement; if(b.classList.contains('hdr-desktop')) b.dataset.h=h; fit(); }catch(e){} }
   function tidy(f){
     try {
       var d=f.contentDocument; if(!d||!d.body) return;
       var keep=f.getAttribute('data-hdr')||'header.header';
       [].forEach.call(d.body.children,function(c){ if(!c.matches(keep)) c.style.display='none'; });
       d.documentElement.style.overflow='hidden';
+      [].forEach.call(d.querySelectorAll('.reveal'),function(e){ e.classList.add('in'); });
       d.addEventListener('click',function(e){ var a=e.target.closest('a'); if(a) e.preventDefault(); });
-      if(keep!=='header.header'){ var el=d.querySelector(keep); if(el){ var h=Math.ceil(el.getBoundingClientRect().height); f.style.height=h+'px'; var b=f.parentElement; if(b.classList.contains('hdr-desktop')) b.dataset.h=h; fit(); } }
+      resize(f);
     } catch(e){}
   }
   fit(); window.addEventListener('resize',fit);
   [].forEach.call(document.querySelectorAll('iframe[data-hdr]'),function(f){ f.addEventListener('load',function(){ tidy(f); }); if(f.contentDocument&&f.contentDocument.readyState==='complete') tidy(f); });
   var prevSeason=null; try{ prevSeason=sessionStorage.getItem('gl.season'); }catch(e){}
-  var sw=document.querySelector('[data-hero-seasons]');
-  if(sw) sw.addEventListener('click',function(e){
-    var b=e.target.closest('button[data-s]'); if(!b) return;
-    [].forEach.call(sw.querySelectorAll('button'),function(x){ x.setAttribute('aria-pressed',String(x===b)); });
-    [].forEach.call(document.querySelectorAll('iframe[data-hdr="section.hero"]'),function(f){ try{ var s=f.contentDocument.querySelector('.js-season-seg button[data-v="'+b.dataset.s+'"]'); if(s) s.click(); }catch(x){} });
-    try{ if(prevSeason===null) sessionStorage.removeItem('gl.season'); else sessionStorage.setItem('gl.season',prevSeason); }catch(x){}
+  [].forEach.call(document.querySelectorAll('[data-hero-seasons]'),function(sw){
+    sw.addEventListener('click',function(e){
+      var b=e.target.closest('button[data-s]'); if(!b) return;
+      [].forEach.call(sw.querySelectorAll('button'),function(x){ x.setAttribute('aria-pressed',String(x===b)); });
+      var body=sw.closest('.spec-body')||document;
+      [].forEach.call(body.querySelectorAll('iframe[data-hdr]'),function(f){ if(f.getAttribute('data-hdr')==='header.header') return; try{ var s=f.contentDocument.querySelector('.js-season-seg button[data-v="'+b.dataset.s+'"]'); if(s) s.click(); }catch(x){} });
+      try{ if(prevSeason===null) sessionStorage.removeItem('gl.season'); else sessionStorage.setItem('gl.season',prevSeason); }catch(x){}
+      [150,700].forEach(function(ms){ setTimeout(function(){ [].forEach.call(body.querySelectorAll('iframe[data-hdr]'),resize); },ms); });
+    });
   });
 })();
 </script>

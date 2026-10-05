@@ -199,6 +199,8 @@ select.compact { width: auto; padding: 5px 10px; font-size: .82rem; border-radiu
 .gallery { display: grid; gap: 12px; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 150px; }
 .gallery .big { grid-column: span 2; grid-row: span 2; }
 .gallery .wide { grid-column: span 2; }
+.gallery .tall { grid-row: span 2; }
+.gallery .ph-img { min-height: 0; height: 100%; }
 
 /* icons */
 .ico { max-width: none; width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; flex: none; }
@@ -974,3 +976,20 @@ textarea.field { min-height: 96px; resize: vertical; }
 .alt-mock-ico { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; background: var(--accent-weak); color: var(--accent-text); flex: none; }
 
 .soon-link { color: var(--accent-text); font-weight: 600; opacity: .75; border-bottom: 1px dashed currentColor; cursor: default; }
+
+/* ===== "Gausta nu" pr. årstid (sideelementer, e-live) ===== */
+.live-season { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 760px) { .live-season { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .live-season { grid-template-columns: 1fr; } }
+.live-season > [data-seasons] { display: none; }
+html[data-season="winter"] .live-season > [data-seasons~="winter"],
+html[data-season="spring"] .live-season > [data-seasons~="spring"],
+html[data-season="summer"] .live-season > [data-seasons~="summer"],
+html[data-season="autumn"] .live-season > [data-seasons~="autumn"] { display: block; }
+.live-season .src { display: block; margin-top: 6px; font-size: .7rem; color: var(--faint); line-height: 1.35; }
+.st { font-size: .62rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; padding: 1px 6px; border-radius: 99px; white-space: nowrap; }
+.st.dec { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+.st.prop { background: var(--elevated); color: var(--muted); }
+.st.ver { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
+.st.calc { background: var(--accent-weak); color: var(--accent-text); }
+.wc-cmp td.c, .wc-cmp th.c { text-align: center; }
