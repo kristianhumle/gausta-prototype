@@ -7,7 +7,7 @@
   var L = function (n) { return 'lejligheden/lejligheden-' + (n < 10 ? '0' : '') + n; };
 
   var ROOMS = [
-    { id: 'entre', name: 'Entré og skirum', dim: '4 m²', desc: 'Indgangen med garderobe og bænk til overtøj og sko. Her er også plads til ski og udstyr.', poly: [[668,212],[750,212],[750,330],[668,330]], label: [709,262], pin: [709,318],
+    { id: 'entre', name: 'Entré og skirum', dim: '4 m²', desc: 'Indgangen med garderobe og bænk til overtøj og sko. Her er også plads til ski og udstyr.', poly: [[668,212],[750,212],[750,330],[668,330]], label: [709,262], slabel: [709,284], pin: [709,318],
       photos: [[L(17),'Entré med garderobe'],[L(28),'Entré med bænk'],[L(2),'Gang'],[L(13),'Skirum']] },
     { id: 'sov1', name: 'Soveværelse 1', dim: '6 m²', desc: 'Soveværelse med dobbeltseng, lænestol og vindue.', poly: [[552,212],[668,212],[668,318],[552,318]], label: [610,262], pin: [653,227],
       photos: [[L(7),'Soveværelse'],[L(29),'Soveværelse, sengebord']] },
@@ -29,17 +29,20 @@
   function room(id) { return ROOMS.filter(function (r) { return r.id === id; })[0]; }
   function lines(r) { return r.lines || r.name.replace(' og ', ' og|').split('|'); }
 
-  function drawing() {
-    var s = '<svg class="plan-svg" viewBox="535 180 340 650" role="group" aria-label="Plantegning med rum">';
+  function drawing(o) {
+    o = o || {};
+    var s = '<svg class="plan-svg' + (o.sensors ? ' sensor-mode' : '') + '" viewBox="535 180 340 650" role="' + (o.sensors ? 'img' : 'group') + '" aria-label="' + (o.label || 'Plantegning med rum') + '">';
     // room fills (hit areas)
     ROOMS.forEach(function (r) {
       if (!r.poly) return;
       var pts = r.poly.map(function (p) { return p.join(','); }).join(' ');
       var badge = r.photos.length;
+      var lb = (o.sensors && r.slabel) || r.label;
+      var nm = '<text class="pl" x="' + lb[0] + '" y="' + lb[1] + '" text-anchor="middle">' + lines(r).map(function (t, i) { return '<tspan x="' + lb[0] + '" dy="' + (i ? 15 : 0) + '">' + t + '</tspan>'; }).join('') + '</text>' +
+        '<text class="pd dim" x="' + lb[0] + '" y="' + (lb[1] + 15 * lines(r).length + 2) + '" text-anchor="middle">' + r.dim + '</text>';
+      if (o.sensors) { s += '<g class="sroom" data-room="' + r.id + '"><polygon class="pr" points="' + pts + '"/>' + nm + '</g>'; return; }
       s += '<g class="room" data-room="' + r.id + '" tabindex="0" role="button" aria-label="' + r.name + ', ' + r.photos.length + ' billeder">' +
-        '<polygon class="pr" points="' + pts + '"/>' +
-        '<text class="pl" x="' + r.label[0] + '" y="' + r.label[1] + '" text-anchor="middle">' + lines(r).map(function (t, i) { return '<tspan x="' + r.label[0] + '" dy="' + (i ? 15 : 0) + '">' + t + '</tspan>'; }).join('') + '</text>' +
-        '<text class="pd" x="' + r.label[0] + '" y="' + (r.label[1] + 15 * lines(r).length + 2) + '" text-anchor="middle">' + r.dim + '</text>' +
+        '<polygon class="pr" points="' + pts + '"/>' + nm +
         '<g class="pin" transform="translate(' + r.pin[0] + ',' + r.pin[1] + ')"><circle r="12"/><text y="4.500" text-anchor="middle">' + badge + '</text></g>' +
         '</g>';
     });
@@ -126,7 +129,7 @@
   }
 
   window.GL = window.GL || {};
-  GL.Plan = { ROOMS: ROOMS, panel: panelVariant };
+  GL.Plan = { ROOMS: ROOMS, panel: panelVariant, drawing: drawing };
   document.addEventListener('gl:ready', function () {
     [].forEach.call(document.querySelectorAll('[data-plan]'), function (el) { var v = GL.Plan[el.getAttribute('data-plan')]; if (v) v(el); });
   });
