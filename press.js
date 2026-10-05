@@ -208,13 +208,8 @@
     if (c) return '<span class="pr-flag" role="img" title="' + FLAGS[c][0] + '" aria-label="Medie fra ' + FLAGS[c][0] + '"><svg viewBox="0 0 28 20" width="22" height="16" aria-hidden="true" focusable="false">' + FLAGS[c][1] + '</svg></span>';
     return '<span class="pr-flag pr-flag-globe" role="img" title="Øvrig" aria-label="Medie fra øvrige lande"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9.5"/><ellipse cx="12" cy="12" rx="4" ry="9.5"/><path d="M2.5 12h19M4 7h16M4 17h16"/></svg></span>';
   }
-  // Kun åbenhedsmærker bevares (inviteret tur, evt. særligt mærke). Sprog og betalingsmur er fjernet.
-  function badges(i) {
-    var b = [];
-    if (i.pressetur) b.push('<span class="pr-b pr-b-warn" title="Artiklen oplyser, at journalisten var inviteret">Inviteret tur</span>');
-    if (i.maerke) b.push('<span class="pr-b pr-b-warn">' + esc(i.maerke) + '</span>');
-    return b.length ? '<div class="pr-badges">' + b.join('') + '</div>' : '';
-  }
+  // Alle labels er fjernet (Brugeroplysning 6. oktober 2026): ingen sprog, betalingsmur, inviteret tur eller særlige mærker.
+  function badges() { return ''; }
   function readLink(i) {
     return '<a class="pr-read" href="' + esc(i.url) + '" target="_blank" rel="noopener">Læs hos ' + esc(i.medie) + ' <span aria-hidden="true">↗</span></a>';
   }
@@ -303,7 +298,7 @@
         return '<button type="button" class="filter" data-pr-season="' + s + '" aria-pressed="' + (s === v4season) + '">' + (s === 'Alle' ? 'Hele året' : SAESON[s]) + '</button>';
       }).join('') + '</div></div>' +
       '<ul class="pr-list">' + (list.length ? list.map(function (i) {
-        return '<li>' + origin(i) + logo(i, 'pr-logo-sm') + '<div class="grow"><div class="pr-meta">' + esc(i.medie) + ' · ' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
+        return '<li><div class="pr-lead">' + logo(i, 'pr-logo-sm') + origin(i) + '</div><div class="grow"><div class="pr-meta">' + esc(i.medie) + ' · ' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
           '<b' + langAttr(i) + '>' + esc(i.titel) + '</b>' + quotes(i, 'pr-q-sm') + badges(i) + '</div>' + readLink(i) + '</li>';
       }).join('') : '<li class="muted">Ingen omtaler med det filter.</li>') + '</ul>';
   }

@@ -832,7 +832,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 .pr-flag svg { border-radius: 2px; box-shadow: 0 0 0 1px rgba(0,0,0,.14); }
 .pr-flag-globe svg { box-shadow: none; }
 .pr-card { padding-top: 16px; }
-.pr-list > li { padding-right: 36px; }
+.pr-list > li { padding-right: 0; }
+.pr-lead { flex: 0 0 110px; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.pr-lead .pr-flag { position: static; }
+.pr-lead .pr-logo { width: auto; }
 /* Karrusel: scroll-snap, 4 / 2 / 1,15 kort pr. visning */
 .pr-car-bar { display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 10px; }
 .pr-car-count { font-size: .8rem; }
