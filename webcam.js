@@ -2,7 +2,8 @@
    Pladsholder-scener er tegnet af designets egne farver (ingen tredjepartsbilleder).
    To rigtige kilder kan indlæses, begge først ved klik, så siden ikke kontakter tredjepart af sig selv:
    1) Statens vegvesen, Fv 37 Jønjiljo (stillbillede, NLOD)
-   2) Gaustabanen, toppen af Gaustatoppen (stillbillede fra ipcamlive, opdateres hvert 10. sekund) */
+   2) Gaustabanen, toppen af Gaustatoppen (stillbillede fra ipcamlive, opdateres hvert 10. sekund)
+   3) Gausta LIVE (Norway Live på YouTube), fanen Live i version 3, via youtube-nocookie.com */
 (function () {
   'use strict';
   var root = document.getElementById('e-webcams');
@@ -12,6 +13,8 @@
     veg: { url: 'https://kamera.atlas.vegvesen.no/api/images/0829010_1', alt: 'Vejkamera Fv 37 Jønjiljo, Statens vegvesen', refresh: 0, label: 'Indlæs rigtigt billede (kontakter Statens vegvesen)', idle: 'Eksempel: ikke hentet endnu' },
     top: { url: 'https://g0.ipcamlive.com/player/snapshot.php?alias=gabakontortopp', alt: 'Gaustatoppen, kamera fra Gaustabanen', refresh: 10000, label: 'Indlæs live-billede fra Gaustatoppen (kontakter Gaustabanen)', idle: 'Ikke hentet endnu' }
   };
+  var YT_ID = 'NGGIyXwoSiU';
+  var PLAY = '<span class="wc-play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>';
   var timeFmt = new Intl.DateTimeFormat('da-DK', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   var tabTimers = [];
 
@@ -96,6 +99,23 @@
   }
   wireReal(root);
 
+  function wireLive(scope) {
+    var btn = scope.querySelector('[data-live-load]');
+    var main = scope.querySelector('#wc-main');
+    var original = main.innerHTML;
+    btn.addEventListener('click', function () {
+      var st = stampOf(main);
+      if (main.getAttribute('data-loaded') === '1') {
+        main.innerHTML = original; main.setAttribute('data-loaded', '0');
+        btn.textContent = 'Indlæs live (kontakter YouTube)'; if (st) st.textContent = 'Afspilleren er ikke indlæst';
+        return;
+      }
+      main.innerHTML = '<iframe title="Gausta LIVE (Norway Live på YouTube)" src="https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>';
+      main.setAttribute('data-loaded', '1');
+      btn.textContent = 'Fjern afspiller'; if (st) st.textContent = 'Afspiller indlæst fra YouTube';
+    });
+  }
+
   /* Version 3: faner med flere kameraer. Toppen og Vejen kan indlæses rigtigt ved klik. */
   var tabs = root.querySelector('[data-wc-tabs]');
   if (tabs) {
@@ -105,6 +125,7 @@
       top: { scene: 'top', badge: ['live', 'Næsten live'], t: 'Toppen af Gaustatoppen', src: 'Kilde: Gaustabanen (ipcamlive). Deres afspiller kan ikke indlejres (kilden spærrer), så her hentes stillbilledet, som opdateres hvert 10. sekund. Ikke et officielt API, rettigheder uafklarede', link: 'https://gaustabanen.no/en/live-updates', stamp: CAMS.top.idle, real: 'top' },
       slope: { scene: 'slope', badge: ['sæson', 'Sæson'], t: 'Pisten, Koffertlokket', src: 'Gausta.com via Norway Live. Vilkår uafklarede. Billederne var 6-10 dage gamle 3. oktober 2026 (off-season)', link: 'https://www.gausta.com/live-data-gausta/', stamp: 'Pladsholder. Skjules, hvis billedet er ældre end 2 timer' },
       road: { scene: 'road', badge: ['frisk', 'Frisk'], t: 'Vejen: Fv 37 Jønjiljo', src: 'Kilde: Statens vegvesen (NLOD)', link: 'https://www.vegvesen.no/trafikk/', stamp: CAMS.veg.idle, real: 'veg' },
+      live: { scene: 'slope', live: true, badge: ['live', 'Live'], t: 'Gausta LIVE (Norway Live)', src: 'Kilde: Norway Live på YouTube. Skifter mellem scener ca. hvert 15. sekund, så den viser ikke altid toppen eller pisten. Klik indlæser afspilleren fra youtube-nocookie.com og kontakter YouTube. Tilladelse ikke afklaret (Norway Live: indholdet kan vises videre, kontakt dem)', link: 'https://norwaylive.tv/gausta/', stamp: 'Afspilleren er ikke indlæst' },
       town: { scene: 'town', badge: ['frisk', 'Frisk'], t: 'Rjukan, mod vest', src: 'Privat kamera (geirb.com). Vilkår ikke læst', link: 'https://www.visitrjukan.no/', stamp: 'Pladsholder' }
     };
     function show(key) {
@@ -112,12 +133,14 @@
       tabTimers.forEach(stopBox); tabTimers = [];
       btns.forEach(function (b) { var on = b.getAttribute('data-key') === key; b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
       out.innerHTML =
-        '<div class="wc-frame"><div class="wc-img" data-scene="' + d.scene + '" id="wc-main">' + scene(d.scene) + '<span class="wc-ph">' + (d.real ? 'Pladsholder, indtil du klikker' : 'Pladsholder') + '</span></div>' +
+        '<div class="wc-frame"><div class="wc-img" data-scene="' + d.scene + '" id="wc-main">' + scene(d.scene) + '<span class="wc-ph">' + (d.real || d.live ? 'Pladsholder, indtil du klikker' : 'Pladsholder') + '</span>' + (d.live ? PLAY : '') + '</div>' +
         '<span class="wc-badge wc-' + d.badge[0] + '">' + d.badge[1] + '</span></div>' +
         '<div class="wc-cap"><b>' + d.t + '</b><span class="stamp" data-stamp>' + d.stamp + '</span></div>' +
         '<div class="wc-src">' + d.src + ' · <a href="' + d.link + '" target="_blank" rel="noopener">Åbn hos kilden</a></div>' +
-        (d.real ? '<button type="button" class="btn btn-primary btn-sm" data-real-load="#wc-main" data-cam="' + d.real + '">' + CAMS[d.real].label + '</button>' : '');
+        (d.real ? '<button type="button" class="btn btn-primary btn-sm" data-real-load="#wc-main" data-cam="' + d.real + '">' + CAMS[d.real].label + '</button>' : '') +
+        (d.live ? '<button type="button" class="btn btn-primary btn-sm" data-live-load>Indlæs live (kontakter YouTube)</button>' : '');
       wireReal(out);
+      if (d.live) wireLive(out);
     }
     btns.forEach(function (b, i) {
       b.addEventListener('click', function () { show(b.getAttribute('data-key')); });
