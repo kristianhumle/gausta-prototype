@@ -15,9 +15,12 @@
   <h1 style="font-size:clamp(2rem,4vw,3rem)">Hvert element, siderne er bygget af.</h1>
   <p class="lead">Ét sted for hver byggeklods. Hvert element vises levende, med status og de krav i kravspecifikationen, det opfylder. Det er katalogets formål at fungere som input til den tekniske og designmæssige specifikation.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span></div>
+  <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer">Footer</a>
   </div>
+  <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
+  <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
 
   <div class="spec-block" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="pv" style="padding:14px 18px"><div class="row-flex" style="justify-content:space-between"><b style="font-family:var(--font-display)">Gausta Lodge 52</b><div class="row-flex"><span class="muted">Lejligheden</span><span class="muted">Ski-in/ski-out</span><span class="muted">Gausta og omegn ▾</span><span class="pill-tag">DA|EN</span><button class="btn btn-primary btn-sm">Book</button></div></div></div></div>
@@ -295,6 +298,16 @@
     <div class="spec-body stack"><div class="notice info">Dørsensorer registrerer, når dørene åbnes. Ingen kameraer.</div><div class="notice">Åbent punkt: noget skal verificeres.</div><div class="notice bad">Aldrig adgangskoder på siden.</div></div>
     <div class="spec-note"><b>Krav:</b> B5 privatliv. Ordlyd og GDPR-vurdering er åbne.</div></div>
 
+  <div class="spec-block" id="e-footer"><div class="spec-head"><h3>Footer</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body"><span class="muted">Se bunden af en hvilken som helst prototype-side. Kolonner: lejligheden, Gausta og omegn (med Ski-in/ski-out), prototype. Privatliv og samtykke: tekst følger.</span></div>
+    <div class="spec-note"><b>Åbent:</b> cookie-samtykke til statistik (TK5), juridiske sider, sprogvælger i bunden.</div></div>
+
+  <section class="bo-zone" id="zone-backoffice" aria-labelledby="bo-title">
+    <div class="bo-head">
+      <div><p class="eyebrow" style="margin:0">Del C</p><h2 id="bo-title" style="margin:2px 0 4px;font-size:1.5rem">Back-office: kun til ejeren</h2></div>
+      <span class="pill-tag bad">Bag login</span>
+    </div>
+    <p class="muted" style="margin:0 0 18px;font-size:.92rem">Disse elementer hører til back-office (del C) og er <b>ikke en del af det offentlige site eller gæsteområdet</b>. De kræver login, ligger i en separat app og bruger eksempeldata. Ingen tal er reelle.</p>
   <div class="spec-block" id="e-kpi"><div class="spec-head"><h3>KPI-flise og søjlediagram</h3><div class="row-flex"><span class="pill-tag">back-office · C1</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="grid grid-2"><div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde, dato</span></div><div class="card"><div class="bars" style="margin-bottom:24px"><div style="height:40%"><span>J</span></div><div style="height:70%"><span>F</span></div><div style="height:55%"><span>M</span></div></div></div></div></div>
     <div class="spec-note"><b>Regel:</b> hvert tal har dato og kilde (C5). Estimater mærkes. Diagrambibliotek vælges i den tekniske specifikation.</div></div>
@@ -306,10 +319,7 @@
   <div class="spec-block" id="e-sensor"><div class="spec-head"><h3>Sensorrække og alarm</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="list-row" style="padding-top:0"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen (eksempel)</div></div><span class="stamp">00:00</span></div><div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel)</div></div><span class="stamp">00:00</span></div></div>
     <div class="spec-note"><b>Foreslået:</b> plantegningsvisning med sensorer. Afhænger af hardware og netværk (åbne punkter i spec.).</div></div>
-
-  <div class="spec-block" id="e-footer"><div class="spec-head"><h3>Footer</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><span class="muted">Se bunden af en hvilken som helst prototype-side. Kolonner: lejligheden, Gausta og omegn (med Ski-in/ski-out), prototype. Privatliv og samtykke: tekst følger.</span></div>
-    <div class="spec-note"><b>Åbent:</b> cookie-samtykke til statistik (TK5), juridiske sider, sprogvælger i bunden.</div></div>
+  </section>
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
