@@ -70,7 +70,7 @@
             GL.icon(r.icon) + '<span><b>' + r.name + '</b><em>' + r.dist + '</em></span></button>';
         }).join('') +
         '<span class="sio-dot poi" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '"></span>' +
-        '<span class="sio-chip poi below" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '">' + GL.icon('wrench') + '<span><b>Fælleshus</b><em>Smørebod</em></span></span>' +
+        '<span class="sio-chip poi below" style="left:' + pct(v.poi.x) + ';top:' + pct(v.poi.y) + '">' + GL.icon('cabin') + '<span><b>Fælleshus</b><em>Smørebod</em></span></span>' +
       '</div>' +
       '<div class="grid grid-3 sio-cards">' +
         ROUTES.map(function (r) {
@@ -78,7 +78,7 @@
             '<div class="sio-dist">' + r.dist + '</div><h3>' + r.name + '</h3><p class="muted">' + r.text + '</p>' +
             '<span class="verify">cirka, skal verificeres på stedet</span></div>';
         }).join('') +
-        '<div class="card" data-keep="1"><div class="ico-box">' + GL.icon('wrench') + '</div><div class="kicker">På stedet</div>' +
+        '<div class="card" data-keep="1"><div class="ico-box">' + GL.icon('cabin') + '</div><div class="kicker">På stedet</div>' +
           '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod og stativer, som beboerne kan bruge. Markeret på kortet, uden afstand.</p>' +
           '<span class="verify">kildepåstand fra salgsannoncen, skal verificeres</span></div>' +
       '</div>' +
