@@ -163,14 +163,17 @@
       url: 'https://happyride.se/50-mil-pa-cykel-med-skidor-fran-skane-till-norska-gausta/' }
   ];
 
-  var MARKETS = [['DK', 'Danmark'], ['SE', 'Sverige'], ['NO', 'Norge'], ['UK', 'UK'], ['XX', 'Andet land']];
+  var MARKETS = [['DK', 'Danmark'], ['SE', 'Sverige'], ['NO', 'Norge'], ['UK', 'UK'], ['XX', 'Øvrig']];
   var SPROG = { da: 'Dansk', en: 'Engelsk', no: 'Norsk', sv: 'Svensk' };
   var SAESON = { vinter: 'Vinter', sommer: 'Sommer' };
   var MDR = ['jan.', 'feb.', 'mar.', 'apr.', 'maj', 'jun.', 'jul.', 'aug.', 'sep.', 'okt.', 'nov.', 'dec.'];
   var KEY = 'gl-press-market';
 
-  var market = 'DK';
-  try { market = localStorage.getItem(KEY) || 'DK'; } catch (e) {}
+  // Forvalgt marked følger sidens sprog, indtil den besøgende selv vælger (Brugeroplysning 5. oktober 2026).
+  var LANG_MARKET = { da: 'DK', en: 'UK', nb: 'NO', no: 'NO', nn: 'NO', sv: 'SE' };
+  var chosen = null, market = 'DK';
+  try { chosen = localStorage.getItem(KEY); } catch (e) {}
+  function defaultMarket() { return LANG_MARKET[pageLang()] || 'XX'; }
   var v4type = 'Alle', v4season = 'Alle';
   var carUpdate = null; // aktiv karrusels opdatering (én resize-lytter i alt)
 
@@ -296,6 +299,7 @@
   var RENDER = { v1: v1, v4: v4 };
 
   function render(only) {
+    market = chosen || defaultMarket();
     var r = forMarket(market);
     document.querySelectorAll('[data-press]').forEach(function (el) {
       var k = el.getAttribute('data-press');
@@ -320,7 +324,7 @@
     });
     function onClick(e) {
       var t = e.target.closest('button'); if (!t) return;
-      if (t.hasAttribute('data-m')) { market = t.getAttribute('data-m'); v4type = 'Alle'; try { localStorage.setItem(KEY, market); } catch (x) {} render(); }
+      if (t.hasAttribute('data-m')) { chosen = t.getAttribute('data-m'); v4type = 'Alle'; try { localStorage.setItem(KEY, chosen); } catch (x) {} render(); }
       else if (t.hasAttribute('data-pr-type')) { v4type = t.getAttribute('data-pr-type'); render('v4'); }
       else if (t.hasAttribute('data-pr-season')) { v4season = t.getAttribute('data-pr-season'); render('v4'); }
     }
