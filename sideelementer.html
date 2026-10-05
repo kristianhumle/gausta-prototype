@@ -16,7 +16,7 @@
   <p class="lead">Ét sted for hver byggeklods. Hvert element vises levende, med status og de krav i kravspecifikationen, det opfylder. Det er katalogets formål at fungere som input til den tekniske og designmæssige specifikation.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span></div>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-footer">Footer</a>
   </div>
 
   <div class="spec-block" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
@@ -208,6 +208,47 @@
     <div class="spec-body"><div class="grid grid-2"><div class="booking"><div class="opt"><b>Model A</b><span class="muted">Link til operatørens booking</span></div><a class="btn btn-primary" href="#" aria-disabled="true">Book hos operatøren</a></div><div class="booking"><div class="opt"><b>Model B</b><span class="muted">Egen forespørgsel, videregives til operatør</span></div><button class="btn btn-primary">Send forespørgsel</button></div></div></div>
     <div class="spec-note"><b>Beslutning åben (spec. afsnit 6):</b> A, B eller C afhænger af analysen og operatøraftalen. Komponenten er bygget, så indholdet kan skiftes uden at siden bygges om. Ingen anbefaling.</div></div>
 
+  <div class="spec-block" id="e-share" data-mode="phone"><div class="spec-head"><h3>Del-knap og forhåndsvisning</h3><div class="row-flex"><span class="pill-tag">offentlige sider · A11</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin-top:0">Én diskret knap, ingen scripts fra Facebook eller X. På <b>telefon</b> åbner den telefonens egen delingsmenu (Web Share). På <b>computer</b> bliver det "Kopiér link" og "Send på e-mail". Knappen sender intet til tredjepart. Linket, der deles, er altid <b>https://gaustahome.com/</b> (det rene, faste link).</p>
+      <div class="row-flex" style="margin-bottom:6px"><span class="muted" style="font-size:.84rem">Vis som:</span>
+        <div class="sh-seg" role="group" aria-label="Visning"><button type="button" data-share-mode="phone" aria-pressed="true">Telefon</button><button type="button" data-share-mode="desktop" aria-pressed="false">Computer</button></div>
+        <span class="muted" style="font-size:.78rem" data-share-diag></span></div>
+      <div class="sh-status" data-share-status role="status" aria-live="polite"></div>
+
+      <div class="wc-grid" style="margin-top:12px">
+        <div class="wc-ver">
+          <h4>Version A: knap ved sidens overskrift</h4>
+          <p class="tagline">På lejlighedssiden og andre offentlige sider. Lille, ikke i vejen.</p>
+          <div class="sh-head"><div><div class="eyebrow" style="margin:0">Lejligheden</div><b style="font-family:var(--font-display);font-size:1.25rem">Gausta Lodge 52</b></div>
+            <div class="sh-actions"><span class="sh-phone"><button type="button" class="btn btn-ghost btn-sm" data-share><svg class="sh-ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg> Del</button></span><span class="sh-desk"><button type="button" class="btn btn-ghost btn-sm" data-copy>Kopiér link</button> <a class="btn btn-ghost btn-sm" data-mail href="#">Send på e-mail</a></span></div></div>
+        </div>
+        <div class="wc-ver">
+          <h4>Version B: ved booking</h4>
+          <p class="tagline">Når man overvejer at booke, deler man ofte med dem, man skal rejse med.</p>
+          <div class="sh-book"><b>Skal I rejse sammen?</b><span class="muted">Send siden til dem, I rejser med.</span>
+            <div class="sh-actions"><span class="sh-phone"><button type="button" class="btn btn-primary btn-sm" data-share><svg class="sh-ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg> Del</button></span><span class="sh-desk"><button type="button" class="btn btn-primary btn-sm" data-copy>Kopiér link</button> <a class="btn btn-ghost btn-sm" data-mail href="#">Send på e-mail</a></span></div></div>
+        </div>
+        <div class="wc-ver">
+          <h4>Version C: ikon på kort</h4>
+          <p class="tagline">Til de enkelte oplevelser (A4). Kun et ikon, med tekst til skærmlæser.</p>
+          <div class="sh-card"><div class="sh-card-img"><span class="wc-ph" style="position:static;display:inline-block">Pladsholder</span></div><div class="sh-card-body"><b>Rjukanbadet</b><span class="muted">Vandpark og spa, ca. 25 min i bil (skal verificeres)</span></div>
+            <button type="button" class="sh-ico" data-share aria-label="Del Rjukanbadet" title="Del"><svg class="sh-ic" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="M8 7l4-4 4 4"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button></div>
+        </div>
+      </div>
+
+      <h4 style="margin:26px 0 6px">Sådan ser et delt link ud (eksempel)</h4>
+      <p class="muted" style="margin:0 0 12px;font-size:.84rem">Forhåndsvisningen kommer af siden selv (Open Graph, A11). Her er to typiske udseender. Billedet er et prototypebillede, og teksten er et eksempel, der skal skrives og godkendes.</p>
+      <div class="wc-grid">
+        <div class="wc-ver"><h4>Facebook og Messenger</h4><p class="tagline">Stort kort, billedet 1,91:1.</p>
+          <div class="sh-og-big"><div class="sh-og-img" style="background-image:url(assets/web/vinter/vinter-01-m.webp)"></div><div class="sh-og-text"><small>GAUSTAHOME.COM</small><b>Gausta Lodge 52: lejlighed ved Gausta Skisenter</b><span>Lejlighed med 7 sengepladser og 25 m² terrasse i Gausta i Telemark. Se billeder, område og book.</span></div></div></div>
+        <div class="wc-ver"><h4>WhatsApp og iMessage</h4><p class="tagline">Kompakt kort med lille billede.</p>
+          <div class="sh-og-small"><div class="sh-og-img" style="background-image:url(assets/web/vinter/vinter-01-m.webp)"></div><div class="sh-og-text"><b>Gausta Lodge 52: lejlighed ved Gausta Skisenter</b><span>Lejlighed med 7 sengepladser og 25 m² terrasse i Gausta i Telemark.</span><small>gaustahome.com</small></div></div></div>
+      </div>
+    </div>
+    <div class="spec-note"><b>Krav:</b> A11. <b>Regler:</b> Web Share API på telefon, ellers kopiér link. Ingen tredjeparts delingsknapper (cookiefri, N3). Knappen står på offentlige sider og ikke i gæsteområdet, og vi tæller klik cookiefrit (A7). Teksten i forhåndsvisningen er skrevet pr. side og sprog. Billedet er 1200 x 630 px og skal have afklarede rettigheder. <b>Åbent:</b> om knappen skal blive efter nogle måneders brug, og endelige tekster og billeder. Se <a href="../teknisk/ikke-funktionelle-krav.md">det tekniske tillæg</a>.</div>
+  </div>
+
   <div class="spec-block" id="e-dist"><div class="spec-head"><h3>Afstandsliste</h3><div class="row-flex"><span class="pill-tag">område · A3</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="list-row"><span data-icon="snow"></span><div class="grow"><b>Slalompister</b><div class="meta">Ski-in / ski-out skal bekræftes</div></div><span class="verify">skal verificeres</span></div><div class="list-row"><span data-icon="pin"></span><div class="grow"><b>Nærmeste butik</b></div><span class="verify">skal verificeres</span></div></div>
     <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået).</div></div>
@@ -279,6 +320,7 @@
 <script src="weather-data.js"></script>
 <script src="weather.js"></script>
 <script src="webcam.js"></script>
+<script src="share.js"></script>
 <script src="press.js"></script>
 <script>document.addEventListener('gl:ready', function(){ var cd=document.getElementById('ctl-demo'); if(cd){ cd.innerHTML=document.querySelector('.controls').innerHTML.replace('hide-sm',''); }  document.getElementById('hero-demo').innerHTML = GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, ''); });</script>
 </body>
