@@ -15,21 +15,36 @@
   <p class="eyebrow">Designsystem · Elementkatalog</p>
   <h1 style="font-size:clamp(2rem,4vw,3rem)">Hvert element, siderne er bygget af.</h1>
   <p class="lead">Ét sted for hver byggeklods. Hvert element vises levende, med status og de krav i kravspecifikationen, det opfylder. Det er katalogets formål at fungere som input til den tekniske og designmæssige specifikation.</p>
-  <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span></div>
+  <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
   <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header">Header</a><a href="#e-controls">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer">Footer</a>
+    <a href="#e-header">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero">Hero</a><a href="#e-facts">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-season-lab">Årstidstema</a><a href="#e-gallery">Galleri</a><a href="#e-plan">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout">Ski-in / ski-out</a><a href="#e-live">Gausta nu</a><a href="#e-weather">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
   <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
 
   <div class="spec-block" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><div class="pv" style="padding:14px 18px"><div class="row-flex" style="justify-content:space-between"><b style="font-family:var(--font-display)">gaustahome.com</b><div class="row-flex"><span class="muted">Lejligheden</span><span class="muted">Ski-in/ski-out</span><span class="muted">Gausta og omegn ▾</span><span class="pill-tag">DA|EN</span><button class="btn btn-primary btn-sm">Book</button></div></div></div></div>
-    <div class="spec-note"><b>Krav:</b> TK1 sprog, TK2 mobil (hamburger ≤ 860px), TK3 årstids- og temavalg. <b>Besluttet 3. oktober 2026:</b> menuen er Lejligheden, Ski-in/ski-out og Gausta og omegn (rullemenu). Gæsteområde (B) og Back-office (C) ligger i Materialer-linjen over headeren og er ikke en del af webnavigationen. I det færdige site skjules C bag login, og B nås via QR, ikke via menu.</div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin:0 0 12px;font-size:.9rem">Her vises <b>den rigtige header</b> fra prototypen (samme kode som siderne), så den altid er ens. Hold musen over "Gausta og omegn" for rullemenuen. På mobil: tryk på menu-ikonet.</p>
+      <div class="hdr-label">Desktop (over 1120 px, skaleret til at passe)</div>
+      <div class="hdr-frame hdr-desktop" data-w="1240" data-h="300"><iframe src="index.html" title="Site-header, desktop" loading="lazy" scrolling="no" data-hdr style="width:1240px;height:300px;transform-origin:0 0"></iframe></div>
+      <div class="hdr-label">Mobil (under 860 px). Tryk på menu-ikonet</div>
+      <div class="hdr-frame hdr-mobile"><iframe src="index.html" title="Site-header, mobil" loading="lazy" scrolling="no" data-hdr style="height:470px"></iframe></div>
+      <div class="table-wrap" style="margin-top:18px"><table class="table">
+        <tr><th>Del</th><th>Indhold</th><th>Opførsel</th></tr>
+        <tr><td>Logo og navn</td><td>Fjeld-logo (A) og "gaustahome.com" (arbejdsnavn, endeligt navn ikke valgt)</td><td>Link til forsiden</td></tr>
+        <tr><td>Menu</td><td>Lejligheden · Ski-in/ski-out · Gausta og omegn ▾</td><td>Aktiv side markeres. Gausta og omegn har rullemenu</td></tr>
+        <tr><td>Rullemenu "Gausta og omegn"</td><td>Oversigt · Tæt på · Oplevelser · Nu og events (kommer, lav prioritet)</td><td>Åbner ved hover og tastaturfokus. "Nu og events" er ikke bygget og er ikke klikbar</td></tr>
+        <tr><td>Kontroller</td><td>Årstidsvælger (ikoner) · Sprog (Dansk / English) · Book</td><td>Se <a href="#e-controls">Årstidsvælger og sprogvælger</a>. Book-knappen linker til bookingsektionen</td></tr>
+        <tr><td>Mellem (860 til 1120 px)</td><td>Menu-ikon i stedet for menuen</td><td>Menuen åbner under headeren. Årstidsvælger, sprog og Book bliver i headeren</td></tr>
+        <tr><td>Mobil (under 860 px)</td><td>Menu-ikon, sprog</td><td>Årstidsvælgeren flytter ind i menuen. Book-knappen skjules</td></tr>
+      </table></div>
+    </div>
+    <div class="spec-note"><b>Krav:</b> TK1 sprog, TK2 mobil (menu-ikon fra 1120 px, årstidsvælger og Book skjult under 860 px), TK3 årstids- og temavalg. <b>Besluttet 3. oktober 2026:</b> menuen er Lejligheden, Ski-in/ski-out og Gausta og omegn (rullemenu). <b>Kun i prototypen:</b> Materialer-linjen over headeren (Website-prototype, Moodboard, Designsystem, Sideelementer, Gæsteområde, Back-office) er prototypens egen navigation og er <b>ikke</b> en del af webnavigationen. Den er skjult i visningerne ovenfor. Gæsteområde (B) og Back-office (C) ligger uden for menuen: I det færdige site skjules C bag login, og B nås via QR, ikke via menu.</div></div>
 
-  <div class="spec-block" id="e-controls"><div class="spec-head"><h3>Årstidsvælger og sprogvælger</h3><div class="row-flex"><span class="pill-tag">header</span><span class="status prototype">Prototype</span></div></div>
+  <div class="spec-block approved" id="e-controls"><div class="spec-head"><h3>Årstidsvælger og sprogvælger</h3><div class="row-flex"><span class="pill-tag">header</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body"><div class="row-flex" id="ctl-demo"></div></div>
-    <div class="spec-note"><b>Idé:</b> Årstidsvælgeren er en segmenteret knap med kun ikoner (forår, sommer, efterår, vinter). Navnet vises som tekst ved hover eller tastaturfokus. Den følger datoen fra start, og et manuelt valg gælder kun til browseren lukkes. Sproget er en drop-down, så der kan komme norsk og tysk på uden at ændre designet. Der er ingen mørk tilstand. <b>Krav:</b> TK1, TK3. <b>Mobil:</b> årstidsvælgeren flytter ind i menuen.</div></div>
+    <div class="spec-note"><b>Idé:</b> Årstidsvælgeren er en segmenteret knap med kun ikoner (forår, sommer, efterår, vinter). Navnet vises som tekst ved hover eller tastaturfokus. Den følger datoen fra start, og et manuelt valg gælder kun til browseren lukkes. Sproget er en drop-down, så der kan komme norsk og tysk på uden at ændre designet. Der er ingen mørk tilstand. <b>Krav:</b> TK1, TK3. <b>Mobil:</b> årstidsvælgeren flytter ind i menuen.<br><b>Godkendt endeligt af ejeren 5. oktober 2026</b> (Brugeroplysning). Ændres kun efter udtrykkelig besked.</div></div>
 
   <div class="spec-block" id="e-hero"><div class="spec-head"><h3>Hero</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status research">Research</span></div></div>
     <div class="spec-body"><div class="pv"><div class="pv-hero" style="padding:24px 24px 0"><p class="eyebrow">Gausta · Telemark</p><div class="pv-title" style="font-size:2rem">Din base ved foden af fjeldet</div><svg viewBox="0 0 1440 260" preserveAspectRatio="none" id="hero-demo" style="height:90px"></svg></div></div></div>
@@ -343,5 +358,20 @@
 <script src="share.js"></script>
 <script src="press.js"></script>
 <script>document.addEventListener('gl:ready', function(){ var cd=document.getElementById('ctl-demo'); if(cd){ cd.innerHTML=document.querySelector('.controls').innerHTML.replace('hide-sm',''); }  document.getElementById('hero-demo').innerHTML = GL.heroArt().replace(/^<svg[^>]*>|<\/svg>$/g, ''); });</script>
+<script>
+(function(){
+  function tidy(f){
+    try {
+      var d=f.contentDocument; if(!d||!d.body) return;
+      [].forEach.call(d.body.children,function(c){ if(!c.matches('header.header')) c.style.display='none'; });
+      d.documentElement.style.overflow='hidden';
+      d.addEventListener('click',function(e){ var a=e.target.closest('a'); if(a) e.preventDefault(); });
+    } catch(e){}
+  }
+  function fit(){ [].forEach.call(document.querySelectorAll('.hdr-desktop'),function(b){ var w=+b.dataset.w,h=+b.dataset.h,s=Math.min(1,b.clientWidth/w),f=b.querySelector('iframe'); f.style.transform='scale('+s+')'; b.style.height=Math.round(h*s)+'px'; }); }
+  fit(); window.addEventListener('resize',fit);
+  [].forEach.call(document.querySelectorAll('iframe[data-hdr]'),function(f){ f.addEventListener('load',function(){ tidy(f); }); if(f.contentDocument&&f.contentDocument.readyState==='complete') tidy(f); });
+})();
+</script>
 </body>
 </html>
