@@ -1016,3 +1016,22 @@ textarea.field { min-height: 96px; resize: vertical; }
 .live-season .src { margin-top: 8px; font-size: .7rem; color: var(--faint); line-height: 1.35; }
 .live-table td, .live-table th { font-size: .8rem; }
 .wc-cmp td.c, .wc-cmp th.c { text-align: center; }
+
+/* afstandsliste: filter som rullelister og kompakt mobilvisning */
+.area-filters { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+.area-sel { display: inline-flex; align-items: center; gap: 8px; font-size: .85rem; }
+.area-sel select { min-width: 0; max-width: 100%; }
+.area-table .type-sub { display: none; }
+@media (max-width: 640px) {
+  .area-filters { flex-wrap: nowrap; gap: 8px; }
+  .area-sel { flex: 1 1 0; min-width: 0; flex-direction: column; align-items: stretch; gap: 3px; }
+  .area-sel select { width: 100%; }
+  .area-table .col-type { display: none; }
+  .area-table .type-sub { display: block; }
+  .area-table td, .area-table th { padding: 10px 8px; }
+  .area-table td:first-child { padding-left: 12px; }
+  .area-table td.r:last-child, .area-table th.r:last-child { padding-right: 12px; }
+  .area-table .num { white-space: nowrap; font-size: .82rem; }
+}
+.area-table .type-sub { font-size: .78rem; font-weight: 400; color: var(--muted); margin-top: 1px; }
+.area-table td.r:last-child { white-space: nowrap; }

@@ -230,22 +230,19 @@
           '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '</div></div>';
       }).join('') + '</div><p class="faint" style="margin-top:12px">' + note + '</p>';
     } else {
-      box.innerHTML = '<div class="table-wrap"><table class="table"><tr><th>Sted</th><th>Type</th><th class="r">Afstand</th><th></th></tr>' + pois.map(function (p) {
-        return '<tr><td><b>' + esc(p.n) + '</b></td><td class="muted">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
+      box.innerHTML = '<div class="table-wrap"><table class="table area-table"><tr><th>Sted</th><th class="col-type">Type</th><th class="r">Afstand</th><th></th></tr>' + pois.map(function (p) {
+        return '<tr><td><b>' + esc(p.n) + '</b><div class="meta type-sub">' + CAT_NAME[kind + ':' + p.c] + '</div></td><td class="muted col-type">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
       }).join('') + '</table></div><p class="faint" style="margin-top:10px">' + note + '</p>';
     }
     }
     if (el.hasAttribute('data-filter')) {
       var types = []; all.forEach(function (p) { if (types.indexOf(p.c) < 0) types.push(p.c); });
-      var btn = function (grp, val, label) { return '<button type="button" class="filter" data-g="' + grp + '" data-v="' + val + '" aria-pressed="' + (val === '' ? 'true' : 'false') + '">' + esc(label) + '</button>'; };
-      el.innerHTML = '<div class="plan-pills" role="group" aria-label="Filtrér på type" style="margin-bottom:8px"><span class="faint" style="align-self:center;margin-right:4px">Type</span>' + btn('t', '', 'Alle typer') + types.map(function (c) { return btn('t', c, CAT_NAME[kind + ':' + c]); }).join('') + '</div>' +
-        '<div class="plan-pills" role="group" aria-label="Filtrér på ' + (kind === 'close' ? 'afstand' : 'køretid') + '" style="margin-bottom:16px"><span class="faint" style="align-self:center;margin-right:4px">' + (kind === 'close' ? 'Afstand' : 'Køretid') + '</span>' + buckets.map(function (x) { return btn('d', x[0], x[1]); }).join('') + '</div><div data-list-body></div>';
+      var sl = function (grp, label, opts) { return '<label class="area-sel"><span class="faint">' + label + '</span><select class="field compact" data-g="' + grp + '" aria-label="Filtrér på ' + label.toLowerCase() + '">' + opts.map(function (o) { return '<option value="' + o[0] + '">' + esc(o[1]) + '</option>'; }).join('') + '</select></label>'; };
+      el.innerHTML = '<div class="area-filters">' + sl('t', 'Type', [['', 'Alle typer']].concat(types.map(function (c) { return [c, CAT_NAME[kind + ':' + c]]; }))) + sl('d', kind === 'close' ? 'Afstand' : 'Køretid', buckets) + '</div><div data-list-body></div>';
       box = el.querySelector('[data-list-body]');
-      el.addEventListener('click', function (e) {
-        var b = e.target.closest('button[data-g]'); if (!b) return;
-        sel[b.getAttribute('data-g')] = b.getAttribute('data-v');
-        [].forEach.call(el.querySelectorAll('button[data-g="' + b.getAttribute('data-g') + '"]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
-        draw();
+      el.addEventListener('change', function (e) {
+        var x = e.target.closest('select[data-g]'); if (!x) return;
+        sel[x.getAttribute('data-g')] = x.value; draw();
       });
     }
     draw();
