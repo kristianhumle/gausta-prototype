@@ -18,7 +18,7 @@
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
   <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
+    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventliste</a><a href="#e-faq" class="done">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
   <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
@@ -369,46 +369,10 @@
     </div>
     <div class="spec-note"><b>Besluttet 3. oktober 2026:</b> to kort i stedet for ét: <b>Gausta</b> (tæt på: mad og drikke, indkøb, skiudlejning, aktiviteter som padel og sauna) og <b>Rjukan og omegn</b> (byen, kultur, natur, aktiviteter, med køretid). Man skifter mellem dem, slår lag til og fra og zoomer ind på centrene (Gaustablikk, Rjukan). Steder tæt på hinanden samles (hotellet, Food Court). A3 (Tæt på) og A4 (Oplevelser) deles efter formål, Nu og events (A5 + A6) er én side med lav prioritet, og menupunktet hedder "Området". <b>Fundet:</b> padel, flydende sauna, restauranter, butikker, skiudlejning, Vemork og Gaustatoppen findes i kortdata. Rjukan Spa findes ikke under det navn (det nærmeste er Rjukanbadet), og Rjukan Klatrepark skal tjekkes (kilden siger lukket på ubestemt tid). <b>Åbent:</b> endelig verificering af steder, rigtigt levende kort og kortleverandør i den tekniske specifikation (åbne kortdata kan hostes selv), datakilder til live-data (TK4).</div></div>
 
-  <div class="spec-block" id="e-faq"><div class="spec-head"><h3>FAQ-harmonika</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status prototype">Prototype</span></div></div>
+  <div class="spec-block approved" id="e-faq"><div class="spec-head"><h3>FAQ-harmonika</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body"><div class="faq"><details open><summary>Hvordan kommer jeg ind?</summary><p>Svar tekst.</p></details><details><summary>Er der kameraer?</summary><p>Svar tekst.</p></details></div></div>
-    <div class="spec-note"><b>Krav:</b> A1 FAQ. Brug native details/summary for tilgængelighed og offline.</div>
-    <div class="spec-body" style="border-top:1px solid var(--border)">
-      <p style="margin:0 0 8px"><b>Markup til søgemaskiner og LLM'er (Inference, forslag, 6. oktober 2026)</b></p>
-      <ul class="wx-facts"><li><b>Synligt indhold:</b> <code>&lt;details&gt;/&lt;summary&gt;</code> er korrekt semantik, og svaret ligger altid i HTML'en, også når punktet er lukket, så crawlere og LLM'er kan læse det. Spørgsmålet er selve <code>summary</code>, og svaret skal give mening uden resten af siden.</li><li><b>Strukturerede data:</b> en <code>FAQPage</code> i JSON-LD (se nedenfor) er tilføjet på forsiden. Teksten i JSON-LD <b>skal være identisk med den synlige tekst</b>, og den genereres ud fra samme CMS-felter, så de aldrig skilles ad.</li><li><b>Sprog:</b> i prototypen skiftes engelsk med JavaScript (<code>data-en</code>), så engelsk ikke står i HTML'en. På det rigtige site får hvert sprog sin egen URL og sit eget serverrenderede indhold med <code>hreflang</code> og egen JSON-LD (<code>inLanguage</code>), ellers ser crawlere kun dansk.</li><li><b>Forbehold (Antagelse, skal verificeres):</b> Google viser kun FAQ-rich results for offentlige og sundhedssider siden 2023, så markeringen giver ikke stjerner i Google. Den er stadig gyldig schema.org og læses af andre søgemaskiner og AI-systemer. Intet er lovet om effekt.</li><li><b>Indhold:</b> kun reelle spørgsmål og svar. Ingen reklame i svar. Svarene i prototypen er pladsholdere og skal skrives og godkendes.</li></ul>
-      <pre class="code" style="overflow:auto;font-size:.78rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:12px;margin:10px 0 0">&lt;script type="application/ld+json"&gt;
-{
-  "@context": "https://schema.org",
-  "@type": "FAQPage",
-  "inLanguage": "da",
-  "mainEntity": [
-    {
-      "@type": "Question",
-      "name": "Hvordan kommer jeg ind i lejligheden?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Adgang følger operatørens fælles låseløsning. Dørkoder vises aldrig på dette website."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Er der internet?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Wi-Fi er planlagt, med oplysninger på et skilt i lejligheden. Hastighed er ikke bekræftet."
-      }
-    },
-    {
-      "@type": "Question",
-      "name": "Er der kameraer?",
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": "Ingen kameraer. Dørsensorer registrerer, når dørene åbnes. Det oplyses tydeligt til gæster."
-      }
-    }
-  ]
-}
-&lt;/script&gt;</pre>
-    </div></div>
+    <div class="spec-note"><b>Godkendt 6. oktober 2026 (Brugeroplysning, G43).</b> <b>Krav:</b> A1 FAQ. Brug native details/summary for tilgængelighed og offline. Svarene er pladsholdere.</div>
+    </div>
 
   <div class="spec-block" id="e-form"><div class="spec-head"><h3>Forespørgselsformular</h3><div class="row-flex"><span class="pill-tag">forside · A2</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><form class="form" style="max-width:520px" onsubmit="return false"><div class="two"><label>Ankomst<input class="field" type="date"></label><label>Afrejse<input class="field" type="date"></label></div><label>E-mail<input class="field" type="email"></label><button class="btn btn-primary" type="button">Send</button></form></div>
