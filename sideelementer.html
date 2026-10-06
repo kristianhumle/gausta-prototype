@@ -342,9 +342,14 @@
     </div>
     <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået). <b>Godkendt 6. oktober 2026</b> (Brugeroplysning, G44), i det udseende prototypen viser. Ændres kun efter udtrykkelig besked. Kilde- og dataforbeholdet er fjernet fra visningen efter ejerens ønske; stederne er stadig kildepåstande, der skal verificeres inden lancering. <b>Opdateret samme dag:</b> visningen er den rigtige liste, nu med <b>filter på Type og Afstand</b> (rullelister, kan kombineres, og højden følger resultatet), fra siden Tæt på, med <b>prøvedata</b>: 16 steder med luftlinje fra lejligheden, sorteret nærmest først, med type og officielt link. Rækkerne kommer fra <code>area-map-data.js</code> (proces: teknisk/proces-interessepunkter-kort.md).</div></div>
 
-  <div class="spec-block" id="e-events"><div class="spec-head"><h3>Eventliste med filter</h3><div class="row-flex"><span class="pill-tag">område · A6</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><div class="row-flex" style="margin-bottom:12px"><button class="filter" aria-pressed="true">Alle</button><button class="filter" aria-pressed="false">Sport</button><button class="filter" aria-pressed="false">Kultur</button></div><div class="list-row" style="padding-top:0"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event</b><div class="meta">Pladsholder</div></div></div></div>
-    <div class="spec-note"><b>Krav:</b> filtrerbar efter måned og kategori. Kilde: feed hvis muligt, ellers manuelt (åbent).</div></div>
+  <div class="spec-block" id="e-events"><div class="spec-head"><h3>Eventliste med filter og tidslinje</h3><div class="row-flex"><span class="pill-tag">område · A6</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body">
+      <div class="hdr-label">Desktop (skaleret til at passe)</div>
+      <div class="hdr-frame hdr-desktop" data-w="1240" data-h="1500"><iframe src="omraadet.html" title="Eventliste, desktop" loading="lazy" scrolling="no" data-hdr="section#events" style="width:1240px;height:1500px;transform-origin:0 0"></iframe></div>
+      <div class="hdr-label">Mobil (under 860 px)</div>
+      <div class="hdr-frame hdr-mobile"><iframe src="omraadet.html" title="Eventliste, mobil" loading="lazy" scrolling="no" data-hdr="section#events" style="height:1500px"></iframe></div>
+    </div>
+    <div class="spec-note"><b>Krav (A6):</b> filtrerbar efter periode og kategori, med kilde pr. event. <b>Opdateret 6. oktober 2026 (Brugeroplysning):</b> listen viser <b>tidsdimensionen</b>: en tidslinje over månederne frem (med antal events, klik for at filtrere), gruppering pr. måned med "om X uger/måneder", sammenfoldede måneder uden events, flerdagsevents som datointerval og en tydelig mærkning af datoer, der <b>ikke er bekræftet</b> (traditionelle events, der plejer at ligge på samme tid hvert år). Eksempeldata strækker sig langt ind i 2027. Filtre er rullelister (Periode, Kategori). <b>Kildeanalyse og anbefaling:</b> teknisk/datakilder/13-events-kildeanalyse.md. Eksemplerne er hentet fra kilderne, men datoer og priser skal verificeres, før noget vises offentligt. Data kommer fra <code>events-data.js</code>.</div></div>
 
   <div class="spec-block approved" id="e-plan"><div class="spec-head"><h3>Interaktiv plantegning</h3><div class="row-flex"><span class="pill-tag">lejlighed · A1</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body">

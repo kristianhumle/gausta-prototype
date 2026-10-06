@@ -8,7 +8,7 @@
   var MAPS = {
     close: { label: 'Gausta', head: 'Gausta, tæt på lejligheden', zoomLabel: 'Zoom til Gaustablikk', clusterName: 'Gaustablikk-centret',
       cats: [{ id: 'mad', name: 'Mad og drikke', icon: 'fork' }, { id: 'indkoeb', name: 'Indkøb', icon: 'bag' }, { id: 'udstyr', name: 'Skiudlejning', icon: 'snow' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }],
-      groups: { hotel: { name: 'Gaustablikk Fjellresort', pos: [59.8801, 8.7342], members: ['bjork', 'blikk', 'kirks', 'lobby', 'wellness'] }, food: { name: 'Gausta Food Court og butikker', pos: [59.8812, 8.7359], members: ['stova', 'pose', 'sport1', 'bakeri'] }, sportsmann: { name: 'Den lykkelige sportsmann', pos: [59.8789, 8.7481], members: ['sportsmann', 'skigaffel'] } } },
+      groups: { hotel: { name: 'Gaustablikk Fjellresort', pos: [59.8801, 8.7342], members: ['bjork', 'blikk', 'kirks', 'lobby', 'wellness'] }, food: { name: 'Gausta Food Court og butikker', pos: [59.8812, 8.7359], members: ['stova', 'pose', 'sport1', 'bakeri'] }, sportsmann: { name: 'Den lykkelige sportsmann', pos: [59.8789, 8.7481], members: ['sportsmann', 'skigaffel'] }, kvitaavatn: { name: 'Flydende sauna og bådleje', pos: [59.8805, 8.7317], members: ['badstue', 'baadleje'] } } },
     wide: { label: 'Rjukan og omegn', head: 'Rjukan og omegn, i bil', zoomLabel: 'Zoom til Rjukan', clusterName: 'Rjukan',
       cats: [{ id: 'by', name: 'Byen', icon: 'city' }, { id: 'kultur', name: 'Kultur', icon: 'museum' }, { id: 'natur', name: 'Natur', icon: 'tree' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }], groups: {} }
   };

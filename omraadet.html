@@ -57,18 +57,7 @@
   <div class="wrap">
     <p class="eyebrow">A6 · Events</p>
     <h2 data-en="What is on.">Hvad sker der.</h2>
-    <div class="row-flex" style="margin:18px 0" data-filter-group="#evlist">
-      <button class="filter" data-f="all" aria-pressed="true" data-en="All">Alle</button>
-      <button class="filter" data-f="sport" aria-pressed="false">Sport</button>
-      <button class="filter" data-f="kultur" aria-pressed="false" data-en="Culture">Kultur</button>
-      <button class="filter" data-f="mad" aria-pressed="false" data-en="Food">Mad</button>
-    </div>
-    <div id="evlist" class="card">
-      <div class="list-row" data-cat="sport"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event A</b><div class="meta">Pladsholder · kategori Sport</div></div><span class="verify">eksempel</span></div>
-      <div class="list-row" data-cat="kultur"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event B</b><div class="meta">Pladsholder · kategori Kultur</div></div><span class="verify">eksempel</span></div>
-      <div class="list-row" data-cat="mad kultur"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event C</b><div class="meta">Pladsholder · kategori Mad, Kultur</div></div><span class="verify">eksempel</span></div>
-    </div>
-    <p class="faint" style="margin-top:10px">Kilde: automatisk feed hvis muligt, ellers manuelt kurateret (åbent punkt).</p>
+    <div data-events></div>
   </div>
 </section>
 <script src="app.js"></script>
@@ -76,5 +65,7 @@
 <script src="weather.js"></script>
 <script src="area-map-data.js"></script>
 <script src="area.js"></script>
+<script src="events-data.js"></script>
+<script src="events.js"></script>
 </body>
 </html>
