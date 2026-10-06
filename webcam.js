@@ -1,17 +1,23 @@
 /* Webcams: to måder at vise dem på (sideelementer.html, e-webcams): version 2 (stillbillede) og version 3 (faner).
-   Pladsholder-scener er tegnet af designets egne farver (ingen tredjepartsbilleder).
-   To rigtige kilder kan indlæses, begge først ved klik, så siden ikke kontakter tredjepart af sig selv:
+   Prototypen er ikke offentlig, så de RIGTIGE kilder indlæses med det samme, uden klik (6. oktober 2026, Brugeroplysning).
+   Tilladelse til at vise dem afklares senere (se teknisk/datakilder/08-webcams.md). Pladsholder-scener er kun fallback,
+   hvis en kilde ikke svarer. Kilder:
    1) Statens vegvesen, Fv 37 Jønjiljo (stillbillede, NLOD)
    2) Gaustabanen, toppen af Gaustatoppen (stillbillede fra ipcamlive, opdateres hvert 10. sekund)
-   3) Gausta LIVE (Norway Live på YouTube), fanen Live i version 3, via youtube-nocookie.com */
+   3) Gausta.com via Norway Live (pistebillede fra cdn.norwaylive.tv, opdateres kun i driftsperioder)
+   4) Rjukan, mod vest (geirb.com, privat kamera)
+   5) Gausta LIVE (Norway Live på YouTube), fanen Live i version 3, via youtube-nocookie.com, startes uden lyd */
 (function () {
   'use strict';
   var root = document.getElementById('e-webcams');
   if (!root) return;
 
+  var NL = 'https://cdn.norwaylive.tv/snapshots/6dc5e9c7-99d2-40a2-aeaf-d7335e752b3c/';
   var CAMS = {
-    veg: { url: 'https://kamera.atlas.vegvesen.no/api/images/0829010_1', alt: 'Vejkamera Fv 37 Jønjiljo, Statens vegvesen', refresh: 0, label: 'Indlæs rigtigt billede (kontakter Statens vegvesen)', idle: 'Eksempel: ikke hentet endnu' },
-    top: { url: 'https://g0.ipcamlive.com/player/snapshot.php?alias=gabakontortopp', alt: 'Gaustatoppen, kamera fra Gaustabanen', refresh: 10000, label: 'Indlæs live-billede fra Gaustatoppen (kontakter Gaustabanen)', idle: 'Ikke hentet endnu' }
+    veg: { url: 'https://kamera.atlas.vegvesen.no/api/images/0829010_1', alt: 'Vejkamera Fv 37 Jønjiljo, Statens vegvesen', refresh: 300000, idle: 'Henter billede ...' },
+    top: { url: 'https://g0.ipcamlive.com/player/snapshot.php?alias=gabakontortopp', alt: 'Gaustatoppen, kamera fra Gaustabanen', refresh: 10000, idle: 'Henter billede ...' },
+    slope: { url: NL + 'kam4utsnitt1.jpg', alt: 'Koffertlokket mod Gaustatoppen, Gausta via Norway Live', refresh: 300000, idle: 'Henter billede ...' },
+    town: { url: 'https://www.geirb.com/cam_2.jpg', alt: 'Rjukan mod vest, geirb.com', refresh: 60000, idle: 'Henter billede ...' }
   };
   var YT_ID = 'NGGIyXwoSiU';
   var PLAY = '<span class="wc-play"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg></span></span>';
@@ -54,66 +60,40 @@
   function bust(u) { return u + (u.indexOf('?') > -1 ? '&' : '?') + 't=' + Date.now(); }
   function stopBox(box) { if (box._timer) { clearInterval(box._timer); box._timer = null; } }
 
-  function loadReal(box, btn, cam) {
-    var img = new Image();
-    img.alt = cam.alt;
-    img.referrerPolicy = 'no-referrer';
-    img.onload = function () {
-      box.innerHTML = ''; box.appendChild(img);
-      var st = stampOf(box);
-      if (st) st.textContent = (cam.refresh ? 'Opdateret ' : 'Hentet ') + timeFmt.format(new Date()) + (cam.refresh ? ' (hvert ' + cam.refresh / 1000 + '. sek.)' : '');
-      if (btn) btn.textContent = 'Fjern billede';
-      box.setAttribute('data-loaded', '1');
-      if (cam.refresh) {
-        stopBox(box);
-        box._timer = setInterval(function () {
-          var n = new Image(); n.referrerPolicy = 'no-referrer';
-          n.onload = function () { img.src = n.src; var s2 = stampOf(box); if (s2) s2.textContent = 'Opdateret ' + timeFmt.format(new Date()) + ' (hvert ' + cam.refresh / 1000 + '. sek.)'; };
-          n.src = bust(cam.url);
-        }, cam.refresh);
-        tabTimers.push(box);
-      }
-    };
-    img.onerror = function () {
-      var st = stampOf(box);
-      if (st) st.textContent = 'Kilden svarer ikke. Viser pladsholder.';
-      if (btn) btn.textContent = 'Prøv igen';
-    };
-    img.src = bust(cam.url);
-  }
-  function wireReal(scope) {
-    Array.prototype.forEach.call(scope.querySelectorAll('[data-real-load]'), function (btn) {
-      var box = scope.querySelector(btn.getAttribute('data-real-load'));
-      var cam = CAMS[btn.getAttribute('data-cam') || 'veg'];
-      var original = box.innerHTML;
-      btn.addEventListener('click', function () {
-        if (box.getAttribute('data-loaded') === '1') {
-          stopBox(box);
-          box.innerHTML = original; box.setAttribute('data-loaded', '0'); btn.textContent = cam.label;
-          var st = stampOf(box); if (st) st.textContent = cam.idle;
-          return;
-        }
-        loadReal(box, btn, cam);
-      });
-    });
-  }
-  wireReal(root);
+  function every(ms) { return ms >= 60000 ? 'hvert ' + Math.round(ms / 60000) + '. min.' : 'hvert ' + ms / 1000 + '. sek.'; }
+  function setStamp(box, txt) { var st = stampOf(box); if (st) st.textContent = txt; }
 
-  function wireLive(scope) {
-    var btn = scope.querySelector('[data-live-load]');
-    var main = scope.querySelector('#wc-main');
-    var original = main.innerHTML;
-    btn.addEventListener('click', function () {
-      var st = stampOf(main);
-      if (main.getAttribute('data-loaded') === '1') {
-        main.innerHTML = original; main.setAttribute('data-loaded', '0');
-        btn.textContent = 'Indlæs live (kontakter YouTube)'; if (st) st.textContent = 'Afspilleren er ikke indlæst';
-        return;
+  /* Henter billedet med det samme og opdaterer det med cam.refresh. Ved fejl vises pladsholderen, og der prøves igen. */
+  function loadReal(box, cam) {
+    var img = null;
+    stopBox(box);
+    function done(n) {
+      if (!img) { img = n; img.alt = cam.alt; box.innerHTML = ''; box.appendChild(img); box.setAttribute('data-loaded', '1'); }
+      else img.src = n.src;
+      setStamp(box, 'Opdateret ' + timeFmt.format(new Date()) + ' (' + every(cam.refresh) + ')');
+    }
+    function fetchOnce() {
+      var n = new Image(); n.referrerPolicy = 'no-referrer';
+      var settled = false, tm = setTimeout(function () { if (!settled) fail(); }, 8000);
+      n.onload = function () { settled = true; clearTimeout(tm); done(n); };
+      n.onerror = function () { settled = true; clearTimeout(tm); fail(); };
+      function fail() {
+        if (!img) setStamp(box, 'Kilden svarer ikke lige nu (fx uden for sæson). Viser pladsholder og prøver igen ' + every(cam.refresh));
+        else setStamp(box, 'Kilden svarer ikke lige nu. Viser sidste billede.');
       }
-      main.innerHTML = '<iframe title="Gausta LIVE (Norway Live på YouTube)" src="https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>';
-      main.setAttribute('data-loaded', '1');
-      btn.textContent = 'Fjern afspiller'; if (st) st.textContent = 'Afspiller indlæst fra YouTube';
-    });
+      n.src = bust(cam.url);
+    }
+    fetchOnce();
+    box._timer = setInterval(fetchOnce, cam.refresh);
+    if (box.id === 'wc-main') tabTimers.push(box);
+  }
+  /* Version 2: vejkameraet indlæses straks. */
+  Array.prototype.forEach.call(root.querySelectorAll('[data-cam]'), function (box) { loadReal(box, CAMS[box.getAttribute('data-cam')]); });
+
+  function startLive(main) {
+    main.innerHTML = '<iframe title="Gausta LIVE (Norway Live på YouTube)" src="https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1&autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>';
+    main.setAttribute('data-loaded', '1');
+    setStamp(main, 'Live fra YouTube (uden lyd, tryk på afspilleren for lyd)');
   }
 
   /* Version 3: faner med flere kameraer. Toppen og Vejen kan indlæses rigtigt ved klik. */
@@ -123,24 +103,24 @@
     var out = root.querySelector('[data-wc-out]');
     var info = {
       top: { scene: 'top', badge: ['live', 'Næsten live'], t: 'Toppen af Gaustatoppen', src: 'Kilde: Gaustabanen (ipcamlive). Deres afspiller kan ikke indlejres (kilden spærrer), så her hentes stillbilledet, som opdateres hvert 10. sekund. Ikke et officielt API, rettigheder uafklarede', link: 'https://gaustabanen.no/en/live-updates', stamp: CAMS.top.idle, real: 'top' },
-      slope: { scene: 'slope', badge: ['sæson', 'Sæson'], t: 'Pisten, Koffertlokket', src: 'Gausta.com via Norway Live. Vilkår uafklarede. Billederne var 6-10 dage gamle 3. oktober 2026 (off-season)', link: 'https://www.gausta.com/live-data-gausta/', stamp: 'Pladsholder. Skjules, hvis billedet er ældre end 2 timer' },
+      slope: { scene: 'slope', badge: ['sæson', 'Sæson'], t: 'Pisten, Koffertlokket', src: 'Kilde: Gausta.com via Norway Live (cdn.norwaylive.tv), opdateres ca. hvert 5. minut, men kun i driftsperioder (6-10 dage gamle 3. oktober 2026, og kilden svarede 502 6. oktober 2026). Vilkår uafklarede', link: 'https://www.gausta.com/webkamera/', stamp: CAMS.slope.idle, real: 'slope' },
       road: { scene: 'road', badge: ['frisk', 'Frisk'], t: 'Vejen: Fv 37 Jønjiljo', src: 'Kilde: Statens vegvesen (NLOD)', link: 'https://www.vegvesen.no/trafikk/', stamp: CAMS.veg.idle, real: 'veg' },
-      live: { scene: 'slope', live: true, badge: ['live', 'Live'], t: 'Gausta LIVE (Norway Live)', src: 'Kilde: Norway Live på YouTube. Skifter mellem scener ca. hvert 15. sekund, så den viser ikke altid toppen eller pisten. Klik indlæser afspilleren fra youtube-nocookie.com og kontakter YouTube. Tilladelse ikke afklaret (Norway Live: indholdet kan vises videre, kontakt dem)', link: 'https://norwaylive.tv/gausta/', stamp: 'Afspilleren er ikke indlæst' },
-      town: { scene: 'town', badge: ['frisk', 'Frisk'], t: 'Rjukan, mod vest', src: 'Privat kamera (geirb.com). Vilkår ikke læst', link: 'https://www.visitrjukan.no/', stamp: 'Pladsholder' }
+      live: { scene: 'slope', live: true, badge: ['live', 'Live'], t: 'Gausta LIVE (Norway Live)', src: 'Kilde: Norway Live på YouTube. Skifter mellem scener ca. hvert 15. sekund, så den viser ikke altid toppen eller pisten. Afspilleren indlæses fra youtube-nocookie.com og kontakter YouTube, og starter uden lyd. Tilladelse ikke afklaret (Norway Live: indholdet kan vises videre, kontakt dem)', link: 'https://norwaylive.tv/gausta/', stamp: 'Henter ...' },
+      town: { scene: 'town', badge: ['frisk', 'Frisk'], t: 'Rjukan, mod vest', src: 'Privat kamera (geirb.com), boligområder maskeret, opdateres ca. hvert minut. Vilkår ikke læst', link: 'https://www.geirb.com/', stamp: CAMS.town.idle, real: 'town' }
     };
     function show(key) {
       var d = info[key];
       tabTimers.forEach(stopBox); tabTimers = [];
       btns.forEach(function (b) { var on = b.getAttribute('data-key') === key; b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; });
       out.innerHTML =
-        '<div class="wc-frame"><div class="wc-img" data-scene="' + d.scene + '" id="wc-main">' + scene(d.scene) + '<span class="wc-ph">' + (d.real || d.live ? 'Pladsholder, indtil du klikker' : 'Pladsholder') + '</span>' + (d.live ? PLAY : '') + '</div>' +
+        '<div class="wc-frame"><div class="wc-img" data-scene="' + d.scene + '" id="wc-main">' + scene(d.scene) + '<span class="wc-ph">' + (d.real || d.live ? 'Henter ...' : 'Pladsholder') + '</span>' + (d.live ? PLAY : '') + '</div>' +
         '<span class="wc-badge wc-' + d.badge[0] + '">' + d.badge[1] + '</span></div>' +
         '<div class="wc-cap"><b>' + d.t + '</b><span class="stamp" data-stamp>' + d.stamp + '</span></div>' +
         '<div class="wc-src">' + d.src + ' · <a href="' + d.link + '" target="_blank" rel="noopener">Åbn hos kilden</a></div>' +
-        (d.real ? '<button type="button" class="btn btn-primary btn-sm" data-real-load="#wc-main" data-cam="' + d.real + '">' + CAMS[d.real].label + '</button>' : '') +
-        (d.live ? '<button type="button" class="btn btn-primary btn-sm" data-live-load>Indlæs live (kontakter YouTube)</button>' : '');
-      wireReal(out);
-      if (d.live) wireLive(out);
+        '';
+      var main = out.querySelector('#wc-main');
+      if (d.real) loadReal(main, CAMS[d.real]);
+      if (d.live) startLive(main);
     }
     btns.forEach(function (b, i) {
       b.addEventListener('click', function () { show(b.getAttribute('data-key')); });

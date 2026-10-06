@@ -184,16 +184,15 @@
 
   <div class="spec-block" id="e-webcams"><div class="spec-head"><h3>Webcams: to måder at vise dem på</h3><div class="row-flex"><span class="pill-tag">forside, område, gæst · A5 · datakilde 7</span><span class="status research">Research</span></div></div>
     <div class="spec-body">
-      <p class="muted" style="margin-top:0"><b>Beslutning 3. oktober 2026:</b> webcams skal være <b>indlejret på siden</b>, ikke kun links. <b>Valgt 5. oktober 2026:</b> version 2 (stillbillede med kilde) og version 3 (faner med flere kameraer) er beholdt, de øvrige er fjernet. Scenerne er <b>pladsholdere</b> tegnet i designets farver. Tre rigtige kilder kan prøves, og de indlæses først, når du klikker: <b>Gaustatoppen</b> (Gaustabanens kamera som stillbillede, der opdateres hvert 10. sekund, i version 3, fanen Toppen), <b>Gausta LIVE</b> (rigtig YouTube-stream fra Norway Live, version 3, fanen Live) og et <b>vejkamera</b> fra Statens vegvesen (åben licens, version 2 og fanen Vejen).</p>
+      <p class="muted" style="margin-top:0"><b>Beslutning 3. oktober 2026:</b> webcams skal være <b>indlejret på siden</b>, ikke kun links. <b>Valgt 5. oktober 2026:</b> version 2 (stillbillede med kilde) og version 3 (faner med flere kameraer) er beholdt, de øvrige er fjernet. Prototypen er ikke offentlig, så <b>de rigtige kilder indlæses med det samme, uden klik</b> (6. oktober 2026, Brugeroplysning). Tilladelse til at vise dem afklares senere. Fem kilder er koblet på: <b>Gaustatoppen</b> (Gaustabanens kamera som stillbillede, opdateres hvert 10. sekund), <b>Pisten</b> (Gausta.com via Norway Live, opdateres kun i driftsperioder), <b>Vejen</b> (Statens vegvesen, åben licens, hvert 5. minut), <b>Rjukan</b> (privat kamera, geirb.com, hvert minut) og <b>Live</b> (Gausta LIVE på YouTube, starter uden lyd). Hvis en kilde ikke svarer, vises en pladsholder tegnet i designets farver, og der prøves igen</p>
       <div class="wc-grid">
 
         <div class="wc-ver" id="wc-v2">
           <h4>Version 2: stillbillede med kilde </h4>
           <p class="tagline">Billedet hentes af vores server, caches 5 til 10 minutter og vises med tidsstempel og kilde.</p>
-          <div class="wc-frame"><div class="wc-img" id="wc-v2-img" data-scene="road"></div><span class="wc-badge wc-frisk">Frisk</span></div>
-          <div class="wc-cap"><b>Vejen: Fv 37 Jønjiljo</b><span class="stamp" data-stamp>Eksempel: ikke hentet endnu</span></div>
+          <div class="wc-frame"><div class="wc-img" id="wc-v2-img" data-scene="road" data-cam="veg"></div><span class="wc-badge wc-frisk">Frisk</span></div>
+          <div class="wc-cap"><b>Vejen: Fv 37 Jønjiljo</b><span class="stamp" data-stamp>Henter billede ...</span></div>
           <div class="wc-src">Kilde: Statens vegvesen (NLOD) · opdateres ca. hvert 10. minut</div>
-          <button type="button" class="btn btn-primary btn-sm" data-real-load="#wc-v2-img">Indlæs rigtigt billede (kontakter Statens vegvesen)</button>
           <ul class="wx-facts"><li><b>Fordel:</b> hurtigt, fuld kontrol over layout, ingen cookies. Kan skjules, hvis billedet er for gammelt.</li><li><b>Ulempe:</b> kræver at kilden tillader genbrug. I prototypen hentes billedet direkte af din browser. I produktion gør vores server det.</li></ul>
         </div>
 
