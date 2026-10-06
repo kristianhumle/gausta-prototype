@@ -227,13 +227,16 @@
     document.body.insertAdjacentHTML('afterbegin', html);
 
     if (shell !== 'materials') {
+      var soon = function (da, en) { return '<span class="f-soon">' + t(da, en) + ' <em>' + t('tekst følger', 'text to follow') + '</em></span>'; };
       var f = '<footer class="footer"><div class="wrap"><div class="cols">' +
-        '<div><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>gaustahome.com</span></a>' +
-        '<p class="muted" style="margin-top:12px;max-width:34ch;font-size:.92rem">' + t('Fjeldlejlighed på Gausta, Telemark. Arbejdsnavn, endeligt navn og domæne er ikke valgt.', 'Mountain apartment at Gausta, Telemark. Working name; final name and domain not chosen.') + '</p></div>' +
-        '<div><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About') + '</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">FAQ</a></div>' +
-        '<div><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="omraadet.html">' + t('Kort og afstande', 'Map and distances') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="omraadet.html#events">' + t('Events', 'Events') + '</a></div>' +
-        '<div><h4>' + t('Prototype-zoner', 'Prototype zones') + '</h4><a href="designsystem.html">' + t('Designsystem', 'Design system') + '</a></div>' +
-        '</div><div class="legal"><span>© 2026 gaustahome.com · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span><span>' + t('Privatliv og samtykke: tekst følger', 'Privacy and consent: text to follow') + '</span></div></div></footer>';
+        '<div class="f-brand"><a class="brand" href="index.html" style="display:flex;padding:0">' + LOGO + '<span>gaustahome.com</span></a>' +
+        '<p class="muted f-tag">' + t('Fjeldlejlighed med ski-in/ski-out på Gausta, Telemark, Norge.', 'Mountain apartment with ski-in/ski-out at Gausta, Telemark, Norway.') + '</p>' +
+        '<a class="btn btn-primary btn-sm f-cta" href="index.html#booking">' + t('Se ledige datoer', 'See available dates') + '</a></div>' +
+        '<nav aria-label="' + t('Lejligheden', 'The apartment') + '"><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About the apartment') + '</a><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">' + t('Spørgsmål og svar', 'FAQ') + '</a></nav>' +
+        '<nav aria-label="' + t('Gausta og omegn', 'Gausta and surroundings') + '"><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="omraadet.html">' + t('Oversigt og kort', 'Overview and map') + '</a><a href="taet-paa.html">' + t('Tæt på', 'Nearby') + '</a><a href="oplevelser.html">' + t('Oplevelser', 'Experiences') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="index.html#omtale">' + t('Omtale i medier', 'In the press') + '</a></nav>' +
+        '<nav aria-label="' + t('Information', 'Information') + '"><h4>' + t('Information', 'Information') + '</h4>' + soon('Kontakt', 'Contact') + soon('Privatliv', 'Privacy') + soon('Cookies', 'Cookies') + soon('Vilkår', 'Terms') + '</nav>' +
+        '</div><div class="legal"><span>© 2026 gaustahome.com · ' + t('Prototype. Ikke en live booking.', 'Prototype. Not a live booking.') + '</span>' +
+        '<span class="f-proto">' + t('Prototype', 'Prototype') + ': <a href="designsystem.html">' + t('Designsystem', 'Design system') + '</a> · <a href="sideelementer.html">' + t('Sideelementer', 'Elements') + '</a></span></div></div></footer>';
       document.body.insertAdjacentHTML('beforeend', f);
     }
   }
