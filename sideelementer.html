@@ -335,8 +335,13 @@
   </div>
 
   <div class="spec-block" id="e-dist"><div class="spec-head"><h3>Afstandsliste</h3><div class="row-flex"><span class="pill-tag">område · A3</span><span class="status prototype">Prototype</span></div></div>
-    <div class="spec-body"><div class="list-row"><span data-icon="snow"></span><div class="grow"><b>Slalompister</b><div class="meta">Ski-in / ski-out skal bekræftes</div></div><span class="verify">skal verificeres</span></div><div class="list-row"><span data-icon="pin"></span><div class="grow"><b>Nærmeste butik</b></div><span class="verify">skal verificeres</span></div></div>
-    <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået).</div></div>
+    <div class="spec-body">
+      <div class="hdr-label">Desktop (skaleret til at passe)</div>
+      <div class="hdr-frame hdr-desktop" data-w="1240" data-h="1500"><iframe src="taet-paa.html" title="Afstandsliste, desktop" loading="lazy" scrolling="no" data-hdr="section#afstande" style="width:1240px;height:1500px;transform-origin:0 0"></iframe></div>
+      <div class="hdr-label">Mobil (under 860 px)</div>
+      <div class="hdr-frame hdr-mobile"><iframe src="taet-paa.html" title="Afstandsliste, mobil" loading="lazy" scrolling="no" data-hdr="section#afstande" style="height:1500px"></iframe></div>
+    </div>
+    <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået). <b>Opdateret 6. oktober 2026:</b> visningen er den rigtige liste fra siden Tæt på, med <b>prøvedata</b>: 16 steder med luftlinje fra lejligheden (OpenStreetMap-data, 3. oktober 2026), sorteret nærmest først, med type og officielt link. Alle steder og oplysninger er kildepåstande og skal verificeres. Rækkerne kommer fra <code>area-map-data.js</code> (proces: teknisk/proces-interessepunkter-kort.md).</div></div>
 
   <div class="spec-block" id="e-events"><div class="spec-head"><h3>Eventliste med filter</h3><div class="row-flex"><span class="pill-tag">område · A6</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="row-flex" style="margin-bottom:12px"><button class="filter" aria-pressed="true">Alle</button><button class="filter" aria-pressed="false">Sport</button><button class="filter" aria-pressed="false">Kultur</button></div><div class="list-row" style="padding-top:0"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event</b><div class="meta">Pladsholder</div></div></div></div>
