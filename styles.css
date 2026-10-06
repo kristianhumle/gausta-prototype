@@ -1040,3 +1040,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 .wc-sound { position: absolute; left: 8px; bottom: 8px; z-index: 2; font: inherit; font-size: .74rem; font-weight: 650; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; opacity: .92; }
 .wc-sound:hover, .wc-sound:focus-visible { opacity: 1; }
 .wc-cover { position: absolute; inset: 0; z-index: 1; cursor: default; }
+
+/* Området: detaljepanel for et sted (6. oktober 2026) */
+.area-panel .am-desc { font-size: .88rem; line-height: 1.5; margin: 10px 0 14px; }
+.am-fig { margin: 0 0 10px; }
+.am-fig img { display: block; width: 100%; height: 130px; object-fit: cover; border-radius: var(--radius-sm); background: var(--surface); }
+.am-fig figcaption { font-size: .72rem; color: var(--faint); margin-top: 4px; }
+.am-fig figcaption a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }

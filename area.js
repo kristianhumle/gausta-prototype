@@ -155,12 +155,23 @@
         '<div class="am-list">' + mem.map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
       panel.scrollTop = 0;
     }
+    // Små billeder af stederne, hentet fra stedets egen side (hotlink, ikke kopieret). Rettigheder er uafklarede, og
+    // billederne er kun prototypebilleder. Steder uden billede her viser intet billede endnu.
+    var PIMG = {
+      sportsmann: { u: 'https://lykkeligesportsmann.no/wp-content/uploads/2025/12/Den-Lykkelige-Sportmann_Gaustablikk_dronebilde_01.webp', k: 'lykkeligesportsmann.no', l: 'https://lykkeligesportsmann.no/' },
+      skigaffel: { u: 'https://lykkeligesportsmann.no/wp-content/uploads/2026/03/Mat-og-drikke-pa-gausta-Den-Lykkelige-Sportsmann_01.webp', k: 'lykkeligesportsmann.no', l: 'https://lykkeligesportsmann.no/meny/' },
+      badet: { u: 'https://rjukanbadet.no/og-image.jpg', k: 'rjukanbadet.no', l: 'https://rjukanbadet.no/' },
+      golf: { u: 'https://i0.wp.com/visitrjukan.com/wp-content/uploads/simpleview-images/E59418F524C18531A303B8E77D338050DB2DA839.jpg?fit=1049%2C700&ssl=1', k: 'visitrjukan.com', l: 'https://visitrjukan.com/p/rjukan-golfklubb/' },
+      npc: { u: 'https://www.hardangerviddanasjonalparksenter.no/assets/og-image.jpg', k: 'hardangerviddanasjonalparksenter.no', l: 'https://www.hardangerviddanasjonalparksenter.no/' }
+    };
     function panelPoi(p) {
       var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
+      var im = PIMG[p.id];
       panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
+        (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a> · prototypebillede</figcaption></figure>' : '') +
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
-        (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '<div class="faint" style="margin:-2px 0 4px">Målt i luftlinje fra Skipsfjellvegen 52. Skal verificeres.</div>') +
-        '<p class="plan-desc">' + esc(p.t) + '</p>' + (p.h ? '<p class="faint">' + esc(p.h) + '</p>' : '') +
+        (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '') +
+        '<p class="plan-desc am-desc">' + esc(p.t) + '</p>' +
         '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '<span class="verify">position fra ' + esc(p.src) + ', skal verificeres</span></div>';
       panel.scrollTop = 0;
     }
