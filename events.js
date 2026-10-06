@@ -78,9 +78,9 @@
     }
 
     function row(x) {
-      var multi = x.e && dayNum(x.e) !== dayNum(x.s);
-      var date = multi ? fDay.format(x.s) + '.–' + fDay.format(x.e) + '.' + (ym(x.e) !== ym(x.s) ? ' ' + fMonthShort.format(x.e).replace('.', '') : '') : fDay.format(x.s) + '.';
-      var wd = multi ? '' : cap(fWd.format(x.s).replace('.', ''));
+      var multi = x.e && dayNum(x.e) !== dayNum(x.s), dd = function (d) { return fDay.format(d).replace('.', ''); }, mo = function (d) { return fMonthShort.format(d).replace('.', ''); };
+      var date = multi ? dd(x.s) + '.–' + dd(x.e) + '.' : dd(x.s) + '.';
+      var wd = multi ? (ym(x.e) !== ym(x.s) ? mo(x.s) + '–' + mo(x.e) : mo(x.s)) : cap(fWd.format(x.s).replace('.', '')) + ' · ' + mo(x.s);
       var when = x.allDay || multi ? (multi ? fDate.format(x.s) + ' til ' + fDate.format(x.e) : 'Hele dagen') : fTime.format(x.s) + (x.e ? '–' + fTime.format(x.e) : '');
       if (!x.ok) when = x.rec || 'Dato ikke fastlagt';
       return '<li class="ev-row' + (x.ok ? '' : ' tent') + '">' +
@@ -97,11 +97,11 @@
       if (!shown.length) html = '<p class="muted" style="margin:18px 0">Ingen events matcher det valgte filter.</p>';
       else {
         var byM = {}; shown.forEach(function (x) { var k = ym(x.s); (byM[k] = byM[k] || []).push(x); });
-        var keys = (st.period === 'all' || st.period === '30d') ? span.filter(function (k) { return k >= first; }) : [st.period];
+        var keys = span.indexOf(st.period) < 0 ? span.filter(function (k) { return k >= first; }) : [st.period];
         var gap = [];
         function flush() { if (!gap.length) return; var a = cap(fMonthShort.format(monthDate(gap[0])).replace('.', '')), b = cap(fMonthShort.format(monthDate(gap[gap.length - 1])).replace('.', '')); html += '<div class="ev-gap">' + (gap.length === 1 ? a + ': ingen events registreret endnu' : a + ' til ' + b + ': ingen events registreret endnu') + '</div>'; gap = []; }
         keys.forEach(function (k) {
-          if (!byM[k]) { if (st.period === 'all' || st.period === '30d') { if (st.period === '30d' || st.cat) return; gap.push(k); } return; }
+          if (!byM[k]) { if (st.period === 'all' && !st.cat) gap.push(k); return; }
           flush();
           var d = monthDate(k), diff = Math.round((dayNum(d) - dayNum(today)) / 30.4);
           html += '<section class="ev-month"><h3 class="ev-mh">' + esc(cap(fMonthLong.format(d))) + '<span>' + byM[k].length + (byM[k].length === 1 ? ' event' : ' events') + (diff >= 2 ? ' · om ca. ' + diff + ' måneder' : '') + '</span></h3><ul class="ev-ul">' + byM[k].map(row).join('') + '</ul></section>';
@@ -123,6 +123,7 @@
       var b = e.target.closest('.ev-m'); if (!b) return;
       st.period = st.period === b.getAttribute('data-m') ? 'all' : b.getAttribute('data-m'); draw();
     });
+    if (/[?&]compact\b/.test(location.search)) list.classList.add('ev-scroll');
     draw();
   }
 
