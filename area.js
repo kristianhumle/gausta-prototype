@@ -81,7 +81,8 @@
         var g = m.groups[gid], mem = d.pois.filter(function (p) { return g.members.indexOf(p.id) > -1; });
         var gx = mem.reduce(function (a, p) { return a + p.x; }, 0) / mem.length, gy = mem.reduce(function (a, p) { return a + p.y; }, 0) / mem.length;
         mem.forEach(function (p) { p.g = gid; });
-        add('group', gx, gy, GL.icon('home') + '<span class="am-n"></span><span class="am-l">' + g.name + '</span>', 'am-pin am-group', { id: gid, aria: g.name });
+        var gc = mem.every(function (p) { return p.c === mem[0].c; }) ? m.cats.filter(function (c) { return c.id === mem[0].c; })[0] : null;
+        add('group', gx, gy, GL.icon(gc ? gc.icon : 'pin') + '<span class="am-n"></span><span class="am-l">' + g.name + '</span>', 'am-pin am-group', { id: gid, aria: g.name });
       });
       d.pois.forEach(function (p) {
         var cat = m.cats.filter(function (c) { return c.id === p.c; })[0];
@@ -98,15 +99,23 @@
     function layout() {
       var d = dataOf(), st = S[cur], v = st.vb, mode = st.mode, W = wrap.clientWidth || 1;
       svgEl.setAttribute('viewBox', v.join(' '));
+      // Steder på (næsten) samme position samles i ét punkt med antal, så de ikke ligger oven på hinanden.
+      // Gælder for hver gruppe, hvis medlemmer (i de tændte lag) er under 26 px fra hinanden på skærmen.
+      var HH = wrap.clientHeight || 1, collapsed = {};
+      Object.keys(MAPS[cur].groups).forEach(function (gid) {
+        var mem = memberPois(gid), far = 0;
+        mem.forEach(function (a) { mem.forEach(function (b) { far = Math.max(far, Math.hypot((a.x - b.x) / v[2] * W, (a.y - b.y) / v[3] * HH)); }); });
+        collapsed[gid] = mem.length > 0 && (mode === 'zoom' || (far < 26 && mem.every(function (p) { return !p.cl; })));
+      });
       items.forEach(function (it) {
         var pad = 15 * v[2] / W, inside = it.x >= v[0] + pad && it.x <= v[0] + v[2] - pad && it.y >= v[1] + pad && it.y <= v[1] + v[3] - pad, show = inside;
         it.el.style.left = ((it.x - v[0]) / v[2] * 100).toFixed(3) + '%'; it.el.style.top = ((it.y - v[1]) / v[3] * 100).toFixed(3) + '%';
         if (it.kind === 'cluster') { var n = memberPois('cluster').length; show = show && mode === 'all' && n > 0; it.el.querySelector('.am-n').textContent = n; }
-        else if (it.kind === 'group') { var k = memberPois(it.data.id).length; show = show && mode === 'zoom' && k > 0; it.el.querySelector('.am-n').textContent = k; }
+        else if (it.kind === 'group') { var k = memberPois(it.data.id).length; show = show && collapsed[it.data.id] && k > 0; it.el.querySelector('.am-n').textContent = k; }
         else if (it.kind === 'poi') {
           var p = poi(it.data.id); show = show && catOn(p);
           if (p.cl && mode === 'all') show = false;
-          if (p.g && mode === 'zoom') show = false;
+          if (p.g && collapsed[p.g]) show = false;
           it.el.classList.toggle('am-lab', !p.cl || mode === 'zoom');
         }
         it.el.classList.toggle('am-hide', !show);
@@ -168,11 +177,11 @@
       var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
       var im = PIMG[p.id];
       panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
-        (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a> · prototypebillede</figcaption></figure>' : '') +
+        (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a></figcaption></figure>' : '') +
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
         (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '') +
         '<p class="plan-desc am-desc">' + esc(p.t) + '</p>' +
-        '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '<span class="verify">position fra ' + esc(p.src) + ', skal verificeres</span></div>';
+        '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '</div>';
       panel.scrollTop = 0;
     }
     function select(sel, kind) {
