@@ -90,11 +90,28 @@
   /* Version 2: vejkameraet indlæses straks. */
   Array.prototype.forEach.call(root.querySelectorAll('[data-cam]'), function (box) { loadReal(box, CAMS[box.getAttribute('data-cam')]); });
 
+  /* Live-feedet vises uden YouTubes knapper og menuer: controls=0, disablekb, ingen fuldskærm, ingen annoteringer, og et usynligt
+     lag over iframen (iframen har pointer-events:none) hindrer, at hover åbner titel eller kontroller. Klik på laget starter afspilningen, hvis autoplay er blokeret. Billedet zoomes 12 % for at skjule kanterne (logo, titellinje).
+     Lyd slås til med en lille knap via YouTubes iframe-API (postMessage). */
   function startLive(main) {
-    main.innerHTML = '<iframe title="Gausta LIVE (Norway Live på YouTube)" src="https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1&autoplay=1&mute=1&playsinline=1" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>';
+    var src = 'https://www.youtube-nocookie.com/embed/' + YT_ID + '?rel=0&modestbranding=1&autoplay=1&mute=1&playsinline=1&controls=0&disablekb=1&fs=0&iv_load_policy=3&cc_load_policy=0&showinfo=0&enablejsapi=1';
+    main.innerHTML = '<iframe title="Gausta LIVE (Norway Live på YouTube)" src="' + src + '" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" style="position:absolute;left:-6%;top:-6%;width:112%;height:112%;border:0;pointer-events:none"></iframe>' +
+      '<div class="wc-cover" aria-hidden="true"></div><button type="button" class="wc-sound" aria-pressed="false">Slå lyd til</button>';
     main.setAttribute('data-loaded', '1');
-    setStamp(main, 'Live fra YouTube (uden lyd, tryk på afspilleren for lyd)');
+    var fr = main.querySelector('iframe'), btn = main.querySelector('.wc-sound');
+    var cover = main.querySelector('.wc-cover');
+    function cmd(f) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: '' }), '*'); } catch (e) {} }
+    btn.addEventListener('click', function () {
+      var on = btn.getAttribute('aria-pressed') !== 'true';
+      cmd(on ? 'unMute' : 'mute'); if (on) cmd('setVolume'); cmd('playVideo');
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false'); btn.textContent = on ? 'Slå lyd fra' : 'Slå lyd til';
+    });
+    fr.addEventListener('load', function () { setTimeout(function () { cmd('playVideo'); }, 800); });
+    cover.addEventListener('click', function () { cmd('playVideo'); });
+    setStamp(main, 'Live fra YouTube, starter uden lyd');
   }
+  /* Version 2: Gausta LIVE-feedet indlæses straks. */
+  Array.prototype.forEach.call(root.querySelectorAll('[data-live]'), startLive);
 
   /* Version 3: faner med flere kameraer. Toppen og Vejen kan indlæses rigtigt ved klik. */
   var tabs = root.querySelector('[data-wc-tabs]');

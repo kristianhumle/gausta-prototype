@@ -1035,3 +1035,8 @@ textarea.field { min-height: 96px; resize: vertical; }
 }
 .area-table .type-sub { font-size: .78rem; font-weight: 400; color: var(--muted); margin-top: 1px; }
 .area-table td.r:last-child { white-space: nowrap; }
+
+/* webcam: lydknap på live-feedet (YouTubes egne kontroller er skjult) */
+.wc-sound { position: absolute; left: 8px; bottom: 8px; z-index: 2; font: inherit; font-size: .74rem; font-weight: 650; padding: 5px 12px; border-radius: 99px; border: 1px solid var(--border); background: var(--surface); color: var(--text); cursor: pointer; opacity: .92; }
+.wc-sound:hover, .wc-sound:focus-visible { opacity: 1; }
+.wc-cover { position: absolute; inset: 0; z-index: 1; cursor: default; }
