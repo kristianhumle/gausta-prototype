@@ -208,22 +208,47 @@
   // ---------- lister (afstande og oplevelser) ----------
   function listRender(el) {
     if (!window.GL || !GL.AREAMAP) return;
-    var kind = el.getAttribute('data-area-list'), style = el.getAttribute('data-style') || 'table', pois = GL.AREAMAP[kind].pois.slice();
+    var kind = el.getAttribute('data-area-list'), style = el.getAttribute('data-style') || 'table', all = GL.AREAMAP[kind].pois.slice();
     var key = function (p) { return kind === 'close' ? p.air : (p.drive ? p.drive[1] : 9999); };
-    pois.sort(function (a, b) { return key(a) - key(b); });
+    all.sort(function (a, b) { return key(a) - key(b); });
     var dist = function (p) { return kind === 'close' ? 'ca. ' + km(p.air) : (p.drive ? p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)' : 'til fods eller med Gaustabanen'); };
     var note = kind === 'close' ? 'Afstand er luftlinje fra Skipsfjellvegen 52 (OpenStreetMap-data, 3. oktober 2026). Alle steder og oplysninger er kildepåstande og skal verificeres.' : 'Køretid fra lejligheden i bil, beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM). Alle steder og oplysninger er kildepåstande og skal verificeres.';
+    var box = el, sel = { t: '', d: '' };
+    var buckets = kind === 'close' ? [['', 'Alle afstande'], ['a', 'Under 500 m'], ['b', '500 m til 1 km'], ['c', 'Over 1 km']] : [['', 'Alle køretider'], ['a', 'Under 15 min'], ['b', '15 til 30 min'], ['c', 'Over 30 min']];
+    var inBucket = function (p, d) {
+      if (!d) return true; var v = key(p);
+      if (kind === 'wide' && !p.drive) return false;
+      return d === 'a' ? v < (kind === 'close' ? 500 : 15) : d === 'b' ? (v >= (kind === 'close' ? 500 : 15) && v < (kind === 'close' ? 1000 : 30)) : v >= (kind === 'close' ? 1000 : 30);
+    };
+    function draw() {
+    var pois = all.filter(function (p) { return (!sel.t || p.c === sel.t) && inBucket(p, sel.d); });
+    if (!pois.length) { box.innerHTML = '<p class="muted" style="margin:16px 0">Ingen steder matcher det valgte filter.</p><p class="faint">' + note + '</p>'; return; }
     if (style === 'cards') {
-      el.innerHTML = '<div class="grid grid-3">' + pois.map(function (p) {
+      box.innerHTML = '<div class="grid grid-3">' + pois.map(function (p) {
         return '<div class="card"><div class="kicker">' + CAT_NAME[kind + ':' + p.c] + '</div><h3>' + esc(p.n) + '</h3><p class="muted">' + esc(p.t) + '</p>' +
           '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</span><span>' + dist(p) + '</span></div>' +
           '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '</div></div>';
       }).join('') + '</div><p class="faint" style="margin-top:12px">' + note + '</p>';
     } else {
-      el.innerHTML = '<div class="table-wrap"><table class="table"><tr><th>Sted</th><th>Type</th><th class="r">Afstand</th><th></th></tr>' + pois.map(function (p) {
+      box.innerHTML = '<div class="table-wrap"><table class="table"><tr><th>Sted</th><th>Type</th><th class="r">Afstand</th><th></th></tr>' + pois.map(function (p) {
         return '<tr><td><b>' + esc(p.n) + '</b></td><td class="muted">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
       }).join('') + '</table></div><p class="faint" style="margin-top:10px">' + note + '</p>';
     }
+    }
+    if (el.hasAttribute('data-filter')) {
+      var types = []; all.forEach(function (p) { if (types.indexOf(p.c) < 0) types.push(p.c); });
+      var btn = function (grp, val, label) { return '<button type="button" class="filter" data-g="' + grp + '" data-v="' + val + '" aria-pressed="' + (val === '' ? 'true' : 'false') + '">' + esc(label) + '</button>'; };
+      el.innerHTML = '<div class="plan-pills" role="group" aria-label="Filtrér på type" style="margin-bottom:8px"><span class="faint" style="align-self:center;margin-right:4px">Type</span>' + btn('t', '', 'Alle typer') + types.map(function (c) { return btn('t', c, CAT_NAME[kind + ':' + c]); }).join('') + '</div>' +
+        '<div class="plan-pills" role="group" aria-label="Filtrér på ' + (kind === 'close' ? 'afstand' : 'køretid') + '" style="margin-bottom:16px"><span class="faint" style="align-self:center;margin-right:4px">' + (kind === 'close' ? 'Afstand' : 'Køretid') + '</span>' + buckets.map(function (x) { return btn('d', x[0], x[1]); }).join('') + '</div><div data-list-body></div>';
+      box = el.querySelector('[data-list-body]');
+      el.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-g]'); if (!b) return;
+        sel[b.getAttribute('data-g')] = b.getAttribute('data-v');
+        [].forEach.call(el.querySelectorAll('button[data-g="' + b.getAttribute('data-g') + '"]'), function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+        draw();
+      });
+    }
+    draw();
   }
 
   document.addEventListener('gl:ready', function () { [].forEach.call(document.querySelectorAll('[data-area-hub]'), render); [].forEach.call(document.querySelectorAll('[data-area-list]'), listRender); });

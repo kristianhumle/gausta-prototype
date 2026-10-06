@@ -341,7 +341,7 @@
       <div class="hdr-label">Mobil (under 860 px)</div>
       <div class="hdr-frame hdr-mobile"><iframe src="taet-paa.html" title="Afstandsliste, mobil" loading="lazy" scrolling="no" data-hdr="section#afstande" style="height:1500px"></iframe></div>
     </div>
-    <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået). <b>Opdateret 6. oktober 2026:</b> visningen er den rigtige liste fra siden Tæt på, med <b>prøvedata</b>: 16 steder med luftlinje fra lejligheden (OpenStreetMap-data, 3. oktober 2026), sorteret nærmest først, med type og officielt link. Alle steder og oplysninger er kildepåstande og skal verificeres. Rækkerne kommer fra <code>area-map-data.js</code> (proces: teknisk/proces-interessepunkter-kort.md).</div></div>
+    <div class="spec-note"><b>Krav:</b> afstande og køretider i klart sprog. Interaktivt kort er en separat komponent (foreslået). <b>Opdateret 6. oktober 2026:</b> visningen er den rigtige liste, nu med <b>filter på Type og Afstand</b> (kan kombineres, og højden følger resultatet), fra siden Tæt på, med <b>prøvedata</b>: 16 steder med luftlinje fra lejligheden (OpenStreetMap-data, 3. oktober 2026), sorteret nærmest først, med type og officielt link. Alle steder og oplysninger er kildepåstande og skal verificeres. Rækkerne kommer fra <code>area-map-data.js</code> (proces: teknisk/proces-interessepunkter-kort.md).</div></div>
 
   <div class="spec-block" id="e-events"><div class="spec-head"><h3>Eventliste med filter</h3><div class="row-flex"><span class="pill-tag">område · A6</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="row-flex" style="margin-bottom:12px"><button class="filter" aria-pressed="true">Alle</button><button class="filter" aria-pressed="false">Sport</button><button class="filter" aria-pressed="false">Kultur</button></div><div class="list-row" style="padding-top:0"><span class="num pill-tag">MÅN</span><div class="grow"><b>Eksempel-event</b><div class="meta">Pladsholder</div></div></div></div>
@@ -448,7 +448,7 @@
       [].forEach.call(d.body.children,function(c){ if(!c.matches(keep)) c.style.display='none'; });
       d.documentElement.style.overflow='hidden';
       [].forEach.call(d.querySelectorAll('.reveal'),function(e){ e.classList.add('in'); });
-      d.addEventListener('click',function(e){ var a=e.target.closest('a'); if(a) e.preventDefault(); });
+      d.addEventListener('click',function(e){ var a=e.target.closest('a'); if(a) e.preventDefault(); setTimeout(function(){ resize(f); },60); });
       resize(f);
     } catch(e){}
   }
