@@ -270,6 +270,9 @@ textarea.field { min-height: 96px; resize: vertical; }
 .footer .f-cta { display: inline-flex; padding: 8px 16px; color: var(--on-accent); }
 .footer .f-cta:hover { color: var(--on-accent); }
 .footer nav a, .footer .f-soon { display: block; padding: 4px 0; font-size: .92rem; }
+.footer nav a { color: var(--footer-fg, var(--text)); font-weight: 500; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-decoration-thickness: 1px; text-underline-offset: 4px; width: fit-content; }
+.footer nav a:hover { color: var(--accent-text, var(--accent)); text-decoration-color: currentColor; }
+.footer nav a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 2px; }
 .footer .f-soon { color: var(--footer-faint, var(--faint)); }
 .footer .f-soon em { font-style: normal; font-size: .72rem; margin-left: 4px; opacity: .8; }
 .footer .legal a { display: inline; padding: 0; font-size: inherit; text-decoration: underline; text-underline-offset: 2px; }
