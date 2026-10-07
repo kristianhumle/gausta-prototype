@@ -1087,3 +1087,56 @@ textarea.field { min-height: 96px; resize: vertical; }
 }
 .ev-list.ev-scroll { max-height: 640px; overflow-y: auto; padding-right: 6px; border-top: 1px solid var(--border); }
 @media (max-width: 640px) { .ev-list.ev-scroll { max-height: 560px; } }
+
+/* eventkalender med ugevalg (A6, version 2) */
+.cal-top { display: flex; gap: 12px; flex-wrap: wrap; justify-content: space-between; align-items: center; margin: 18px 0 12px; }
+.cal-nav { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.cal-grid { border: 1px solid var(--border); border-radius: var(--radius); background: var(--surface); overflow: hidden; }
+.cal-row { display: grid; grid-template-columns: 44px repeat(7, 1fr); border-bottom: 1px solid var(--border); position: relative; }
+.cal-row:last-child { border-bottom: 0; }
+.cal-head { background: transparent; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--faint); font-weight: 650; }
+.cal-head span { padding: 8px 4px; text-align: center; }
+.cal-wn { font: inherit; font-size: .78rem; font-weight: 650; color: var(--muted); background: transparent; border: 0; border-right: 1px solid var(--border); padding: 0; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.cal-head .cal-wn { cursor: default; border-right: 0; }
+.cal-row.hasev .cal-wn { color: var(--accent); }
+.cal-d { font: inherit; color: var(--text); background: transparent; border: 0; border-left: 1px solid var(--border); min-height: 62px; padding: 6px 4px 6px 8px; display: flex; flex-direction: column; align-items: flex-start; gap: 5px; cursor: pointer; text-align: left; }
+.cal-d b { font-size: .9rem; font-weight: 600; }
+.cal-d.out { background: color-mix(in srgb, var(--border) 18%, transparent); }
+.cal-d.out b { color: var(--faint); font-weight: 400; }
+.cal-d.today b { background: var(--accent); color: var(--on-accent); border-radius: 99px; min-width: 1.6em; text-align: center; padding: 0 .35em; }
+.cal-dots { display: flex; align-items: center; gap: 3px; min-height: 10px; }
+.cal-dots em { font-style: normal; font-size: .68rem; font-weight: 700; color: var(--muted); margin-left: 2px; }
+.cal-dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+.cal-dot.hollow { background: transparent; border: 1.5px solid var(--accent); }
+.cal-row.sel { background: color-mix(in srgb, var(--accent) 9%, transparent); box-shadow: inset 3px 0 0 var(--accent), inset 0 0 0 1px var(--accent); }
+.cal-d:hover, .cal-wn:hover { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.cal-legend { margin: 10px 0 0; display: flex; gap: 6px 10px; flex-wrap: wrap; align-items: center; }
+.cal-week { margin-top: 18px; }
+.cal-wh { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 10px; border-bottom: 2px solid var(--border); }
+.cal-wh h3 { margin: 0; font-size: 1.1rem; text-align: center; flex: 1 1 200px; }
+.cal-wh h3 span { display: block; font-family: inherit; font-size: .8rem; font-weight: 500; color: var(--muted); margin-top: 2px; }
+.cal-dh { margin: 0 0 4px; font-size: .95rem; }
+.cal-week .ev-row { grid-template-columns: 96px 1fr auto; }
+.cal-week .ev-date b { font-size: .8rem; white-space: normal; }
+@media (max-width: 640px) {
+  .cal-row { grid-template-columns: 34px repeat(7, 1fr); }
+  .cal-d { min-height: 52px; padding: 5px 2px 5px 4px; align-items: center; gap: 3px; }
+  .cal-d b { font-size: .8rem; }
+  .cal-dots em { display: none; }
+  .cal-top { flex-direction: column; align-items: stretch; }
+  .cal-nav select { flex: 1 1 auto; min-width: 0; }
+  .cal-week .ev-row { grid-template-columns: 1fr; }
+  .cal-week .ev-date { text-align: left; display: inline-block; justify-self: start; padding: 3px 8px; }
+  .cal-week .ev-side { grid-column: 1; }
+}
+.ev-ver { margin: 14px 0 0; font-size: 1rem; color: var(--muted); font-weight: 600; }
+
+.cal-d { position: relative; }
+.cal-d.cont::after { content: ""; position: absolute; left: 6px; right: 6px; bottom: 5px; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--accent) 45%, transparent); }
+.cal-legend span { display: inline-flex; align-items: center; gap: 5px; margin-right: 6px; }
+.cal-wh .btn { white-space: nowrap; }
+@media (max-width: 640px) {
+  .cal-lbl { display: none; }
+  .cal-wh { flex-wrap: nowrap; }
+  .cal-wh h3 { flex: 1 1 auto; }
+}
