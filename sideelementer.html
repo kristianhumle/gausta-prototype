@@ -18,7 +18,7 @@
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
   <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams" class="done">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventkalender</a><a href="#e-faq" class="done">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
+    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-area">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams" class="done">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-slot</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventkalender</a><a href="#e-social">Social feed</a><a href="#e-faq" class="done">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
   <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
@@ -351,6 +351,20 @@
     </div>
     <div class="spec-note"><b>Valgt 6. oktober 2026 (Brugeroplysning):</b> kalendervisningen er valgt, og listen med tidslinje (version 1) er slettet (koden er gemt i <code>backup/eventliste-v1-2026-10-06/</code>). <b>Krav (A6):</b> målgruppen er på ferie en given uge og vil se, hvad der sker. Traditionel månedskalender (mandag først, med ugenumre): gæsten vælger måned, klikker på en uge (eller dag) og ser ugens events dag for dag, med flerdagsevents samlet øverst. Prikker pr. dag viser <b>bekræftet</b> (fyldt) eller <b>traditionel dato, ikke bekræftet</b> (tom), og en streg viser, at et event fortsætter fra en tidligere dag. Der er "I dag", forrige/næste uge, kategorifilter og forslag til nærmeste uge med events, hvis ugen er tom. <b>Kildeanalyse og anbefaling:</b> teknisk/datakilder/13-events-kildeanalyse.md. Eksemplerne (41 events, oktober 2026 til oktober 2027) er hentet fra kilderne, men datoer og priser skal verificeres, før noget vises offentligt. Data kommer fra <code>events-data.js</code>. <b>Åbne punkter:</b> tilladelse fra Visit Rjukan og Gausta, og om kalenderen skal kunne åbnes på gæstens bookede uge.</div></div>
 
+  <div class="spec-block" id="e-social"><div class="spec-head"><h3>Social feed</h3><div class="row-flex"><span class="pill-tag">forside, område · foreslået</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body">
+      <p class="muted" style="margin-top:0">Nyheder fra udvalgte sociale kanaler samlet ét sted: <b>Gausta</b> (Facebook, Instagram, YouTube), <b>Visit Rjukan</b> (Facebook, Instagram, TikTok) og <b>Visit Telemark</b> (Facebook, Instagram). Hvert opslag er et <b>link-kort</b> med afsender, platform, dato, en kort tekst og et link til originalen. Filter på afsender og platform. <b>Intet indlæses fra platformene</b>, og ingen billeder er kopieret.</p>
+      <div data-social></div>
+      <div class="table-wrap" style="margin-top:18px"><table class="table">
+        <tr><th>Platform</th><th>Kan hentes automatisk?</th><th>Forslag</th></tr>
+        <tr><td><b>YouTube</b></td><td>Ja, åben RSS-feed (testet for Gausta 8. oktober 2026)</td><td>Hentes natligt server-side, vises efter ejerens godkendelse</td></tr>
+        <tr><td><b>Facebook</b></td><td>Nej (kun iframe-plugin eller Graph API med app og review)</td><td>Link-kort, evt. indlejring efter klik</td></tr>
+        <tr><td><b>Instagram</b></td><td>Nej (oEmbed kræver token)</td><td>Link-kort</td></tr>
+        <tr><td><b>TikTok</b></td><td>Delvist (oEmbed uden nøgle)</td><td>Link-kort, evt. indlejring efter klik</td></tr>
+      </table></div>
+    </div>
+    <div class="spec-note"><b>Foreslået 8. oktober 2026 (Brugeroplysning), ikke besluttet.</b> <b>Anbefaling (Inference):</b> kuraterede link-kort i CMS plus et automatisk YouTube-spor, uden direkte kald fra gæstens browser til platformene (cookiefri og N19-sikker, websitet læser kun CMS og cache). Opslag og billeder tilhører afsenderne, så vi viser kun afsender, dato, tekst i egne ord og link. <b>Åbent:</b> hvilke kanaler, tilladelse fra afsenderne, Visit Rjukans YouTube-kanal, Visit Telemarks YouTube-kanal (peger på "Visit Rauland"), hvem skriver og godkender, og placering. Analyse: <code>teknisk/datakilder/14-social-feed.md</code>.</div></div>
+
   <div class="spec-block approved" id="e-plan"><div class="spec-head"><h3>Interaktiv plantegning</h3><div class="row-flex"><span class="pill-tag">lejlighed · A1</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body">
       <p class="muted" style="margin-top:0">Plantegningen er tegnet om som SVG ud fra annoncens rumopdeling (skitse, ikke målfast). Over planen er en rumvælger (Alle, hvert rum og "Uden for planen") med antal billeder. "Alle" er standardvisningen og viser alle lejlighedens billeder i panelet. Man kan vælge rum i listen eller klikke på planen, og et klik på det valgte rum igen går tilbage til "Alle". Elementet erstatter det separate galleri på lejlighedssiden. Tallet på hvert rum viser antal billeder, og "klik for at forstørre" åbner billedet stort. På mobil stables planen og panelet, og siden ruller automatisk ned til billederne.</p>
@@ -438,6 +452,7 @@
 <script src="weather-data.js"></script>
 <script src="weather.js"></script>
 <script src="webcam.js"></script>
+<script src="social.js"></script>
 <script src="live-season.js"></script>
 <script src="share.js"></script>
 <script src="press.js"></script>
