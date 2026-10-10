@@ -5,13 +5,10 @@
    Alle placeringer, åbningstider og beskrivelser er kildepåstande og skal verificeres. */
 (function () {
   'use strict';
-  var MAPS = {
-    close: { label: 'Gausta', head: 'Gausta, tæt på lejligheden', zoomLabel: 'Zoom til Gaustablikk', clusterName: 'Gaustablikk-centret',
-      cats: [{ id: 'mad', name: 'Mad og drikke', icon: 'fork' }, { id: 'indkoeb', name: 'Indkøb', icon: 'bag' }, { id: 'udstyr', name: 'Skiudlejning', icon: 'snow' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }],
-      groups: { hotel: { name: 'Gaustablikk Fjellresort', pos: [59.8801, 8.7342], members: ['bjork', 'blikk', 'kirks', 'lobby', 'wellness'] }, food: { name: 'Gausta Food Court og butikker', pos: [59.8812, 8.7359], members: ['stova', 'pose', 'sport1', 'bakeri'] }, sportsmann: { name: 'Den lykkelige sportsmann', pos: [59.8789, 8.7481], members: ['sportsmann', 'skigaffel'] }, kvitaavatn: { name: 'Flydende sauna og bådleje', pos: [59.8805, 8.7317], members: ['badstue', 'baadleje'] } } },
-    wide: { label: 'Rjukan og omegn', head: 'Rjukan og omegn, i bil', zoomLabel: 'Zoom til Rjukan', clusterName: 'Rjukan',
-      cats: [{ id: 'by', name: 'Byen', icon: 'city' }, { id: 'indkoeb', name: 'Indkøb', icon: 'bag' }, { id: 'kultur', name: 'Kultur', icon: 'museum' }, { id: 'natur', name: 'Natur', icon: 'tree' }, { id: 'aktivitet', name: 'Aktiviteter', icon: 'racket' }], groups: { centrum: { name: 'Rjukan centrum', pos: [59.8790, 8.5915], members: ['rjukan', 'kiwisentrum', 'rema', 'vinmonopolet', 'apotek', 'turistinfo'] }, krosso: { name: 'Krossobanen og Rjukan Klatrepark', pos: [59.8796, 8.5550], members: ['krossobanen', 'klatre'] } } }
-  };
+  // Kort, kategorier og grupper kommer fra den genererede datafil (GL.AREAMAP[kort].meta, kilde: tools/maps.json).
+  // Et nyt kort tilføjes dér, ikke her.
+  var MAPS = {};
+  if (window.GL && GL.AREAMAP) Object.keys(GL.AREAMAP).forEach(function (k) { if (GL.AREAMAP[k] && GL.AREAMAP[k].meta) MAPS[k] = GL.AREAMAP[k].meta; });
   var CAT_NAME = {};
   Object.keys(MAPS).forEach(function (k) { MAPS[k].cats.forEach(function (c) { CAT_NAME[k + ':' + c.id] = c.name; }); });
   var NICE = [50, 100, 200, 500, 1000, 2000, 5000, 10000];
@@ -164,18 +161,9 @@
         '<div class="am-list">' + mem.map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
       panel.scrollTop = 0;
     }
-    // Små billeder af stederne, hentet fra stedets egen side (hotlink, ikke kopieret). Rettigheder er uafklarede, og
-    // billederne er kun prototypebilleder. Steder uden billede her viser intet billede endnu.
-    var PIMG = {
-      sportsmann: { u: 'https://lykkeligesportsmann.no/wp-content/uploads/2025/12/Den-Lykkelige-Sportmann_Gaustablikk_dronebilde_01.webp', k: 'lykkeligesportsmann.no', l: 'https://lykkeligesportsmann.no/' },
-      skigaffel: { u: 'https://lykkeligesportsmann.no/wp-content/uploads/2026/03/Mat-og-drikke-pa-gausta-Den-Lykkelige-Sportsmann_01.webp', k: 'lykkeligesportsmann.no', l: 'https://lykkeligesportsmann.no/meny/' },
-      badet: { u: 'https://rjukanbadet.no/og-image.jpg', k: 'rjukanbadet.no', l: 'https://rjukanbadet.no/' },
-      golf: { u: 'https://i0.wp.com/visitrjukan.com/wp-content/uploads/simpleview-images/E59418F524C18531A303B8E77D338050DB2DA839.jpg?fit=1049%2C700&ssl=1', k: 'visitrjukan.com', l: 'https://visitrjukan.com/p/rjukan-golfklubb/' },
-      npc: { u: 'https://www.hardangerviddanasjonalparksenter.no/assets/og-image.jpg', k: 'hardangerviddanasjonalparksenter.no', l: 'https://www.hardangerviddanasjonalparksenter.no/' }
-    };
     function panelPoi(p) {
       var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
-      var im = PIMG[p.id];
+      var im = p.img;
       panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
         (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a></figcaption></figure>' : '') +
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
