@@ -1150,3 +1150,4 @@ textarea.field { min-height: 96px; resize: vertical; }
 .inv-row:last-child { border-bottom: 0; }
 .inv-note { margin-top: 14px; }
 @media (max-width: 640px) { .inv-row { flex-direction: column; gap: 6px; } .inv-top { flex-direction: column; align-items: stretch; } }
+.inv-row .meta { font-size: .84rem; color: var(--muted); margin-top: 2px; }
