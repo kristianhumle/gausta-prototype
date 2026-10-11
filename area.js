@@ -32,17 +32,10 @@
         '<div class="am-bar"><button type="button" class="btn btn-ghost btn-sm" data-v="all">Hele kortet</button><button type="button" class="btn btn-ghost btn-sm" data-v="zoom"></button>' +
         '<span class="faint am-ski">Pister, lifte og langrendsløjper vises ikke her: <a href="#e-skiinout">se Ski-in / ski-out</a></span></div></div>' +
         '<div class="plan-panel area-panel" aria-live="polite"></div></div>' +
-      '<div class="grid grid-3 area-cards">' +
-        '<div class="card"><div class="ico-box">' + GL.icon('pin') + '</div><div class="kicker">A3 · ' + counts.close + ' steder</div><h3>Tæt på lejligheden</h3><p class="muted">Restauranter, butikker, skiudlejning, padel og sauna på Gausta. Afstande i klart sprog.</p><span class="card-link soon">Åbn Tæt på (kommer)</span></div>' +
-        '<div class="card"><div class="ico-box">' + GL.icon('mountain') + '</div><div class="kicker">A4 · ' + counts.wide + ' steder</div><h3>Oplevelser</h3><p class="muted">Rjukan, Vemork, Rjukanbadet, Gaustatoppen og mere. Køretid fra lejligheden.</p><span class="card-link soon">Åbn Oplevelser (kommer)</span></div>' +
-        '<div class="card"><div class="ico-box">' + GL.icon('cal') + '</div><div class="kicker">A5 + A6</div><h3>Nu og events</h3><p class="muted">Forhold lige nu og kalenderen over, hvad der sker. Laveste prioritet.</p><span class="card-link soon">Åbn Nu og events (kommer)</span></div>' +
-      '</div>' +
-      '<div class="now-widget"><div class="now-head"><b>Gausta nu</b><span class="stamp">Sidst opdateret: aldrig (prototype)</span></div>' +
-        '<div class="now-grid"><div><small>Temperatur</small><b class="num">n/a</b></div><div><small>Snedybde</small><b class="num">n/a</b></div><div><small>Åbne lifte</small><b class="num">n/a</b></div><div><small>Vejforhold</small><b class="num">n/a</b></div></div>' +
-        '<div class="faint" style="margin-top:8px">Kilder er ikke valgt. Ved nedbrud vises "sidst opdateret kl. ...". <a href="#" aria-disabled="true">Se alle forhold (kommer)</a></div></div>';
+      '';
 
     var fixed = el.getAttribute('data-map'), minimal = el.getAttribute('data-chrome') === 'min', skiHref = el.getAttribute('data-ski-href') || '#e-skiinout';
-    if (minimal) { ['.subnav', '.area-head', '.area-cards', '.now-widget'].forEach(function (q) { var n = el.querySelector(q); if (n) n.remove(); }); }
+    if (minimal) { ['.subnav', '.area-head'].forEach(function (q) { var n = el.querySelector(q); if (n) n.remove(); }); }
     if (fixed) { var swn = el.querySelector('.am-switch'); if (swn) swn.remove(); }
     el.querySelector('.am-ski a').setAttribute('href', skiHref);
     var wrap = el.querySelector('.am-wrap'), panel = el.querySelector('.area-panel'), layersEl = el.querySelector('.am-layers'), pinsEl, svgEl, scaleEl, items = [];
