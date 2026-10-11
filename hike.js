@@ -60,7 +60,7 @@
     // Udsnittet følger kortets faktiske format (kortet fylder hele højden ved siden af panelet)
     function box(v) {
       var W = wrap.clientWidth || 800, H = wrap.clientHeight || 468, w = v.w;
-      if (w === 'cover') w = Math.max(d.w, d.h * W / H);   // hele kortet: hele bredden (eller hele højden), uden at beskære
+      if (w === 'cover') w = Math.max(d.w * 0.88, d.h * W / H);   // hele kortet: næsten hele bredden (beskærer højst 6 % i hver side) og så lidt tom kant som muligt
       var h = w * H / W; return [v.cx - w / 2, v.cy - h / 2, w, h];
     }
     (d.places || []).forEach(function (p) { if (p[0] === 'Stavsro') view('gaustatoppen', (d.peaks[0][1] + p[1]) / 2, (d.peaks[0][2] + p[2]) / 2, 330); if (p[0] === 'Gaustablikk') view('gaustablikk', p[1], p[2], 260); if (p[0] === 'Rjukan') view('rjukan', p[1], p[2], 220); });
