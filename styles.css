@@ -1298,3 +1298,8 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 .hk-panel .hk-links { margin-top: 8px; }
 .hk-stage, .hk-wrap { min-height: 340px; }
 .hk-card .hk-fig > img { height: 130px; }
+.hk-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin: 0 0 10px; font-size: .8rem; }
+.hk-legend-t { font-weight: 650; }
+.hk-legend-i { display: inline-flex; align-items: center; gap: 6px; }
+.hk-legend-i i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
+.hk-legend-n { color: var(--faint); font-size: .74rem; }

@@ -64,7 +64,7 @@
       var h = w * H / W; return [v.cx - w / 2, v.cy - h / 2, w, h];
     }
     (d.places || []).forEach(function (p) { if (p[0] === 'Stavsro') view('gaustatoppen', (d.peaks[0][1] + p[1]) / 2, (d.peaks[0][2] + p[2]) / 2, 330); if (p[0] === 'Gaustablikk') view('gaustablikk', p[1], p[2], 260); if (p[0] === 'Rjukan') view('rjukan', p[1], p[2], 220); });
-    el.innerHTML = '<div class="hk-map-top"><div class="row-flex hk-chips" role="group" aria-label="Vælg rute"></div></div>' +
+    el.innerHTML = '<div class="hk-map-top"><div class="hk-legend" aria-label="Forklaring af farver"><span class="hk-legend-t">Sværhedsgrad:</span>' + ['let', 'middel', 'krævende'].map(function (g) { return '<span class="hk-legend-i"><i style="background:' + GRADE[g][1] + '"></i>' + GRADE[g][0] + '</span>'; }).join('') + '<span class="hk-legend-n">Farven på knapper og rutelinjer viser sværhedsgraden (vores vurdering ud fra kilderne).</span></div><div class="row-flex hk-chips" role="group" aria-label="Vælg rute"></div></div>' +
       '<div class="plan-split hk-grid"><div class="hk-stage"><div class="hk-wrap"></div><div class="am-ov am-ov-bot" role="group" aria-label="Zoom">' +
       [['alle', 'Hele kortet'], ['gaustatoppen', 'Gaustatoppen'], ['gaustablikk', 'Gaustablikk'], ['rjukan', 'Rjukan']].filter(function (x) { return VIEWS[x[0]]; }).map(function (x) { return '<button type="button" class="am-ov-btn" data-view="' + x[0] + '">' + x[1] + '</button>'; }).join('') + '</div></div>' +
       '<div class="plan-panel hk-panel" aria-live="polite"></div></div>' +
