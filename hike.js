@@ -56,7 +56,7 @@
         s += '<g class="hk-route' + (on ? ' on' : '') + '" data-r="' + r.id + '"><path class="hk-halo" d="' + r.d + '"/><path class="hk-line" d="' + r.d + '" style="stroke:' + col + '"/>' + '<path class="hk-hit" d="' + r.d + '"/></g>';
       });
       var r0 = routes.filter(function (r) { return r.id === sel; })[0];
-      if (r0 && r0.start) s += '<circle class="hk-start" cx="' + r0.start[0] + '" cy="' + r0.start[1] + '" r="1"/>';
+      if (r0 && r0.startXY) s += '<circle class="hk-start" cx="' + r0.startXY[0] + '" cy="' + r0.startXY[1] + '" r="1"/>';
       return s + '<g class="hk-lbls"></g></svg>';
     }
     function labels() {

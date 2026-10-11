@@ -1234,8 +1234,8 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 .hk-ctr-m { stroke: #b9a97f; stroke-width: 1.1px; }
 .hk-water { fill: #cfe2ee; stroke: #93bad3; stroke-width: 1px; vector-effect: non-scaling-stroke; }
 .hk-stream { fill: none; stroke: #93bad3; stroke-width: 1px; vector-effect: non-scaling-stroke; }
-.hk-rd { fill: none; stroke: #9d9da6; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-.hk-rd-a { stroke-width: 3.5px; } .hk-rd-b { stroke-width: 2.8px; } .hk-rd-c { stroke-width: 2px; } .hk-rd-d { stroke-width: 1.2px; } .hk-rd-t { stroke-width: 1.2px; stroke-dasharray: 5 3; }
+.hk-rd { fill: none; stroke: #b9b9c0; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+.hk-rd-a { stroke-width: 2.6px; stroke: #a5a5ae; } .hk-rd-b { stroke-width: 2px; } .hk-rd-c { stroke-width: 1.1px; } .hk-rd-d { stroke-width: .7px; } .hk-rd-t { stroke-width: .9px; stroke-dasharray: 5 3; }
 .hk-path { fill: none; stroke: #8b6f47; stroke-width: 1px; stroke-dasharray: 2 2.5; opacity: .75; vector-effect: non-scaling-stroke; }
 .hk-halo { fill: none; stroke: #fff; stroke-width: 7px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; opacity: .9; }
 .hk-line { fill: none; stroke-width: 3px; stroke-linecap: round; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
