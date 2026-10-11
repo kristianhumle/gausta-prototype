@@ -1284,3 +1284,17 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 @media (max-width: 860px) { .hk-stage { display: block; min-height: 0; } .hk-wrap { aspect-ratio: 1000 / 585; min-height: 0; } }
 .hk-fig > img { height: 130px; }
 .hk-stage, .hk-wrap { min-height: 460px; }
+/* Vandring: mere kompakt format, ca. 25 % lavere (11. oktober 2026) */
+.hk-fig { position: relative; margin: 0 0 8px; }
+.hk-fig > img { height: 104px; }
+.hk-thumbs { position: absolute; top: 6px; right: 6px; margin: 0; gap: 4px; }
+.hk-thumb { width: 38px; height: 28px; border-color: #fff; opacity: .9; box-shadow: 0 1px 4px rgba(0,0,0,.3); }
+.hk-thumb.on { border-color: var(--accent); }
+.hk-fig figcaption { margin-top: 3px; }
+.hk-panel .hk-facts { gap: 2px; margin-bottom: 8px; font-size: .8rem; }
+.hk-panel .hk-facts div { grid-template-columns: 96px 1fr; }
+.hk-panel p, .hk-panel .muted { font-size: .84rem; line-height: 1.42; margin: 0 0 8px; }
+.hk-panel .hk-tip { padding: 6px 9px; margin: 8px 0 !important; }
+.hk-panel .hk-links { margin-top: 8px; }
+.hk-stage, .hk-wrap { min-height: 340px; }
+.hk-card .hk-fig > img { height: 130px; }
