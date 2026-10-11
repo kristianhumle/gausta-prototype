@@ -1282,3 +1282,5 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 .hk-wrap { flex: 1; aspect-ratio: auto; min-height: 440px; }
 .hk-panel { max-height: none; overflow: visible; }
 @media (max-width: 860px) { .hk-stage { display: block; min-height: 0; } .hk-wrap { aspect-ratio: 1000 / 585; min-height: 0; } }
+.hk-fig > img { height: 130px; }
+.hk-stage, .hk-wrap { min-height: 460px; }
