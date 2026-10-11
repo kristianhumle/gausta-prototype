@@ -54,9 +54,15 @@
   /* ---------- Version 2: kort med ruter ---------- */
   function map(el) {
     var d = D(); if (!d) return;
-    var routes = d.routes.filter(function (r) { return r.status === 'valgt' && r.d; }), sel = routes[0].id, vb = [0, 0, d.w, d.h];
-    var VIEWS = { alle: [0, 0, d.w, d.h] };
-    function view(name, x, y, w) { VIEWS[name] = [x - w / 2, y - w * d.h / d.w / 2, w, w * d.h / d.w]; }
+    var routes = d.routes.filter(function (r) { return r.status === 'valgt' && r.d; }), sel = routes[0].id, vb = [0, 0, d.w, d.h], curView = 'alle';
+    var VIEWS = { alle: { cx: d.w / 2, cy: d.h / 2, w: 'cover' } };
+    function view(name, x, y, w) { VIEWS[name] = { cx: x, cy: y, w: w }; }
+    // Udsnittet følger kortets faktiske format (kortet fylder hele højden ved siden af panelet): hele kortet = "cover"
+    function box(v) {
+      var W = wrap.clientWidth || 800, H = wrap.clientHeight || 468, w = v.w;
+      if (w === 'cover') w = (W / H < d.w / d.h) ? d.h * W / H : d.w;
+      var h = w * H / W; return [v.cx - w / 2, v.cy - h / 2, w, h];
+    }
     (d.places || []).forEach(function (p) { if (p[0] === 'Stavsro') view('gaustatoppen', (d.peaks[0][1] + p[1]) / 2, (d.peaks[0][2] + p[2]) / 2, 330); if (p[0] === 'Gaustablikk') view('gaustablikk', p[1], p[2], 260); if (p[0] === 'Rjukan') view('rjukan', p[1], p[2], 220); });
     el.innerHTML = '<div class="hk-map-top"><div class="row-flex hk-chips" role="group" aria-label="Vælg rute"></div></div>' +
       '<div class="plan-split hk-grid"><div class="hk-stage"><div class="hk-wrap"></div><div class="am-ov am-ov-bot" role="group" aria-label="Zoom">' +
@@ -97,23 +103,24 @@
       panel.scrollTop = 0;
     }
     function draw() {
-      wrap.innerHTML = base(); labels();
+      vb = box(VIEWS[curView]); wrap.innerHTML = base(); labels();
       chips.innerHTML = routes.map(function (r) { var col = (GRADE[r.grade] || ['', '#555'])[1]; return '<button type="button" class="filter hk-chip" data-r="' + r.id + '" aria-pressed="' + (r.id === sel) + '"><i style="background:' + col + '"></i>' + esc(r.name.replace(/ \(.*\)$/, '')) + '</button>'; }).join('');
     }
     function pick(id) { sel = id; panelFor(routes.filter(function (r) { return r.id === id; })[0]); draw(); }
     var anim = null;
     function go(name, instant) {
-      var to = VIEWS[name], from = vb.slice(), t0 = performance.now();
-      if (anim) cancelAnimationFrame(anim);
-      if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches) { vb = to.slice(); wrap.querySelector('svg').setAttribute('viewBox', vb.join(' ')); labels(); return; }
-      (function step(t) { var k = Math.min(1, (t - t0) / 450), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; vb = from.map(function (a, i) { return a + (to[i] - a) * e; }); wrap.querySelector('svg').setAttribute('viewBox', vb.join(' ')); labels(); if (k < 1) anim = requestAnimationFrame(step); })(t0);
+      var to = box(VIEWS[name]), from = vb.slice(), t0 = performance.now(), svg = wrap.querySelector('svg');
+      curView = name;
       [].forEach.call(el.querySelectorAll('[data-view]'), function (b) { b.classList.toggle('on', b.dataset.view === name); });
+      if (anim) cancelAnimationFrame(anim);
+      if (instant || matchMedia('(prefers-reduced-motion: reduce)').matches) { vb = to.slice(); svg.setAttribute('viewBox', vb.join(' ')); labels(); return; }
+      (function step(t) { var k = Math.min(1, (t - t0) / 450), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; vb = from.map(function (a, i) { return a + (to[i] - a) * e; }); svg.setAttribute('viewBox', vb.join(' ')); labels(); if (k < 1) anim = requestAnimationFrame(step); })(t0);
     }
     el.addEventListener('click', function (e) {
       var c = e.target.closest('[data-r]'); if (c) { pick(c.dataset.r); return; }
       var v = e.target.closest('[data-view]'); if (v) go(v.dataset.view);
     });
-    if (window.ResizeObserver) new ResizeObserver(function () { if (wrap.querySelector('svg')) labels(); }).observe(wrap);
+    if (window.ResizeObserver) new ResizeObserver(function () { var s = wrap.querySelector('svg'); if (s && !anim) { vb = box(VIEWS[curView]); s.setAttribute('viewBox', vb.join(' ')); labels(); } }).observe(wrap);
     pick(sel);
     var first = el.querySelector('[data-view="alle"]'); if (first) first.classList.add('on');
   }
