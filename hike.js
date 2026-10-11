@@ -8,8 +8,15 @@
   function km(m) { return (m / 1000).toFixed(1).replace('.', ',') + ' km'; }
   function chip(g) { var x = GRADE[g]; return x ? '<span class="hk-grade" style="--c:' + x[1] + '">' + x[0] + '</span>' : ''; }
   function links(r) { return (r.links || []).map(function (l) { return '<a class="btn btn-ghost btn-sm" href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t) + ' <span aria-hidden="true">↗</span></a>'; }).join(''); }
+  function fromApt(r) {
+    var f = r.fromApt; if (!f) return '';
+    var s = 'ca. ' + (f.airM < 1000 ? Math.round(f.airM / 10) * 10 + ' m' : km(f.airM)) + ' i luftlinje';
+    if (f.drive) s += ', ' + String(f.drive[0]).replace('.', ',') + ' km (ca. ' + f.drive[1] + ' min) i bil';
+    return s;
+  }
+  function official(r) { return r.official ? '<a href="' + esc(r.official.u) + '" target="_blank" rel="noopener">' + esc(r.official.t) + ' <span aria-hidden="true">↗</span></a>' : '<span class="faint">Ingen fundet</span>'; }
   function facts(r) {
-    var rows = [['Afstand', r.dist], ['Stigning', r.ascent], ['Tid', r.time], ['Sæson', r.season], ['Start', r.start]];
+    var rows = [['Afstand', r.dist], ['Stigning', r.ascent], ['Tid', r.time], ['Sæson', r.season], ['Start', r.start], ['Fra lejligheden', fromApt(r)]];
     return '<dl class="hk-facts">' + rows.filter(function (x) { return x[1] && x[1] !== 'ikke oplyst'; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('') + '</dl>';
   }
   function D() { return window.GL && GL.AREAMAP && GL.AREAMAP.hike; }
@@ -111,10 +118,10 @@
     var d = D(); if (!d) return;
     var n = d.routes.filter(function (r) { return r.status === 'valgt'; }).length;
     el.innerHTML = '<p class="muted" style="margin:0 0 10px"><b>' + n + ' valgt</b> og <b>' + (d.routes.length - n) + ' fravalgt</b> af ' + d.routes.length + ' fundne ruter og aktiviteter (11. oktober 2026). Tal fra kilderne, og vores egen beregning ud fra OpenStreetMap og terrænmodellen (kun vejen frem, vejledende).</p>' +
-      '<div class="table-wrap"><table class="table hk-table"><tr><th>Rute</th><th>Status</th><th>Grad</th><th>Afstand (kilde)</th><th>Stigning (kilde)</th><th>Vores beregning</th><th>Begrundelse</th></tr>' +
+      '<div class="table-wrap"><table class="table hk-table"><tr><th>Rute</th><th>Status</th><th>Grad</th><th>Fra lejligheden (til start)</th><th>Officiel beskrivelse</th><th>Afstand (kilde)</th><th>Stigning (kilde)</th><th>Vores beregning</th><th>Begrundelse</th></tr>' +
       d.routes.map(function (r) {
         var c = r.calc || {}, mine = c.lengthM ? km(c.lengthM) + (c.ascentM ? ', +' + c.ascentM + ' m' : '') : 'n/a';
-        return '<tr class="' + (r.status === 'valgt' ? 'hk-on' : 'hk-off') + '"><td><b>' + esc(r.name) + '</b><div class="meta">' + esc(r.group) + '</div></td><td><span class="hk-status ' + r.status + '">' + (r.status === 'valgt' ? 'Valgt' : 'Fravalgt') + '</span></td><td>' + (chip(r.grade) || '–') + '</td><td>' + esc(r.dist || '–') + '</td><td>' + esc(r.ascent || '–') + '</td><td class="num">' + mine + '</td><td class="muted">' + esc((r.reason || (r.status === 'valgt' ? 'Med på brugerens liste 11. oktober 2026' : '')).replace(/\*\*/g, '')) + '</td></tr>'; }).join('') + '</table></div>';
+        return '<tr class="' + (r.status === 'valgt' ? 'hk-on' : 'hk-off') + '"><td><b>' + esc(r.name) + '</b><div class="meta">' + esc(r.group) + '</div></td><td><span class="hk-status ' + r.status + '">' + (r.status === 'valgt' ? 'Valgt' : 'Fravalgt') + '</span></td><td>' + (chip(r.grade) || '–') + '</td><td>' + esc(fromApt(r) || '–') + '</td><td>' + official(r) + '</td><td>' + esc(r.dist || '–') + '</td><td>' + esc(r.ascent || '–') + '</td><td class="num">' + mine + '</td><td class="muted">' + esc((r.reason || (r.status === 'valgt' ? 'Med på brugerens liste 11. oktober 2026' : '')).replace(/\*\*/g, '')) + '</td></tr>'; }).join('') + '</table></div>';
   }
 
   function season(el) {
