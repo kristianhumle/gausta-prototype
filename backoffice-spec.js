@@ -33,13 +33,13 @@
       return '<section data-bo-group="' + g.id + '" style="margin-top:28px"><h3 style="font-size:1.25rem;margin:0 0 4px">' + g.id + ' · ' + esc(g.title) + '</h3><p class="muted" style="margin:0 0 14px">' + esc(g.lead) + '</p>' +
         items.map(function (x) {
           var st = STATUS[x.status] || STATUS.draft;
-          var rows = '<tr><th style="width:150px">Hvad</th><td>' + esc(x.what) + '</td></tr>' +
-            '<tr><th>Leverance</th><td>' + esc(x.out) + '</td></tr>' +
-            (x.decided ? '<tr><th>Besluttet</th><td>' + esc(x.decided) + '</td></tr>' : '') +
-            '<tr><th>Afhænger af</th><td>' + (x.deps.length ? '<div class="row-flex" style="gap:6px">' + x.deps.map(chip).join('') + '</div>' : '<span class="faint">intet</span>') + '</td></tr>' +
-            (x.open.length ? '<tr><th>Åbne spørgsmål</th><td><ul style="margin:0;padding-left:18px">' + x.open.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></td></tr>' : '');
+          var rows = '<dt>Hvad</dt><dd>' + esc(x.what) + '</dd>' +
+            '<dt>Leverance</dt><dd>' + esc(x.out) + '</dd>' +
+            (x.decided ? '<dt>Besluttet</dt><dd>' + esc(x.decided) + '</dd>' : '') +
+            '<dt>Afhænger af</dt><dd>' + (x.deps.length ? '<div class="row-flex" style="gap:6px">' + x.deps.map(chip).join('') + '</div>' : '<span class="faint">intet</span>') + '</dd>' +
+            (x.open.length ? '<dt>Åbne spørgsmål</dt><dd><ul style="margin:0;padding-left:18px">' + x.open.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></dd>' : '');
           return '<div class="spec-block' + (x.status === 'approved' ? ' approved' : '') + '" id="bo-' + x.id + '" data-status="' + x.status + '"><div class="spec-head"><h3>' + x.id + ' · ' + esc(x.title) + '</h3><div class="row-flex"><span class="pill-tag">' + esc(x.req) + '</span><span class="status ' + st.cls + '">' + st.label + '</span></div></div>' +
-            '<div class="spec-body"><div class="table-wrap"><table class="table">' + rows + '</table></div></div></div>';
+            '<div class="spec-body"><dl class="bo-dl">' + rows + '</dl></div></div>';
         }).join('') + '</section>';
     }).join('');
 
