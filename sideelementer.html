@@ -18,7 +18,7 @@
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
   <p class="eyebrow" style="margin:18px 0 6px">Offentlig side og gæsteområde (del A og B)</p>
   <div class="toc">
-    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-inventory" class="done">Inventar</a><a href="#e-area" class="done">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams" class="done">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-formular</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventkalender</a><a href="#e-social">Social feed</a><a href="#e-faq" class="done">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
+    <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-inventory" class="done">Inventar</a><a href="#e-area" class="done">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams" class="done">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking">Booking-formular</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventkalender</a><a href="#e-social">Social feed</a><a href="#e-hike">Vandring</a><a href="#e-faq" class="done">FAQ</a><a href="#e-form">Formular</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
   <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
@@ -461,6 +461,27 @@
     </div>
     <div class="spec-note"><b>Godkendt 11. oktober 2026 (Brugeroplysning, G50):</b> Området-elementet er godkendt (kort med faner, zoom i kortet, steder med billede og kilde). Steder, tekster, åbningstider, billeder og rettigheder skal stadig verificeres. <b>Besluttet 11. oktober 2026 (Brugeroplysning, G48):</b> kortskiftet er faner i en ramme om kortet (variant B), og "Hele kortet" og "Zoom" ligger inde i kortet (fra variant A). De øvrige varianter er fravalgt og ligger under en skjult sektion. <b>Besluttet 3. oktober 2026:</b> to kort i stedet for ét: <b>Gausta</b> (tæt på: mad og drikke, indkøb, skiudlejning, aktiviteter som padel og sauna) og <b>Rjukan og omegn</b> (byen, kultur, natur, aktiviteter, med køretid). Man skifter mellem dem, slår lag til og fra og zoomer ind på centrene (Gaustablikk, Rjukan). Steder tæt på hinanden samles (hotellet, Food Court). A3 (Tæt på) og A4 (Oplevelser) deles efter formål, Nu og events (A5 + A6) er én side med lav prioritet, og menupunktet hedder "Området". <b>Fundet:</b> padel, flydende sauna, restauranter, butikker, skiudlejning, Vemork og Gaustatoppen findes i kortdata. Rjukan Spa findes ikke under det navn (det nærmeste er Rjukanbadet), og Rjukan Klatrepark skal tjekkes (kilden siger lukket på ubestemt tid). <b>Åbent:</b> endelig verificering af steder, rigtigt levende kort og kortleverandør i den tekniske specifikation (åbne kortdata kan hostes selv), datakilder til live-data (TK4).</div></div>
 
+  <div class="spec-block" id="e-hike"><div class="spec-head"><h3>Vandremuligheder</h3><div class="row-flex"><span class="pill-tag">område, oplevelser · A12 · forår, sommer, efterår</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body">
+      <div data-hike="season"></div>
+      <p class="muted" style="margin:0 0 16px"><b>Forslag 11. oktober 2026 (Brugeroplysning):</b> to måder at vise vandremuligheder på, som du kan vælge imellem, og en oversigt over alle fundne ruter med valgt og fravalgt. Elementet er til <b>forår, sommer og efterår</b> (ikke vinter). Tekster, tal og links er hentet fra kilderne (ut.no, Visit Rjukan, Gausta.com) som standard, og erstattes senere med egen tekst. Alle tal skal verificeres.</p>
+      <div class="wc-ver" id="e-hike-v1">
+        <h4>Version 1: turkort med links</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> enkelt, hurtigt at overskue, med filter på sværhedsgrad og direkte links til officielle beskrivelser. Ingen rutegeometri, så intet kan være "forkert" på kortet.</li><li><b>Ulempe:</b> ingen visualisering af, hvor ruterne går.</li></ul>
+        <div data-hike="cards"></div>
+      </div>
+      <div class="wc-ver" id="e-hike-v2">
+        <h4>Version 2: kort med ruter</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> viser, hvor turene går, med højdekurver, farve efter sværhedsgrad, højdeprofil og samme detaljer og links som version 1.</li><li><b>Ulempe:</b> rutelinjerne er sammensat af stier i OpenStreetMap (og Turrutebasen) og er vejledende. Kræver kortdata og vedligehold.</li></ul>
+        <div data-hike="map"></div>
+      </div>
+      <div class="wc-ver" id="e-hike-alle">
+        <h4>Oversigt: alle ruter og status (valgt og fravalgt)</h4>
+        <div data-hike="table"></div>
+      </div>
+    </div>
+    <div class="spec-note"><b>Valg 11. oktober 2026 (Brugeroplysning):</b> start med de foreslåede ture (Gaustatoppen fra Stavsro, Svineroi og Selstali, Toreskyrkja, Skipsfjell, Månastien og Kjærlighetsstien, og de lokale gåture), lav begge versioner i elementkataloget, <b>lav højdekurver selv</b> (fra Kartverkets terrænmodel), kun forår, sommer og efterår, dansk som øvrige elementer, og brug kildernes tekster som standard. <b>Metode:</b> rutelinjerne er fundet ved at følge stier i OpenStreetMap mellem få waypoints og kontrolleret mod kildernes længder (se <a href="../teknisk/datakilder/15-vandreruter.md">research</a> og <a href="../teknisk/kortgenerator.md">kortgeneratoren</a>). <b>Åbent:</b> vælg version 1, 2 eller begge, hvilke ture der skal med, rettigheder til kildernes tekster (ut.no er DNT's ophavsret), engelsk tekst, og sikkerhedsnote (vejr, føre, fodtøj).</div></div>
+
   <div class="spec-block approved" id="e-faq"><div class="spec-head"><h3>FAQ-harmonika</h3><div class="row-flex"><span class="pill-tag">forside · A1</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body"><div class="faq"><details open><summary>Hvordan kommer jeg ind?</summary><p>Svar tekst.</p></details><details><summary>Er der kameraer?</summary><p>Svar tekst.</p></details></div></div>
     <div class="spec-note"><b>Godkendt 6. oktober 2026 (Brugeroplysning, G43).</b> <b>Krav:</b> A1 FAQ. Brug native details/summary for tilgængelighed og offline. Svarene er pladsholdere.</div>
@@ -521,6 +542,8 @@
 <script src="sensorplan.js"></script>
 <script src="area-map-data.js"></script>
 <script src="area.js"></script>
+<script src="area-hike-data.js"></script>
+<script src="hike.js"></script>
 <script src="skiinout-draw.js"></script>
 <script src="skiinout.js"></script>
 <script src="weather-data.js"></script>
