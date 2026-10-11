@@ -41,9 +41,9 @@
     <div>
       <p class="eyebrow">B2</p>
       <h2 data-en="Search the inventory.">Søg i inventaret.</h2>
-      <p class="muted" data-en="Built from the operator’s accessory list (S15 appendix 1) once confirmed.">Bygges på operatørens tilbehørsliste (S15 bilag 1), når den er bekræftet.</p>
-      <input class="field" type="search" placeholder="Søg: kedel, ski, strygejern …" aria-label="Søg i inventar">
-      <div class="card" style="margin-top:14px"><div class="list-row"><span class="grow">Eksempel: Gryder og pander</span><span class="pill-tag">Køkken</span></div><div class="list-row"><span class="grow">Eksempel: Ekstra dyner</span><span class="pill-tag">Soveværelse</span></div></div>
+      <p class="muted" data-en="Same inventory as on the apartment page. A draft, built on the operator’s accessory list (S15 appendix 1) once confirmed.">Samme inventar som på lejlighedssiden (B7). Listen er et udkast og bygges på operatørens tilbehørsliste (S15 bilag 1), når den er bekræftet.</p>
+      <input class="field" type="search" placeholder="Søg: sofa, fjernsyn, vaskemaskine …" aria-label="Søg i inventar" data-inv-search>
+      <div class="card" style="margin-top:14px" data-inv-results></div>
     </div>
     <div>
       <p class="eyebrow">B3</p>
@@ -57,5 +57,18 @@
   </div>
 </section>
 <script src="app.js"></script>
+<script src="inventory-data.js"></script>
+<script>
+(function(){
+  var D=window.GL_INVENTORY, box=document.querySelector("[data-inv-results]"), inp=document.querySelector("[data-inv-search]");
+  if(!D||!box||!inp) return;
+  var esc=function(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;");};
+  var all=[]; D.rooms.forEach(function(r){ r.items.forEach(function(i){ all.push({n:i.n,d:i.d||"",r:r.name}); }); });
+  function draw(){ var q=inp.value.trim().toLowerCase(); var list=all.filter(function(x){ return !q||(x.n+" "+x.d+" "+x.r).toLowerCase().indexOf(q)>-1; });
+    box.innerHTML=list.length? list.map(function(x){ return '<div class="list-row"><span class="grow"><b>'+esc(x.n)+'</b>'+(x.d?'<div class="meta">'+esc(x.d)+'</div>':"")+'</span><span class="pill-tag">'+esc(x.r)+'</span></div>'; }).join("") : '<p class="muted" style="margin:6px 0">Ingen ting matcher søgningen.</p>';
+  }
+  inp.addEventListener("input",draw); draw();
+})();
+</script>
 </body>
 </html>

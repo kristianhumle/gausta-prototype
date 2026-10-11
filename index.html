@@ -75,13 +75,7 @@
       <p class="eyebrow">Gausta nu</p>
       <h2 data-en="Conditions right now.">Forholdene lige nu.</h2>
     </div>
-    <div class="live reveal">
-      <div data-weather="tile"></div>
-      <div><small data-en="Snow depth">Snedybde</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
-      <div><small data-en="Lifts open">Åbne lifte</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
-      <div><small data-en="Road conditions">Vejforhold</small><b class="num">n/a</b><small class="verify">kilde ikke valgt</small></div>
-    </div>
-    <div class="live-foot"><span class="stamp" data-en="Fallback when a feed is down: “Last updated HH:MM”.">Fallback ved nedbrud: "Sidst opdateret kl. TT:MM".</span><a href="omraadet.html#nu" data-en="Weather, webcam and more →">Vejr, webcam og mere →</a></div>
+    <div data-nu></div>
   </div>
 </section>
 
@@ -99,7 +93,7 @@
       <div class="opt"><b data-en="Model B · Own request, passed on">Model B · Egen forespørgsel, videregives</b><span class="muted" data-en="Request form below. Needs the operator’s written acceptance.">Forespørgselsformular nedenfor. Kræver operatørens skriftlige accept.</span></div>
       <form class="form" onsubmit="return false" style="margin-top:14px">
         <div class="two"><label><span data-en="Arrival">Ankomst</span><input class="field" type="date"></label><label><span data-en="Departure">Afrejse</span><input class="field" type="date"></label></div>
-        <div class="two"><label><span data-en="Guests">Gæster</span><select class="field"><option>2</option><option>4</option><option>7</option></select></label><label>E-mail<input class="field" type="email" placeholder="navn@eksempel.dk"></label></div>
+        <div class="two"><label><span data-en="Guests">Gæster</span><select class="field"><option>2</option><option>4</option><option>6</option></select></label><label>E-mail<input class="field" type="email" placeholder="navn@eksempel.dk"></label></div>
         <label><span data-en="Message">Besked</span><textarea class="field"></textarea></label>
         <button class="btn btn-primary" type="button" data-en="Send request (prototype)">Send forespørgsel (prototype)</button>
         <span class="faint" data-en="Quick reply promised. Consent text for GDPR to follow.">Hurtigt svar lovet. Samtykketekst til GDPR følger.</span>
@@ -170,6 +164,7 @@
 </section>
 
 <script src="app.js"></script>
+<script src="nu.js"></script>
 <script src="weather-data.js"></script>
 <script src="weather.js"></script>
 <script src="plan.js"></script>

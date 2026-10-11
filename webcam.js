@@ -9,7 +9,7 @@
    5) Gausta LIVE (Norway Live på YouTube), fanen Live i version 3, via youtube-nocookie.com, startes uden lyd */
 (function () {
   'use strict';
-  var root = document.getElementById('e-webcams');
+  var root = document.getElementById('e-webcams') || document.querySelector('[data-webcams]');
   if (!root) return;
 
   var NL = 'https://cdn.norwaylive.tv/snapshots/6dc5e9c7-99d2-40a2-aeaf-d7335e752b3c/';
