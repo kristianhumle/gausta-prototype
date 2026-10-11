@@ -28,7 +28,7 @@
         '<p class="muted" style="margin:0">' + verb + ' på et sted på kortet. Skift mellem de to kort, slå lag til og fra, og zoom ind på centrene.</p></div>' +
       '<div class="plan-pills am-switch" role="group" aria-label="Vælg kort">' + Object.keys(MAPS).map(function (k, i) { return '<button type="button" class="filter" data-map="' + k + '" aria-pressed="' + (i === 0) + '">' + MAPS[k].label + '</button>'; }).join('') + '</div>' +
       '<div class="plan-pills layers am-layers" role="group" aria-label="Lag på kortet"></div>' +
-      '<div class="plan-split am-grid"><div class="am-col"><div class="am-wrap" id="am-wrap"></div>' +
+      '<div class="plan-split am-grid"><div class="am-col"><div class="am-wrap"></div>' +
         '<div class="am-bar"><button type="button" class="btn btn-ghost btn-sm" data-v="all">Hele kortet</button><button type="button" class="btn btn-ghost btn-sm" data-v="zoom"></button>' +
         '<span class="faint am-ski">Pister, lifte og langrendsløjper vises ikke her: <a href="#e-skiinout">se Ski-in / ski-out</a></span></div></div>' +
         '<div class="plan-panel area-panel" aria-live="polite"></div></div>' +
@@ -45,7 +45,7 @@
     if (minimal) { ['.subnav', '.area-head', '.area-cards', '.now-widget'].forEach(function (q) { var n = el.querySelector(q); if (n) n.remove(); }); }
     if (fixed) { var swn = el.querySelector('.am-switch'); if (swn) swn.remove(); }
     el.querySelector('.am-ski a').setAttribute('href', skiHref);
-    var wrap = el.querySelector('#am-wrap'), panel = el.querySelector('.area-panel'), layersEl = el.querySelector('.am-layers'), pinsEl, svgEl, scaleEl, items = [];
+    var wrap = el.querySelector('.am-wrap'), panel = el.querySelector('.area-panel'), layersEl = el.querySelector('.am-layers'), pinsEl, svgEl, scaleEl, items = [];
 
     function dataOf() { return DATA[cur]; }
     function poi(id) { return dataOf().pois.filter(function (p) { return p.id === id; })[0]; }
@@ -132,7 +132,7 @@
       NICE.forEach(function (m) { if (m / mPerPx >= 60 && m / mPerPx <= 150 && pick === NICE[0]) pick = m; });
       if (pick === NICE[0]) NICE.forEach(function (m) { if (m / mPerPx <= 150) pick = m; });
       scaleEl.querySelector('i').style.width = (pick / mPerPx).toFixed(0) + 'px'; scaleEl.querySelector('span').textContent = pick >= 1000 ? (pick / 1000) + ' km' : pick + ' m';
-      el.querySelectorAll('.am-bar [data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === mode)); b.classList.toggle('on', b.dataset.v === mode); });
+      el.querySelectorAll('[data-v]').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.v === mode)); b.classList.toggle('on', b.dataset.v === mode); });
     }
 
     var anim = null;
@@ -184,15 +184,70 @@
 
     function layersUi() {
       layersEl.innerHTML = MAPS[cur].cats.map(function (c) { return '<button type="button" class="filter" data-l="' + c.id + '" aria-pressed="' + (S[cur].cats.indexOf(c.id) > -1) + '">' + GL.icon(c.icon) + c.name + '</button>'; }).join('');
-      el.querySelector('.am-bar [data-v="zoom"]').textContent = MAPS[cur].zoomLabel;
+      [].forEach.call(el.querySelectorAll('[data-v="zoom"]'), function (b) { b.textContent = MAPS[cur].zoomLabel; });
     }
     function showMap(k) {
       cur = k; layersUi(); build(); layout(); S[k].sel = null; panelEmpty();
-      [].forEach.call(el.querySelectorAll('.am-switch .filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.map === k)); });
+      [].forEach.call(el.querySelectorAll('button[data-map]'), function (b) {
+        var on = b.dataset.map === k;
+        if (b.getAttribute('role') === 'tab') { b.setAttribute('aria-selected', String(on)); b.tabIndex = on ? 0 : -1; } else b.setAttribute('aria-pressed', String(on));
+        b.classList.toggle('on', on);
+      });
+      if (updateThumb) updateThumb();
     }
 
+    // ---------- visning af kortskift (data-switch): pills (standard), overlay, tabs, cards, thumb ----------
+    var updateThumb = null;
+    (function applySwitch() {
+      var variant = el.getAttribute('data-switch') || 'pills', keys = Object.keys(MAPS), col = el.querySelector('.am-col');
+      el.classList.add('am-sw-' + variant);
+      if (fixed || variant === 'pills' || keys.length < 2) return;
+      var sw = el.querySelector('.am-switch'); if (sw) sw.remove();
+      var cnt = function (k) { return DATA[k].pois.length; };
+      var stage = null;
+      if (variant === 'overlay' || variant === 'thumb') { stage = document.createElement('div'); stage.className = 'am-stage'; col.insertBefore(stage, wrap); stage.appendChild(wrap); }
+      if (variant === 'overlay') {
+        stage.insertAdjacentHTML('beforeend',
+          '<div class="am-ov am-ov-top" role="group" aria-label="Vælg kort">' + keys.map(function (k) { return '<button type="button" class="am-ov-btn" data-map="' + k + '" aria-pressed="false">' + esc(MAPS[k].label) + '</button>'; }).join('') + '</div>' +
+          '<div class="am-ov am-ov-bot" role="group" aria-label="Zoom"><button type="button" class="am-ov-btn" data-v="all">Hele kortet</button><button type="button" class="am-ov-btn" data-v="zoom"></button></div>');
+        [].forEach.call(el.querySelectorAll('.am-bar [data-v]'), function (b) { b.remove(); });
+      } else if (variant === 'tabs') {
+        var frame = document.createElement('div'); frame.className = 'am-frame';
+        var tabs = document.createElement('div'); tabs.className = 'am-tabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Vælg kort');
+        tabs.innerHTML = keys.map(function (k) { return '<button type="button" role="tab" class="am-tab" data-map="' + k + '" aria-selected="false" tabindex="-1">' + esc(MAPS[k].label) + ' <span class="am-tab-n">' + cnt(k) + '</span></button>'; }).join('');
+        var strip = document.createElement('div'); strip.className = 'am-strip'; strip.appendChild(layersEl);
+        wrap.setAttribute('role', 'tabpanel');
+        col.insertBefore(frame, col.firstChild); frame.appendChild(tabs); frame.appendChild(strip); frame.appendChild(wrap);
+      } else if (variant === 'cards') {
+        var icons = { close: 'pin', wide: 'mountain' };
+        var cards = document.createElement('div'); cards.className = 'am-cardsw'; cards.setAttribute('role', 'group'); cards.setAttribute('aria-label', 'Vælg kort');
+        cards.innerHTML = keys.map(function (k) { return '<button type="button" class="am-cardw" data-map="' + k + '" aria-pressed="false"><span class="am-cardw-ico">' + GL.icon(icons[k] || 'pin') + '</span><span class="am-cardw-t"><b>' + esc(MAPS[k].label) + '</b><small>' + esc(MAPS[k].tagline || '') + ' · ' + cnt(k) + ' steder</small></span></button>'; }).join('');
+        layersEl.parentNode.insertBefore(cards, layersEl);
+      } else if (variant === 'thumb') {
+        stage.insertAdjacentHTML('beforeend', '<div class="am-ov am-ov-cur"></div><button type="button" class="am-thumb" data-map="" aria-label=""></button>');
+        var cur_ = stage.querySelector('.am-ov-cur'), th = stage.querySelector('.am-thumb');
+        var mini = function (k) {
+          var d = DATA[k], r = d.roads, s = '<svg viewBox="0 0 ' + d.w + ' ' + d.h + '" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><rect width="' + d.w + '" height="' + d.h + '" fill="#fbfaf6"/><path d="' + d.water.join(' ') + '" fill="#cfe2ee" fill-rule="evenodd"/>';
+          ['a', 'b'].forEach(function (c) { if (r[c]) s += '<path d="' + r[c].join(' ') + '" fill="none" stroke="#9a9aa3" stroke-width="' + (c === 'a' ? 5 : 3) + '" stroke-linecap="round"/>'; });
+          return s + '<circle cx="' + d.apt[0] + '" cy="' + d.apt[1] + '" r="' + (d.w / 28) + '" fill="#b05a1c" stroke="#fff" stroke-width="' + (d.w / 150) + '"/></svg>';
+        };
+        updateThumb = function () {
+          var ks = Object.keys(MAPS), other = ks[(ks.indexOf(cur) + 1) % ks.length];
+          cur_.innerHTML = '<b>' + esc(MAPS[cur].label) + '</b>';
+          th.setAttribute('data-map', other); th.setAttribute('aria-label', 'Skift til kortet ' + MAPS[other].label);
+          th.innerHTML = mini(other) + '<span class="am-thumb-l">' + esc(MAPS[other].label) + ' <span aria-hidden="true">→</span></span>';
+        };
+      }
+    })();
+
     // ---------- hændelser ----------
-    var swEl = el.querySelector('.am-switch'); if (swEl) swEl.addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b && b.dataset.map !== cur) showMap(b.dataset.map); });
+    el.addEventListener('click', function (e) { var b = e.target.closest('button[data-map]'); if (b && b.dataset.map !== cur) showMap(b.dataset.map); });
+    var tl = el.querySelector('[role="tablist"]');
+    if (tl) tl.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var ks = Object.keys(MAPS), i = ks.indexOf(cur), n = ks[(i + (e.key === 'ArrowRight' ? 1 : ks.length - 1)) % ks.length];
+      showMap(n); var t = tl.querySelector('[data-map="' + n + '"]'); if (t) t.focus(); e.preventDefault();
+    });
     layersEl.addEventListener('click', function (e) {
       var b = e.target.closest('.filter'); if (!b) return; var id = b.dataset.l, cs = S[cur].cats, i = cs.indexOf(id);
       if (i > -1) cs.splice(i, 1); else cs.push(id);
@@ -200,7 +255,7 @@
       if (S[cur].sel && S[cur].sel !== 'cluster' && !MAPS[cur].groups[S[cur].sel] && poi(S[cur].sel) && !catOn(poi(S[cur].sel))) { S[cur].sel = null; panelEmpty(); }
       layout();
     });
-    el.querySelector('.am-bar').addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (b) { go(b.dataset.v); if (b.dataset.v === 'zoom' && !S[cur].sel) { S[cur].sel = 'cluster'; panelList('cluster', MAPS[cur].clusterName); layout(); } } });
+    el.addEventListener('click', function (e) { var b = e.target.closest('[data-v]'); if (b) { go(b.dataset.v); if (b.dataset.v === 'zoom' && !S[cur].sel) { S[cur].sel = 'cluster'; panelList('cluster', MAPS[cur].clusterName); layout(); } } });
     wrap.addEventListener('click', function (e) {
       var b = e.target.closest('.am-pin'); if (!b) return; var id = b.dataset.id;
       if (id === 'cluster') select('cluster', 'cluster'); else if (MAPS[cur].groups[id]) select(id, 'group'); else select(id, 'poi');

@@ -420,6 +420,27 @@
     <div class="spec-body">
       <div class="notice" style="margin-bottom:22px"><b>Kort fra åbne data.</b> Veje, bygninger og vand er omtegnet fra OpenStreetMap (© OpenStreetMap contributors) som egne SVG-former, uden eksterne kald. Stedernes placering, åbningstider og beskrivelser er kildepåstande og skal verificeres senere. Køretider er beregnet 3. oktober 2026 på kortdata (OSRM). Pister, lifte og langrendsløjper vises bevidst ikke her, men i <a href="#e-skiinout">Ski-in / ski-out</a>.</div>
       <div data-area-hub></div>
+      <p class="muted" style="margin:18px 0 6px"><b>Ovenfor: nuværende visning</b> (knapper over kategorierne). <b>Forslag 11. oktober 2026 (Brugeroplysning: usikker på, om skiftet mellem Gausta og Rjukan ses):</b> fire varianter, hvor skiftet ligger i eller tæt på selve kortet. Prøv dem, og vælg én. Alle bruger samme kort og data, og kun skiftet er forskelligt.</p>
+      <div class="wc-ver" id="e-area-overlay">
+        <h4>Variant A: skift oven på kortet (øverst til venstre) og zoom nederst</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> skiftet ligger på kortet, hvor øjnene er, og zoom-knapperne er flyttet ind, så der er intet filter under kortet.</li><li><b>Ulempe:</b> dækker en lille del af kortet, og et kortskift kan ligne et lag, ikke et andet kort.</li></ul>
+        <div data-area-hub data-chrome="min" data-switch="overlay"></div>
+      </div>
+      <div class="wc-ver" id="e-area-tabs">
+        <h4>Variant B: faner i en ramme om kortet (med antal), kategorierne som linje i rammen</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> faner er et velkendt mønster, med antal steder pr. kort. Kort, skifte og kategorier hænger visuelt sammen i én ramme. Piletaster skifter fane.</li><li><b>Ulempe:</b> fylder en række mere over kortet, og kategorilinjen flytter ind i rammen.</li></ul>
+        <div data-area-hub data-chrome="min" data-switch="tabs"></div>
+      </div>
+      <div class="wc-ver" id="e-area-cards">
+        <h4>Variant C: to store kort over kortet med forklaring</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> tydeligst og forklarer forskellen (tæt på kontra i bil, med antal). Passer godt til mobil.</li><li><b>Ulempe:</b> fylder mest, og kortet skubbes længere ned.</li></ul>
+        <div data-area-hub data-chrome="min" data-switch="cards"></div>
+      </div>
+      <div class="wc-ver" id="e-area-thumb">
+        <h4>Variant D: miniature i hjørnet (som i kortprogrammer), navnet på det viste kort øverst</h4>
+        <ul class="wx-facts"><li><b>Fordel:</b> roligt og kortnært. Miniaturen viser, hvad man kommer til, og fylder ikke en ekstra række.</li><li><b>Ulempe:</b> mindst synligt for nye besøgende, og to kort er mere naturligt som faner.</li></ul>
+        <div data-area-hub data-chrome="min" data-switch="thumb"></div>
+      </div>
     </div>
     <div class="spec-note"><b>Besluttet 3. oktober 2026:</b> to kort i stedet for ét: <b>Gausta</b> (tæt på: mad og drikke, indkøb, skiudlejning, aktiviteter som padel og sauna) og <b>Rjukan og omegn</b> (byen, kultur, natur, aktiviteter, med køretid). Man skifter mellem dem, slår lag til og fra og zoomer ind på centrene (Gaustablikk, Rjukan). Steder tæt på hinanden samles (hotellet, Food Court). A3 (Tæt på) og A4 (Oplevelser) deles efter formål, Nu og events (A5 + A6) er én side med lav prioritet, og menupunktet hedder "Området". <b>Fundet:</b> padel, flydende sauna, restauranter, butikker, skiudlejning, Vemork og Gaustatoppen findes i kortdata. Rjukan Spa findes ikke under det navn (det nærmeste er Rjukanbadet), og Rjukan Klatrepark skal tjekkes (kilden siger lukket på ubestemt tid). <b>Åbent:</b> endelig verificering af steder, rigtigt levende kort og kortleverandør i den tekniske specifikation (åbne kortdata kan hostes selv), datakilder til live-data (TK4).</div></div>
 
