@@ -105,7 +105,17 @@
       vb = box(VIEWS[curView]); wrap.innerHTML = base(); labels();
       chips.innerHTML = routes.map(function (r) { var col = (GRADE[r.grade] || ['', '#555'])[1]; return '<button type="button" class="filter hk-chip" data-r="' + r.id + '" aria-pressed="' + (r.id === sel) + '"><i style="background:' + col + '"></i>' + esc(r.name.replace(/ \(.*\)$/, '')) + '</button>'; }).join('');
     }
-    function pick(id) { sel = id; panelFor(routes.filter(function (r) { return r.id === id; })[0]); draw(); }
+    // Zoomer ind på den valgte rute, så også korte ture (fx de lokale gåture) kan ses
+    function routeView(r) {
+      var n = r.d.match(/-?\d+(?:\.\d+)?/g).map(Number), x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
+      for (var i = 0; i + 1 < n.length; i += 2) { x0 = Math.min(x0, n[i]); x1 = Math.max(x1, n[i]); y0 = Math.min(y0, n[i + 1]); y1 = Math.max(y1, n[i + 1]); }
+      var W = wrap.clientWidth || 800, H = wrap.clientHeight || 468;
+      return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: Math.min(d.w, Math.max((x1 - x0) * 1.7, (y1 - y0) * 1.7 * W / H, 150)) };
+    }
+    function pick(id, zoom) {
+      sel = id; var r = routes.filter(function (x) { return x.id === id; })[0]; panelFor(r); draw();
+      if (zoom) { VIEWS._route = routeView(r); go('_route'); }
+    }
     var anim = null;
     function go(name, instant) {
       var to = box(VIEWS[name]), from = vb.slice(), t0 = performance.now(), svg = wrap.querySelector('svg');
@@ -116,7 +126,7 @@
       (function step(t) { var k = Math.min(1, (t - t0) / 450), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; vb = from.map(function (a, i) { return a + (to[i] - a) * e; }); svg.setAttribute('viewBox', vb.join(' ')); labels(); if (k < 1) anim = requestAnimationFrame(step); else anim = null; })(t0);
     }
     el.addEventListener('click', function (e) {
-      var c = e.target.closest('[data-r]'); if (c) { pick(c.dataset.r); return; }
+      var c = e.target.closest('[data-r]'); if (c) { pick(c.dataset.r, true); return; }
       var v = e.target.closest('[data-view]'); if (v) go(v.dataset.view);
     });
     if (window.ResizeObserver) new ResizeObserver(function () { var s = wrap.querySelector('svg'); if (s && !anim) { vb = box(VIEWS[curView]); s.setAttribute('viewBox', vb.join(' ')); labels(); } }).observe(wrap);
