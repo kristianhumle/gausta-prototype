@@ -22,7 +22,6 @@
     var link = el.hasAttribute('data-nu-nolink') ? '' : '<a href="omraadet.html#nu">Vejr, webcam og mere →</a>';
     el.innerHTML = '<div class="live live-season reveal"><div data-seasons="winter spring summer autumn" data-weather="tile"></div>' +
       T.map(function (t) { return '<div data-seasons="' + t[0] + '"><small>' + t[1] + '</small><b class="num">' + t[2] + '</b><small>' + t[3] + '</small><small class="src">' + t[4] + '</small></div>'; }).join('') + '</div>' +
-      '<div class="live-foot"><span class="stamp">Opdateret kl. 10.30 · hver flise viser sin kilde</span>' + link + '</div>' +
-      '<p style="margin:8px 0 0"><span class="proto-tag">Eksempelværdier i prototypen, undtagen vejret</span></p>';
+      '<div class="live-foot"><span class="stamp">Opdateret kl. 10.30 · hver flise viser sin kilde</span>' + link + '</div>';
   });
 })();
