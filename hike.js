@@ -16,9 +16,22 @@
   }
   function official(r) { return r.official ? '<a href="' + esc(r.official.u) + '" target="_blank" rel="noopener">' + esc(r.official.t) + ' <span aria-hidden="true">↗</span></a>' : '<span class="faint">Ingen fundet</span>'; }
   function facts(r) {
-    var rows = [['Afstand', r.dist], ['Stigning', r.ascent], ['Tid', r.time], ['Sæson', r.season], ['Start', r.start], ['Fra lejligheden', fromApt(r)]];
+    var rows = [['Afstand', r.dist], ['Stigning', r.ascent], ['Tid', r.time], ['Start', r.start], ['Fra lejligheden', fromApt(r)]];
     return '<dl class="hk-facts">' + rows.filter(function (x) { return x[1] && x[1] !== 'ikke oplyst'; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('') + '</dl>';
   }
+  function gallery(r) {
+    var im = r.imgs; if (!im || !im.length) return '';
+    var cap = function (x) { return 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>'; };
+    return '<figure class="hk-fig" data-g="' + esc(r.id) + '"><img src="' + esc(im[0].u) + '" alt="' + esc(im[0].c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>' + cap(im[0]) + '</figcaption>' +
+      (im.length > 1 ? '<div class="hk-thumbs">' + im.map(function (x, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + '"><img src="' + esc(x.u) + '" alt="" loading="lazy" referrerpolicy="no-referrer"></button>'; }).join('') + '</div>' : '') + '</figure>';
+  }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('.hk-thumb'); if (!b) return;
+    var fig = b.closest('.hk-fig'), d = D(), r = d && d.routes.filter(function (x) { return x.id === fig.getAttribute('data-g'); })[0]; if (!r) return;
+    var x = r.imgs[+b.dataset.i], img = fig.querySelector(':scope > img'); img.src = x.u; img.alt = x.c || r.name;
+    fig.querySelector('figcaption').innerHTML = 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>';
+    [].forEach.call(fig.querySelectorAll('.hk-thumb'), function (t) { t.classList.toggle('on', t === b); });
+  });
   function D() { return window.GL && GL.AREAMAP && GL.AREAMAP.hike; }
 
   /* ---------- Version 1: turkort med links ---------- */
@@ -30,7 +43,7 @@
       el.innerHTML = '<div class="row-flex hk-filters" role="group" aria-label="Sværhedsgrad">' + [['alle', 'Alle (' + all.length + ')'], ['let', 'Let'], ['middel', 'Middel'], ['krævende', 'Krævende']].map(function (x) {
         return '<button type="button" class="filter" data-g="' + x[0] + '" aria-pressed="' + (x[0] === f) + '">' + x[1] + '</button>'; }).join('') + '</div>' +
         '<div class="hk-cards">' + list.map(function (r) {
-          return '<article class="card hk-card"><div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3>' + esc(r.name) + '</h3>' + facts(r) +
+          return '<article class="card hk-card"><div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3>' + esc(r.name) + '</h3>' + gallery(r) + facts(r) +
             (r.text ? '<p class="muted">' + esc(r.text) + '</p>' : '') + (r.tip ? '<p class="hk-tip"><b>Tip:</b> ' + esc(r.tip) + '</p>' : '') +
             '<div class="row-flex hk-links">' + links(r) + '</div>' + (r.note ? '<p class="faint hk-note">' + esc(r.note) + '</p>' : '') + '</article>'; }).join('') + '</div>';
     }
@@ -77,18 +90,9 @@
       var st = svg.querySelector('.hk-start'); if (st) { st.setAttribute('r', 5 * k); st.setAttribute('stroke-width', 2 * k); }
       [].forEach.call(svg.querySelectorAll('.hk-line'), function (p) { p.style.strokeWidth = (svg.querySelector('.hk-route.on .hk-line') === p ? 4.5 : 3) + 'px'; });
     }
-    function profile(r) {
-      var p = r.profile; if (!p || p.length < 2) return '';
-      var W = 300, H = 90, maxD = p[p.length - 1][0], lo = Math.min.apply(null, p.map(function (x) { return x[1]; })), hi = Math.max.apply(null, p.map(function (x) { return x[1]; })), pad = 8;
-      var X = function (v) { return pad + v / maxD * (W - 2 * pad); }, Y = function (v) { return H - pad - (v - lo) / ((hi - lo) || 1) * (H - 2 * pad - 6); };
-      var line = p.map(function (x, i) { return (i ? 'L' : 'M') + X(x[0]).toFixed(1) + ' ' + Y(x[1]).toFixed(1); }).join('');
-      return '<div class="hk-prof"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Højdeprofil, fra ' + lo + ' til ' + hi + ' meter"><path d="' + line + 'L' + X(maxD) + ' ' + (H - pad) + 'L' + pad + ' ' + (H - pad) + 'Z" class="hk-prof-a"/><path d="' + line + '" class="hk-prof-l"/>' +
-        '<text x="' + pad + '" y="10" class="hk-prof-t">' + hi + ' m</text><text x="' + pad + '" y="' + (H - 1) + '" class="hk-prof-t">' + lo + ' m</text><text x="' + (W - pad) + '" y="' + (H - 1) + '" class="hk-prof-t" text-anchor="end">' + km(maxD) + '</text></svg>' +
-        '<small class="faint">Højdeprofil fra Kartverkets terrænmodel (vejledende).</small></div>';
-    }
     function panelFor(r) {
       var c = r.calc || {}, mine = c.lengthM ? '<p class="faint hk-calc">Vores beregning ud fra kortet: ' + km(c.lengthM) + (c.ascentM ? ', stigning ca. ' + c.ascentM + ' m' : '') + (r.kind === 'osm' ? (r.loop ? ' (rundtur)' : ' (kun vejen frem)') : '') + '. Vejledende.</p>' : '';
-      panel.innerHTML = '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3 style="margin:6px 0 8px">' + esc(r.name) + '</h3>' + facts(r) + profile(r) + (r.text ? '<p class="muted hk-desc">' + esc(r.text) + '</p>' : '') +
+      panel.innerHTML = '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3 style="margin:6px 0 8px">' + esc(r.name) + '</h3>' + gallery(r) + facts(r) + (r.text ? '<p class="muted hk-desc">' + esc(r.text) + '</p>' : '') +
         (r.tip ? '<p class="hk-tip"><b>Tip:</b> ' + esc(r.tip) + '</p>' : '') + '<div class="row-flex hk-links">' + links(r) + '</div>' + mine + (r.note ? '<p class="faint hk-note">' + esc(r.note) + '</p>' : '');
       panel.scrollTop = 0;
     }

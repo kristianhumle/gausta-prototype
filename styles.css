@@ -1263,3 +1263,16 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 .bo-dl dd { margin: 0; color: var(--muted); }
 @media (max-width: 640px) { .bo-dl { grid-template-columns: 1fr; gap: 2px; } .bo-dl dd { margin-bottom: 10px; } }
 .hk-table td:nth-child(4) { min-width: 150px; } .hk-table td:nth-child(5) a { white-space: nowrap; }
+/* Vandring: skrift og billeder (11. oktober 2026) */
+.hk-panel p, .hk-card p, .hk-panel .muted { font-size: .88rem; line-height: 1.5; }
+.hk-panel h3 { font-size: 1.08rem; line-height: 1.25; }
+.hk-panel .hk-facts, .hk-panel .hk-links a { font-size: .84rem; }
+.hk-fig { margin: 0 0 12px; }
+.hk-fig > img { display: block; width: 100%; height: 150px; object-fit: cover; border-radius: var(--radius-sm); background: var(--elevated); }
+.hk-fig figcaption { font-size: .72rem; color: var(--faint); margin-top: 4px; }
+.hk-fig figcaption a { color: inherit; text-decoration: underline; text-underline-offset: 2px; }
+.hk-thumbs { display: flex; gap: 6px; margin-top: 8px; }
+.hk-thumb { width: 56px; height: 40px; padding: 0; border: 2px solid transparent; border-radius: 6px; overflow: hidden; cursor: pointer; background: var(--elevated); opacity: .75; }
+.hk-thumb.on, .hk-thumb:hover { border-color: var(--accent); opacity: 1; }
+.hk-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.hk-thumb:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
