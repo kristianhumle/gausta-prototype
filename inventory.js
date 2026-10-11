@@ -1,20 +1,19 @@
-/* Inventar pr. rum: rullelisten under Faciliteter på lejligheden.html (element e-inventory i elementkataloget).
-   Data: window.GL_INVENTORY (inventory-data.js). "Hele lejligheden" viser et overblik pr. rum, et valgt rum viser sine ting
-   grupperet. Status pr. punkt: Bekræftet af ejeren, Fra sælgerens liste (aftale ikke afsluttet), Skal verificeres. */
+/* Inventar pr. rum: rumknapper under Faciliteter på lejligheden.html (element e-inventory i elementkataloget).
+   Knapperne er de samme som på den interaktive plantegning (.plan-pills). Data: window.GL_INVENTORY (inventory-data.js).
+   "Alle" viser et overblik pr. rum, et valgt rum viser sine ting grupperet. Statusfeltet (s) i data vises ikke på siden. */
 (function () {
   'use strict';
   var root = document.querySelector('[data-inventory]');
   if (!root || !window.GL_INVENTORY) return;
-  var D = window.GL_INVENTORY, ST = { ejer: ['Bekræftet af ejeren', 'inv-ok'], saelger: ['Sælgerens liste', 'inv-sael'], verify: ['Skal verificeres', 'inv-ver'] };
+  var D = window.GL_INVENTORY, rooms = D.rooms;
+  var SHORT = { entre: 'Entré og skirum', kstue: 'Køkken og stue', stuesov: 'TV-stue', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', bad: 'Bad', terrasse: 'Terrasse', hele: 'Hele lejligheden' };
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); };
-  var rooms = D.rooms;
-  function tag(s) { return '<span class="inv-tag ' + ST[s][1] + '">' + ST[s][0] + '</span>'; }
+  var total = rooms.reduce(function (n, r) { return n + r.items.length; }, 0);
+  var cur = 'all';
 
-  root.innerHTML = '<div class="inv-top"><label class="area-sel"><span class="faint">Vis inventar for</span><select class="field compact" data-inv="room" aria-label="Vælg rum">' +
-    '<option value="">Hele lejligheden (overblik)</option>' + rooms.map(function (r) { return '<option value="' + r.id + '">' + esc(r.name) + ' (' + r.items.length + ')</option>'; }).join('') + '</select></label>' +
-    '<p class="inv-legend faint">' + Object.keys(ST).map(function (k) { return tag(k); }).join(' ') + '</p></div><div class="inv-body" aria-live="polite"></div>' +
-    '<p class="faint inv-note">Inventaret vedligeholdes ét sted og genbruges i gæsteområdet (TK4). Listen er et udkast: ting fra sælgerens liste medfølger først, når inventaraftalen er afsluttet, og alt skal verificeres på stedet.</p>';
-  var sel = root.querySelector('select'), body = root.querySelector('.inv-body');
+  root.innerHTML = '<div class="plan-pills" role="group" aria-label="Vælg rum"><button type="button" class="filter" data-r="all" aria-pressed="true">Alle <span class="n">' + total + '</span></button>' +
+    rooms.map(function (r) { return '<button type="button" class="filter" data-r="' + r.id + '" aria-pressed="false">' + esc(SHORT[r.id] || r.name) + ' <span class="n">' + r.items.length + '</span></button>'; }).join('') + '</div><div class="inv-body" aria-live="polite"></div>';
+  var pills = root.querySelector('.plan-pills'), body = root.querySelector('.inv-body');
 
   function overview() {
     return '<div class="inv-grid">' + rooms.map(function (r) {
@@ -27,13 +26,18 @@
     var html = '<div class="inv-head"><h3>' + esc(r.name) + (r.dim ? ' <span class="faint">' + esc(r.dim) + '</span>' : '') + '</h3><p class="muted">' + esc(r.blurb) + '</p></div>';
     Object.keys(by).sort(function (a, b) { return a - b; }).forEach(function (g) {
       html += '<h4 class="inv-gh">' + esc(D.groups[g]) + '</h4><ul class="inv-ul">' + by[g].map(function (i) {
-        return '<li class="inv-row"><div><b>' + esc(i.n) + '</b>' + (i.d ? '<div class="meta">' + esc(i.d) + '</div>' : '') + '</div>' + tag(i.s) + '</li>';
+        return '<li class="inv-row"><div><b>' + esc(i.n) + '</b>' + (i.d ? '<div class="meta">' + esc(i.d) + '</div>' : '') + '</div></li>';
       }).join('') + '</ul>';
     });
-    return html + '<p><button type="button" class="btn btn-ghost btn-sm" data-go="">‹ Tilbage til overblik</button></p>';
+    return html;
   }
-  function draw() { var r = rooms.filter(function (x) { return x.id === sel.value; })[0]; body.innerHTML = r ? roomView(r) : overview(); }
-  root.addEventListener('change', function (e) { if (e.target === sel) draw(); });
-  root.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (!b) return; sel.value = b.getAttribute('data-go'); draw(); });
-  draw();
+  function show(id) {
+    cur = id;
+    [].forEach.call(pills.querySelectorAll('.filter'), function (b) { b.setAttribute('aria-pressed', String(b.dataset.r === id)); });
+    var r = rooms.filter(function (x) { return x.id === id; })[0];
+    body.innerHTML = r ? roomView(r) : overview();
+  }
+  pills.addEventListener('click', function (e) { var b = e.target.closest('.filter'); if (b) show(b.dataset.r); });
+  body.addEventListener('click', function (e) { var b = e.target.closest('[data-go]'); if (b) show(b.getAttribute('data-go')); });
+  show('all');
 })();
