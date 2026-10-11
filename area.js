@@ -199,25 +199,30 @@
     // ---------- visning af kortskift (data-switch): pills (standard), overlay, tabs, cards, thumb ----------
     var updateThumb = null;
     (function applySwitch() {
-      var variant = el.getAttribute('data-switch') || 'pills', keys = Object.keys(MAPS), col = el.querySelector('.am-col');
+      var keys = Object.keys(MAPS), col = el.querySelector('.am-col'), multi = !fixed && keys.length > 1;
+      // Standard (valgt 11. oktober 2026): faner i en ramme om kortet, når der er flere kort. Ellers kun kortet.
+      var variant = el.getAttribute('data-switch') || (multi ? 'tabs' : 'pills');
+      if (!multi && variant !== 'pills') variant = 'pills';
       el.classList.add('am-sw-' + variant);
-      if (fixed || variant === 'pills' || keys.length < 2) return;
-      var sw = el.querySelector('.am-switch'); if (sw) sw.remove();
       var cnt = function (k) { return DATA[k].pois.length; };
-      var stage = null;
-      if (variant === 'overlay' || variant === 'thumb') { stage = document.createElement('div'); stage.className = 'am-stage'; col.insertBefore(stage, wrap); stage.appendChild(wrap); }
-      if (variant === 'overlay') {
-        stage.insertAdjacentHTML('beforeend',
-          '<div class="am-ov am-ov-top" role="group" aria-label="Vælg kort">' + keys.map(function (k) { return '<button type="button" class="am-ov-btn" data-map="' + k + '" aria-pressed="false">' + esc(MAPS[k].label) + '</button>'; }).join('') + '</div>' +
-          '<div class="am-ov am-ov-bot" role="group" aria-label="Zoom"><button type="button" class="am-ov-btn" data-v="all">Hele kortet</button><button type="button" class="am-ov-btn" data-v="zoom"></button></div>');
+      var stage = document.createElement('div'); stage.className = 'am-stage'; col.insertBefore(stage, wrap); stage.appendChild(wrap);
+      var zoomHtml = '<div class="am-ov am-ov-bot" role="group" aria-label="Zoom"><button type="button" class="am-ov-btn" data-v="all">Hele kortet</button><button type="button" class="am-ov-btn" data-v="zoom"></button></div>';
+      // Hele kortet / Zoom ligger inde i kortet (fra variant A) og ikke i en linje under det. Miniature-varianten bruger hjørnet selv.
+      if (variant !== 'thumb') {
+        stage.insertAdjacentHTML('beforeend', zoomHtml);
         [].forEach.call(el.querySelectorAll('.am-bar [data-v]'), function (b) { b.remove(); });
+      }
+      if (variant === 'pills') return;
+      var sw = el.querySelector('.am-switch'); if (sw) sw.remove();
+      if (variant === 'overlay') {
+        stage.insertAdjacentHTML('beforeend', '<div class="am-ov am-ov-top" role="group" aria-label="Vælg kort">' + keys.map(function (k) { return '<button type="button" class="am-ov-btn" data-map="' + k + '" aria-pressed="false">' + esc(MAPS[k].label) + '</button>'; }).join('') + '</div>');
       } else if (variant === 'tabs') {
         var frame = document.createElement('div'); frame.className = 'am-frame';
         var tabs = document.createElement('div'); tabs.className = 'am-tabs'; tabs.setAttribute('role', 'tablist'); tabs.setAttribute('aria-label', 'Vælg kort');
         tabs.innerHTML = keys.map(function (k) { return '<button type="button" role="tab" class="am-tab" data-map="' + k + '" aria-selected="false" tabindex="-1">' + esc(MAPS[k].label) + ' <span class="am-tab-n">' + cnt(k) + '</span></button>'; }).join('');
         var strip = document.createElement('div'); strip.className = 'am-strip'; strip.appendChild(layersEl);
-        wrap.setAttribute('role', 'tabpanel');
-        col.insertBefore(frame, col.firstChild); frame.appendChild(tabs); frame.appendChild(strip); frame.appendChild(wrap);
+        stage.setAttribute('role', 'tabpanel');
+        col.insertBefore(frame, col.firstChild); frame.appendChild(tabs); frame.appendChild(strip); frame.appendChild(stage);
       } else if (variant === 'cards') {
         var icons = { close: 'pin', wide: 'mountain' };
         var cards = document.createElement('div'); cards.className = 'am-cardsw'; cards.setAttribute('role', 'group'); cards.setAttribute('aria-label', 'Vælg kort');
@@ -262,6 +267,7 @@
     });
     panel.addEventListener('click', function (e) { var b = e.target.closest('[data-poi]'); if (b) select(b.dataset.poi, 'poi'); });
     window.addEventListener('resize', function () { layout(); });
+    if (window.ResizeObserver) new ResizeObserver(function () { layout(); }).observe(wrap);
     el.addEventListener('click', function (e) { if (e.target.closest('a[aria-disabled="true"], .subnav a')) e.preventDefault(); });
 
     showMap(fixed || 'close');
