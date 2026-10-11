@@ -84,10 +84,10 @@
       var line = p.map(function (x, i) { return (i ? 'L' : 'M') + X(x[0]).toFixed(1) + ' ' + Y(x[1]).toFixed(1); }).join('');
       return '<div class="hk-prof"><svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Højdeprofil, fra ' + lo + ' til ' + hi + ' meter"><path d="' + line + 'L' + X(maxD) + ' ' + (H - pad) + 'L' + pad + ' ' + (H - pad) + 'Z" class="hk-prof-a"/><path d="' + line + '" class="hk-prof-l"/>' +
         '<text x="' + pad + '" y="10" class="hk-prof-t">' + hi + ' m</text><text x="' + pad + '" y="' + (H - 1) + '" class="hk-prof-t">' + lo + ' m</text><text x="' + (W - pad) + '" y="' + (H - 1) + '" class="hk-prof-t" text-anchor="end">' + km(maxD) + '</text></svg>' +
-        '<small class="faint">Højdeprofil fra Kartverkets terrænmodel (vejledende, kun vejen op).</small></div>';
+        '<small class="faint">Højdeprofil fra Kartverkets terrænmodel (vejledende).</small></div>';
     }
     function panelFor(r) {
-      var c = r.calc || {}, mine = c.lengthM ? '<p class="faint hk-calc">Vores beregning ud fra kortet: ' + km(c.lengthM) + (c.ascentM ? ', stigning ca. ' + c.ascentM + ' m' : '') + (r.kind === 'osm' ? ' (kun vejen frem)' : '') + '. Vejledende.</p>' : '';
+      var c = r.calc || {}, mine = c.lengthM ? '<p class="faint hk-calc">Vores beregning ud fra kortet: ' + km(c.lengthM) + (c.ascentM ? ', stigning ca. ' + c.ascentM + ' m' : '') + (r.kind === 'osm' ? (r.loop ? ' (rundtur)' : ' (kun vejen frem)') : '') + '. Vejledende.</p>' : '';
       panel.innerHTML = '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3 style="margin:6px 0 8px">' + esc(r.name) + '</h3>' + facts(r) + profile(r) + (r.text ? '<p class="muted hk-desc">' + esc(r.text) + '</p>' : '') +
         (r.tip ? '<p class="hk-tip"><b>Tip:</b> ' + esc(r.tip) + '</p>' : '') + '<div class="row-flex hk-links">' + links(r) + '</div>' + mine + (r.note ? '<p class="faint hk-note">' + esc(r.note) + '</p>' : '');
       panel.scrollTop = 0;
