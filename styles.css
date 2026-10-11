@@ -1200,3 +1200,5 @@ html[data-season="winter"] [data-nu] .live-season > [data-seasons~="winter"],
 html[data-season="spring"] [data-nu] .live-season > [data-seasons~="spring"],
 html[data-season="summer"] [data-nu] .live-season > [data-seasons~="summer"],
 html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { display: block; }
+.am-fig-card { margin: -2px -2px 12px; }
+.am-fig-card img { height: 150px; }
