@@ -1202,3 +1202,8 @@ html[data-season="summer"] [data-nu] .live-season > [data-seasons~="summer"],
 html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { display: block; }
 .am-fig-card { margin: -2px -2px 12px; }
 .am-fig-card img { height: 150px; }
+
+.bf-msg { margin: 8px 0 0; padding: 10px 12px; border-radius: var(--radius-sm); font-size: .88rem; }
+.bf-msg.bf-ok { background: color-mix(in srgb, var(--good) 14%, transparent); color: var(--good); }
+.bf-msg.bf-err { background: color-mix(in srgb, var(--bad, #b3261e) 12%, transparent); color: var(--bad, #b3261e); }
+.bf-msg[hidden] { display: none; }
