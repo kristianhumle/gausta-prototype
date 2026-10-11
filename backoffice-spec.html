@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Back-office spec · gaustahome.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body data-shell="materials">
+<main class="section" style="border:0"><div class="wrap">
+  <p class="eyebrow">Back-office · Teknisk spec · Udkast</p>
+  <h1 style="font-size:clamp(2rem,4vw,3rem)">Det, der skal laves på serveren.</h1>
+  <p class="lead">Arbejdslisten for back-office og de services, der kører på hjemmeserveren (del C). Hvert punkt bliver til teknisk dokumentation, som vi godkender ét ad gangen, ligesom elementerne i elementkataloget. Intet bygges, før du siger til.</p>
+  <div class="row-flex" style="margin-top:18px"><span class="status proposed">Udkast</span><span class="muted">beskrevet, ikke drøftet</span><span class="status research">Afklares</span><span class="muted">kræver din beslutning</span><span class="status prototype">Klar til godkendelse</span><span class="muted">dokumentation skrevet</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
+  <p class="faint" style="margin-top:10px;font-size:.85rem" data-bo-updated></p>
+
+  <h2 style="margin-top:36px;font-size:1.5rem">Sådan hænger det sammen</h2>
+  <div class="grid grid-3" style="margin-top:14px;gap:16px">
+    <div class="card"><div class="kicker">Udefra</div><h3>Det, serveren henter</h3><p class="muted">gausta.com, senere Airbnb, dagskurs, sensorer i lejligheden (via privat forbindelse), presse og markedsdata.</p></div>
+    <div class="card"><div class="kicker">Hjemmeserveren</div><h3>Back-office</h3><p class="muted">Database, faste job, back-office-appen bag login og backup ud af huset.</p></div>
+    <div class="card"><div class="kicker">Ud</div><h3>Det, der forlader serveren</h3><p class="muted">Beskeder til dig (Telegram) og øjebliksbilleder med dato til Sanity, fx godkendte omtaler.</p></div>
+  </div>
+  <div class="notice info" style="margin-top:14px"><b>Guardrail (G28, N19):</b> websitet (offentlig side og gæsteområde) kalder aldrig serveren. Hvis serveren er nede, rammer det kun back-office, aldrig gæsterne.</div>
+
+  <h2 style="margin-top:40px;font-size:1.5rem">Foreslået rækkefølge</h2>
+  <div class="table-wrap" style="margin-top:14px"><table class="table" data-bo-order></table></div>
+
+  <h2 style="margin-top:40px;font-size:1.5rem">Punkterne</h2>
+  <div class="plan-pills" role="group" aria-label="Filtrér på status" data-bo-filter style="margin-top:14px"></div>
+  <div data-bo-list></div>
+
+  <div class="notice" style="margin-top:28px">Denne side er offentlig (skjult for søgemaskiner). Derfor står der ingen servernavne, adresser eller hemmeligheder her. Detaljen ligger i den tekniske dokumentation i vidensbasen.</div>
+</div></main>
+<script src="app.js"></script>
+<script src="backoffice-spec-data.js"></script>
+<script src="backoffice-spec.js"></script>
+</body>
+</html>
