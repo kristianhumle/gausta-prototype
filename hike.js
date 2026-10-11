@@ -64,7 +64,7 @@
       });
       var r0 = routes.filter(function (r) { return r.id === sel; })[0];
       if (r0 && r0.startXY) s += '<circle class="hk-start" cx="' + r0.startXY[0] + '" cy="' + r0.startXY[1] + '" r="1"/>';
-      return s + '<g class="hk-lbls"></g></svg>';
+      return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span></div>';
     }
     function labels() {
       var svg = wrap.querySelector('svg'), g = svg.querySelector('.hk-lbls'), k = vb[2] / (wrap.clientWidth || 800), fs = 11.5 * k, h = '';
@@ -73,6 +73,7 @@
       (d.places || []).forEach(function (p) { put(p[0], p[1] + 6 * k, p[2] - 5 * k, 'hk-t'); });
       (d.names || []).forEach(function (n) { put(n[0], n[1], n[2], 'hk-t hk-t-w'); });
       g.innerHTML = h;
+      var ap = wrap.querySelector('.hk-apt'); if (ap && d.apt) { var inside = d.apt[0] > vb[0] && d.apt[0] < vb[0] + vb[2] && d.apt[1] > vb[1] && d.apt[1] < vb[1] + vb[3]; ap.style.display = inside ? '' : 'none'; ap.style.left = ((d.apt[0] - vb[0]) / vb[2] * 100).toFixed(2) + '%'; ap.style.top = ((d.apt[1] - vb[1]) / vb[3] * 100).toFixed(2) + '%'; }
       var st = svg.querySelector('.hk-start'); if (st) { st.setAttribute('r', 5 * k); st.setAttribute('stroke-width', 2 * k); }
       [].forEach.call(svg.querySelectorAll('.hk-line'), function (p) { p.style.strokeWidth = (svg.querySelector('.hk-route.on .hk-line') === p ? 4.5 : 3) + 'px'; });
     }
