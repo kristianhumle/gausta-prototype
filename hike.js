@@ -133,11 +133,12 @@
     var deep = el.hasAttribute('data-deeplink');
     function fromHash() { var h = decodeURIComponent((location.hash || '').slice(1)); return routes.some(function (r) { return r.id === h; }) ? h : null; }
     if (deep) {
-      window.addEventListener('hashchange', function () { var h = fromHash(); if (h && h !== sel) pick(h, true); });
+      window.addEventListener('hashchange', function () { var h = fromHash(); if (h && h !== sel) { pick(h, true); var s = el.closest('section') || el; s.scrollIntoView({ block: 'start', behavior: 'smooth' }); } });
       el.addEventListener('click', function (e) { var c = e.target.closest('[data-r]'); if (c && history.replaceState) history.replaceState(null, '', '#' + c.dataset.r); });
     }
     var h0 = deep && fromHash();
     pick(h0 || sel, !!h0);
+    if (h0) setTimeout(function () { var s = el.closest('section') || el; s.scrollIntoView({ block: 'start' }); }, 400);   // dybt link: gå til kortet
     var first = el.querySelector('[data-view="alle"]'); if (first && !h0) first.classList.add('on');
   }
 

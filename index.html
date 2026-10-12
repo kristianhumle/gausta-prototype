@@ -90,24 +90,23 @@
   </div>
 </section>
 
-<!-- A2 · Booking-slot (model-neutral, spec afsnit 6) -->
+<!-- A2 · Booking-formular (forespørgsel): kun formularen, fuld bredde (11. og 12. oktober 2026, G55, G59). Model A og B er fjernet. Demo: sender intet (booking-form.js). -->
 <section class="section band-soft" id="booking">
-  <div class="wrap grid grid-2" style="align-items:start;gap:48px">
-    <div class="reveal">
+  <div class="wrap">
+    <div class="reveal" style="margin-bottom:24px">
       <p class="eyebrow">Booking</p>
-      <h2 data-en="Check dates and book.">Tjek datoer og book.</h2>
-      <p class="lead" data-en="How booking works is not decided. The booking block is built as a swappable slot, so the choice does not force a rebuild of the rest of the site.">Hvordan booking foregår, er ikke afgjort. Booking-blokken er bygget som en udskiftelig slot, så valget ikke tvinger resten af siden om.</p>
-      <div class="notice" style="margin-top:20px" data-en="Open decision (spec section 6): operator only, parallel own channel, or no operator. No recommendation made.">Åben beslutning (kravspec. afsnit 6): kun operatør, parallel egen kanal eller uden operatør. Ingen anbefaling er truffet.</div>
+      <h2 data-en="Send an enquiry.">Send en forespørgsel.</h2>
+      <p class="lead" data-en="Tell us when you would like to come and how many you are, and we will reply.">Skriv, hvornår du gerne vil komme, og hvor mange I er, så svarer vi dig.</p>
     </div>
     <div class="booking reveal">
-      <div class="opt"><b data-en="Model A · Operator’s booking">Model A · Operatørens booking</b><span class="muted" data-en="Button links to the operator’s booking page.">Knap linker til operatørens bookingside.</span><a class="btn btn-primary" href="#" aria-disabled="true" data-en="Book with the operator">Book hos operatøren</a></div>
-      <div class="opt"><b data-en="Model B · Own request, passed on">Model B · Egen forespørgsel, videregives</b><span class="muted" data-en="Request form below. Needs the operator’s written acceptance.">Forespørgselsformular nedenfor. Kræver operatørens skriftlige accept.</span></div>
-      <form class="form" onsubmit="return false" style="margin-top:14px">
-        <div class="two"><label><span data-en="Arrival">Ankomst</span><input class="field" type="date"></label><label><span data-en="Departure">Afrejse</span><input class="field" type="date"></label></div>
-        <div class="two"><label><span data-en="Guests">Gæster</span><select class="field"><option>2</option><option>4</option><option>6</option></select></label><label>E-mail<input class="field" type="email" placeholder="navn@eksempel.dk"></label></div>
-        <label><span data-en="Message">Besked</span><textarea class="field"></textarea></label>
-        <button class="btn btn-primary" type="button" data-en="Send request (prototype)">Send forespørgsel (prototype)</button>
-        <span class="faint" data-en="Quick reply promised. Consent text for GDPR to follow.">Hurtigt svar lovet. Samtykketekst til GDPR følger.</span>
+      <form class="form" data-booking-form novalidate>
+        <div class="two"><label><span data-en="Arrival">Ankomst</span><input class="field" type="date" name="arrival"></label><label><span data-en="Departure">Afrejse</span><input class="field" type="date" name="departure"></label></div>
+        <div class="two"><label><span data-en="Guests">Gæster</span><select class="field" name="guests"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label><label>E-mail<input class="field" type="email" name="email" placeholder="navn@eksempel.dk"></label></div>
+        <label><span data-en="Message">Besked</span><textarea class="field" name="message"></textarea></label>
+        <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;opacity:0">
+        <button class="btn btn-primary" type="submit" data-en="Send enquiry (prototype)">Send forespørgsel (prototype)</button>
+        <span class="faint" data-en="You are also welcome to email info@gaustahome.com">Send også gerne mail på info@gaustahome.com</span>
+        <p class="bf-msg" data-bf-msg hidden></p>
       </form>
     </div>
   </div>
@@ -183,5 +182,6 @@
 <script src="area-hike-data.js"></script>
 <script src="hike.js"></script>
 <script src="gallery.js"></script>
+<script src="booking-form.js"></script>
 </body>
 </html>
