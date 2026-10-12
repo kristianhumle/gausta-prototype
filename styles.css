@@ -1312,3 +1312,9 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .hk-more { display: inline-block; margin-top: 8px; font: 600 .84rem var(--font-body); color: var(--accent-text); }
 #e-hike-teaser [data-hide-winter] { display: block; }
 #e-ski-teaser [data-hide-winter] { display: block; }
+/* Ski-in/ski-out: fotos i kortene (12. oktober 2026) */
+.sio-cards .sk-fig { margin: -2px -2px 12px; }
+.sio-cards .sk-fig > img { height: 170px; }
+.sk-sign { margin: 10px 0 0; font-size: .84rem; }
+.sk-sign summary { cursor: pointer; font-weight: 600; color: var(--accent-text); }
+.hk-teaser .hk-fig > img[src*="ski-in-out"] { object-position: 40% 50%; }

@@ -168,13 +168,13 @@
   /* ---------- Forsiden: Ski-in / ski-out (vises hele året) ---------- */
   function ski(el) {
     var items = [
-      { h: 'Langrend', img: 'assets/web/kort/langrend-udsnit.webp', alt: 'Udsnit af løjpekortet omkring tilgangen til løjpen', d: 'Cirka 50 til 100 m', t: 'Fra døren til langrendsløjpen. Her kommer du på løjpen.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se på kortet' },
-      { h: 'Slalom', img: 'assets/web/kort/slalom-udsnit.webp', alt: 'Udsnit af pistekortet omkring tilgangen til slalompisten', d: 'Cirka 50 til 100 m', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se på kortet' },
-      { h: 'Liftkort og pistekort', icon: 'mountain', d: 'Gausta Skisenter', t: 'Officielle sider med liftkort, pistekort, appen og aktuelle forhold.', href: 'ski-in-ski-out.html#links', more: 'Se links' }
+      { h: 'Langrend', img: 'assets/web/ski/langrend-skilt', alt: 'Skiltestolpe med løjper og løjpekort ved starten', cap: 'Foto: ejerens egne fotos, oktober 2026', d: 'Cirka 50 til 100 m', t: 'Fra døren til langrendsløjpen. Skiltet viser blandt andet Skipsfjell rundt, Kvitåvatn og Langetjønn.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se langrend' },
+      { h: 'Slalom', img: 'assets/web/ski/slalom-skilt', alt: 'Grønt skilt med nr. 3 fra Gausta Skisenter ved stien', cap: 'Foto: ejerens egne fotos, oktober 2026', d: 'Cirka 50 til 100 m', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se slalom' },
+      { h: 'Se kortene', img: 'assets/web/kort/ski-in-out-m.webp', full: true, alt: 'Luftfoto af området omkring lejligheden med løjper og pister', cap: 'Prototypebillede (luftfoto)', d: 'Løjper, pister og fælleshus', t: 'Kort over området med afstande fra lejligheden. Se de store kort.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Åbn kortene' }
     ];
     el.innerHTML = '<div class="hk-cards">' + items.map(function (x) {
-      return '<a class="card hk-card hk-teaser" href="' + x.href + '">' +
-        (x.img ? '<figure class="hk-fig"><img src="' + x.img + '" alt="' + esc(x.alt) + '" loading="lazy" decoding="async"><figcaption>Prototypebillede (kortudsnit)</figcaption></figure>' : '<div class="ico-box" style="margin-bottom:10px">' + GL.icon(x.icon) + '</div>') +
+      var src = x.full ? x.img : x.img + '-m.webp';
+      return '<a class="card hk-card hk-teaser" href="' + x.href + '"><figure class="hk-fig"><img src="' + src + '"' + (x.full ? '' : ' srcset="' + x.img + '-s.webp 480w, ' + x.img + '-m.webp 900w, ' + x.img + '.webp 1600w" sizes="(max-width: 860px) 100vw, 380px"') + ' alt="' + esc(x.alt) + '" loading="lazy" decoding="async"><figcaption>' + esc(x.cap) + '</figcaption></figure>' +
         '<div class="hk-card-h"><span class="hk-grp">' + esc(x.d) + '</span></div><h3>' + esc(x.h) + '</h3><p class="muted">' + esc(x.t) + '</p><span class="hk-more">' + x.more + ' <span aria-hidden="true">→</span></span></a>';
     }).join('') + '</div><p class="faint hk-note" data-hide-winter>Sæsonen starter typisk sidst i november (skal verificeres).</p>';
   }
