@@ -45,9 +45,42 @@
 
   function lang() { return document.documentElement.getAttribute('lang') === 'en' ? 1 : 0; }
 
+  var ORDER = ['spring', 'summer', 'autumn', 'winter'];
+  var NAMES = { spring: ['Forår', 'Spring'], summer: ['Sommer', 'Summer'], autumn: ['Efterår', 'Autumn'], winter: ['Vinter', 'Winter'] };
+
+  function globalSeason() { return document.documentElement.getAttribute('data-season') || 'autumn'; }
+
+  /* Indlejret årstidsvælger (data-gallery-tabs): brugeren vælger selv årstid for galleriet.
+     Valget er lokalt og ændrer ikke sidens tema. Skifter sidens årstid, følger galleriet med igen. */
+  function buildTabs(el) {
+    var bar = el.previousElementSibling;
+    if (!bar || !bar.classList.contains('gal-tabs')) {
+      bar = document.createElement('div');
+      bar.className = 'plan-pills gal-tabs';
+      bar.setAttribute('role', 'group');
+      bar.setAttribute('aria-label', 'Vælg årstid for galleriet');
+      bar.innerHTML = ORDER.map(function (s) {
+        return '<button type="button" class="filter" data-gs="' + s + '" aria-pressed="false" data-da="' + NAMES[s][0] + '" data-en="' + NAMES[s][1] + '">' + NAMES[s][lang()] + '</button>';
+      }).join('');
+      el.parentNode.insertBefore(bar, el);
+      bar.addEventListener('click', function (e) {
+        var b = e.target.closest('button[data-gs]');
+        if (!b) return;
+        el.setAttribute('data-gallery-local', b.getAttribute('data-gs'));
+        render(el);
+      });
+    }
+    return bar;
+  }
+
   function render(el) {
     var set = SETS[el.getAttribute('data-gallery-set') || 'atmosphere'];
-    var season = document.documentElement.getAttribute('data-season') || 'autumn';
+    var season = el.hasAttribute('data-gallery-tabs') ? (el.getAttribute('data-gallery-local') || globalSeason()) : globalSeason();
+    if (el.hasAttribute('data-gallery-tabs')) {
+      [].forEach.call(buildTabs(el).querySelectorAll('button'), function (b) {
+        b.setAttribute('aria-pressed', b.getAttribute('data-gs') === season ? 'true' : 'false');
+      });
+    }
     var items = set[season] || [];
     if (items.length) {
       GL.buildGallery(el, items, { caps: el.hasAttribute('data-gallery-caps') });
@@ -64,9 +97,13 @@
   }
 
   function renderAll() { [].forEach.call(document.querySelectorAll('[data-gallery-set]'), render); }
+  function resetAll() {
+    [].forEach.call(document.querySelectorAll('[data-gallery-local]'), function (n) { n.removeAttribute('data-gallery-local'); });
+    renderAll();
+  }
 
   window.GL = window.GL || {};
   GL.Gallery = { SETS: SETS, render: render };
   document.addEventListener('gl:ready', renderAll);
-  document.addEventListener('gl:season', renderAll);
+  document.addEventListener('gl:season', resetAll);
 })();

@@ -2,7 +2,7 @@
    One entry per item. Status: draft (Udkast), open (Afklares), ready (Klar til godkendelse), approved (Godkendt).
    Mirrored as a register in teknisk/backoffice-spec.md: update both when a status changes.
    Public page (noindex): no host names, IP addresses, VM numbers, places or secrets here. */
-window.BO_SPEC_UPDATED = '11. oktober 2026';
+window.BO_SPEC_UPDATED = '12. oktober 2026';
 window.BO_SPEC_GROUPS = [
   { id: 'F', title: 'Forudsætninger', lead: 'Ejerhandlinger, der skal være på plads, før der kan bygges noget på serveren.' },
   { id: 'P', title: 'Platform', lead: 'Fundamentet på hjemmeserveren: maskine, database, backup, adgang og jobkørsel.' },
@@ -48,8 +48,8 @@ window.BO_SPEC = [
     what: 'Back-office får sin egen maskine. En eksisterende, ubrugt maskine (2 CPU, 4 GB RAM) geninstalleres med Ubuntu Server 24.04 LTS på en ny disk. Den bærer intet andet, så back-office er adskilt fra GPU-maskinen og fra den maskine, der styrer energien. Docker med compose, administration kun via privat netværk, ingen åbne porte.',
     out: 'Specifikation af maskine, styresystem, disk, opdateringer og opsætningsrækkefølge. Skrevet 11. oktober 2026.',
     deps: [], req: 'G27',
-    decided: 'Hjemmeserver (3. oktober 2026). 11. oktober 2026: den ubrugte maskine genbruges, Ubuntu 24.04 LTS som de øvrige, ny disk på mindst 40 GB (størrelse sættes ved opsætning), ingen diskkryptering.',
-    open: [] },
+    decided: 'Hjemmeserver (3. oktober 2026). 11. oktober 2026: den ubrugte maskine genbruges, Ubuntu 24.04 LTS som de øvrige, ny disk på mindst 40 GB (størrelse sættes ved opsætning), ingen diskkryptering. Opsat 12. oktober 2026: maskinen hedder nu Gausta og kører Ubuntu 24.04.5 med Docker, firewall og automatiske sikkerhedsopdateringer.',
+    open: ['Godkend maskinen i Tailscale.', 'Oprydning af den gamle disk, når alt virker.'] },
   { id: 'P3', g: 'P', status: 'draft', title: 'Database (PostgreSQL)',
     what: 'Én database til marked, økonomi, kurs og sensorer. Ændringer i strukturen styres i kode. Markedsdata overskrives aldrig, der tilføjes kun.',
     out: 'Version, opsætning, hvordan strukturen ændres, og adgangsroller (indsamling skriver, app læser og skriver, rapporter læser).',
