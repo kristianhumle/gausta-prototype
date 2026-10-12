@@ -179,6 +179,69 @@
     }).join('') + '</div><p class="faint hk-note" data-hide-winter>Sæsonen starter typisk sidst i november (skal verificeres).</p>';
   }
 
+  /* ---------- Samlet teaser med faner: Ski-in / ski-out, Vandring, Oplevelser (forslag 12. oktober 2026) ---------- */
+  var OPLEV_IMG = {
+    stova: 'https://ik.imagekit.io/spotlio/fetch/tr:w-800/https://public-assets.spotliodata.com/be48c932-b0f4-43c0-9315-24fb08dd1697.jpg',
+    vemork: 'https://www.nia.no/wp-content/uploads/2022/03/Vemork_sommer2013.jpg'
+  };
+  function tcard(x) {
+    var src = x.srcBase ? x.srcBase + '-m.webp' : x.img;
+    return '<a class="card hk-card hk-teaser" href="' + x.href + '"><figure class="hk-fig"><img src="' + esc(src) + '"' + (x.srcBase ? ' srcset="' + x.srcBase + '-s.webp 480w, ' + x.srcBase + '-m.webp 900w, ' + x.srcBase + '.webp 1600w" sizes="(max-width: 860px) 100vw, 380px"' : '') + ' alt="' + esc(x.alt) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>' + esc(x.cap) + '</figcaption></figure>' +
+      '<div class="hk-card-h"><span class="hk-grp">' + esc(x.grp) + '</span>' + (x.grade ? chip(x.grade) : '') + '</div><h3>' + esc(x.h) + '</h3><p class="muted">' + esc(x.t) + '</p><span class="hk-more">' + esc(x.more) + ' <span aria-hidden="true">→</span></span></a>';
+  }
+  function tabData() {
+    var d = D(), routes = d ? d.routes : [];
+    var pick = function (id) { return routes.filter(function (r) { return r.id === id; })[0]; };
+    var hike = ['skipsfjell', 'kvitaavatn-rundt', 'stavsro'].map(pick).filter(Boolean).map(function (r) {
+      var im = r.imgs && r.imgs[0];
+      return { h: r.name, grp: r.group, grade: r.grade, img: im ? im.u : '', alt: im ? (im.c || r.name) : r.name, cap: im ? 'Foto: ' + im.k : '', t: [r.dist, r.time].filter(function (x) { return x && x.indexOf('ikke oplyst') < 0; }).join(' · '), href: 'vandring.html#' + r.id, more: 'Se turen på kortet' };
+    });
+    return [
+      { id: 'ski', label: 'Ski-in / ski-out', icon: 'snow', one: 'Fra døren til løjpe og pist', intro: 'Fra døren til løjpe og pist.', all: ['ski-in-ski-out.html', 'Se ski-in / ski-out'], cards: [
+        { h: 'Langrend', grp: 'Cirka 50 til 100 m', srcBase: 'assets/web/ski/langrend-skilt', alt: 'Skiltestolpe med løjper og løjpekort ved starten', cap: 'Foto: ejerens egne fotos, oktober 2026', t: 'Fra døren til langrendsløjpen. Skiltet viser blandt andet Skipsfjell rundt, Kvitåvatn og Langetjønn.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se langrend' },
+        { h: 'Slalom', grp: 'Cirka 50 til 100 m', srcBase: 'assets/web/ski/slalom-skilt', alt: 'Grønt skilt med nr. 3 fra Gausta Skisenter ved stien', cap: 'Foto: ejerens egne fotos, oktober 2026', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se slalom' },
+        { h: 'Se kortene', grp: 'Løjper, pister og fælleshus', img: 'assets/web/kort/ski-in-out-m.webp', alt: 'Luftfoto af området omkring lejligheden', cap: 'Prototypebillede (luftfoto)', t: 'Kort over området med afstande fra lejligheden. Se de store kort.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Åbn kortene' }] },
+      { id: 'vandring', label: 'Vandring', icon: 'mountain', one: 'Til fods fra døren', intro: 'Til fods fra døren.', all: ['vandring.html', 'Se alle ture'], hideWinter: true, cards: hike },
+      { id: 'oplev', label: 'Oplevelser', icon: 'pin', one: 'Tæt på, oplevelser og kalender', intro: 'Tæt på, oplevelser og kalender.', all: ['omraadet.html', 'Se Gausta og omegn'], cards: [
+        { h: 'Tæt på', grp: 'Mad, indkøb og udstyr', img: OPLEV_IMG.stova, alt: 'Restaurant ved Gaustablikk', cap: 'Foto: gausta.com', t: 'Restauranter, butikker, skiudlejning og aktiviteter på Gausta, og det praktiske i Rjukan.', href: 'taet-paa.html', more: 'Se Tæt på' },
+        { h: 'Oplevelser', grp: 'Rjukan og omegn', img: OPLEV_IMG.vemork, alt: 'Vemork ved Rjukan', cap: 'Foto: nia.no', t: 'Vemork, Rjukanbadet, Gaustatoppen og mere, med køretid fra lejligheden.', href: 'oplevelser.html', more: 'Se oplevelser' },
+        { h: 'Kalender', grp: 'Events', srcBase: 'assets/web/omraadet/omraadet-02', alt: 'Dal og sø ved Gausta', cap: 'Prototypebillede', t: 'Kommende events og aktiviteter på Gausta og i Rjukan, med ugevalg.', href: 'omraadet.html#events', more: 'Se kalenderen' }] }
+    ];
+  }
+  function tabsEl(el) {
+    var variant = el.getAttribute('data-variant') || 'pills', ALL = tabData(), cur = null;
+    function winter() { return document.documentElement.getAttribute('data-season') === 'winter'; }
+    function list() { return ALL.filter(function (t) { return !(t.hideWinter && winter()); }); }
+    function dflt() { return winter() ? 'ski' : 'vandring'; }
+    function shell() {
+      var L = list(), tabsHtml;
+      if (variant === 'cards') {
+        tabsHtml = '<div class="am-cardsw tz-sel" role="tablist" aria-label="Vælg emne">' + L.map(function (t) { return '<button type="button" role="tab" class="am-cardw" data-tab="' + t.id + '" aria-selected="false" aria-pressed="false"><span class="am-cardw-ico">' + GL.icon(t.icon) + '</span><span class="am-cardw-t"><b>' + esc(t.label) + '</b><small>' + esc(t.one) + '</small></span></button>'; }).join('') + '</div>';
+      } else if (variant === 'frame') {
+        tabsHtml = '<div class="am-tabs tz-ftabs" role="tablist" aria-label="Vælg emne">' + L.map(function (t) { return '<button type="button" role="tab" class="am-tab" data-tab="' + t.id + '" aria-selected="false" tabindex="-1">' + GL.icon(t.icon) + ' ' + esc(t.label) + '</button>'; }).join('') + '</div>';
+      } else {
+        tabsHtml = '<div class="row-flex tz-pills" role="tablist" aria-label="Vælg emne">' + L.map(function (t) { return '<button type="button" role="tab" class="filter" data-tab="' + t.id + '" aria-pressed="false" aria-selected="false">' + GL.icon(t.icon) + ' ' + esc(t.label) + '</button>'; }).join('') + '</div>';
+      }
+      el.innerHTML = '<div class="tz tz-' + variant + '"><div class="tz-head"><div><p class="eyebrow">Gausta og omegn</p><h2 class="tz-h" data-tz-intro></h2></div><a class="btn btn-ghost" data-tz-all href="#"></a></div>' + tabsHtml + '<div class="tz-panel" role="tabpanel"></div></div>';
+      if (variant === 'frame') { var f = el.querySelector('.tz'); f.classList.add('am-frame'); }
+    }
+    function show(id) {
+      var L = list(), t = L.filter(function (x) { return x.id === id; })[0] || L[0]; cur = t.id;
+      [].forEach.call(el.querySelectorAll('[data-tab]'), function (b) { var on = b.dataset.tab === cur; b.setAttribute('aria-selected', String(on)); if (b.hasAttribute('aria-pressed')) b.setAttribute('aria-pressed', String(on)); b.tabIndex = on ? 0 : -1; });
+      el.querySelector('[data-tz-intro]').textContent = t.intro;
+      var a = el.querySelector('[data-tz-all]'); a.setAttribute('href', t.all[0]); a.textContent = t.all[1];
+      el.querySelector('.tz-panel').innerHTML = '<div class="hk-cards">' + t.cards.map(tcard).join('') + '</div>';
+    }
+    shell(); show(dflt());
+    el.addEventListener('click', function (e) { var b = e.target.closest('[data-tab]'); if (b) show(b.dataset.tab); });
+    el.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      var L = list(), i = L.map(function (t) { return t.id; }).indexOf(cur), n = L[(i + (e.key === 'ArrowRight' ? 1 : L.length - 1)) % L.length];
+      show(n.id); var b = el.querySelector('[data-tab="' + n.id + '"]'); if (b) b.focus(); e.preventDefault();
+    });
+    new MutationObserver(function () { shell(); show(dflt()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
+  }
+
   /* ---------- Forsiden: tre udvalgte ture ---------- */
   function teaser(el) {
     var d = D(); if (!d) return;
@@ -194,6 +257,6 @@
   }
 
   document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser, ski: ski })[k](el); });
+    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser, ski: ski, tabs: tabsEl })[k](el); });
   });
 })();

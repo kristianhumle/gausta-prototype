@@ -1323,3 +1323,19 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 
 /* Galleri: indlejret årstidsvælger */
 .gal-tabs { margin: 0 0 14px; }
+/* Samlet teaser med faner (forslag) */
+.tz-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px 24px; flex-wrap: wrap; margin-bottom: 16px; }
+.tz-h { margin: 0; }
+.tz-pills { gap: 8px; margin-bottom: 18px; }
+.tz-pills .filter { display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; font-size: .92rem; }
+.tz-pills .filter .ico { width: 17px; height: 17px; }
+.tz-frame { padding: 0; }
+.tz-frame.am-frame { overflow: hidden; }
+.tz-frame .tz-head { padding: 20px 20px 0; }
+.tz-frame .tz-ftabs { margin-top: 4px; }
+.tz-frame .tz-ftabs .am-tab { padding: 14px 10px; gap: 8px; }
+.tz-frame .tz-ftabs .am-tab .ico { width: 18px; height: 18px; }
+.tz-frame .tz-panel { padding: 18px 20px 20px; background: var(--surface); }
+.tz-cards .tz-sel { grid-template-columns: repeat(3, 1fr); margin: 0 0 18px; }
+@media (max-width: 700px) { .tz-cards .tz-sel { grid-template-columns: 1fr; } }
+.tz-panel .hk-cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
