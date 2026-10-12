@@ -1318,3 +1318,4 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .sk-sign { margin: 10px 0 0; font-size: .84rem; }
 .sk-sign summary { cursor: pointer; font-weight: 600; color: var(--accent-text); }
 .hk-teaser .hk-fig > img[src*="ski-in-out"] { object-position: 40% 50%; }
+.sio-cards .sio-dist { margin: 2px 0 8px; }

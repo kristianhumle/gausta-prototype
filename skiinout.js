@@ -97,12 +97,12 @@
       '</div>' +
       '<div class="grid grid-3 sio-cards">' +
         ROUTES.map(function (r) {
-          var extra = r.id === 'langrend' ? '<details class="sk-sign"><summary>Skilt ved starten</summary><div class="list-row"><span class="grow muted">Skipsfjell rundt</span><span>Rød, 6 km</span></div><div class="list-row"><span class="grow muted">Kvitåvatn</span><span>Grøn, 6,10 km</span></div><div class="list-row"><span class="grow muted">Langetjønn</span><span>Rød, 10,15 km</span></div><div class="list-row"><span class="grow muted">Fyriegg</span><span>Blå, 23 km</span></div><p class="faint" style="margin:6px 0 0;font-size:.74rem">Aflæst på skiltet (oktober 2026). Skal verificeres, kortets tal for Rød 10 afviger.</p></details>' : '';
+          var extra = r.id === 'slalom' ? '<details class="sk-sign"><summary>Pisten og liftene</summary><div class="list-row"><span class="grow muted">Pist</span><span>Grøn 3, Kofferten</span></div><div class="list-row"><span class="grow muted">Lift A</span><span>Lilleputtheisen</span></div><div class="list-row"><span class="grow muted">Lift B</span><span>Skipsheisen</span></div><p class="faint" style="margin:6px 0 0;font-size:.74rem">Pisten løber ned til liftene, som kobler dig på hele pistekortet. Ejerens oplysning, skal verificeres.</p></details>' : r.id === 'langrend' ? '<details class="sk-sign"><summary>Skilt ved starten</summary><div class="list-row"><span class="grow muted">Skipsfjell rundt</span><span>Rød, 6 km</span></div><div class="list-row"><span class="grow muted">Kvitåvatn</span><span>Grøn, 6,10 km</span></div><div class="list-row"><span class="grow muted">Langetjønn</span><span>Rød, 10,15 km</span></div><div class="list-row"><span class="grow muted">Fyriegg</span><span>Blå, 23 km</span></div><p class="faint" style="margin:6px 0 0;font-size:.74rem">Aflæst på skiltet (oktober 2026). Skal verificeres, kortets tal for Rød 10 afviger.</p></details>' : '';
           return '<div class="card" data-route="' + r.id + '">' + gal(r.id) + '<div class="ico-box">' + GL.icon(r.icon) + '</div><div class="kicker">Fra lejligheden</div>' +
-            '<div class="sio-dist">' + r.dist + '</div><h3>' + r.name + '</h3><p class="muted">' + r.text + '</p>' + extra + '</div>';
+            '<h3>' + r.name + '</h3><div class="sio-dist">' + r.dist + '</div><p class="muted">' + r.text + '</p>' + extra + '</div>';
         }).join('') +
-        '<div class="card" data-keep="1">' + gal('skibod') + '<div class="ico-box">' + GL.icon('cabin') + '</div><div class="kicker">Fra lejligheden</div><div class="sio-dist">Cirka 20 m</div>' +
-          '<h3>Fælleshus med smørebod</h3><p class="muted">Fælles smørebod med smørebænke og stativer, som beboerne kan bruge. Markeret på kortet.</p></div>' +
+        '<div class="card" data-keep="1">' + gal('skibod') + '<div class="ico-box">' + GL.icon('cabin') + '</div><div class="kicker">Fra lejligheden</div>' +
+          '<h3>Fælleshus med smørebod</h3><div class="sio-dist">Cirka 20 m</div><p class="muted">Fælles smørebod med smørebænke og stativer, som beboerne kan bruge. Markeret på kortet.</p></div>' +
       '</div>' +
       '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. Slalompistens og langrendsløjpens forløb (blå og lilla) er tegnet ud fra luftfotoet og ejerens beskrivelse, cirka, skal verificeres. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
   }
@@ -126,7 +126,7 @@
       kartLink('Se hele løjpekortet hos Gausta') +
       '<div class="sio-cards"><div class="card" data-route="langrend">' + gal('langrend') +
         '<div class="ico-box">' + GL.icon('wave') + '</div><div class="kicker">Langrend · tilgang fra lejligheden</div>' +
-        '<div class="sio-dist">50 til 100 m</div><h3>Rød 15, 10 og 6</h3>' +
+        '<h3>Rød 15, 10 og 6</h3><div class="sio-dist">50 til 100 m</div>' +
         '<div class="list-row"><span class="grow muted">Rød 6</span><span>Skipsfjell, 6,2 km</span></div>' +
         '<div class="list-row"><span class="grow muted">Rød 10</span><span>Skipsfjell, Nordhaddefjell, Langetjønn, 9,5 km</span></div>' +
         '<div class="list-row"><span class="grow muted">Rød 15</span><span>Skipsfjell, Jotehaug, Klokksjåvatn, Langetjønn, 13,6 km</span></div>' +
@@ -143,9 +143,12 @@
       kartLink('Se hele pistekortet hos Gausta') +
       '<div class="sio-cards"><div class="card" data-route="slalom">' + gal('slalom') +
         '<div class="ico-box">' + GL.icon('snow') + '</div><div class="kicker">Slalom · tilgang fra lejligheden</div>' +
-        '<div class="sio-dist">50 til 100 m</div><h3>Nr. 3 Kofferten</h3>' +
+        '<h3>Grøn 3, Kofferten</h3><div class="sio-dist">50 til 100 m</div>' +
         '<div class="list-row"><span class="grow muted">Niveau</span><span>Veldig lett (grøn)</span></div>' +
         '<div class="list-row"><span class="grow muted">Længde</span><span>1000 m</span></div>' +
+        '<div class="list-row"><span class="grow muted">Lift A</span><span>Lilleputtheisen</span></div>' +
+        '<div class="list-row"><span class="grow muted">Lift B</span><span>Skipsheisen</span></div>' +
+        '<p class="faint" style="margin:6px 0 0;font-size:.74rem">Pisten løber ned til liftene, som kobler dig på hele pistekortet. Ejerens oplysning, skal verificeres.</p>' +
       '</div></div>';
   }
 
