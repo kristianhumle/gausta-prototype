@@ -1352,4 +1352,4 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 @media (max-width: 860px) { .nl-grid { grid-template-columns: 1fr; } .nl-cam .wc-img { height: auto; } }
 @media (max-width: 480px) { .nl-tiles.live-season { grid-template-columns: 1fr; } }
 .nl-tiles > div { min-width: 0; }
-.nl-tiles [data-weather] .src { display: block; margin-top: 8px; }
+.live [data-weather] .src, .nl-tiles [data-weather] .src { display: block; margin-top: 8px; }
