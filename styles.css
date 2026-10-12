@@ -1337,3 +1337,17 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .tz-cards .tz-sel { grid-template-columns: repeat(3, 1fr); margin: 0 0 18px; }
 @media (max-width: 700px) { .tz-cards .tz-sel { grid-template-columns: 1fr; } }
 .tz-panel .hk-cards { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+
+/* "Forholdene lige nu" med webcam (forslag, 12. oktober 2026): fliser 2 x 2 til venstre, live-feed til højre */
+.nl-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: stretch; }
+.nl-tiles.live-season { grid-template-columns: repeat(2, 1fr); grid-auto-rows: 1fr; height: 100%; }
+.nl-cam { min-width: 0; }
+.nl-cam .wc-frame { height: 100%; min-height: 0; }
+.nl-cam .wc-img { height: 100%; aspect-ratio: 16 / 9; }
+.nl-tiles > [data-seasons] { display: none; }
+#e-nulive[data-live="winter"] .nl-tiles > [data-seasons~="winter"],
+#e-nulive[data-live="spring"] .nl-tiles > [data-seasons~="spring"],
+#e-nulive[data-live="summer"] .nl-tiles > [data-seasons~="summer"],
+#e-nulive[data-live="autumn"] .nl-tiles > [data-seasons~="autumn"] { display: block; }
+@media (max-width: 860px) { .nl-grid { grid-template-columns: 1fr; } .nl-cam .wc-img { height: auto; } }
+@media (max-width: 480px) { .nl-tiles.live-season { grid-template-columns: 1fr; } }

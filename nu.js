@@ -18,6 +18,7 @@
     ['autumn', 'Gaustabanen i dag', 'Åben', 'kl. 10 til 17', 'Kilde: Gaustabanen'],
     ['autumn', 'Toppen af Gaustatoppen', '-4°', 'vind 15 m/s, 1883 m', 'Kilde: MET Norway (modelleret)']
   ];
+  window.GL_NU_TILES = T;
   [].forEach.call(document.querySelectorAll('[data-nu]'), function (el) {
     var link = el.hasAttribute('data-nu-nolink') ? '' : '<a href="omraadet.html#nu">Vejr, webcam og mere →</a>';
     el.innerHTML = '<div class="live live-season reveal"><div data-seasons="winter spring summer autumn" data-weather="tile"></div>' +
