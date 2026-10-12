@@ -165,20 +165,6 @@
     upd(); new MutationObserver(upd).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
-  /* ---------- Forsiden: Ski-in / ski-out (vises hele året) ---------- */
-  function ski(el) {
-    var items = [
-      { h: 'Langrend', img: 'assets/web/ski/langrend-skilt', alt: 'Skiltestolpe med løjper og løjpekort ved starten', cap: 'Foto: ejerens egne fotos, oktober 2026', d: 'Cirka 50 til 100 m', t: 'Fra døren til langrendsløjpen. Skiltet viser blandt andet Skipsfjell rundt, Kvitåvatn og Langetjønn.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se langrend' },
-      { h: 'Slalom', img: 'assets/web/ski/slalom-skilt', alt: 'Grønt skilt med nr. 3 fra Gausta Skisenter ved stien', cap: 'Foto: ejerens egne fotos, oktober 2026', d: 'Cirka 50 til 100 m', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se slalom' },
-      { h: 'Se kortene', img: 'assets/web/kort/ski-in-out-m.webp', full: true, alt: 'Luftfoto af området omkring lejligheden med løjper og pister', cap: 'Prototypebillede (luftfoto)', d: 'Løjper, pister og fælleshus', t: 'Kort over området med afstande fra lejligheden. Se de store kort.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Åbn kortene' }
-    ];
-    el.innerHTML = '<div class="hk-cards">' + items.map(function (x) {
-      var src = x.full ? x.img : x.img + '-m.webp';
-      return '<a class="card hk-card hk-teaser" href="' + x.href + '"><figure class="hk-fig"><img src="' + src + '"' + (x.full ? '' : ' srcset="' + x.img + '-s.webp 480w, ' + x.img + '-m.webp 900w, ' + x.img + '.webp 1600w" sizes="(max-width: 860px) 100vw, 380px"') + ' alt="' + esc(x.alt) + '" loading="lazy" decoding="async"><figcaption>' + esc(x.cap) + '</figcaption></figure>' +
-        '<div class="hk-card-h"><span class="hk-grp">' + esc(x.d) + '</span></div><h3>' + esc(x.h) + '</h3><p class="muted">' + esc(x.t) + '</p><span class="hk-more">' + x.more + ' <span aria-hidden="true">→</span></span></a>';
-    }).join('') + '</div><p class="faint hk-note" data-hide-winter>Sæsonen starter typisk sidst i november (skal verificeres).</p>';
-  }
-
   /* ---------- Samlet teaser med faner: Ski-in / ski-out, Vandring, Oplevelser (forslag 12. oktober 2026) ---------- */
   var OPLEV_IMG = {
     stova: 'https://ik.imagekit.io/spotlio/fetch/tr:w-800/https://public-assets.spotliodata.com/be48c932-b0f4-43c0-9315-24fb08dd1697.jpg',
@@ -242,21 +228,7 @@
     new MutationObserver(function () { shell(); show(dflt()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
-  /* ---------- Forsiden: tre udvalgte ture ---------- */
-  function teaser(el) {
-    var d = D(); if (!d) return;
-    var ids = (el.getAttribute('data-ids') || '').split(',');
-    var list = ids.map(function (id) { return d.routes.filter(function (r) { return r.id === id; })[0]; }).filter(Boolean);
-    el.innerHTML = '<div class="hk-cards">' + list.map(function (r) {
-      var im = r.imgs && r.imgs[0];
-      return '<a class="card hk-card hk-teaser" href="vandring.html#' + esc(r.id) + '">' +
-        (im ? '<figure class="hk-fig"><img src="' + esc(im.u) + '" alt="' + esc(im.c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: ' + esc(im.k) + '</figcaption></figure>' : '') +
-        '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3>' + esc(r.name) + '</h3>' +
-        '<p class="muted">' + esc([r.dist, r.time].filter(function (x) { return x && x.indexOf('ikke oplyst') < 0; }).join(' · ')) + '</p><span class="hk-more">Se turen på kortet <span aria-hidden="true">→</span></span></a>';
-    }).join('') + '</div>';
-  }
-
   document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser, ski: ski, tabs: tabsEl })[k](el); });
+    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, tabs: tabsEl })[k](el); });
   });
 })();
