@@ -140,7 +140,7 @@
 
   function tile(own) {
     var c = D.ts[0], sy = sym(c.s1 || c.s6);
-    own.innerHTML = '<small>Vejr</small><b class="num">' + r1(c.T) + '°</b><small>' + sy.txt + ', vind ' + r1(c.ws) + ' m/s</small><small class="verify">snapshot ' + fmtFull.format(dt(D.updated_at)) + ', MET</small>';
+    own.innerHTML = '<small>Vejr</small><b class="num">' + r1(c.T) + '°</b><small>' + sy.txt + ', vind ' + r1(c.ws) + ' m/s</small>' + (own.closest('.nl-tiles') ? '<small class="src">Kilde: MET Norway, snapshot ' + fmtFull.format(dt(D.updated_at)) + '</small>' : '<small class="verify">snapshot ' + fmtFull.format(dt(D.updated_at)) + ', MET</small>');
   }
 
   [].forEach.call(mounts, function (m) { (m.getAttribute('data-weather') === 'tile' ? tile : full)(m); });
