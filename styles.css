@@ -1311,3 +1311,4 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .hk-teaser h3 { margin: 8px 0 4px; }
 .hk-more { display: inline-block; margin-top: 8px; font: 600 .84rem var(--font-body); color: var(--accent-text); }
 #e-hike-teaser [data-hide-winter] { display: block; }
+#e-ski-teaser [data-hide-winter] { display: block; }

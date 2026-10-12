@@ -165,6 +165,20 @@
     upd(); new MutationObserver(upd).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
+  /* ---------- Forsiden: Ski-in / ski-out (vises hele året) ---------- */
+  function ski(el) {
+    var items = [
+      { h: 'Langrend', img: 'assets/web/kort/langrend-udsnit.webp', alt: 'Udsnit af løjpekortet omkring tilgangen til løjpen', d: 'Cirka 50 til 100 m', t: 'Fra døren til langrendsløjpen. Her kommer du på løjpen.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se på kortet' },
+      { h: 'Slalom', img: 'assets/web/kort/slalom-udsnit.webp', alt: 'Udsnit af pistekortet omkring tilgangen til slalompisten', d: 'Cirka 50 til 100 m', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se på kortet' },
+      { h: 'Liftkort og pistekort', icon: 'mountain', d: 'Gausta Skisenter', t: 'Officielle sider med liftkort, pistekort, appen og aktuelle forhold.', href: 'ski-in-ski-out.html#links', more: 'Se links' }
+    ];
+    el.innerHTML = '<div class="hk-cards">' + items.map(function (x) {
+      return '<a class="card hk-card hk-teaser" href="' + x.href + '">' +
+        (x.img ? '<figure class="hk-fig"><img src="' + x.img + '" alt="' + esc(x.alt) + '" loading="lazy" decoding="async"><figcaption>Prototypebillede (kortudsnit)</figcaption></figure>' : '<div class="ico-box" style="margin-bottom:10px">' + GL.icon(x.icon) + '</div>') +
+        '<div class="hk-card-h"><span class="hk-grp">' + esc(x.d) + '</span></div><h3>' + esc(x.h) + '</h3><p class="muted">' + esc(x.t) + '</p><span class="hk-more">' + x.more + ' <span aria-hidden="true">→</span></span></a>';
+    }).join('') + '</div><p class="faint hk-note" data-hide-winter>Sæsonen starter typisk sidst i november (skal verificeres).</p>';
+  }
+
   /* ---------- Forsiden: tre udvalgte ture ---------- */
   function teaser(el) {
     var d = D(); if (!d) return;
@@ -180,6 +194,6 @@
   }
 
   document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser })[k](el); });
+    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser, ski: ski })[k](el); });
   });
 })();
