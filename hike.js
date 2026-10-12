@@ -130,8 +130,15 @@
       var v = e.target.closest('[data-view]'); if (v) go(v.dataset.view);
     });
     if (window.ResizeObserver) new ResizeObserver(function () { var s = wrap.querySelector('svg'); if (s && !anim) { vb = box(VIEWS[curView]); s.setAttribute('viewBox', vb.join(' ')); labels(); } }).observe(wrap);
-    pick(sel);
-    var first = el.querySelector('[data-view="alle"]'); if (first) first.classList.add('on');
+    var deep = el.hasAttribute('data-deeplink');
+    function fromHash() { var h = decodeURIComponent((location.hash || '').slice(1)); return routes.some(function (r) { return r.id === h; }) ? h : null; }
+    if (deep) {
+      window.addEventListener('hashchange', function () { var h = fromHash(); if (h && h !== sel) pick(h, true); });
+      el.addEventListener('click', function (e) { var c = e.target.closest('[data-r]'); if (c && history.replaceState) history.replaceState(null, '', '#' + c.dataset.r); });
+    }
+    var h0 = deep && fromHash();
+    pick(h0 || sel, !!h0);
+    var first = el.querySelector('[data-view="alle"]'); if (first && !h0) first.classList.add('on');
   }
 
   /* ---------- Oversigt: alle ruter og status ---------- */
@@ -146,11 +153,32 @@
   }
 
   function season(el) {
-    function upd() { var w = document.documentElement.getAttribute('data-season') === 'winter'; el.innerHTML = w ? '<div class="notice info"><b>Vinter:</b> Vandring vises ikke om vinteren på det rigtige site (elementet er til forår, sommer og efterår). Om vinteren vises langrend og ski-in/ski-out i stedet. Her er det vist, så du kan vurdere det.</div>' : ''; }
+    var page = el.getAttribute('data-mode') === 'page';
+    function upd() {
+      var w = document.documentElement.getAttribute('data-season') === 'winter';
+      if (!w) { el.innerHTML = ''; return; }
+      el.innerHTML = page
+        ? '<div class="notice info"><b>Vinter:</b> De fleste ture er dækket af sne og is og passer ikke som almindelige vandreture nu. Turene og kortet kan du stadig se her. Om vinteren er der langrend og pister lige ved lejligheden: <a href="ski-in-ski-out.html">se Ski-in/ski-out</a>.</div>'
+        : '<div class="notice info"><b>Vinter:</b> Vandring-sektionen på forsiden vises kun i forår, sommer og efterår. Siden Vandring og menupunktet er der hele året, og om vinteren henviser siden til Ski-in/ski-out. Her er det vist, så du kan vurdere det.</div>';
+    }
     upd(); new MutationObserver(upd).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
+  /* ---------- Forsiden: tre udvalgte ture ---------- */
+  function teaser(el) {
+    var d = D(); if (!d) return;
+    var ids = (el.getAttribute('data-ids') || '').split(',');
+    var list = ids.map(function (id) { return d.routes.filter(function (r) { return r.id === id; })[0]; }).filter(Boolean);
+    el.innerHTML = '<div class="hk-cards">' + list.map(function (r) {
+      var im = r.imgs && r.imgs[0];
+      return '<a class="card hk-card hk-teaser" href="vandring.html#' + esc(r.id) + '">' +
+        (im ? '<figure class="hk-fig"><img src="' + esc(im.u) + '" alt="' + esc(im.c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: ' + esc(im.k) + '</figcaption></figure>' : '') +
+        '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3>' + esc(r.name) + '</h3>' +
+        '<p class="muted">' + esc([r.dist, r.time].filter(function (x) { return x && x.indexOf('ikke oplyst') < 0; }).join(' · ')) + '</p><span class="hk-more">Se turen på kortet <span aria-hidden="true">→</span></span></a>';
+    }).join('') + '</div>';
+  }
+
   document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season })[k](el); });
+    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, teaser: teaser })[k](el); });
   });
 })();

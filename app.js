@@ -165,6 +165,7 @@
     { href: 'omraadet.html', id: 'omraadet', da: 'Oversigt', en: 'Overview' },
     { href: 'taet-paa.html', id: 'taet-paa', da: 'Tæt på', en: 'Nearby' },
     { href: 'oplevelser.html', id: 'oplevelser', da: 'Oplevelser', en: 'Experiences' },
+    { href: 'vandring.html', id: 'vandring', da: 'Vandring', en: 'Hiking' },
     { id: 'nu', da: 'Nu og events', en: 'Now and events', soon: true }
   ];
   function areaIds() { return AREA.map(function (x) { return x.id; }); }
@@ -186,7 +187,7 @@
     }).join('');
   }
   var MATERIALS = [
-    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'ski-in-ski-out'] },
+    { href: 'index.html', label: 'Website-prototype', match: ['index', 'lejligheden', 'omraadet', 'taet-paa', 'oplevelser', 'vandring', 'ski-in-ski-out'] },
     { href: 'moodboard.html', label: 'Moodboard', match: ['moodboard'] },
     { href: 'designsystem.html', label: 'Designsystem', match: ['designsystem'] },
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
@@ -234,7 +235,7 @@
         '<p class="muted f-tag">' + t('Fjeldlejlighed med ski-in/ski-out på Gausta, Telemark, Norge.', 'Mountain apartment with ski-in/ski-out at Gausta, Telemark, Norway.') + '</p>' +
         '<a class="btn btn-primary btn-sm f-cta" href="index.html#booking">' + t('Se ledige datoer', 'See available dates') + '</a></div>' +
         '<nav aria-label="Lejligheden"><h4>' + t('Lejligheden', 'The apartment') + '</h4><a href="lejligheden.html">' + t('Om lejligheden', 'About the apartment') + '</a><a href="ski-in-ski-out.html">Ski-in/ski-out</a><a href="index.html#booking">' + t('Booking', 'Booking') + '</a><a href="index.html#faq">' + t('Spørgsmål og svar', 'FAQ') + '</a></nav>' +
-        '<nav aria-label="Gausta og omegn"><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="omraadet.html">' + t('Oversigt og kort', 'Overview and map') + '</a><a href="taet-paa.html">' + t('Tæt på', 'Nearby') + '</a><a href="oplevelser.html">' + t('Oplevelser', 'Experiences') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="index.html#omtale">' + t('Omtale i medier', 'In the press') + '</a></nav>' +
+        '<nav aria-label="Gausta og omegn"><h4>' + t('Gausta og omegn', 'Gausta and surroundings') + '</h4><a href="omraadet.html">' + t('Oversigt og kort', 'Overview and map') + '</a><a href="taet-paa.html">' + t('Tæt på', 'Nearby') + '</a><a href="oplevelser.html">' + t('Oplevelser', 'Experiences') + '</a><a href="vandring.html">' + t('Vandring', 'Hiking') + '</a><a href="omraadet.html#nu">Gausta nu</a><a href="index.html#omtale">' + t('Omtale i medier', 'In the press') + '</a></nav>' +
         '<nav aria-label="Information"><h4>' + t('Information', 'Information') + '</h4>' + soon('Kontakt', 'Contact') + soon('Privatliv', 'Privacy') + soon('Cookies', 'Cookies') + soon('Vilkår', 'Terms') + '</nav>' +
         '</div><div class="legal"><span>© 2026 gaustahome.com</span></div></div></footer>';
       document.body.insertAdjacentHTML('beforeend', f);

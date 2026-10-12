@@ -162,7 +162,7 @@
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
         (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '') +
         '<p class="plan-desc am-desc">' + esc(p.t) + '</p>' +
-        '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '</div>';
+        '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + (p.vandring ? '<a class="btn btn-primary btn-sm" href="vandring.html#' + p.vandring + '">Se vandreturen</a>' : '') + '</div>';
       panel.scrollTop = 0;
     }
     function select(sel, kind) {
@@ -292,7 +292,7 @@
       box.innerHTML = '<div class="grid grid-3">' + pois.map(function (p) {
         return '<div class="card">' + (p.img ? '<figure class="am-fig am-fig-card"><img src="' + p.img.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + p.img.l + '" target="_blank" rel="noopener">' + p.img.k + '</a></figcaption></figure>' : '') + '<div class="kicker">' + CAT_NAME[kind + ':' + p.c] + '</div><h3>' + esc(p.n) + '</h3><p class="muted">' + esc(p.t) + '</p>' +
           '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</span><span>' + dist(p) + '</span></div>' +
-          '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + '</div></div>';
+          '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + (p.vandring ? '<a class="btn btn-primary btn-sm" href="vandring.html#' + p.vandring + '">Se vandreturen</a>' : '') + '</div></div>';
       }).join('') + '</div><p class="faint" style="margin-top:12px">' + note + '</p>';
     } else {
       box.innerHTML = '<div class="table-wrap"><table class="table area-table"><tr><th>Sted</th><th class="col-type">Type</th><th class="r">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</th><th></th></tr>' + pois.map(function (p) {

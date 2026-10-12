@@ -1303,3 +1303,11 @@ html[data-season="autumn"] [data-nu] .live-season > [data-seasons~="autumn"] { d
 .hk-legend-i { display: inline-flex; align-items: center; gap: 6px; }
 .hk-legend-i i { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
 .hk-legend-n { color: var(--faint); font-size: .74rem; }
+/* Vandring på forsiden og skjul i vinter (kun forsidesektionen) */
+html[data-season="winter"] [data-hide-winter] { display: none; }
+.hk-teaser { display: block; text-decoration: none; color: inherit; transition: border-color .15s, transform .15s; }
+.hk-teaser:hover { border-color: var(--accent); transform: translateY(-2px); }
+.hk-teaser .hk-fig > img { height: 150px; }
+.hk-teaser h3 { margin: 8px 0 4px; }
+.hk-more { display: inline-block; margin-top: 8px; font: 600 .84rem var(--font-body); color: var(--accent-text); }
+#e-hike-teaser [data-hide-winter] { display: block; }

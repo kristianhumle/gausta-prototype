@@ -1,4 +1,4 @@
-/* Kortgrundlag til skjult kort "hike" (vandring). GENERERET af tools/build-map.py (11.10.2026). Ret ikke i hånden. Se teknisk/kortgenerator.md.
+/* Kortgrundlag til skjult kort "hike" (vandring). GENERERET af tools/build-map.py (12.10.2026). Ret ikke i hånden. Se teknisk/kortgenerator.md.
    Veje, vand og stier: OpenStreetMap contributors (ODbL). Højdekurver: (c) Kartverket (CC BY 4.0). Ruter: OpenStreetMap og Turrutebasen (Kartverket). OSM-data hentet 2026-07-15T15:22:01Z, 2026-10-10T07:21:39Z, 2026-10-10T07:22:41Z. */
 window.GL = window.GL || {};
 GL.AREAMAP = GL.AREAMAP || {};
