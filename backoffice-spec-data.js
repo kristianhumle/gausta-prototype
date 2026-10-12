@@ -14,12 +14,12 @@ window.BO_SPEC_GROUPS = [
 ];
 window.BO_SPEC = [
   // F: forudsætninger
-  { id: 'F1', g: 'F', status: 'open', title: 'Frigør hukommelse (RAM) på serveren',
-    what: 'Serveren er fuldt udnyttet og har brugt swap (læst 5. september 2026). Back-office får sin RAM fra den maskine, der genbruges (P2), så der kræves ikke ny RAM. Cudo Miner stoppes og frigør GPU, CPU og strøm. For at give serveren luft igen anbefales det stadig at sætte GPU-maskinens faste RAM-tildeling ned, fordi den ikke giver ubrugt RAM tilbage af sig selv.',
-    out: 'Ny RAM-tildeling til GPU-maskinen, målt ledig RAM og swap på serveren bagefter, med dato.',
+  { id: 'F1', g: 'F', status: 'ready', title: 'Fordeling af RAM og CPU på serveren',
+    what: 'Målt 12. oktober 2026: serveren har brugt swap hele ugen, og maskinen med energistyringen er delvist swappet ud. GPU-maskinen låser hele sin RAM og bruger ca. 8 CPU-kerner på mining. Anbefaling: GPU-maskinen og Windows-maskinen skrumpes, energistyringen får mere RAM, og der bliver ca. 17 GB fri til serveren.',
+    out: 'Analyse og anbefalet fordeling pr. maskine med rækkefølge for ændringerne. Skrevet 12. oktober 2026.',
     deps: [], req: 'N12',
     decided: 'Cudo Miner stoppes (din beslutning 11. oktober 2026).',
-    open: ['Hvor meget skal GPU-maskinen ned på? Forslag: fra 26 til 18 GB, så Ollama stadig har rigeligt.', 'Skal jeg foretage ændringen på serveren, eller gør du det selv?'] },
+    open: ['Godkender du fordelingen, især Windows ned til 16 GB?', 'Hvem udfører ændringerne?'] },
   { id: 'F2', g: 'F', status: 'open', title: 'Ekstern backup-destination',
     what: 'Et lager uden for huset til natlige kopier af databasen. I dag tages backup manuelt til en USB-disk i samme rum.',
     out: 'Valgt udbyder, pris pr. måned, hvor længe kopier gemmes, kryptering og besked ved fejl.',
