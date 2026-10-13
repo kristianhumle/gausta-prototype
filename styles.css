@@ -1353,3 +1353,15 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 @media (max-width: 480px) { .nl-tiles.live-season { grid-template-columns: 1fr; } }
 .nl-tiles > div { min-width: 0; }
 .live [data-weather] .src, .nl-tiles [data-weather] .src { display: block; margin-top: 8px; }
+
+/* Video i plantegningens rumpanel (13. oktober 2026) */
+.plan-video { position: relative; margin: 0; aspect-ratio: 16 / 9; border-radius: var(--radius-sm); overflow: hidden; background: #000; }
+.plan-video video { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pv-play { position: absolute; inset: 0; border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; }
+.pv-play span { width: 64px; height: 64px; border-radius: 50%; background: color-mix(in srgb, var(--surface) 90%, transparent); display: grid; place-items: center; box-shadow: var(--shadow-sm); }
+.pv-play svg { width: 26px; height: 26px; fill: var(--accent); }
+.pv-play em { position: absolute; right: 10px; top: 10px; font-style: normal; font-size: .72rem; font-weight: 650; padding: 3px 9px; border-radius: 99px; background: var(--surface); border: 1px solid var(--border); }
+.pv-play:hover span, .pv-play:focus-visible span { background: var(--surface); }
+.plan-video .cap { pointer-events: none; }
+.plan-thumbs button { position: relative; }
+.pt-play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: .8rem; background: rgba(0,0,0,.28); }

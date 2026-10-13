@@ -20,9 +20,13 @@
     { id: 'stuesov', name: 'TV-stue / soveværelse', lines: ['TV-stue /','soveværelse'], dim: '10 m²', desc: 'TV-stue med sofa og tv, som også kan bruges som ekstra soveværelse. Herfra er der adgang til terrassen gennem terrassedøren.', poly: [[750,416],[860,416],[860,640],[750,640]], label: [805,500], pin: [845,431],
       photos: [[L(24),'Tv-hjørne'],[L(27),'Sofa og tv'],[L(12),'Seng og tv'],[L(32),'Seng med terrassedør'],[L(25),'Terrassedør med gardin']] },
     { id: 'terrasse', name: 'Terrasse', dim: '25 m²', desc: 'Terrasse med plads til udemøbler og sol det meste af dagen.', poly: [[552,660],[860,660],[860,815],[552,815]], label: [705,738], pin: [705,775],
-      photos: [['sommer/sommer-01','Terrassen om sommeren']] },
+      photos: [['video:terrasse','Video: terrassen og udsigten'],['sommer/sommer-01','Terrassen om sommeren']] },
     { id: 'outside', name: 'Uden for planen', short: 'Uden for planen', dim: '', desc: 'Bygningen udefra, indgangen og depotrum uden for selve lejligheden.', photos: [[L(8),'Bygningen udefra'],[L(26),'Indgang udefra'],[L(20),'Depot'],[L(33),'Depot']] }
   ];
+  // Video i rummenes billedliste: nøgle 'video:<id>'. Klip uden lyd (MP4, 1280 px) og et stillbillede.
+  var VIDEOS = { terrasse: { src: 'assets/web/video/terrasse.mp4', poster: 'assets/web/video/terrasse-poster.jpg', thumb: 'assets/web/video/terrasse-poster-s.jpg', dur: '0:13' } };
+  function isVid(k) { return k.indexOf('video:') === 0; }
+  function vid(k) { return VIDEOS[k.slice(6)]; }
   var SHORT = { entre: 'Entré og skirum', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', outside: 'Uden for planen' };
   var PILLS = ['entre', 'sov1', 'sov2', 'kstue', 'bad', 'stuesov', 'terrasse', 'outside'];
   var ORDER_ALL = ['kstue', 'stuesov', 'sov1', 'sov2', 'bad', 'entre', 'terrasse', 'outside'];
@@ -113,13 +117,27 @@
         '<div class="muted" style="font-size:.85rem;margin-bottom:12px">' + (isAll ? photos.length + ' billeder fra hele lejligheden' : photos.length + ' billeder' + (r.dim ? ' · ' + r.dim + ' <span class="verify">skal verificeres</span>' : '')) + '</div>' +
         '<div data-gallery-group>' + photos.map(function (q, k) {
           var qc = isAll ? q[1] + ' · ' + q[2] : q[1];
+          if (isVid(q[0])) return k !== i ? '' : '<figure class="plan-video" data-plan-video><video muted loop playsinline preload="metadata" poster="' + vid(q[0]).poster + '" aria-label="' + qc + '"><source src="' + vid(q[0]).src + '" type="video/mp4"></video>' +
+            '<button type="button" class="pv-play" aria-label="Afspil video: ' + qc + '"><span>' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>' + '</span><em>' + vid(q[0]).dur + '</em></button><figcaption class="cap">' + qc + '</figcaption></figure>';
           if (k !== i) return '<a class="sr-only" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + qc + '">' + qc + '</a>';
           return '<a class="plan-hero" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + cap + '" aria-label="Forstør billedet: ' + cap + '"><img class="photo" src="' + GL.photo(q[0], 'm') + '" alt="' + cap + '">' +
             '<span class="zoom-hint">' + GL.icon('search') + (touch ? 'Tryk for at forstørre' : 'Klik for at forstørre') + '</span><span class="cap">' + cap + '</span></a>';
         }).join('') + '</div>' +
-        '<div class="plan-thumbs">' + photos.map(function (q, k) { return '<button type="button" class="' + (k === i ? 'on' : '') + '" data-k="' + k + '" aria-label="' + q[1] + '"><img src="' + GL.photo(q[0], 's') + '" alt="" loading="lazy"></button>'; }).join('') + '</div>' +
+        '<div class="plan-thumbs">' + photos.map(function (q, k) { return '<button type="button" class="' + (k === i ? 'on' : '') + '" data-k="' + k + '" aria-label="' + q[1] + '"><img src="' + (isVid(q[0]) ? vid(q[0]).thumb : GL.photo(q[0], 's')) + '" alt="" loading="lazy">' + (isVid(q[0]) ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div>' +
         '<p class="plan-desc">' + (isAll ? 'Vælg et rum på planen eller i listen over planen for kun at se det rums billeder.' : r.desc) + '</p>';
       [].forEach.call(panel.querySelectorAll('.plan-thumbs button'), function (b) { b.addEventListener('click', function () { show(id, +b.dataset.k, false); }); });
+      var pv = panel.querySelector('[data-plan-video]');
+      if (pv) {
+        var v = pv.querySelector('video'), pb = pv.querySelector('.pv-play'), on = false;
+        function start() { on = true; v.controls = true; v.loop = false; v.muted = false; pb.hidden = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); }); }
+        pb.addEventListener('click', start);
+        v.addEventListener('ended', function () { pb.hidden = false; v.controls = false; on = false; v.loop = true; v.muted = true; v.currentTime = 0; });
+        // mouseover på computer: kort, lydløs forhåndsvisning, indtil der klikkes
+        if (!touch) {
+          pv.addEventListener('mouseenter', function () { if (!on) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } });
+          pv.addEventListener('mouseleave', function () { if (!on) { v.pause(); v.currentTime = 0; } });
+        }
+      }
       panel.querySelector('.plan-back').addEventListener('click', function () { planBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
       if (scroll && stacked()) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
