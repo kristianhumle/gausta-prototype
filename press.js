@@ -175,7 +175,6 @@
   var chosen = null, market = 'DK';
   try { chosen = localStorage.getItem(KEY); } catch (e) {}
   function defaultMarket() { return LANG_MARKET[pageLang()] || 'XX'; }
-  var v4type = 'Alle', v4season = 'Alle';
   var carUpdate = null; // aktiv karrusels opdatering (én resize-lytter i alt)
 
   function esc(s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
@@ -221,17 +220,12 @@
     }
     return '<p class="pr-sum">' + esc(i.resume) + '</p>';
   }
-  function fallbackNote(r) {
-    return r.fallback ? '<p class="pr-fb">Der er endnu ingen omtale for dit land. Vi viser internationale artikler.</p>' : '';
-  }
 
   /* ---------- Version 1: kort med logo som karrusel (forside) ---------- */
   function v1(r, el) {
-    var all = (el.closest('[data-press-root]') || el).getAttribute('data-all-href') || '#e-press-v4';
     var items = r.items.filter(function (i) { return i.fremhaevet; });
-    return fallbackNote(r) +
-      '<section class="pr-car" aria-roledescription="karrusel" aria-label="Omtale af Gausta i medier">' +
-      '<div class="pr-car-bar"><span class="muted pr-car-count" aria-live="polite"></span>' +
+    return '<section class="pr-car" aria-roledescription="karrusel" aria-label="Omtale af Gausta i medier">' +
+      '<div class="pr-car-bar">' +
       '<div class="pr-car-btns"><button type="button" class="pr-car-btn" data-car="prev" aria-label="Forrige omtaler">←</button>' +
       '<button type="button" class="pr-car-btn" data-car="next" aria-label="Næste omtaler">→</button></div></div>' +
       '<ul class="pr-track" tabindex="0">' + items.map(function (i, k) {
@@ -240,13 +234,12 @@
           '<h5' + langAttr(i) + '>' + esc(i.titel) + '</h5>' +
           quotes(i) +
           '<div class="pr-foot">' + badges(i) + readLink(i) + '</div></li>';
-      }).join('') + '</ul><div class="pr-dots" role="group" aria-label="Vælg side"></div>' +
-      '<a class="pr-all" href="' + esc(all) + '">Se alle omtaler</a></section>';
+      }).join('') + '</ul><div class="pr-dots" role="group" aria-label="Vælg side"></div></section>';
   }
 
   function wireCarousel(root) {
     var track = root.querySelector('.pr-track'); if (!track || !track.children.length) return;
-    var dots = root.querySelector('.pr-dots'), count = root.querySelector('.pr-car-count');
+    var dots = root.querySelector('.pr-dots');
     var prev = root.querySelector('[data-car="prev"]'), next = root.querySelector('[data-car="next"]');
     var cards = track.children;
     function perView() { return cards.length ? Math.max(1, Math.round(track.clientWidth / cards[0].getBoundingClientRect().width)) : 1; }
@@ -261,15 +254,13 @@
     function go(p) { var n = Math.max(0, Math.min(pages() - 1, p)); var c = cards[n * perView()]; if (c) track.scrollTo({ left: c.offsetLeft - cards[0].offsetLeft, behavior: calm() ? 'auto' : 'smooth' }); if (calm()) update(); }
     function calm() { return document.hidden || (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches); }
     function update() {
-      var n = pages(), p = page(), pv = perView();
+      var n = pages(), p = page();
       if (dots.children.length !== n) {
         dots.innerHTML = n > 1 ? Array.apply(null, Array(n)).map(function (_, k) { return '<button type="button" aria-label="Side ' + (k + 1) + '"></button>'; }).join('') : '';
       }
       Array.prototype.forEach.call(dots.children, function (d, k) { d.setAttribute('aria-current', k === p ? 'true' : 'false'); });
       prev.disabled = track.scrollLeft <= 2;
       next.disabled = atEnd();
-      var from = firstIdx() + 1, to = Math.min(cards.length, from + pv - 1);
-      count.textContent = cards.length <= pv ? cards.length + ' omtaler' : from === to ? from + ' af ' + cards.length : 'Viser ' + from + ' til ' + to + ' af ' + cards.length;
     }
     prev.addEventListener('click', function () { go(page() - 1); });
     next.addEventListener('click', function () { go(page() + 1); });
@@ -283,27 +274,7 @@
     update();
   }
 
-  /* ---------- Version 2 (intern nøgle v4): liste med filter (egen side) ---------- */
-  function v4(r) {
-    var types = ['Alle'].concat(r.items.map(function (i) { return i.type; }).filter(function (t, k, a) { return a.indexOf(t) === k; }));
-    var seasons = ['Alle', 'vinter', 'sommer'];
-    if (types.indexOf(v4type) < 0) v4type = 'Alle';
-    var list = r.items.filter(function (i) {
-      return (v4type === 'Alle' || i.type === v4type) && (v4season === 'Alle' || i.saeson === v4season || i.saeson === 'helaar');
-    });
-    return fallbackNote(r) +
-      '<div class="pr-filters"><div class="row-flex" role="group" aria-label="Type">' + types.map(function (t) {
-        return '<button type="button" class="filter" data-pr-type="' + esc(t) + '" aria-pressed="' + (t === v4type) + '">' + esc(t) + '</button>';
-      }).join('') + '</div><div class="row-flex" role="group" aria-label="Årstid">' + seasons.map(function (s) {
-        return '<button type="button" class="filter" data-pr-season="' + s + '" aria-pressed="' + (s === v4season) + '">' + (s === 'Alle' ? 'Hele året' : SAESON[s]) + '</button>';
-      }).join('') + '</div></div>' +
-      '<ul class="pr-list">' + (list.length ? list.map(function (i) {
-        return '<li><div class="pr-lead">' + logo(i, 'pr-logo-sm') + origin(i) + '</div><div class="grow"><div class="pr-meta">' + esc(i.medie) + ' · ' + esc(i.type) + ' · ' + fmtDate(i.dato) + '</div>' +
-          '<b' + langAttr(i) + '>' + esc(i.titel) + '</b>' + quotes(i, 'pr-q-sm') + badges(i) + '</div>' + readLink(i) + '</li>';
-      }).join('') : '<li class="muted">Ingen omtaler med det filter.</li>') + '</ul>';
-  }
-
-  var RENDER = { v1: v1, v4: v4 };
+  var RENDER = { v1: v1 };
 
   function render(only) {
     market = chosen || defaultMarket();
@@ -331,9 +302,7 @@
     });
     function onClick(e) {
       var t = e.target.closest('button'); if (!t) return;
-      if (t.hasAttribute('data-m')) { chosen = t.getAttribute('data-m'); v4type = 'Alle'; try { localStorage.setItem(KEY, chosen); } catch (x) {} render(); }
-      else if (t.hasAttribute('data-pr-type')) { v4type = t.getAttribute('data-pr-type'); render('v4'); }
-      else if (t.hasAttribute('data-pr-season')) { v4season = t.getAttribute('data-pr-season'); render('v4'); }
+      if (t.hasAttribute('data-m')) { chosen = t.getAttribute('data-m'); try { localStorage.setItem(KEY, chosen); } catch (x) {} render(); }
     }
     roots.forEach(function (root) { root.addEventListener('click', onClick); });
     // Sprogskift (app.js sætter lang på <html>) opdaterer sprogmærkerne.
