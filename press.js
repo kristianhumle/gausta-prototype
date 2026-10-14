@@ -284,7 +284,12 @@
       if (only && k !== only) return;
       el.innerHTML = r.items.length ? RENDER[k](r, el) : '';
       var host = el.closest('[data-press-hide-empty]'); if (host) host.hidden = !r.items.length;
-      if (k === 'v1') wireCarousel(el);
+      if (k === 'v1') {
+        wireCarousel(el);
+        // Landeknapper og pile på samme linje (14. oktober 2026): pilene flyttes op ved siden af landene.
+        var slot = (el.closest('[data-press-root]') || document).querySelector('[data-press-btns]'), bar = el.querySelector('.pr-car-bar');
+        if (slot && bar) { slot.innerHTML = ''; slot.appendChild(bar.querySelector('.pr-car-btns')); bar.remove(); }
+      }
     });
     document.querySelectorAll('[data-press-market] button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-m') === market)); });
     var c = document.querySelector('[data-press-count]');
