@@ -95,7 +95,7 @@
       });
       var r0 = routes.filter(function (r) { return r.id === sel; })[0];
       if (r0 && r0.startXY) s += '<circle class="hk-start" cx="' + r0.startXY[0] + '" cy="' + r0.startXY[1] + '" r="1"/>';
-      return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span>' + mediaPins(r0) + '</div>';
+      return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span></div>';
     }
     // billeder og videoer med GPS på den valgte tur: små markører, som åbner mediet i fuld visning
     function mediaItems(r) { return (r.imgs || []).map(function (x) { return x.v ? { href: x.v.poster, video: x.v.src, cap: x.c } : { href: x.f || x.u, cap: x.c }; }); }
@@ -133,7 +133,7 @@
       var n = r.d.match(/-?\d+(?:\.\d+)?/g).map(Number), x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9;
       for (var i = 0; i + 1 < n.length; i += 2) { x0 = Math.min(x0, n[i]); x1 = Math.max(x1, n[i]); y0 = Math.min(y0, n[i + 1]); y1 = Math.max(y1, n[i + 1]); }
       var W = wrap.clientWidth || 800, H = wrap.clientHeight || 468;
-      return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: Math.min(d.w, Math.max((x1 - x0) * 1.7, (y1 - y0) * 1.7 * W / H, 150)) };
+      return { cx: (x0 + x1) / 2, cy: (y0 + y1) / 2, w: Math.min(d.w, Math.max((x1 - x0) * 1.3, (y1 - y0) * 1.3 * W / H, 40)) };
     }
     function pick(id, zoom) {
       sel = id; var r = routes.filter(function (x) { return x.id === id; })[0]; panelFor(r); draw();
