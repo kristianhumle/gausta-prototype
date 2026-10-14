@@ -128,11 +128,17 @@
   /* ---------- Video i gallerier (13. oktober 2026, G74) ----------
      Et galleri-element kan i stedet for et billede være en video: {v: {src, poster, thumb, dur}} (MP4 uden lyd eller kort med lyd, plus stillbillede).
      - Fliser i gitteret (GL.buildGallery): afspilningsmærke, lydløs forhåndsvisning ved mouseover (kun computer), klik åbner lysboksen med kontroller.
-     - Hovedbillede med miniaturer (Vandring, Ski-in/ski-out): figur med data-vsrc/data-vposter/data-vdur får et lag over billedet (mouseover = forhåndsvisning, klik = afspil på stedet).
+     - Hovedbillede med miniaturer (Vandring, Ski-in/ski-out): figur med data-vsrc/data-vposter/data-vdur får et lag over billedet (mouseover = forhåndsvisning, klik = fuld visning i lysboksen, som et billede).
      Plantegningens Terrasse-video (G72/G73) har sin egen, tidligere kode og er uændret. */
   var PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
   var canHover = matchMedia('(hover: hover)').matches;
   GL.Vid = {
+    // åbner én video i lysboksen (fuld visning)
+    lightbox: function (src, poster, cap) {
+      var box = document.createElement('div'), a = document.createElement('a');
+      a.href = poster; a.setAttribute('data-lightbox', ''); a.setAttribute('data-video', src); a.setAttribute('data-cap', cap || '');
+      box.appendChild(a); lbOpen(a);
+    },
     badge: function (dur) { return '<span class="vid-play" aria-hidden="true"><span>' + PLAY_SVG + '</span>' + (dur ? '<em>' + dur + '</em>' : '') + '</span>'; },
     // sæt eller fjern videoen på en figur med hovedbillede (v = {src, poster, dur} eller null)
     set: function (fig, v) {
@@ -142,7 +148,7 @@
       fig.setAttribute('data-vsrc', v.src); fig.setAttribute('data-vdone', '1');
       if (v.poster && img) img.src = v.poster;
       var ov = document.createElement('button'); ov.type = 'button'; ov.className = 'vid-ov'; ov.setAttribute('data-vprev', v.src); ov.setAttribute('data-vsrc', v.src);
-      ov.setAttribute('aria-label', 'Afspil video'); ov.innerHTML = GL.Vid.badge(v.dur);
+      ov.setAttribute('aria-label', 'Åbn video i fuld visning'); ov.innerHTML = GL.Vid.badge(v.dur);
       fig.insertBefore(ov, img ? img.nextSibling : fig.firstChild);
       if (img && window.ResizeObserver) { ov._ro = new ResizeObserver(function () { ov.style.height = img.offsetHeight + 'px'; }); ov._ro.observe(img); }
       else if (img) ov.style.height = img.offsetHeight + 'px';
@@ -165,11 +171,12 @@
     document.addEventListener('mouseover', function (e) { var t = e.target.closest('[data-vprev]'); if (t) vidPrevStart(t); });
     document.addEventListener('mouseout', function (e) { var t = e.target.closest('[data-vprev]'); if (t && !t.contains(e.relatedTarget)) vidPrevStop(t); });
   }
+  // klik på en video i et hovedbillede åbner den i fuld visning (lysboksen), som et billede
   document.addEventListener('click', function (e) {
-    var ov = e.target.closest('.vid-ov'); if (!ov || ov.classList.contains('vid-on')) return;
-    vidPrevStop(ov); ov.classList.add('vid-on'); ov.removeAttribute('data-vprev'); ov.innerHTML = '';
-    var v = document.createElement('video'); v.controls = true; v.playsInline = true; v.autoplay = true; v.src = ov.getAttribute('data-vsrc'); ov.appendChild(v);
-    var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); });
+    var ov = e.target.closest('.vid-ov'); if (!ov) return;
+    var img = ov.parentNode.querySelector(':scope > img');
+    vidPrevStop(ov);
+    GL.Vid.lightbox(ov.getAttribute('data-vsrc'), img ? img.src : '', img ? img.alt : '');
   });
   if (window.MutationObserver) {
     var vq = false;

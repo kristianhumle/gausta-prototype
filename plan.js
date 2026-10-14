@@ -118,7 +118,7 @@
         '<div data-gallery-group>' + photos.map(function (q, k) {
           var qc = isAll ? q[1] + ' · ' + q[2] : q[1];
           if (isVid(q[0])) return k !== i ? '' : '<figure class="plan-video" data-plan-video><video muted loop playsinline preload="metadata" poster="' + vid(q[0]).poster + '" aria-label="' + qc + '"><source src="' + vid(q[0]).src + '" type="video/mp4"></video>' +
-            '<button type="button" class="pv-play" aria-label="Afspil video: ' + qc + '"><span>' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>' + '</span><em>' + vid(q[0]).dur + '</em></button><figcaption class="cap">' + qc + '</figcaption></figure>';
+            '<button type="button" class="pv-play" aria-label="Åbn video i fuld visning: ' + qc + '"><span>' + '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>' + '</span><em>' + vid(q[0]).dur + '</em></button><figcaption class="cap">' + qc + '</figcaption></figure>';
           if (k !== i) return '<a class="sr-only" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + qc + '">' + qc + '</a>';
           return '<a class="plan-hero" href="' + GL.photo(q[0]) + '" data-lightbox data-cap="' + cap + '" aria-label="Forstør billedet: ' + cap + '"><img class="photo" src="' + GL.photo(q[0], 'm') + '" alt="' + cap + '">' +
             '<span class="zoom-hint">' + GL.icon('search') + (touch ? 'Tryk for at forstørre' : 'Klik for at forstørre') + '</span><span class="cap">' + cap + '</span></a>';
@@ -128,14 +128,15 @@
       [].forEach.call(panel.querySelectorAll('.plan-thumbs button'), function (b) { b.addEventListener('click', function () { show(id, +b.dataset.k, false); }); });
       var pv = panel.querySelector('[data-plan-video]');
       if (pv) {
-        var v = pv.querySelector('video'), pb = pv.querySelector('.pv-play'), on = false;
-        function start() { on = true; v.controls = true; v.loop = false; v.muted = false; pb.hidden = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); }); }
-        pb.addEventListener('click', start);
-        v.addEventListener('ended', function () { pb.hidden = false; pv.classList.remove('pv-live'); v.controls = false; on = false; v.loop = true; v.muted = true; v.currentTime = 0; });
-        // mouseover på computer: kort, lydløs forhåndsvisning, indtil der klikkes
+        var v = pv.querySelector('video'), pb = pv.querySelector('.pv-play');
+        // mouseover på computer: lydløs forhåndsvisning i galleriet. Klik (eller tryk): fuld visning i lysboksen, som billederne.
+        pb.addEventListener('click', function () {
+          v.pause(); v.currentTime = 0; pv.classList.remove('pv-live');
+          var vv = vid(p[0]); GL.Vid.lightbox(vv.src, vv.poster, (isAll ? p[1] + ' · ' + p[2] : p[1]));
+        });
         if (!touch) {
-          pv.addEventListener('mouseenter', function () { if (!on) { pv.classList.add('pv-live'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () { pv.classList.remove('pv-live'); }); } });
-          pv.addEventListener('mouseleave', function () { if (!on) { v.pause(); v.currentTime = 0; pv.classList.remove('pv-live'); } });
+          pv.addEventListener('mouseenter', function () { pv.classList.add('pv-live'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () { pv.classList.remove('pv-live'); }); });
+          pv.addEventListener('mouseleave', function () { v.pause(); v.currentTime = 0; pv.classList.remove('pv-live'); });
         }
       }
       panel.querySelector('.plan-back').addEventListener('click', function () { planBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); });
