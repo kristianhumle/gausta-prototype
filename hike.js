@@ -7,7 +7,8 @@
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
   function km(m) { return (m / 1000).toFixed(1).replace('.', ',') + ' km'; }
   function chip(g) { var x = GRADE[g]; return x ? '<span class="hk-grade" style="--c:' + x[1] + '">' + x[0] + '</span>' : ''; }
-  function links(r) { return (r.links || []).map(function (l) { return '<a class="btn btn-ghost btn-sm" href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t) + ' <span aria-hidden="true">↗</span></a>'; }).join(''); }
+  // højst to links pr. tur, og ikke Gausta.com (14. oktober 2026, G79)
+  function links(r) { return (r.links || []).filter(function (l) { return !/^Gausta\.com/i.test(l.t); }).slice(0, 2).map(function (l) { return '<a class="btn btn-ghost btn-sm" href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t) + ' <span aria-hidden="true">↗</span></a>'; }).join(''); }
   function fromApt(r) {
     var f = r.fromApt; if (!f) return '';
     var s = 'ca. ' + (f.airM < 1000 ? Math.round(f.airM / 10) * 10 + ' m' : km(f.airM)) + ' i luftlinje';
@@ -55,7 +56,7 @@
         return '<button type="button" class="filter" data-g="' + x[0] + '" aria-pressed="' + (x[0] === f) + '">' + x[1] + '</button>'; }).join('') + '</div>' +
         '<div class="hk-cards">' + list.map(function (r) {
           return '<article class="card hk-card"><div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3>' + esc(r.name) + '</h3>' + gallery(r) + facts(r) +
-            (r.text ? '<p class="muted">' + esc(r.text) + '</p>' : '') + (r.tip ? '<p class="hk-tip"><b>Tip:</b> ' + esc(r.tip) + '</p>' : '') +
+            (r.text ? '<p class="muted">' + esc(r.text) + '</p>' : '') +
             '<div class="row-flex hk-links">' + links(r) + '</div>' + (r.note ? '<p class="faint hk-note">' + esc(r.note) + '</p>' : '') + '</article>'; }).join('') + '</div>';
     }
     el.addEventListener('click', function (e) { var b = e.target.closest('[data-g]'); if (b) { f = b.dataset.g; draw(); } });
@@ -94,7 +95,17 @@
       });
       var r0 = routes.filter(function (r) { return r.id === sel; })[0];
       if (r0 && r0.startXY) s += '<circle class="hk-start" cx="' + r0.startXY[0] + '" cy="' + r0.startXY[1] + '" r="1"/>';
-      return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span></div>';
+      return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span>' + mediaPins(r0) + '</div>';
+    }
+    // billeder og videoer med GPS på den valgte tur: små markører, som åbner mediet i fuld visning
+    function mediaItems(r) { return (r.imgs || []).map(function (x) { return x.v ? { href: x.v.poster, video: x.v.src, cap: x.c } : { href: x.f || x.u, cap: x.c }; }); }
+    function mediaPins(r) {
+      if (!r || !r.imgs) return '';
+      return r.imgs.map(function (x, i) {
+        if (!x.xy) return '';
+        return '<button type="button" class="hk-ph' + (x.v ? ' hk-ph-v' : '') + '" data-ph="' + i + '" data-x="' + x.xy[0] + '" data-y="' + x.xy[1] + '" aria-label="' + esc((x.v ? 'Video: ' : 'Billede: ') + (x.c || '')) + '" title="' + esc(x.c || '') + '">' +
+          (x.v ? '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>' : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.2" fill="#fff"/></svg>') + '</button>';
+      }).join('');
     }
     function labels() {
       var svg = wrap.querySelector('svg'), g = svg.querySelector('.hk-lbls'), k = vb[2] / (wrap.clientWidth || 800), fs = 11.5 * k, h = '';
@@ -104,12 +115,13 @@
       (d.names || []).forEach(function (n) { put(n[0], n[1], n[2], 'hk-t hk-t-w'); });
       g.innerHTML = h;
       var ap = wrap.querySelector('.hk-apt'); if (ap && d.apt) { var inside = d.apt[0] > vb[0] && d.apt[0] < vb[0] + vb[2] && d.apt[1] > vb[1] && d.apt[1] < vb[1] + vb[3]; ap.style.display = inside ? '' : 'none'; ap.style.left = ((d.apt[0] - vb[0]) / vb[2] * 100).toFixed(2) + '%'; ap.style.top = ((d.apt[1] - vb[1]) / vb[3] * 100).toFixed(2) + '%'; }
+      [].forEach.call(wrap.querySelectorAll('.hk-ph'), function (b) { var x = +b.dataset.x, y = +b.dataset.y, ins = x > vb[0] && x < vb[0] + vb[2] && y > vb[1] && y < vb[1] + vb[3]; b.style.display = ins ? '' : 'none'; b.style.left = ((x - vb[0]) / vb[2] * 100).toFixed(2) + '%'; b.style.top = ((y - vb[1]) / vb[3] * 100).toFixed(2) + '%'; });
       var st = svg.querySelector('.hk-start'); if (st) { st.setAttribute('r', 5 * k); st.setAttribute('stroke-width', 2 * k); }
       [].forEach.call(svg.querySelectorAll('.hk-line'), function (p) { p.style.strokeWidth = (svg.querySelector('.hk-route.on .hk-line') === p ? 4.5 : 3) + 'px'; });
     }
     function panelFor(r) {
       panel.innerHTML = '<div class="hk-card-h"><span class="hk-grp">' + esc(r.group) + '</span>' + chip(r.grade) + '</div><h3 style="margin:4px 0 8px">' + esc(r.name) + '</h3>' + gallery(r) + facts(r) + (r.text ? '<p class="muted hk-desc">' + esc(r.text) + '</p>' : '') +
-        (r.tip ? '<p class="hk-tip"><b>Tip:</b> ' + esc(r.tip) + '</p>' : '') + '<div class="row-flex hk-links">' + links(r) + '</div>';
+        '<div class="row-flex hk-links">' + links(r) + '</div>';
       panel.scrollTop = 0;
     }
     function draw() {
@@ -137,6 +149,8 @@
       (function step(t) { var k = Math.min(1, (t - t0) / 450), e = k < .5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2; vb = from.map(function (a, i) { return a + (to[i] - a) * e; }); svg.setAttribute('viewBox', vb.join(' ')); labels(); if (k < 1) anim = requestAnimationFrame(step); else anim = null; })(t0);
     }
     el.addEventListener('click', function (e) {
+      var ph = e.target.closest('.hk-ph');
+      if (ph) { var rr = routes.filter(function (x) { return x.id === sel; })[0]; GL.Vid.gallery(mediaItems(rr), +ph.dataset.ph); return; }
       var c = e.target.closest('[data-r]'); if (c) { pick(c.dataset.r, true); return; }
       var v = e.target.closest('[data-view]'); if (v) go(v.dataset.view);
     });
