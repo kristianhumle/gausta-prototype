@@ -1407,3 +1407,6 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
   .hk-wrap { min-height: 0; height: 100%; }
   .hk-panel { max-height: 640px; overflow-y: auto; }
 }
+
+/* Ski-in / ski-out kort på mobil: Fælleshus-mærkaten forskudt mod højre, så den ikke dækker lejlighedsbygningen */
+@media (max-width: 520px) { .sio-chip.poi.below { transform: translate(-12%, 12px); } }
