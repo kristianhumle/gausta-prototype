@@ -131,11 +131,11 @@
         var v = pv.querySelector('video'), pb = pv.querySelector('.pv-play'), on = false;
         function start() { on = true; v.controls = true; v.loop = false; v.muted = false; pb.hidden = true; var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); }); }
         pb.addEventListener('click', start);
-        v.addEventListener('ended', function () { pb.hidden = false; v.controls = false; on = false; v.loop = true; v.muted = true; v.currentTime = 0; });
+        v.addEventListener('ended', function () { pb.hidden = false; pv.classList.remove('pv-live'); v.controls = false; on = false; v.loop = true; v.muted = true; v.currentTime = 0; });
         // mouseover på computer: kort, lydløs forhåndsvisning, indtil der klikkes
         if (!touch) {
-          pv.addEventListener('mouseenter', function () { if (!on) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } });
-          pv.addEventListener('mouseleave', function () { if (!on) { v.pause(); v.currentTime = 0; } });
+          pv.addEventListener('mouseenter', function () { if (!on) { pv.classList.add('pv-live'); var pr = v.play(); if (pr && pr.catch) pr.catch(function () { pv.classList.remove('pv-live'); }); } });
+          pv.addEventListener('mouseleave', function () { if (!on) { v.pause(); v.currentTime = 0; pv.classList.remove('pv-live'); } });
         }
       }
       panel.querySelector('.plan-back').addEventListener('click', function () { planBox.scrollIntoView({ behavior: 'smooth', block: 'start' }); });

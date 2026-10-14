@@ -1365,3 +1365,6 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .plan-video .cap { pointer-events: none; }
 .plan-thumbs button { position: relative; }
 .pt-play { position: absolute; inset: 0; display: grid; place-items: center; color: #fff; font-size: .8rem; background: rgba(0,0,0,.28); }
+/* play-ikonet skjules, mens forhåndsvisningen afspilles (knappen er stadig klikbar) */
+.plan-video .pv-play span, .plan-video .pv-play em { transition: opacity .2s; }
+.plan-video.pv-live .pv-play span, .plan-video.pv-live .pv-play em { opacity: 0; }
