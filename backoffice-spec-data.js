@@ -2,7 +2,7 @@
    One entry per item. Status: draft (Udkast), open (Afklares), ready (Klar til godkendelse), approved (Godkendt).
    Mirrored as a register in teknisk/backoffice-spec.md: update both when a status changes.
    Public page (noindex): no host names, IP addresses, VM numbers, places or secrets here. */
-window.BO_SPEC_UPDATED = '12. oktober 2026';
+window.BO_SPEC_UPDATED = '14. oktober 2026';
 window.BO_SPEC_GROUPS = [
   { id: 'F', title: 'Forudsætninger', lead: 'Ejerhandlinger, der skal være på plads, før der kan bygges noget på serveren.' },
   { id: 'P', title: 'Platform', lead: 'Fundamentet på hjemmeserveren: maskine, database, backup, adgang og jobkørsel.' },
@@ -20,11 +20,12 @@ window.BO_SPEC = [
     deps: [], req: 'N12',
     decided: 'Cudo Miner er stoppet og slået fra (12. oktober 2026). Fordelingen er godkendt og udført 12. oktober 2026: ca. 22 GB fri RAM på serveren og ingen swap i brug.',
     open: [] },
-  { id: 'F2', g: 'F', status: 'open', title: 'Ekstern backup-destination',
-    what: 'Et lager uden for huset til natlige kopier af databasen. I dag tages backup manuelt til en USB-disk i samme rum.',
-    out: 'Valgt udbyder, pris pr. måned, hvor længe kopier gemmes, kryptering og besked ved fejl.',
+  { id: 'F2', g: 'F', status: 'approved', title: 'Ekstern backup-destination',
+    what: 'Et lager uden for huset til krypterede kopier af back-office-data. Valgt: Cloudflare R2, fordi kontoen findes i forvejen. Forventet under 10 GB, så inden for R2\'s gratisniveau.',
+    out: 'Valgt udbyder, pris, plan for kryptering og opbevaring. Skrevet 14. oktober 2026. Selve opsætningen er P9.',
     deps: [], req: 'N8, N12',
-    open: ['Backblaze B2, Cloudflare R2 eller Google Drive?', 'Hvor længe skal kopier gemmes (fx 30 dage plus en pr. måned i et år)?', 'Krypteres kopien, før den forlader huset? Anbefalet, fordi den indeholder økonomidata.'] },
+    decided: 'Cloudflare R2 (din beslutning 14. oktober 2026). Bygges som noget af det sidste.',
+    open: [] },
   { id: 'F3', g: 'F', status: 'open', title: 'Adresse og login til back-office',
     what: 'Adressen, back-office nås på, og hvem der må logge ind. Foreslået: Google-login foran adressen (Cloudflare Access), ingen åbne porte hjemme.',
     out: 'Valgt adresse, liste over brugere og login-metode.',
@@ -58,10 +59,10 @@ window.BO_SPEC = [
     what: 'Nøgler og adgangskoder ligger kun på serveren, aldrig i repoet eller i dokumentationen.',
     out: 'Liste over hemmeligheder (kun navne, ikke værdier), hvor de ligger, og hvordan de skiftes.',
     deps: ['P2'], req: 'N2', open: [] },
-  { id: 'P5', g: 'P', status: 'draft', title: 'Backup og gendannelse',
-    what: 'Natlig kopi af databasen ud af huset og planlagt backup af hele maskinen. Gendannelse øves én gang, før noget sættes i drift.',
+  { id: 'P5', g: 'P', status: 'draft', title: 'Backup og gendannelse (lokalt)',
+    what: 'Natlig databasekopi på serveren, og maskinen er med i det månedlige backup-job til USB-disken. Gendannelse øves én gang, før noget sættes i drift. Kopien uden for huset er P9.',
     out: 'Plan, opbevaringstid og en testprotokol med dato for den øvede gendannelse.',
-    deps: ['F2', 'P3'], req: 'N8, N12', open: [] },
+    deps: ['P3'], req: 'N8, N12', open: [] },
   { id: 'P6', g: 'P', status: 'draft', title: 'Adgang udefra med login',
     what: 'Back-office nås gennem en udgående tunnel med login foran. Ingen åbne porte hjemme.',
     out: 'Opsætning af adresse, adgangsregel og hvor længe et login gælder.',
@@ -74,6 +75,10 @@ window.BO_SPEC = [
     what: 'Alarm, når noget er galt med platformen: ingen vellykket kørsel i 36 timer, lidt diskplads, database nede eller backup fejlet.',
     out: 'Liste over tjek og grænser, og hvem der får beskeden.',
     deps: ['P7', 'U1'], req: 'N12', open: [] },
+  { id: 'P9', g: 'P', status: 'draft', title: 'Kopi uden for huset (Cloudflare R2)',
+    what: 'Natlig, krypteret kopi af database og bilag til Cloudflare R2 med restic. 30 daglige og 12 månedlige kopier. Bygges som noget af det sidste, men før data, der ikke kan genskabes, lægges ind.',
+    out: 'Opsætning, nøglehåndtering, besked ved fejl og en øvet gendannelse fra R2.',
+    deps: ['F2', 'P5', 'U1'], req: 'N8, N12', open: ['Skal hele serveren også med senere?'] },
 
   // I: indsamling og services
   { id: 'I1', g: 'I', status: 'open', title: 'Indsamling fra gausta.com (konkurrenter)',
@@ -229,5 +234,6 @@ window.BO_SPEC_ORDER = [
   { step: '5', title: 'Økonomi', ids: ['D2', 'D3', 'D4', 'D5', 'D6', 'D8', 'V3', 'V6'], note: 'Afhænger delvist af booking-model og operatøraftale.' },
   { step: '6', title: 'Sensorer', ids: ['F4', 'I5', 'I6', 'V5'], note: 'Tidligst efter overtagelsen 1. november 2026.' },
   { step: '7', title: 'Udvidelser', ids: ['I3', 'I7', 'I8', 'I9', 'V7', 'U2', 'U3', 'D7', 'D9'], note: 'Airbnb, marked, presse og skub til Sanity.' },
+  { step: '8', title: 'Til sidst', ids: ['P9'], note: 'Kopi uden for huset. Senest før økonomidata lægges ind.' },
   { step: 'Løbende', title: 'Tværgående', ids: ['F5', 'T2', 'T3', 'T4'], note: 'Følger med hele vejen.' }
 ];
