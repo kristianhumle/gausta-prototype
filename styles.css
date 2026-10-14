@@ -886,6 +886,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .pr-home-market { display: grid; gap: 6px; font-size: .8rem; }
 .pr-home-market .filter { font-size: .8rem; padding: 5px 12px; }
 .pr-ctl { display: flex; justify-content: space-between; align-items: flex-end; gap: 12px 24px; flex-wrap: wrap; margin-bottom: 12px; }
+.pr-ctl [data-press-btns] { margin-left: auto; }
 
 /* ===== Del-knap og forhåndsvisning (sideelementer, e-share) ===== */
 .sh-seg { display: inline-flex; border: 1px solid var(--border); border-radius: 99px; overflow: hidden; }
