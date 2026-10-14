@@ -2,21 +2,23 @@
    og Gausta LIVE-feedet (Norway Live på YouTube, uden lyd, YouTubes knapper skjult) i højre halvdel. Ingen fodlinje.
    Bruges på forsiden, Området og Ski-in / ski-out via [data-nu]. Fliserne vises efter den valgte årstid (html[data-season]).
    Vejret (første flise) er et rigtigt snapshot fra MET via weather.js. De øvrige værdier er EKSEMPLER i prototypen
-   (ingen kilder er koblet endnu). Hver flise viser sin kilde. Data slår kalenderen: se reglerne i #e-live. */
+   (på gaustahome.com er alle kilder koblet: MET, Fnugg (G93) og gaustabanen.no (G96)). Hver flise viser sin kilde som link.
+   Om vinteren og foråret står Fnuggs kildeangivelse med logo under fliserne (krav i Fnuggs vilkår, ordret på norsk).
+   Data slår kalenderen: se reglerne i #e-live. */
 (function () {
   'use strict';
   var T = [
-    ['winter', 'Snedybde på pisterne', '42 cm', 'målt på pisterne', 'Kilde: Gausta'],
-    ['winter', 'Åbne lifte og pister', '9 af 13', '31 af 44 pister åbne', 'Kilde: Gausta (via Fnugg)'],
+    ['winter', 'Snedybde på pisterne', '42 cm', 'målt på pisterne', 'Kilde: Gausta (via Fnugg)', 'https://fnugg.no/gausta/'],
+    ['winter', 'Åbne lifte og pister', '9 af 13', '31 af 44 pister åbne', 'Kilde: Gausta (via Fnugg)', 'https://fnugg.no/gausta/'],
     ['winter', 'Toppen af Gaustatoppen', '-14°', 'vind 12 m/s, 1883 m', 'Kilde: MET Norway (modelleret)'],
-    ['spring', 'Snedybde på pisterne', '28 cm', 'forårssne', 'Kilde: Gausta'],
-    ['spring', 'Åbne lifte og pister', '5 af 13', '12 af 44 pister åbne', 'Kilde: Gausta (via Fnugg)'],
+    ['spring', 'Snedybde på pisterne', '28 cm', 'målt på pisterne', 'Kilde: Gausta (via Fnugg)', 'https://fnugg.no/gausta/'],
+    ['spring', 'Åbne lifte og pister', '5 af 13', '12 af 44 pister åbne', 'Kilde: Gausta (via Fnugg)', 'https://fnugg.no/gausta/'],
     ['spring', 'Sol i dag', 'UV 2', 'solnedgang kl. 19.40', 'Kilde: MET Norway'],
     ['summer', 'Sol i dag', 'UV 5', 'solnedgang kl. 22.05', 'Kilde: MET Norway'],
-    ['summer', 'Gaustabanen i dag', 'Åben', 'kl. 10 til 17', 'Kilde: Gaustabanen'],
+    ['summer', 'Gaustabanen i dag', 'Åben', 'kl. 10 til 17', 'Kilde: Gaustabanen', 'https://gaustabanen.no/live-info#status-og-avganger'],
     ['summer', 'Toppen af Gaustatoppen', '8°', 'vind 7 m/s, 1883 m', 'Kilde: MET Norway (modelleret)'],
     ['autumn', 'Sol i dag', 'UV 1,8', 'solnedgang kl. 18.43', 'Kilde: MET Norway'],
-    ['autumn', 'Gaustabanen i dag', 'Åben', 'kl. 10 til 17', 'Kilde: Gaustabanen'],
+    ['autumn', 'Gaustabanen i dag', 'Åben', 'kl. 10 til 17', 'Kilde: Gaustabanen', 'https://gaustabanen.no/live-info#status-og-avganger'],
     ['autumn', 'Toppen af Gaustatoppen', '-4°', 'vind 15 m/s, 1883 m', 'Kilde: MET Norway (modelleret)']
   ];
   var YT_ID = 'NGGIyXwoSiU';
@@ -26,9 +28,10 @@
   function mount(el) {
     el.innerHTML = '<div class="nl-grid reveal">' +
       '<div class="live live-season nl-tiles"><div data-seasons="winter spring summer autumn" data-weather="tile"></div>' +
-      T.map(function (t) { return '<div data-seasons="' + t[0] + '"><small>' + t[1] + '</small><b class="num">' + t[2] + '</b><small>' + t[3] + '</small><small class="src">' + t[4] + '</small></div>'; }).join('') + '</div>' +
+      T.map(function (t) { return '<div data-seasons="' + t[0] + '"><small>' + t[1] + '</small><b class="num">' + t[2] + '</b><small>' + t[3] + '</small><small class="src">' + (t[5] ? '<a href="' + t[5] + '" target="_blank" rel="noopener">' + t[4] + '</a>' : t[4]) + '</small></div>'; }).join('') + '</div>' +
       '<div class="nl-cam"><div class="wc-frame"><div class="wc-img"><iframe title="Gausta LIVE (Norway Live på YouTube)" src="' + SRC + '" allow="autoplay; encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" tabindex="-1" style="position:absolute;left:-6%;top:-6%;width:112%;height:112%;border:0;pointer-events:none"></iframe>' +
-      '<div class="wc-cover" aria-hidden="true"></div><button type="button" class="wc-sound" aria-pressed="false">Slå lyd til</button></div><span class="wc-badge wc-live">Live</span></div></div></div>';
+      '<div class="wc-cover" aria-hidden="true"></div><button type="button" class="wc-sound" aria-pressed="false">Slå lyd til</button></div><span class="wc-badge wc-live">Live</span></div></div></div>' +
+      '<p class="nl-credit"><a href="https://fnugg.no/gausta/" target="_blank" rel="noopener"><img src="assets/web/logos/fnugg.svg" alt="fnugg" width="75" height="28"><span>Vær- og føredata er levert av fnugg, Yr, Meteorologisk institutt og NRK</span></a></p>';
     var fr = el.querySelector('iframe'), btn = el.querySelector('.wc-sound'), cover = el.querySelector('.wc-cover');
     function cmd(f) { try { fr.contentWindow.postMessage(JSON.stringify({ event: 'command', func: f, args: '' }), '*'); } catch (e) {} }
     btn.addEventListener('click', function () {

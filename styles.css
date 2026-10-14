@@ -1353,6 +1353,13 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 @media (max-width: 480px) { .nl-tiles.live-season { grid-template-columns: 1fr; } }
 .nl-tiles > div { min-width: 0; }
 .live [data-weather] .src, .nl-tiles [data-weather] .src { display: block; margin-top: 8px; }
+.nl-tiles .src a { color: inherit; }
+/* Fnuggs kildeangivelse (G93, 14. oktober 2026): kun når sne- og liftefliserne vises (vinter og forår) */
+.nl-credit { display: none; margin: 12px 0 0; font-size: .8rem; color: var(--muted); }
+.nl-credit a { color: inherit; display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.nl-credit img { height: 28px; width: auto; display: block; }
+html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [data-nu] .nl-credit,
+#e-nulive[data-live="winter"] .nl-credit, #e-nulive[data-live="spring"] .nl-credit { display: block; }
 
 /* Video i plantegningens rumpanel (13. oktober 2026) */
 .plan-video { position: relative; margin: 0; aspect-ratio: 16 / 9; border-radius: var(--radius-sm); overflow: hidden; background: #000; }
