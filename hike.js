@@ -22,13 +22,15 @@
   function gallery(r) {
     var im = r.imgs; if (!im || !im.length) return '';
     var cap = function (x) { return 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>'; };
-    return '<figure class="hk-fig" data-g="' + esc(r.id) + '"><img src="' + esc(im[0].u) + '" alt="' + esc(im[0].c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>' + cap(im[0]) + '</figcaption>' +
-      (im.length > 1 ? '<div class="hk-thumbs">' + im.map(function (x, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + '"><img src="' + esc(x.u) + '" alt="" loading="lazy" referrerpolicy="no-referrer"></button>'; }).join('') + '</div>' : '') + '</figure>';
+    var v0 = im[0].v ? ' data-vsrc="' + esc(im[0].v.src) + '" data-vposter="' + esc(im[0].v.poster) + '" data-vdur="' + esc(im[0].v.dur || '') + '"' : '';
+    return '<figure class="hk-fig" data-g="' + esc(r.id) + '"' + v0 + '><img src="' + esc(im[0].u) + '" alt="' + esc(im[0].c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>' + cap(im[0]) + '</figcaption>' +
+      (im.length > 1 ? '<div class="hk-thumbs">' + im.map(function (x, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + '"><img src="' + esc(x.u) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' + (x.v ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div>' : '') + '</figure>';
   }
   document.addEventListener('click', function (e) {
     var b = e.target.closest('.hk-thumb'); if (!b) return;
     var fig = b.closest('.hk-fig'), d = D(), r = d && d.routes.filter(function (x) { return x.id === fig.getAttribute('data-g'); })[0]; if (!r) return;
     var x = r.imgs[+b.dataset.i], img = fig.querySelector(':scope > img'); img.src = x.u; img.alt = x.c || r.name;
+    GL.Vid.set(fig, x.v || null);
     fig.querySelector('figcaption').innerHTML = 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>';
     [].forEach.call(fig.querySelectorAll('.hk-thumb'), function (t) { t.classList.toggle('on', t === b); });
   });

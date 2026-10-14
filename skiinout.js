@@ -28,6 +28,7 @@
     { id: 'langrend', name: 'Langrend', icon: 'wave', dist: '50 til 100 m', text: 'Her kommer du på langrendsløjpen.', pos: 'right' },
     { id: 'slalom', name: 'Slalom', icon: 'snow', dist: '50 til 100 m', text: 'Her kommer du på slalompisten.', pos: 'above' }
   ];
+  // Et element kan være en video: { v: {src, poster, thumb, dur}, alt: '...' } (se GL.Vid i app.js).
   // Ejerens egne fotos (oktober 2026), 2 pr. element. Vises øverst i kortene under kortet og i fanerne Langrend og Slalom.
   var PHOTOS = {
     langrend: [
@@ -41,18 +42,21 @@
       { f: 'skibod-inde', alt: 'Inde i smørebodden med smørebænke og siddebænke ved vinduet' }]
   };
   function photoSrc(p, i) {
+    if (p.v) return '<img src="' + p.v.poster + '" alt="' + p.alt + '" loading="lazy" decoding="async">';
     var b = 'assets/web/ski/' + p.f;
     return '<img src="' + b + '-m.webp" srcset="' + b + '-s.webp 480w, ' + b + '-m.webp 900w, ' + b + '.webp 1600w" sizes="(max-width: 860px) 100vw, 380px" alt="' + p.alt + '" loading="lazy" decoding="async">';
   }
   function gal(k) {
     var ph = PHOTOS[k];
-    return '<figure class="hk-fig sk-fig" data-k="' + k + '">' + photoSrc(ph[0]) + '<figcaption>Foto: ejerens egne fotos, oktober 2026</figcaption>' +
-      '<div class="hk-thumbs">' + ph.map(function (p, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + ' af 2"><img src="assets/web/ski/' + p.f + '-s.webp" alt="" loading="lazy"></button>'; }).join('') + '</div></figure>';
+    var v0 = ph[0].v ? ' data-vsrc="' + ph[0].v.src + '" data-vposter="' + ph[0].v.poster + '" data-vdur="' + (ph[0].v.dur || '') + '"' : '';
+    return '<figure class="hk-fig sk-fig" data-k="' + k + '"' + v0 + '>' + photoSrc(ph[0]) + '<figcaption>Foto: ejerens egne fotos, oktober 2026</figcaption>' +
+      '<div class="hk-thumbs">' + ph.map(function (p, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + ' af 2"><img src="' + (p.v ? p.v.thumb || p.v.poster : 'assets/web/ski/' + p.f + '-s.webp') + '" alt="" loading="lazy">' + (p.v ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div></figure>';
   }
   document.addEventListener('click', function (e) {
     var b = e.target.closest('.sk-fig .hk-thumb'); if (!b) return;
     var fig = b.closest('.sk-fig'), p = PHOTOS[fig.getAttribute('data-k')][+b.dataset.i], img = fig.querySelector(':scope > img'), base = 'assets/web/ski/' + p.f;
     img.src = base + '-m.webp'; img.srcset = base + '-s.webp 480w, ' + base + '-m.webp 900w, ' + base + '.webp 1600w'; img.alt = p.alt;
+    if (p.v) { img.removeAttribute('srcset'); GL.Vid.set(fig, p.v); } else GL.Vid.set(fig, null);
     [].forEach.call(fig.querySelectorAll('.hk-thumb'), function (t) { t.classList.toggle('on', t === b); });
   });
   // ---------- langrendskort (PDF-koordinater i pt; udsnit omkring tilgangen: x 120-340, y 380-545) ----------

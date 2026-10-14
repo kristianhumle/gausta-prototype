@@ -91,6 +91,11 @@
       <div class="hdr-frame hdr-desktop" data-w="1240" data-h="700"><iframe src="index.html" title="Galleri, desktop" loading="lazy" scrolling="no" data-hdr="section#galleri" style="width:1240px;height:700px;transform-origin:0 0"></iframe></div>
       <div class="hdr-label">Mobil (under 860 px)</div>
       <div class="hdr-frame hdr-mobile"><iframe src="index.html" title="Galleri, mobil" loading="lazy" scrolling="no" data-hdr="section#galleri" style="height:700px"></iframe></div>
+      <h4 style="margin:22px 0 6px" id="e-gallery-video">Video i galleriet (bygget 13. oktober 2026)</h4>
+      <p class="muted" style="margin:0 0 12px;font-size:.9rem">Et galleri-element kan være en <b>video</b> i stedet for et billede. Herunder er terrasse-videoen sat ind som prøve i et gitter og i et hovedbillede med miniaturer (som i Vandring og Ski-in / ski-out). <b>Computer:</b> hold musen over en video for en lydløs forhåndsvisning (afspilningsmærket skjules), klik åbner den med kontroller. <b>Telefon:</b> tryk afspiller den med kontroller. I gitteret åbner klik lysboksen, hvor man kan bladre mellem billeder og videoer.</p>
+      <div class="gallery" data-vid-demo-grid style="grid-auto-rows:130px"></div>
+      <div style="max-width:380px;margin-top:16px"><figure class="hk-fig" data-vid-demo-fig style="margin:0"><img src="assets/web/vinter/vinter-08-m.webp" alt="Fjeldet i vinterlys" style="height:200px"><figcaption>Hovedbillede med miniaturer: vælg miniaturen med afspilningsmærket</figcaption><div class="hk-thumbs"><button type="button" class="hk-thumb on" data-d="0" aria-label="Billede"><img src="assets/web/vinter/vinter-08-s.webp" alt=""></button><button type="button" class="hk-thumb" data-d="1" aria-label="Video"><img src="assets/web/video/terrasse-poster-s.jpg" alt=""><span class="pt-play" aria-hidden="true">&#9654;</span></button></div></figure></div>
+      <p class="muted" style="margin:10px 0 0;font-size:.82rem"><b>Regler (forslag):</b> korte klip (under ca. 20 sekunder, MP4, højst 1280 px, helst under 5 MB), et stillbillede pr. video, ingen automatisk lyd, forhåndsvisning kun på computer, en alt-tekst og en billedtekst pr. video. YouTube/Vimeo er ikke bygget, fordi det kræver samtykke. Plantegningens Terrasse-video (G72, G73) har sin egen, uændrede kode.</p>
       <div class="table-wrap" style="margin-top:18px"><table class="table">
         <tr><th>Emne</th><th>Beskrivelse</th></tr>
         <tr><td>Formål</td><td>Vise <b>stemning fra Gausta og omegn</b>. Kan bruges overalt hvor der skal billeder: forsiden, Området, Oplevelser, Ski-in/ski-out, gæsteområdet og senere sæsonsider. Ikke kun billeder af lejligheden (dem har plantegningen og lejlighedssiden)</td></tr>
@@ -639,6 +644,11 @@
   });
 })();
 </script>
+<script>document.addEventListener('gl:ready', function(){
+  var V={src:'assets/web/video/terrasse.mp4',poster:'assets/web/video/terrasse-poster.jpg',thumb:'assets/web/video/terrasse-poster-s.jpg',dur:'0:13'};
+  var g=document.querySelector('[data-vid-demo-grid]'); if(g) GL.buildGallery(g,[{k:'vinter/vinter-03',cls:'big',cap:'Langrend mod Gaustatoppen'},{k:'vinter/vinter-08',cap:'Fjeldet i vinterlys'},{v:V,cap:'Video: terrassen og udsigten',alt:'Video af terrassen med udsigt mod fjeldet'},{k:'efteraar/efteraar-01',cap:'Gaustatoppen set fra stien'}],{caps:true});
+  var f=document.querySelector('[data-vid-demo-fig]'); if(f) f.addEventListener('click',function(e){var b=e.target.closest('.hk-thumb'); if(!b) return; var vid=b.getAttribute('data-d')==='1'; f.querySelector(':scope > img').src= vid?V.poster:'assets/web/vinter/vinter-08-m.webp'; GL.Vid.set(f, vid?V:null); [].forEach.call(f.querySelectorAll('.hk-thumb'),function(t){t.classList.toggle('on',t===b);}); });
+});</script>
 <script>document.addEventListener('toggle',function(e){ if(e.target.tagName==='DETAILS') setTimeout(function(){ window.dispatchEvent(new Event('resize')); },50); },true);</script>
 </body>
 </html>

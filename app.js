@@ -106,6 +106,9 @@
     opts = opts || {};
     el.innerHTML = items.map(function (it, i) {
       var cls = (it.cls || '');
+      if (it.v) return '<a href="' + it.v.poster + '" data-lightbox data-video="' + it.v.src + '" data-vprev="' + it.v.src + '" data-cap="' + (it.cap || '') + '" data-cat="' + (it.cat || '') + '" class="gal-vid ' + cls + '">' +
+        '<img class="photo" loading="lazy" decoding="async" src="' + (it.v.thumb && !/big|tall|wide2|wide/.test(cls) ? it.v.thumb : it.v.poster) + '" alt="' + (it.alt || it.cap || '') + '">' + GL.Vid.badge(it.v.dur) +
+        (it.cap && opts.caps ? '<span class="cap">' + it.cap + '</span>' : '') + '</a>';
       return '<a href="' + GL.photo(it.k) + '" data-lightbox data-cap="' + (it.cap || '') + '" data-cat="' + (it.cat || '') + '" class="' + cls + '">' +
         '<img class="photo" loading="lazy" decoding="async" src="' + GL.photo(it.k, /big|tall|wide2|wide/.test(cls) ? 'm' : 's') + '" alt="' + (it.alt || it.cap || '') + '">' +
         (it.cap && opts.caps ? '<span class="cap">' + it.cap + '</span>' : '') + '</a>';
@@ -121,31 +124,88 @@
       else { h.classList.remove('has-photo'); h.style.backgroundImage = ''; }
     });
   }
+
+  /* ---------- Video i gallerier (13. oktober 2026, G74) ----------
+     Et galleri-element kan i stedet for et billede være en video: {v: {src, poster, thumb, dur}} (MP4 uden lyd eller kort med lyd, plus stillbillede).
+     - Fliser i gitteret (GL.buildGallery): afspilningsmærke, lydløs forhåndsvisning ved mouseover (kun computer), klik åbner lysboksen med kontroller.
+     - Hovedbillede med miniaturer (Vandring, Ski-in/ski-out): figur med data-vsrc/data-vposter/data-vdur får et lag over billedet (mouseover = forhåndsvisning, klik = afspil på stedet).
+     Plantegningens Terrasse-video (G72/G73) har sin egen, tidligere kode og er uændret. */
+  var PLAY_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>';
+  var canHover = matchMedia('(hover: hover)').matches;
+  GL.Vid = {
+    badge: function (dur) { return '<span class="vid-play" aria-hidden="true"><span>' + PLAY_SVG + '</span>' + (dur ? '<em>' + dur + '</em>' : '') + '</span>'; },
+    // sæt eller fjern videoen på en figur med hovedbillede (v = {src, poster, dur} eller null)
+    set: function (fig, v) {
+      var old = fig.querySelector(':scope > .vid-ov'); if (old) { if (old._ro) old._ro.disconnect(); old.remove(); }
+      var img = fig.querySelector(':scope > img');
+      if (!v) { fig.removeAttribute('data-vsrc'); fig.removeAttribute('data-vposter'); fig.removeAttribute('data-vdur'); fig.removeAttribute('data-vdone'); return; }
+      fig.setAttribute('data-vsrc', v.src); fig.setAttribute('data-vdone', '1');
+      if (v.poster && img) img.src = v.poster;
+      var ov = document.createElement('button'); ov.type = 'button'; ov.className = 'vid-ov'; ov.setAttribute('data-vprev', v.src); ov.setAttribute('data-vsrc', v.src);
+      ov.setAttribute('aria-label', 'Afspil video'); ov.innerHTML = GL.Vid.badge(v.dur);
+      fig.insertBefore(ov, img ? img.nextSibling : fig.firstChild);
+      if (img && window.ResizeObserver) { ov._ro = new ResizeObserver(function () { ov.style.height = img.offsetHeight + 'px'; }); ov._ro.observe(img); }
+      else if (img) ov.style.height = img.offsetHeight + 'px';
+    },
+    // figurer, der er rendret med data-vsrc (første element er en video), får laget efter indsættelse
+    scan: function (root) {
+      [].forEach.call((root || document).querySelectorAll('figure[data-vsrc]:not([data-vdone])'), function (fig) {
+        GL.Vid.set(fig, { src: fig.getAttribute('data-vsrc'), poster: fig.getAttribute('data-vposter'), dur: fig.getAttribute('data-vdur') });
+      });
+    }
+  };
+  function vidPrevStart(t) {
+    if (t._pv || t.classList.contains('vid-on')) return;
+    t._pv = document.createElement('video'); t._pv.className = 'vid-prev'; t._pv.muted = true; t._pv.loop = true; t._pv.playsInline = true; t._pv.src = t.getAttribute('data-vprev');
+    t.appendChild(t._pv); t.classList.add('vid-live');
+    var pr = t._pv.play(); if (pr && pr.catch) pr.catch(function () { vidPrevStop(t); });
+  }
+  function vidPrevStop(t) { if (t._pv) { t._pv.pause(); t._pv.remove(); t._pv = null; } t.classList.remove('vid-live'); }
+  if (canHover) {
+    document.addEventListener('mouseover', function (e) { var t = e.target.closest('[data-vprev]'); if (t) vidPrevStart(t); });
+    document.addEventListener('mouseout', function (e) { var t = e.target.closest('[data-vprev]'); if (t && !t.contains(e.relatedTarget)) vidPrevStop(t); });
+  }
+  document.addEventListener('click', function (e) {
+    var ov = e.target.closest('.vid-ov'); if (!ov || ov.classList.contains('vid-on')) return;
+    vidPrevStop(ov); ov.classList.add('vid-on'); ov.removeAttribute('data-vprev'); ov.innerHTML = '';
+    var v = document.createElement('video'); v.controls = true; v.playsInline = true; v.autoplay = true; v.src = ov.getAttribute('data-vsrc'); ov.appendChild(v);
+    var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); });
+  });
+  if (window.MutationObserver) {
+    var vq = false;
+    new MutationObserver(function () { if (vq) return; vq = true; requestAnimationFrame(function () { vq = false; GL.Vid.scan(); }); }).observe(document.documentElement, { childList: true, subtree: true });
+  }
   var lb, lbItems = [], lbIdx = 0;
+  function lbClose() { lb.classList.remove('open'); var v = lb.querySelector('video'); if (v) { v.pause(); v.removeAttribute('src'); v.load(); } }
   function lbShow(i) {
     lbIdx = (i + lbItems.length) % lbItems.length;
     var a = lbItems[lbIdx];
-    lb.querySelector('img').src = a.getAttribute('href');
-    lb.querySelector('figcaption').textContent = (a.getAttribute('data-cap') || '') + (lbItems.length > 1 ? '  (' + (lbIdx + 1) + '/' + lbItems.length + ')' : '') + '  ·  prototypebillede';
+    var im = lb.querySelector('img'), v = lb.querySelector('video'), vs = a.getAttribute('data-video');
+    v.pause();
+    if (vs) {
+      im.style.display = 'none'; v.style.display = 'block'; v.poster = a.getAttribute('href'); v.src = vs; v.muted = false;
+      var pr = v.play(); if (pr && pr.catch) pr.catch(function () { v.muted = true; v.play(); });
+    } else { v.removeAttribute('src'); v.load(); v.style.display = 'none'; im.style.display = ''; im.src = a.getAttribute('href'); }
+    lb.querySelector('figcaption').textContent = (a.getAttribute('data-cap') || '') + (lbItems.length > 1 ? '  (' + (lbIdx + 1) + '/' + lbItems.length + ')' : '') + (vs ? '  ·  prototypevideo' : '  ·  prototypebillede');
   }
   function lbOpen(a) {
     var group = a.closest('[data-gallery-group]') || a.parentElement;
     lbItems = [].slice.call(group.querySelectorAll('a[data-lightbox]')).filter(function (x) { return x.style.display !== 'none'; });
     if (!lb) {
       lb = document.createElement('div'); lb.className = 'lb'; lb.setAttribute('role', 'dialog'); lb.setAttribute('aria-modal', 'true');
-      lb.innerHTML = '<button class="x" aria-label="Luk">×</button><button class="prev" aria-label="Forrige">‹</button><button class="next" aria-label="Næste">›</button><figure><img alt=""><figcaption></figcaption></figure>';
+      lb.innerHTML = '<button class="x" aria-label="Luk">×</button><button class="prev" aria-label="Forrige">‹</button><button class="next" aria-label="Næste">›</button><figure><img alt=""><video controls playsinline style="display:none"></video><figcaption></figcaption></figure>';
       document.body.appendChild(lb);
       lb.addEventListener('click', function (e) {
         if (e.target.classList.contains('prev')) lbShow(lbIdx - 1);
         else if (e.target.classList.contains('next')) lbShow(lbIdx + 1);
-        else if (e.target.tagName !== 'IMG') lb.classList.remove('open');
+        else if (e.target.tagName !== 'IMG' && e.target.tagName !== 'VIDEO') lbClose();
       });
       var tx = null;
       lb.addEventListener('touchstart', function (e) { tx = e.changedTouches[0].clientX; }, { passive: true });
       lb.addEventListener('touchend', function (e) { if (tx === null) return; var dx = e.changedTouches[0].clientX - tx; tx = null; if (Math.abs(dx) > 50) lbShow(lbIdx + (dx < 0 ? 1 : -1)); }, { passive: true });
       document.addEventListener('keydown', function (e) {
         if (!lb.classList.contains('open')) return;
-        if (e.key === 'Escape') lb.classList.remove('open');
+        if (e.key === 'Escape') lbClose();
         if (e.key === 'ArrowLeft') lbShow(lbIdx - 1);
         if (e.key === 'ArrowRight') lbShow(lbIdx + 1);
       });
