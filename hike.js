@@ -189,7 +189,7 @@
         { h: 'Langrend', grp: 'Cirka 50 til 100 m', srcBase: 'assets/web/ski/langrend-skilt', alt: 'Skiltestolpe med løjper og løjpekort ved starten', cap: 'Foto: ejerens egne fotos, oktober 2026', t: 'Fra døren til langrendsløjpen. Skiltet viser blandt andet Skipsfjell rundt, Kvitåvatn og Langetjønn.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se langrend' },
         { h: 'Slalom', grp: 'Cirka 50 til 100 m', srcBase: 'assets/web/ski/slalom-skilt', alt: 'Grønt skilt med nr. 3 fra Gausta Skisenter ved stien', cap: 'Foto: ejerens egne fotos, oktober 2026', t: 'Fra døren til slalompisten. Her kommer du på pisten.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Se slalom' },
         { h: 'Se kortene', grp: 'Løjper, pister og fælleshus', img: 'assets/web/kort/ski-in-out-m.webp', alt: 'Luftfoto af området omkring lejligheden', cap: 'Prototypebillede (luftfoto)', t: 'Kort over området med afstande fra lejligheden. Se de store kort.', href: 'ski-in-ski-out.html#ski-in-out', more: 'Åbn kortene' }] },
-      { id: 'vandring', label: 'Vandring', icon: 'mountain', one: 'Til fods fra døren', intro: 'Til fods fra døren.', all: ['vandring.html', 'Se alle ture'], hideWinter: true, cards: hike },
+      { id: 'vandring', label: 'Vandring', icon: 'mountain', one: 'Til fods fra døren', intro: 'Til fods fra døren.', all: ['vandring.html', 'Se alle ture'], cards: hike },
       { id: 'oplev', label: 'Oplevelser', icon: 'pin', one: 'Tæt på, oplevelser og kalender', intro: 'Tæt på, oplevelser og kalender.', all: ['omraadet.html', 'Se Gausta og omegn'], cards: [
         { h: 'Tæt på', grp: 'Mad, indkøb og udstyr', img: OPLEV_IMG.stova, alt: 'Restaurant ved Gaustablikk', cap: 'Foto: gausta.com', t: 'Restauranter, butikker, skiudlejning og aktiviteter på Gausta, og det praktiske i Rjukan.', href: 'taet-paa.html', more: 'Se Tæt på' },
         { h: 'Oplevelser', grp: 'Rjukan og omegn', img: OPLEV_IMG.vemork, alt: 'Vemork ved Rjukan', cap: 'Foto: nia.no', t: 'Vemork, Rjukanbadet, Gaustatoppen og mere, med køretid fra lejligheden.', href: 'oplevelser.html', more: 'Se oplevelser' },
@@ -199,7 +199,7 @@
   function tabsEl(el) {
     var variant = el.getAttribute('data-variant') || 'pills', ALL = tabData(), cur = null;
     function winter() { return document.documentElement.getAttribute('data-season') === 'winter'; }
-    function list() { return ALL.filter(function (t) { return !(t.hideWinter && winter()); }); }
+    function list() { return ALL; } // alle faner er altid synlige (G76); årstiden vælger kun standardfanen
     function dflt() { return winter() ? 'ski' : 'vandring'; }
     function shell() {
       var L = list(), tabsHtml;
@@ -227,7 +227,7 @@
       var L = list(), i = L.map(function (t) { return t.id; }).indexOf(cur), n = L[(i + (e.key === 'ArrowRight' ? 1 : L.length - 1)) % L.length];
       show(n.id); var b = el.querySelector('[data-tab="' + n.id + '"]'); if (b) b.focus(); e.preventDefault();
     });
-    new MutationObserver(function () { shell(); show(dflt()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
+    new MutationObserver(function () { show(dflt()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
   document.addEventListener('gl:ready', function () {
