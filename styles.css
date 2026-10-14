@@ -1399,3 +1399,11 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .hk-ph svg { width: 14px; height: 14px; fill: #fff; }
 .hk-ph.hk-ph-v { background: var(--text); }
 .hk-ph:hover, .hk-ph:focus-visible { transform: translate(-50%, -50%) scale(1.15); z-index: 3; }
+
+/* Vandring: kortet har samme størrelse for alle ture (14. oktober 2026, G80). Panelet ruller, hvis det er højere. */
+@media (min-width: 861px) {
+  .hk-grid { align-items: start; }
+  .hk-stage { height: 640px; min-height: 640px; }
+  .hk-wrap { min-height: 0; height: 100%; }
+  .hk-panel { max-height: 640px; overflow-y: auto; }
+}
