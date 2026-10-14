@@ -8,7 +8,7 @@
   function km(m) { return (m / 1000).toFixed(1).replace('.', ',') + ' km'; }
   function chip(g) { var x = GRADE[g]; return x ? '<span class="hk-grade" style="--c:' + x[1] + '">' + x[0] + '</span>' : ''; }
   // højst to links pr. tur, og ikke Gausta.com (14. oktober 2026, G79)
-  function links(r) { return (r.links || []).filter(function (l) { return !/^Gausta\.com/i.test(l.t); }).slice(0, 2).map(function (l) { return '<a class="btn btn-ghost btn-sm" href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t) + ' <span aria-hidden="true">↗</span></a>'; }).join(''); }
+  function links(r) { return (r.links || []).filter(function (l) { return !/^Gausta\.com/i.test(l.t); }).slice(0, 2).map(function (l) { return '<a class="btn btn-ghost btn-sm" href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t.replace(/\s*\(.*\)\s*$/, '')) + ' <span aria-hidden="true">↗</span></a>'; }).join(''); }
   function fromApt(r) {
     var f = r.fromApt; if (!f) return '';
     var s = 'ca. ' + (f.airM < 1000 ? Math.round(f.airM / 10) * 10 + ' m' : km(f.airM)) + ' i luftlinje';
