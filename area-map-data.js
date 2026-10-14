@@ -1,4 +1,4 @@
-/* Kortgrundlag og steder til Området-elementet. GENERERET af tools/build-map.py (12.10.2026). Ret ikke i hånden.
+/* Kortgrundlag og steder til Området-elementet. GENERERET af tools/build-map.py (14.10.2026). Ret ikke i hånden.
    Rediger i stedet tools/maps.json (kort, kategorier, grupper, stil) og tools/data/area-pois.json (steder), og kør:
    python3 tools/build-map.py build. Beskrivelse: teknisk/kortgenerator.md
    Veje, bygninger og vand er omtegnet fra åbne kortdata (OpenStreetMap contributors, ODbL). OSM-data hentet 2026-07-15T15:22:01Z, 2026-10-10T07:21:39Z, 2026-10-10T07:22:41Z.
