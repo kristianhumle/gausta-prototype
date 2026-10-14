@@ -97,7 +97,7 @@
       if (r0 && r0.startXY) s += '<circle class="hk-start" cx="' + r0.startXY[0] + '" cy="' + r0.startXY[1] + '" r="1"/>';
       return s + '<g class="hk-lbls"></g></svg><div class="am-pins hk-pins"><span class="am-apt hk-apt" role="img" aria-label="Lejligheden">' + GL.icon('home') + '<span class="am-l am-l-apt">Lejligheden</span></span></div>';
     }
-    // billeder og videoer med GPS på den valgte tur: små markører, som åbner mediet i fuld visning
+    // GPS-markører til billeder og videoer er fjernet fra kortet 14. oktober 2026; billederne vises kun i turens galleri
     function mediaItems(r) { return (r.imgs || []).map(function (x) { return x.v ? { href: x.v.poster, video: x.v.src, cap: x.c } : { href: x.f || x.u, cap: x.c }; }); }
     function mediaPins(r) {
       if (!r || !r.imgs) return '';
