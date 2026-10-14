@@ -134,10 +134,13 @@
   var canHover = matchMedia('(hover: hover)').matches;
   GL.Vid = {
     // åbner én video i lysboksen (fuld visning)
-    lightbox: function (src, poster, cap) {
-      var box = document.createElement('div'), a = document.createElement('a');
-      a.href = poster; a.setAttribute('data-lightbox', ''); a.setAttribute('data-video', src); a.setAttribute('data-cap', cap || '');
-      box.appendChild(a); lbOpen(a);
+    lightbox: function (src, poster, cap) { GL.Vid.gallery([{ href: poster, video: src, cap: cap }], 0); },
+    // åbner lysboksen på en liste af {href, cap, video?} (billeder og videoer), startende ved idx
+    gallery: function (items, idx) {
+      var box = document.createElement('div'), as = items.map(function (it) {
+        var a = document.createElement('a'); a.href = it.href; a.setAttribute('data-lightbox', ''); if (it.video) a.setAttribute('data-video', it.video); a.setAttribute('data-cap', it.cap || ''); box.appendChild(a); return a;
+      });
+      lbOpen(as[idx || 0]);
     },
     badge: function (dur) { return '<span class="vid-play" aria-hidden="true"><span>' + PLAY_SVG + '</span>' + (dur ? '<em>' + dur + '</em>' : '') + '</span>'; },
     // sæt eller fjern videoen på en figur med hovedbillede (v = {src, poster, dur} eller null)

@@ -19,19 +19,28 @@
     var rows = [['Afstand', r.dist], ['Stigning', r.ascent], ['Tid', r.time], ['Start', r.start], ['Fra lejligheden', fromApt(r)]];
     return '<dl class="hk-facts">' + rows.filter(function (x) { return x[1] && x[1] !== 'ikke oplyst'; }).map(function (x) { return '<div><dt>' + x[0] + '</dt><dd>' + esc(x[1]) + '</dd></div>'; }).join('') + '</dl>';
   }
+  /* Billeder og videoer pr. tur (r.imgs). Ejerens egne ({own: true}) har en tekst som kilde og et fuldt billede (f) til lysboksen;
+     lånte billeder har kilde og link. Video: {v: {src, poster, thumb, dur}} (se GL.Vid i app.js). */
+  function capOf(x) { return x.own ? esc(x.k) : 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>'; }
   function gallery(r) {
     var im = r.imgs; if (!im || !im.length) return '';
-    var cap = function (x) { return 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>'; };
     var v0 = im[0].v ? ' data-vsrc="' + esc(im[0].v.src) + '" data-vposter="' + esc(im[0].v.poster) + '" data-vdur="' + esc(im[0].v.dur || '') + '"' : '';
-    return '<figure class="hk-fig" data-g="' + esc(r.id) + '"' + v0 + '><img src="' + esc(im[0].u) + '" alt="' + esc(im[0].c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>' + cap(im[0]) + '</figcaption>' +
-      (im.length > 1 ? '<div class="hk-thumbs">' + im.map(function (x, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + '"><img src="' + esc(x.u) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' + (x.v ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div>' : '') + '</figure>';
+    return '<figure class="hk-fig" data-g="' + esc(r.id) + '"' + v0 + '><img src="' + esc(im[0].u) + '" alt="' + esc(im[0].c || r.name) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"' + (im[0].f ? ' data-zoom="0"' : '') + '><figcaption>' + capOf(im[0]) + '</figcaption>' +
+      (im.length > 1 ? '<div class="hk-thumbs">' + im.map(function (x, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="' + esc(x.v ? 'Vis video: ' + (x.c || '') : 'Vis billede ' + (i + 1)) + '"><img src="' + esc(x.s || x.u) + '" alt="" loading="lazy" referrerpolicy="no-referrer">' + (x.v ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div>' : '') + '</figure>';
   }
   document.addEventListener('click', function (e) {
+    var z = e.target.closest('.hk-fig > img[data-zoom]');
+    if (z) { // klik på et eget billede: fuld visning (lysboksen) med bladring mellem tur-ens billeder og videoer
+      var fig0 = z.closest('.hk-fig'), d0 = D(), r0 = d0 && d0.routes.filter(function (x) { return x.id === fig0.getAttribute('data-g'); })[0];
+      if (r0) GL.Vid.gallery(r0.imgs.map(function (x) { return x.v ? { href: x.v.poster, video: x.v.src, cap: x.c } : { href: x.f || x.u, cap: x.c }; }), +z.getAttribute('data-zoom'));
+      return;
+    }
     var b = e.target.closest('.hk-thumb'); if (!b) return;
     var fig = b.closest('.hk-fig'), d = D(), r = d && d.routes.filter(function (x) { return x.id === fig.getAttribute('data-g'); })[0]; if (!r) return;
     var x = r.imgs[+b.dataset.i], img = fig.querySelector(':scope > img'); img.src = x.u; img.alt = x.c || r.name;
+    if (x.f && !x.v) img.setAttribute('data-zoom', b.dataset.i); else img.removeAttribute('data-zoom');
     GL.Vid.set(fig, x.v || null);
-    fig.querySelector('figcaption').innerHTML = 'Foto: <a href="' + esc(x.l) + '" target="_blank" rel="noopener">' + esc(x.k) + '</a>';
+    fig.querySelector('figcaption').innerHTML = capOf(x);
     [].forEach.call(fig.querySelectorAll('.hk-thumb'), function (t) { t.classList.toggle('on', t === b); });
   });
   function D() { return window.GL && GL.AREAMAP && GL.AREAMAP.hike; }
@@ -182,7 +191,7 @@
     var pick = function (id) { return routes.filter(function (r) { return r.id === id; })[0]; };
     var hike = ['skipsfjell', 'kvitaavatn-rundt', 'stavsro'].map(pick).filter(Boolean).map(function (r) {
       var im = r.imgs && r.imgs[0];
-      return { h: r.name, grp: r.group, grade: r.grade, img: im ? im.u : '', alt: im ? (im.c || r.name) : r.name, cap: im ? 'Foto: ' + im.k : '', t: [r.dist, r.time].filter(function (x) { return x && x.indexOf('ikke oplyst') < 0; }).join(' · '), href: 'vandring.html#' + r.id, more: 'Se turen på kortet' };
+      return { h: r.name, grp: r.group, grade: r.grade, img: im ? im.u : '', alt: im ? (im.c || r.name) : r.name, cap: im ? (im.own ? im.k : 'Foto: ' + im.k) : '', t: [r.dist, r.time].filter(function (x) { return x && x.indexOf('ikke oplyst') < 0; }).join(' · '), href: 'vandring.html#' + r.id, more: 'Se turen på kortet' };
     });
     return [
       { id: 'ski', label: 'Ski-in / ski-out', icon: 'snow', one: 'Fra døren til løjpe og pist', intro: 'Fra døren til løjpe og pist.', all: ['ski-in-ski-out.html', 'Se ski-in / ski-out'], cards: [

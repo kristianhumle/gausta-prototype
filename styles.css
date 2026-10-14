@@ -1385,3 +1385,5 @@ html[data-season="winter"] [data-hide-winter] { display: none; }
 .lb video { max-width: 100%; max-height: 80vh; border-radius: 8px; margin: 0 auto; background: #000; }
 /* video: klik åbner fuld visning (lysboksen), derfor ingen indlejrede kontroller */
 .vid-ov.vid-on { background: transparent; }
+/* Vandring: egne billeder kan forstørres (klik) */
+.hk-fig > img[data-zoom] { cursor: zoom-in; }
