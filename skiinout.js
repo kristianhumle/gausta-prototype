@@ -49,7 +49,7 @@
   function gal(k) {
     var ph = PHOTOS[k];
     var v0 = ph[0].v ? ' data-vsrc="' + ph[0].v.src + '" data-vposter="' + ph[0].v.poster + '" data-vdur="' + (ph[0].v.dur || '') + '"' : '';
-    return '<figure class="hk-fig sk-fig" data-k="' + k + '"' + v0 + '>' + photoSrc(ph[0]) + '<figcaption>Foto: ejerens egne fotos, oktober 2026</figcaption>' +
+    return '<figure class="hk-fig sk-fig" data-k="' + k + '"' + v0 + '>' + photoSrc(ph[0]) + 
       '<div class="hk-thumbs">' + ph.map(function (p, i) { return '<button type="button" class="hk-thumb' + (i ? '' : ' on') + '" data-i="' + i + '" aria-label="Vis billede ' + (i + 1) + ' af 2"><img src="' + (p.v ? p.v.thumb || p.v.poster : 'assets/web/ski/' + p.f + '-s.webp') + '" alt="" loading="lazy">' + (p.v ? '<span class="pt-play" aria-hidden="true">&#9654;</span>' : '') + '</button>'; }).join('') + '</div></figure>';
   }
   document.addEventListener('click', function (e) {
@@ -111,13 +111,12 @@
         }).join('') +
         '<div class="card" data-keep="1">' + gal('skibod') + '<div class="ico-box">' + GL.icon('cabin') + '</div><div class="kicker">Fra lejligheden</div>' +
           '<h3>Fælleshus med smørebod</h3><div class="sio-dist">Cirka 20 m</div><p class="muted">Fælles smørebod med smørebænke og stativer, som beboerne kan bruge. Markeret på kortet.</p></div>' +
-      '</div>' +
-      '<p class="faint sio-note">Afstande er ejerens angivelse (3. oktober 2026). Fælleshusets placering er ejerens markering. Slalompistens og langrendsløjpens forløb (blå og lilla) er tegnet ud fra luftfotoet og ejerens beskrivelse, cirka, skal verificeres. ' + (drawn ? 'Tegnet kort: veje og bygninger er omtegnet som egne linjer ud fra et terrænkort. Skematisk, ikke målfast. Bygningernes form og placering er aflæst af kortet.' : 'Luftfoto: prototypebillede, kilde og rettigheder skal afklares før endelig brug.') + '</p>';
+      '</div>';
   }
 
   var GAUSTA_KART = 'https://www.gausta.com/kart/';
   function kartLink(label) {
-    return '<p class="sio-more"><a class="btn btn-ghost btn-sm" href="' + GAUSTA_KART + '" target="_blank" rel="noopener">' + label + ' <span aria-hidden="true">↗</span></a><span class="faint"> Åbner gausta.com i en ny fane</span></p>';
+    return '<p class="sio-more"><a class="btn btn-ghost btn-sm" href="' + GAUSTA_KART + '" target="_blank" rel="noopener">' + label + ' <span aria-hidden="true">↗</span></a></p>';
   }
   function langrendPanel() {
     var ax = (LK.access[0] - LK.x0) / LK.w, ay = (LK.access[1] - LK.y0) / LK.h;
