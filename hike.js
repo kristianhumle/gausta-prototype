@@ -253,7 +253,15 @@
     new MutationObserver(function () { show(dflt()); }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-season'] });
   }
 
+  /* ---------- Én fane fra den samlede teaser alene, fx Vandring på Området (16. oktober 2026) ----------
+     Samme kort og samme udseende som fanen på forsiden, men uden fanevælger. data-tab vælger fanen (standard: vandring). */
+  function oneTab(el) {
+    var t = tabData().filter(function (x) { return x.id === (el.getAttribute('data-tab') || 'vandring'); })[0]; if (!t) return;
+    el.innerHTML = '<div class="tz tz-pills"><div class="tz-head"><div><p class="eyebrow">' + esc(t.label) + '</p><h2 class="tz-h">' + esc(t.intro) + '</h2></div>' +
+      '<a class="btn btn-ghost" href="' + t.all[0] + '">' + esc(t.all[1]) + '</a></div><div class="tz-panel"><div class="hk-cards">' + t.cards.map(tcard).join('') + '</div></div></div>';
+  }
+
   document.addEventListener('gl:ready', function () {
-    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, tabs: tabsEl })[k](el); });
+    [].forEach.call(document.querySelectorAll('[data-hike]'), function (el) { var k = el.getAttribute('data-hike'); ({ cards: cards, map: map, table: table, season: season, tabs: tabsEl, teaser: oneTab })[k](el); });
   });
 })();
