@@ -11,7 +11,7 @@
       photos: [[L(17),'Entré med garderobe'],[L(28),'Entré med bænk'],[L(2),'Gang'],[L(13),'Skirum']] },
     { id: 'sov1', name: 'Soveværelse 1', dim: '6 m²', desc: 'Soveværelse med dobbeltseng, lænestol og vindue.', poly: [[552,212],[668,212],[668,318],[552,318]], label: [610,262], pin: [653,227],
       photos: [[L(7),'Soveværelse'],[L(29),'Soveværelse, sengebord']] },
-    { id: 'sov2', name: 'Soveværelse 2', dim: '5 m²', desc: 'Lille soveværelse med køjeseng.', poly: [[750,212],[860,212],[860,312],[750,312]], label: [805,262], pin: [845,227],
+    { id: 'sov2', name: 'Soveværelse 2', dim: '5 m²', desc: 'Soveværelse med tre senge: 150x200, 90x200 og 75x170 cm.', poly: [[750,212],[860,212],[860,312],[750,312]], label: [805,262], pin: [845,227],
       photos: [[L(10),'Køjeseng']] },
     { id: 'bad', name: 'Bad', dim: '4 m²', desc: 'Badeværelse med bruser, vask og vaskemaskine.', poly: [[750,312],[860,312],[860,390],[750,390]], label: [805,342], pin: [845,327],
       photos: [[L(9),'Bad med vaskemaskine'],[L(23),'Bad'],[L(6),'Bad, detalje'],[L(22),'Håndklæder']] },

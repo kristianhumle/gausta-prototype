@@ -40,7 +40,7 @@ window.GL_INVENTORY = {
       { n: 'Dobbeltseng, 150x200 cm', d: '2 sengepladser.', g: 3, s: 'ejer' }, { n: 'Lænestol', g: 0, s: 'verify' },
       { n: 'Dyner, puder og sengetøj', d: 'Medfølger ikke fra sælger. Hvem leverer, afklares.', g: 3, s: 'verify' }
     ] },
-    { id: 'sov2', name: 'Soveværelse 2', dim: '5 m²', blurb: 'Soveværelse med 4 sengepladser.', items: [
+    { id: 'sov2', name: 'Soveværelse 2', dim: '5 m²', blurb: 'Soveværelse med tre senge og 4 sengepladser.', items: [
       { n: 'Dobbeltseng, 150x200 cm', d: '2 sengepladser.', g: 3, s: 'ejer' },
       { n: 'Enkeltseng, 90x200 cm', d: '1 sengeplads.', g: 3, s: 'ejer' },
       { n: 'Juniorseng, 75x170 cm', d: '1 sengeplads, bedst til et barn.', g: 3, s: 'ejer' },
