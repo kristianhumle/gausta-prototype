@@ -3,8 +3,10 @@
    placering og seneste værdi oven på. Placeringerne er cirka og skal verificeres ved installationen.
    Hardware (Brugeroplysning, bestilling 1. oktober 2026): 2 x Environmental Sensor (badeværelse og
    terrasse), 2 x All-In-One Sensor (hoveddør og terrassedør), SuperLink Gateway og Dream Router 7.
-   Net- og routerstatus: placeret i entréen efter ejerens ønske. Røgalarm er ikke bestilt (udsolgt),
-   og lækagesensor ved opvaskemaskinen er fravalgt. */
+   Net- og routerstatus: placeret i entréen efter ejerens ønske. Lækagesensor ved opvaskemaskinen er fravalgt.
+   Tilføjet 16. oktober 2026 (Brugeroplysning, ejerens skitse): Eva-fugtmåler ved køkkenbordet, Eva-røgdetektor
+   i stuen, to Eva-termostater (stuen og TV-stuen), SuperLink Gateway i stuen og internetstikket i stuens hjørne.
+   Mærke, model og forbindelse for Eva-enhederne er ikke oplyst, så værdierne er eksempler. */
 (function () {
   'use strict';
 
@@ -34,19 +36,42 @@
       rows: [['Temperatur', '-3,1 °C', 'good'], ['Luftfugtighed', '82 %'], ['Lys', 'Dagslys (eksempel)'], ['Batteri', '66 %', 'good'], ['Forbindelse', 'Online', 'good']],
       spark: [-6.2, -6.4, -6.8, -7.0, -7.1, -6.9, -6.5, -6.0, -5.2, -4.4, -3.8, -3.2, -2.8, -2.6, -2.9, -3.3, -3.6, -3.4, -3.2, -3.1, -3.0, -3.0, -3.1, -3.1],
       note: 'Udendørs sensor. Kan komme under sin nedre grænse på -20 °C (Inference), og så mangler data.' },
-    { id: 'net', kind: 'net', name: 'Net og Wi-Fi', model: 'Dream Router 7 og SuperLink Gateway', where: 'Entréen', pos: [722, 316], lab: [0, 0], noLabel: true, layers: ['net'], st: 'good',
+    { id: 'net', kind: 'net', name: 'Net og Wi-Fi', model: 'Dream Router 7', where: 'Entréen', pos: [722, 316], lab: [0, 0], noLabel: true, layers: ['net'], st: 'good',
       main: { net: 'Online', all: 'Online' },
       rows: [['Internet', 'Online', 'good'], ['Svartid', '14 ms'], ['Hastighed ned / op', '248 / 47 Mbit/s'], ['Wi-Fi-enheder', '2'], ['Sensor-gateway', 'Forbundet', 'good'], ['Oppetid', '12 dage']],
-      note: 'Hvis nettet er nede, mangler al sensordata (Inference). Abonnementstype og hastighed er ikke oplyst, og der er ikke valgt 5G-backup.' }
+      note: 'Hvis nettet er nede, mangler al sensordata (Inference). Abonnementstype og hastighed er ikke oplyst, og der er ikke valgt 5G-backup.' },
+    { id: 'usl', kind: 'hub', name: 'Sensor-gateway', model: 'SuperLink Gateway (USL)', where: 'Stuen, ved vinduesvæggen', pos: [672, 657], lab: [0, 0], noLabel: true, layers: ['net'], st: 'good',
+      main: { net: 'Forbundet', all: 'Forbundet' },
+      rows: [['Status', 'Forbundet', 'good'], ['Tilknyttede sensorer', '4'], ['Forbindelse til router', 'OK', 'good'], ['Oppetid', '12 dage']],
+      note: 'Samler UniFi-sensorerne trådløst. Er den nede, mangler data fra døre, badeværelse og terrasse (Inference).' },
+    { id: 'inet', kind: 'inet', name: 'Internetstik', model: 'Indgang for internet (abonnement ikke oplyst)', where: 'Stuens hjørne mod terrassen', pos: [562, 653], lab: [0, 0], noLabel: true, layers: ['net'], st: 'good',
+      main: { net: 'Forbindelse', all: 'Forbindelse' },
+      rows: [['Linje', 'Forbindelse', 'good'], ['Abonnement', 'Ikke oplyst'], ['Backup-forbindelse', 'Ingen']],
+      note: 'Der hvor internettet kommer ind i lejligheden. Status aflæses via routeren. Type og hastighed på abonnementet er ikke oplyst.' },
+    { id: 'eva-fugt', kind: 'leak', name: 'Fugtmåler', model: 'Eva (model ikke oplyst)', where: 'Køkkenet, ved enden af køkkenbordet', pos: [660, 352], lab: [26, 4], labAnchor: 'start', layers: ['temp', 'safety'], st: 'good',
+      main: { temp: '46 %', safety: '46 %', all: '46 %' },
+      rows: [['Luftfugtighed', '46 %', 'good'], ['Temperatur', '20,6 °C'], ['Batteri', 'Ikke oplyst'], ['Forbindelse', 'Online (eksempel)', 'good']],
+      note: 'Hvad måleren præcist måler (luftfugtighed eller vand på gulvet), og hvordan den sender data, er ikke oplyst. Værdierne er eksempler.' },
+    { id: 'eva-roeg', kind: 'smoke', name: 'Røgdetektor', model: 'Eva (model ikke oplyst)', where: 'Stuen, ved søjlen mellem køkken og entré', pos: [683, 405], lab: [24, 4], labAnchor: 'start', layers: ['safety'], st: 'good',
+      main: { safety: 'Ingen røg', all: 'Ingen røg' },
+      rows: [['Røg', 'Ingen', 'good'], ['Sidste selvtest', 'Ikke oplyst'], ['Batteri', 'Ikke oplyst'], ['Forbindelse', 'Online (eksempel)', 'good']],
+      note: 'Røg er en alarm. Operatøren kræver røgalarmer (S15, bilag 1). Om detektoren kan sende alarm videre til back-office, afhænger af model og forbindelse (ikke oplyst).' },
+    { id: 'eva-term-stue', kind: 'thermo', name: 'Termostat, stuen', model: 'Eva (model ikke oplyst)', where: 'Stuen, ved vinduesvæggen', pos: [612, 655], lab: [0, -21], layers: ['temp'], st: 'good',
+      main: { temp: '20,5 °C', all: '20,5 °C' },
+      rows: [['Målt', '20,5 °C', 'good'], ['Indstillet', '21,0 °C'], ['Tilstand', 'Opvarmer (eksempel)'], ['Forbindelse', 'Online (eksempel)', 'good']],
+      note: 'Termostater gør det muligt at sænke varmen, når lejligheden står tom (strøm betales af ejeren, S15 §4.4). Om de kan styres fra back-office, er ikke afklaret.' },
+    { id: 'eva-term-tv', kind: 'thermo', name: 'Termostat, TV-stuen', model: 'Eva (model ikke oplyst)', where: 'TV-stuen, på ydervæggen', pos: [852, 598], lab: [-24, 4], labAnchor: 'end', layers: ['temp'], st: 'good',
+      main: { temp: '19,0 °C', all: '19,0 °C' },
+      rows: [['Målt', '19,0 °C', 'good'], ['Indstillet', '19,0 °C'], ['Tilstand', 'Holder (eksempel)'], ['Forbindelse', 'Online (eksempel)', 'good']],
+      note: 'Se termostaten i stuen.' }
   ];
 
   // Sensorer, der ikke er installeret. Vises tonet, så ejeren ser, hvad der mangler.
   var GHOSTS = [
-    { id: 'roeg', kind: 'smoke', name: 'Røgalarm', pos: [610, 470], why: 'Ikke bestilt (USL-Smoke var udsolgt)', where: 'Stuen' },
     { id: 'opvask', kind: 'leak', name: 'Lækage ved opvaskemaskine', pos: [604, 336], why: 'Fravalgt, vurderet som høj risiko', where: 'Køkkenet' }
   ];
 
-  var LAYERS = [['all', 'Alle'], ['door', 'Døre'], ['temp', 'Temperatur og fugt'], ['net', 'Net og Wi-Fi']];
+  var LAYERS = [['all', 'Alle'], ['door', 'Døre'], ['temp', 'Temperatur og fugt'], ['safety', 'Røg og fugt'], ['net', 'Net og Wi-Fi']];
   var STT = { good: 'OK', warn: 'Advarsel', bad: 'Alarm' };
 
   // Små ikoner, tegnet ud fra (0,0).
@@ -55,7 +80,10 @@
     env: '<path d="M-1.6 -6.5a1.6 1.6 0 0 1 3.2 0V1.4a3.2 3.2 0 1 1-3.2 0Z"/>',
     net: '<path d="M-6.5 -1.5a9 9 0 0 1 13 0M-4 1.2a5.4 5.4 0 0 1 8 0"/><path d="M0 4.8h.01" stroke-width="2.4"/>',
     smoke: '<circle r="5.5"/><path d="M-2.4 0h4.8M-1.2 -2.6h2.4M-1.2 2.6h2.4"/>',
-    leak: '<path d="M0 -6.4C2.6 -2.8 4.2 -.8 4.2 1.6a4.2 4.2 0 0 1-8.4 0C-4.2 -.8 -2.6 -2.8 0 -6.4Z"/>'
+    leak: '<path d="M0 -6.4C2.6 -2.8 4.2 -.8 4.2 1.6a4.2 4.2 0 0 1-8.4 0C-4.2 -.8 -2.6 -2.8 0 -6.4Z"/>',
+    thermo: '<circle r="5.8"/><path d="M0 0L2.8 -2.8"/><path d="M0 0h.01" stroke-width="2.4"/>',
+    hub: '<rect x="-6" y="-3.6" width="12" height="7.2" rx="2"/><path d="M-2.6 0h.01M0 0h.01M2.6 0h.01" stroke-width="2.2"/>',
+    inet: '<circle r="5.8"/><path d="M-5.8 0h11.6M0 -5.8c2.2 2.4 2.2 9.2 0 11.6M0 -5.8c-2.2 2.4-2.2 9.2 0 11.6"/>'
   };
   function ico(kind) { return '<g class="si" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' + ICON[kind] + '</g>'; }
 
