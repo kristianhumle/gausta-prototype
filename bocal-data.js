@@ -25,7 +25,8 @@ window.BOCAL = {
     { s: 'high', from: '2027-12-21', to: '2027-12-31' }
   ],
 
-  // De 6 højsæsonuger (Brugeroplysning, 16. oktober 2026). from = ankomst, to = afrejse.
+  // De 6 højsæsonuger fra Gausta Hytteleie: ugerne med størst indtjening (Brugeroplysning, 16. oktober 2026). from = ankomst, to = afrejse.
+  highSrc: 'Gausta Hytteleie',
   highWeeks: [
     { name: 'Jul', from: '2026-12-20', to: '2026-12-27' },
     { name: 'Nytår', from: '2026-12-27', to: '2027-01-03' },
@@ -57,7 +58,9 @@ window.BOCAL = {
     { c: 'SE', name: 'Höstlov vecka 44', region: 'Göteborg, Malmö, Täby (Stockholms län) m.fl.', from: '2026-10-24', to: '2026-11-01', lab: 'Fakta', src: 'Göteborgs Stad og Täby kommun, nämndhandlingar' },
     { c: 'SE', name: 'Jullov', region: 'Malmö', from: '2026-12-23', to: '2027-01-10', lab: 'Kildepåstand', src: 'malmo.se (søgeresultat)' },
     { c: 'SE', name: 'Sportlov vecka 7', region: 'Göteborg', from: '2027-02-13', to: '2027-02-21', lab: 'Fakta', src: 'Göteborgs Stad, läsårstider 2026/27' },
+    { c: 'SE', name: 'Sportlov vecka 8', region: 'Malmö og Uppsala (bl.a. Skåne og Mellansverige)', from: '2027-02-20', to: '2027-02-28', lab: 'Fakta', src: 'malmo.se (kommunale gymnasier) og uppsala.se, läsårstider 2026/27' },
     { c: 'SE', name: 'Sportlov vecka 9', region: 'Täby og Köping (bl.a. Stockholms län)', from: '2027-02-27', to: '2027-03-07', lab: 'Fakta', src: 'Täby kommun (forslag) og koping.se' },
+    { c: 'SE', name: 'Sportlov vecka 10', region: 'Norrland (fx Västerbotten og Norrbotten)', from: '2027-03-06', to: '2027-03-14', lab: 'Inference', src: 'Fast mønster (nordligste län har vecka 10). Ingen kommune fundet med offentliggjort plan for 2027' },
     { c: 'SE', name: 'Påsklov', region: 'Göteborg og Täby', from: '2027-03-26', to: '2027-04-04', lab: 'Fakta', src: 'Göteborgs Stad og Täby kommun' },
     { c: 'SE', name: 'Höstlov vecka 44', region: 'De fleste kommuner', from: '2027-10-30', to: '2027-11-07', lab: 'Inference', src: 'Fast mønster (vecka 44), ikke bekræftet for 2027' }
   ]

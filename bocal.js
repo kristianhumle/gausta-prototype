@@ -64,7 +64,7 @@
       [['season', 'Sæson'], ['high', 'Højsæsonuger'], ['hol', 'Helligdage'], ['school', 'Skoleferier']].map(function (l) { return '<button type="button" class="filter" data-layer="' + l[0] + '" aria-pressed="true">' + l[1] + '</button>'; }).join('') +
       '</div><div class="plan-pills" role="group" aria-label="Vis lande" style="margin:0">' + CC.map(function (c) { return '<button type="button" class="filter" data-cc="' + c + '" aria-pressed="true">' + c + '</button>'; }).join('') + '</div></div>' +
       '<div class="cal-grid bc-grid" role="grid" aria-label="Månedskalender"></div>' +
-      '<p class="faint cal-legend"><span><i class="bc-sw low"></i> Lavsæson</span><span><i class="bc-sw ord"></i> Ordinær</span><span><i class="bc-sw high"></i> Højsæson</span><span><i class="bc-sw hw"></i> Højsæsonuge</span><span><b class="bc-tag">NO</b> helligdag</span><span><span class="bc-bar sample">SE</span> skoleferie</span><span>Sæson ifølge Gausta utleie, for lejligheder. Klik på en dag for detaljer.</span></p>' +
+      '<p class="faint cal-legend"><span><i class="bc-sw low"></i> Lavsæson</span><span><i class="bc-sw ord"></i> Ordinær</span><span><i class="bc-sw high"></i> Højsæson</span><span><i class="bc-sw hw"></i> <b>Højsæsonuge</b> (størst indtjening, Gausta Hytteleie)</span><span><b class="bc-tag">NO</b> helligdag</span><span><span class="bc-bar sample">SE</span> skoleferie</span><span>Sæson ifølge Gausta utleie, for lejligheder. Klik på en dag for detaljer.</span></p>' +
       '<div class="bc-detail" aria-live="polite"></div>';
 
     var grid = el.querySelector('.bc-grid'), detail = el.querySelector('.bc-detail'), strip = el.querySelector('.bc-strip'), mname = el.querySelector('.bc-mname');
@@ -97,7 +97,7 @@
           var dd = add(w, i), s = iso(dd), out = dd.getMonth() !== m, se = st.layers.season ? seasonOf(s) : null, hw = st.layers.high ? highOf(s) : [], hol = holVis(s), sch = schVis(s);
           var ccs = {}; sch.forEach(function (x) { ccs[x.c] = 1; });
           h += '<button type="button" role="gridcell" class="cal-d bc-d' + (out ? ' out' : '') + (se ? ' s-' + se.s : '') + (hw.length ? ' hw' : '') + (s === today ? ' today' : '') + (st.sel === s ? ' on' : '') + '" data-day="' + s + '" aria-label="' + fmtY(s) + (se ? ', ' + SEASON[se.s] : '') + (hw.length ? ', højsæsonuge ' + hw.map(function (x) { return x.name; }).join(' og ') : '') + (hol.length ? ', helligdag: ' + hol.map(function (x) { return x.c + ' ' + x.name; }).join(', ') : '') + (sch.length ? ', skoleferie: ' + Object.keys(ccs).join(', ') : '') + '">' +
-            '<span class="bc-top"><b>' + dd.getDate() + '</b>' + (hw.length && hw.some(function (x) { return x.from === s; }) ? '<span class="bc-hwl">' + hw.filter(function (x) { return x.from === s; })[0].name + '</span>' : '') + '</span>' +
+            '<span class="bc-top"><b>' + dd.getDate() + '</b>' + (hw.length && hw.some(function (x) { return x.from === s; }) ? '<span class="bc-hwl">★ ' + hw.filter(function (x) { return x.from === s; })[0].name + '</span>' : '') + '</span>' +
             '<span class="bc-tags">' + hol.map(function (x) { return '<b class="bc-tag' + (x.defacto ? ' df' : '') + '" title="' + x.c + ': ' + esc(x.name) + '">' + x.c + '</b>'; }).join('') + '</span>' +
             '<span class="bc-bars">' + CC.filter(function (c) { return ccs[c]; }).map(function (c) { return '<span class="bc-bar">' + c + '</span>'; }).join('') + '</span></button>';
         }
@@ -114,7 +114,7 @@
         detail.innerHTML = '<div class="cal-wh"><h3 style="text-align:left">' + DAYN[(parse(s).getDay() + 6) % 7] + ' ' + fmtY(s) + '<span>Uge ' + isoWeek(parse(s)) + '</span></h3><button type="button" class="btn btn-ghost btn-sm" data-bc="month">Hele måneden</button></div>' +
           '<div class="sp-rows" style="margin-top:10px">' +
           '<div class="sp-row"><span>Sæson (Gausta)</span><b>' + (se ? '<i class="bc-sw ' + se.s + '"></i> ' + SEASON[se.s] : '<span class="faint">ikke oplyst</span>') + '</b></div>' +
-          '<div class="sp-row"><span>Højsæsonuge</span><b>' + (hw.length ? hw.map(function (x) { return x.name + ' (' + fmt(x.from) + ' til ' + fmt(x.to) + ')'; }).join(', ') : '<span class="faint">nej</span>') + '</b></div>' +
+          '<div class="sp-row"><span>Højsæsonuge</span><b>' + (hw.length ? hw.map(function (x) { return '<span class="bc-hwl">★ ' + x.name + '</span> ' + fmt(x.from) + ' til ' + fmt(x.to); }).join('<br>') + '<br><span class="faint" style="font-weight:400">størst indtjening, ' + D.highSrc + '</span>' : '<span class="faint">nej</span>') + '</b></div>' +
           '<div class="sp-row"><span>Helligdage</span><b>' + (hol.length ? hol.map(function (x) { return x.c + ': ' + esc(x.name) + (x.defacto ? ' (reelt fri)' : ''); }).join('<br>') : '<span class="faint">ingen</span>') + '</b></div>' +
           '<div class="sp-row"><span>Skoleferie</span><b>' + (sch.length ? sch.map(function (x) { return x.c + ': ' + esc(x.name) + ', ' + esc(x.region); }).join('<br>') : '<span class="faint">ingen kendte</span>') + '</b></div></div>' +
           (se && se.note ? '<p class="faint" style="margin:8px 0 0;font-size:.82rem">' + esc(se.note) + '</p>' : '');
@@ -122,12 +122,14 @@
       }
       var items = [];
       if (st.layers.season) D.seasons.forEach(function (x) { if (x.to >= a && x.from <= b) items.push({ k: x.from < a ? a : x.from, html: '<i class="bc-sw ' + x.s + '"></i> <b>' + SEASON[x.s] + '</b> ' + fmt(x.from) + ' til ' + fmt(x.to), sub: 'Gausta utleie' + (x.note ? '. ' + x.note : ''), lab: 'Brugeroplysning' }); });
-      if (st.layers.high) D.highWeeks.forEach(function (x) { if (x.to > a && x.from <= b) items.push({ k: x.from, html: '<i class="bc-sw hw"></i> <b>Højsæsonuge: ' + x.name + '</b> ' + fmt(x.from) + ' til ' + fmt(x.to), sub: 'ankomst til afrejse', lab: 'Brugeroplysning' }); });
+      var hwItems = [];
+      if (st.layers.high) D.highWeeks.forEach(function (x) { if (x.to > a && x.from <= b) hwItems.push({ k: x.from, html: '<span class="bc-hwl">★ ' + x.name + '</span> <b>Højsæsonuge</b> ' + fmt(x.from) + ' til ' + fmt(x.to), sub: 'Ankomst til afrejse. Uge med størst indtjening ifølge ' + D.highSrc, lab: 'Brugeroplysning', hw: true }); });
       if (st.layers.hol) HOL.forEach(function (x) { if (x.date >= a && x.date <= b && st.cc[x.c]) items.push({ k: x.date, html: '<b class="bc-tag' + (x.defacto ? ' df' : '') + '">' + x.c + '</b> <b>' + esc(x.name) + '</b> ' + fmt(x.date), sub: x.defacto ? 'ikke lovbestemt, men reelt fri for de fleste' : 'helligdag', lab: 'Fakta' }); });
       if (st.layers.school) D.school.forEach(function (x) { if (x.to >= a && x.from <= b && st.cc[x.c]) items.push({ k: x.from < a ? a : x.from, html: '<span class="bc-bar">' + x.c + '</span> <b>' + esc(x.name) + '</b> ' + fmt(x.from) + ' til ' + fmt(x.to), sub: esc(x.region) + ' · kilde: ' + esc(x.src), lab: x.lab }); });
       items.sort(function (p, q) { return p.k < q.k ? -1 : p.k > q.k ? 1 : 0; });
+      items = hwItems.concat(items);
       detail.innerHTML = '<div class="cal-wh"><h3 style="text-align:left">' + mname.textContent + '<span>' + items.length + ' perioder og dage</span></h3></div>' +
-        (items.length ? '<ul class="ev-ul">' + items.map(function (it) { return '<li class="bc-li"><div>' + it.html + '<div class="ev-bl">' + it.sub + '</div></div><span class="pill-tag' + (it.lab === 'Inference' ? ' warn' : '') + '">' + it.lab + '</span></li>'; }).join('') + '</ul>' : '<p class="muted">Intet kendt i denne måned for de valgte lag og lande.</p>');
+        (items.length ? '<ul class="ev-ul">' + items.map(function (it) { return '<li class="bc-li' + (it.hw ? ' hw' : '') + '"><div>' + it.html + '<div class="ev-bl">' + it.sub + '</div></div><span class="pill-tag' + (it.lab === 'Inference' ? ' warn' : '') + '">' + it.lab + '</span></li>'; }).join('') + '</ul>' : '<p class="muted">Intet kendt i denne måned for de valgte lag og lande.</p>');
     }
 
     el.addEventListener('click', function (e) {
