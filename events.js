@@ -15,7 +15,7 @@
   function esc(s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
   function ymd(d) { var p = new Intl.DateTimeFormat('en-CA', { timeZone: TZ, year: 'numeric', month: '2-digit', day: '2-digit' }).format(d); return p; } // YYYY-MM-DD
   function ym(d) { return ymd(d).slice(0, 7); }
-  function dayNum(d) { return Math.round(Date.parse(ymd(d) + 'T12:00:00Z') / 86400000); }
+  function dayNum(d) { return Math.floor(Date.parse(ymd(d) + 'T12:00:00Z') / 86400000); }
   function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
 
   /* ---------- Månedskalender med ugevalg (A6) ----------
@@ -55,7 +55,7 @@
 
     function vis() { return events.filter(function (x) { return !st.cat || x.cat === st.cat; }); }
     function onDay(list, dn) { return list.filter(function (x) { return x.a <= dn && x.b >= dn; }); }
-    function monthRange(k) { var f = Math.round(Date.parse(k + '-01T12:00:00Z') / 86400000), n = new Date(Date.parse(k + '-01T12:00:00Z')); n.setUTCMonth(n.getUTCMonth() + 1); var l = Math.round(n.getTime() / 86400000) - 1; return [f, l]; }
+    function monthRange(k) { var f = Math.floor(Date.parse(k + '-01T12:00:00Z') / 86400000), n = new Date(Date.parse(k + '-01T12:00:00Z')); n.setUTCMonth(n.getUTCMonth() + 1); var l = Math.floor(n.getTime() / 86400000) - 1; return [f, l]; }
 
     function drawGrid() {
       var list = vis(), r = monthRange(st.month), ws = weekStart(r[0]), we = weekStart(r[1]), html = '<div class="cal-row cal-head" role="row"><span class="cal-wn">Uge</span>' + DAYN.map(function (d) { return '<span role="columnheader">' + d + '</span>'; }).join('') + '</div>';
