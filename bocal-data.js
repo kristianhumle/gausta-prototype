@@ -25,7 +25,8 @@ window.BOCAL = {
     { s: 'high', from: '2027-12-21', to: '2027-12-31' }
   ],
 
-  // De 6 højsæsonuger fra Gausta Hytteleie: ugerne med størst indtjening (Brugeroplysning, 16. oktober 2026). from = ankomst, to = afrejse.
+  // Udleje premium-uger fra Gausta Hytteleie (Brugeroplysning, 16. oktober 2026): de 6 uger, der afgør antallet af sæsonliftkort
+  // (3 uger stillet til rådighed for udleje = 1 sæsonliftkort, 6 uger = 2). Også ugerne med størst indtjening. from = ankomst, to = afrejse.
   highSrc: 'Gausta Hytteleie',
   highWeeks: [
     { name: 'Jul', from: '2026-12-20', to: '2026-12-27' },

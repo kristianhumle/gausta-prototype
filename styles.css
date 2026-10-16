@@ -1453,3 +1453,13 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 @media (max-width: 640px) { .bc-grid .cal-d { min-height: 58px; padding: 4px 2px 4px 4px; } .bc-hwl { display: none; } .bc-tag, .bc-bar { font-size: .52rem; } }
 
 .bc-li.hw { background: color-mix(in srgb, var(--coral) 8%, transparent); border-left: 4px solid var(--coral); padding-left: 10px; }
+
+.bc-prem { display: flex; gap: 14px 20px; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; margin: 14px 0 4px; padding: 12px 14px; border: 1px solid color-mix(in srgb, var(--coral) 45%, var(--border)); border-left: 4px solid var(--coral); border-radius: var(--radius-sm); background: color-mix(in srgb, var(--coral) 6%, var(--surface)); font-size: .88rem; }
+.bc-prem > div:first-child { flex: 1 1 280px; }
+.bc-prem p { margin: 4px 0 0; color: var(--muted); }
+.bc-prem-list { display: grid; grid-template-columns: repeat(3, minmax(120px, 1fr)); gap: 6px; flex: 1 1 380px; }
+.bc-prem-chip { font: inherit; text-align: left; border: 1px solid color-mix(in srgb, var(--coral) 45%, var(--border)); background: var(--surface); border-radius: 6px; padding: 5px 8px; cursor: pointer; display: flex; flex-direction: column; gap: 1px; }
+.bc-prem-chip b { color: var(--coral); font-size: .8rem; }
+.bc-prem-chip span { font-size: .74rem; color: var(--muted); }
+.bc-prem-chip:hover { outline: 2px solid var(--accent); }
+@media (max-width: 640px) { .bc-prem-list { grid-template-columns: repeat(2, 1fr); } }

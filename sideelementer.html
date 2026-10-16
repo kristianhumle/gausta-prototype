@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=c2">
+<link rel="stylesheet" href="styles.css?v=c3">
 </head>
 <body data-shell="materials">
 <main class="section" style="border:0"><div class="wrap">
@@ -587,11 +587,11 @@
     <div class="spec-body"><div class="list-row" style="padding-top:0"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen (eksempel)</div></div><span class="stamp">00:00</span></div><div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel)</div></div><span class="stamp">00:00</span></div></div>
     <div class="spec-note"><b>Foreslået:</b> plantegningsvisning med sensorer. Afhænger af hardware og netværk (åbne punkter i spec.).</div></div>
 
-  <div class="spec-block" id="e-bocal"><div class="spec-head"><h3>Kalender: sæsoner, højsæsonuger, helligdage og skoleferier</h3><div class="row-flex"><span class="pill-tag">back-office · C3</span><span class="status proposed">Foreslået</span></div></div>
+  <div class="spec-block" id="e-bocal"><div class="spec-head"><h3>Kalender: sæsoner, premium-uger, helligdage og skoleferier</h3><div class="row-flex"><span class="pill-tag">back-office · C3</span><span class="status proposed">Foreslået</span></div></div>
     <div class="spec-body"><div data-bocal></div></div>
-    <div class="spec-note"><b>Idé (Brugeroplysning, 16. oktober 2026):</b> én kalender, der viser, hvornår efterspørgslen typisk stiger: helligdage og skoleferier i Danmark, Sverige og Norge, Gaustas sæsoner og de 6 højsæsonuger. Øverst en <b>ugestribe</b> for hele perioden (farve = sæson, ★ = højsæsonuge, tal = antal lande med skoleferie), derunder en <b>månedskalender</b> med lag og lande, der kan slås til og fra, og en liste over månedens perioder med kilde. Klik på en dag for detaljer.
-      <br><b>Data:</b> sæsoner fra Gausta utleies sæsonkalender (vinter 26-27, sommer 27, vinter 27-28) for lejligheder. <b>Højsæsonuger</b> fra <b>Gausta Hytteleie</b>: de 6 uger med størst indtjening (Jul, Nytår, uge 7, uge 8, Påske del 1 og 2). De er derfor markeret kraftigst: rød ramme og skravering hen over hele ugen, rødt mærke med ★ og navn på ankomstdagen, rød ramme i ugestriben, og de står øverst i månedens liste. Helligdage beregnes (påske efter den gregorianske regel), ikke-lovbestemte fridage (fx juleaften) vises stiplet. Skoleferier: Oslo kommune, Göteborgs Stad, Täby kommun, Malmö stad og Uppsala kommun (Fakta), svensk sportlov i vecka 10 (Norrland) som fast mønster (Inference), danske kommuners ferieplaner via calendar.center (Kildepåstand) og faste mønstre for efteråret 2027 (Inference). Detaljer og kilder: <code class="token">teknisk/datakilder/16-kalender-saesoner-og-ferier.md</code>.
-      <br><b>To kilder, bevidst vist hver for sig:</b> sæsonerne er Gausta utleies prisperioder, højsæsonugerne er Gausta Hytteleies uger med størst indtjening. De er ikke ens: "Jul" (20. til 27. december) er Ordinær i sæsonkalenderen, "Nytår" og "Påske del 1" er bredere end højsæsonen dér. Gaustas sæsontabel lader desuden lavsæson og ordinær sæson dele 6. februar.
+    <div class="spec-note"><b>Idé (Brugeroplysning, 16. oktober 2026):</b> én kalender, der viser, hvornår efterspørgslen typisk stiger: helligdage og skoleferier i Danmark, Sverige og Norge, Gaustas sæsoner og de 6 udleje premium-uger. Øverst en <b>ugestribe</b> for hele perioden (farve = sæson, ★ = udleje premium-uge, tal = antal lande med skoleferie), en boks, der forklarer premium-ugerne og reglen om sæsonliftkort,, derunder en <b>månedskalender</b> med lag og lande, der kan slås til og fra, og en liste over månedens perioder med kilde. Klik på en dag for detaljer.
+      <br><b>Data:</b> sæsoner fra Gausta utleies sæsonkalender (vinter 26-27, sommer 27, vinter 27-28) for lejligheder. <b>Udleje premium-uger</b> fra <b>Gausta Hytteleie</b> (Jul, Nytår, uge 7, uge 8, Påske del 1 og 2): de 6 uger, der afgør antallet af sæsonliftkort (3 uger stillet til rådighed for udleje giver 1 sæsonliftkort, alle 6 giver 2), og ugerne med størst indtjening. De er derfor markeret kraftigst med ★: rød ramme og skravering hen over hele ugen, rødt mærke med ★ og navn på ankomstdagen, én ★ pr. premium-uge i ugestriben (★★, hvis to ligger i samme kalenderuge, som Påske del 1 og 2 i uge 12), og de står øverst i månedens liste. Helligdage beregnes (påske efter den gregorianske regel), ikke-lovbestemte fridage (fx juleaften) vises stiplet. Skoleferier: Oslo kommune, Göteborgs Stad, Täby kommun, Malmö stad og Uppsala kommun (Fakta), svensk sportlov i vecka 10 (Norrland) som fast mønster (Inference), danske kommuners ferieplaner via calendar.center (Kildepåstand) og faste mønstre for efteråret 2027 (Inference). Detaljer og kilder: <code class="token">teknisk/datakilder/16-kalender-saesoner-og-ferier.md</code>.
+      <br><b>To kilder, bevidst vist hver for sig:</b> sæsonerne er Gausta utleies prisperioder, premium-ugerne er Gausta Hytteleies liftkort- og indtjeningsuger. De er ikke ens: "Jul" (20. til 27. december) er Ordinær i sæsonkalenderen, "Nytår" og "Påske del 1" er bredere end højsæsonen dér. Gaustas sæsontabel lader desuden lavsæson og ordinær sæson dele 6. februar.
       <br><b>Åbent:</b> skoleferier i Telemark og andre norske fylker, sommerferier i Norge og Sverige, og om kalenderen skal hente helligdage og ferier automatisk (fx fra en helligdags-API) eller vedligeholdes manuelt. Kun back-office.</div></div>
 
   <div class="spec-block" id="e-sensorplan"><div class="spec-head"><h3>Sensor-plantegning</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status prototype">Prototype</span></div></div>
@@ -605,8 +605,8 @@
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
-<script src="bocal-data.js?v=c2"></script>
-<script src="bocal.js?v=c2"></script>
+<script src="bocal-data.js?v=c3"></script>
+<script src="bocal.js?v=c3"></script>
 <script src="sensorplan.js?v=s20261016b"></script>
 <script src="area-map-data.js"></script>
 <script src="area.js"></script>
