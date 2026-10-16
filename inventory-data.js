@@ -3,6 +3,8 @@
    ejer   = Brugeroplysning fra ejeren (fx PlayStation 4 og 42" fjernsyn i TV-stuen, vaskemaskine i badeværelset)
    saelger = står på sælgernes inventarliste (mail 30. september 2026), men inventaraftalen (bud NOK 50.000) er IKKE afsluttet
    verify = fra annoncens rumbeskrivelse eller antaget, skal verificeres på stedet
+   Billede pr. punkt (valgfrit, 16. oktober 2026): img = { k: 'mappe/navn' i assets/web (som GL.photo), alt: beskrivelse, cap: billedtekst }.
+   Webkopierne laves i tre størrelser (navn.webp 1350 px, -m 675 px, -s 360 px) og registreres i assets/web/manifest.json.
    Rummene er pladsholderdata fra vidensbasen, ikke en endelig liste. Placering af enkelte ting er et gæt, hvor kilden ikke nævner rum. */
 window.GL_INVENTORY = {
   groups: ['Møbler', 'Teknik og apparater', 'Køkken og husholdning', 'Sovning', 'Andet'],
@@ -16,7 +18,8 @@ window.GL_INVENTORY = {
     ] },
     { id: 'kstue', name: 'Køkken og stue', dim: '34 m²', blurb: 'Åbent køkken og opholdsstue med spisebord, brændeovn, sofa og store vinduer.', items: [
       { n: 'Spisebord med 8 stole', g: 0, s: 'saelger' }, { n: 'Sofagruppe med bord og bænk', g: 0, s: 'saelger' },
-      { n: 'Brændeovn', d: 'Brænde medfølger efter sælgerens liste.', g: 1, s: 'verify' },
+      { n: 'Brændeovn', d: 'Brænde medfølger efter sælgerens liste.', g: 1, s: 'ejer',
+        img: { k: 'inventar/inventar-braendeovn', alt: 'Sort, rund brændeovn med ild bag glasset og en støbejernsgryde på toppen', cap: 'Brændeovnen i stuen' } },
       { n: 'Brænde', g: 4, s: 'saelger' },
       { n: 'Køkkenudstyr', d: 'Alt køkkenudstyr, inkl. VIPP-spand.', g: 2, s: 'saelger' },
       { n: 'Opvaskemaskine', g: 2, s: 'verify' }, { n: 'Komfur', g: 2, s: 'verify' }
