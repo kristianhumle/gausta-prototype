@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=c1">
 </head>
 <body data-shell="materials">
 <main class="section" style="border:0"><div class="wrap">
@@ -21,7 +21,7 @@
     <a href="#e-header" class="done">Header</a><a href="#e-controls" class="done">Kontroller</a><a href="#e-hero" class="done">Hero</a><a href="#e-facts" class="done">Faktalinje</a><a href="#e-season">Årstidskort</a><a href="#e-gallery" class="done">Galleri</a><a href="#e-plan" class="done">Plantegning</a><a href="#e-inventory" class="done">Inventar</a><a href="#e-area" class="done">Området</a><a href="#e-skiinout" class="done">Ski-in / ski-out</a><a href="#e-links" class="done">Links</a><a href="#e-live" class="done">Gausta nu</a><a href="#e-nulive" class="done">Gausta nu + webcam</a><a href="#e-weather" class="done">Vejr nu og prognose</a><a href="#e-webcams" class="done">Webcams</a><a href="#e-press" class="done">Omtale i medier</a><a href="#e-booking" class="done">Booking-formular</a><a href="#e-share">Del-knap</a><a href="#e-dist" class="done">Afstandsliste</a><a href="#e-events">Eventkalender</a><a href="#e-social">Social feed</a><a href="#e-hike" class="done">Vandring</a><a href="#e-teaser" class="done">Teaser med faner</a><a href="#e-faq" class="done">FAQ</a><a href="#e-guest">Gæstefliser</a><a href="#e-notice">Noter</a><a href="#e-footer" class="done">Footer</a>
   </div>
   <p class="eyebrow" style="margin:16px 0 6px">Back-office, kun ejeren (del C)</p>
-  <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
+  <div class="toc bo-toc"><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#e-bocal">Kalender</a><a href="#zone-backoffice">Gå til afsnittet</a></div>
 
   <div class="spec-block approved" id="e-header"><div class="spec-head"><h3>Site-header og navigation</h3><div class="row-flex"><span class="pill-tag">alle sider</span><span class="status approved">✓ Godkendt</span></div></div>
     <div class="spec-body">
@@ -587,6 +587,13 @@
     <div class="spec-body"><div class="list-row" style="padding-top:0"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen (eksempel)</div></div><span class="stamp">00:00</span></div><div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel)</div></div><span class="stamp">00:00</span></div></div>
     <div class="spec-note"><b>Foreslået:</b> plantegningsvisning med sensorer. Afhænger af hardware og netværk (åbne punkter i spec.).</div></div>
 
+  <div class="spec-block" id="e-bocal"><div class="spec-head"><h3>Kalender: sæsoner, højsæsonuger, helligdage og skoleferier</h3><div class="row-flex"><span class="pill-tag">back-office · C3</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><div data-bocal></div></div>
+    <div class="spec-note"><b>Idé (Brugeroplysning, 16. oktober 2026):</b> én kalender, der viser, hvornår efterspørgslen typisk stiger: helligdage og skoleferier i Danmark, Sverige og Norge, Gaustas sæsoner og de 6 højsæsonuger. Øverst en <b>ugestribe</b> for hele perioden (farve = sæson, ★ = højsæsonuge, tal = antal lande med skoleferie), derunder en <b>månedskalender</b> med lag og lande, der kan slås til og fra, og en liste over månedens perioder med kilde. Klik på en dag for detaljer.
+      <br><b>Data:</b> sæsoner fra Gausta utleies sæsonkalender (vinter 26-27, sommer 27, vinter 27-28) for lejligheder. Højsæsonuger: Jul, Nytår, uge 7, uge 8, Påske del 1 og 2. Helligdage beregnes (påske efter den gregorianske regel), ikke-lovbestemte fridage (fx juleaften) vises stiplet. Skoleferier: Oslo kommune, Göteborgs Stad og Täby kommun (Fakta), danske kommuners ferieplaner via calendar.center (Kildepåstand) og faste mønstre for efteråret 2027 (Inference). Detaljer og kilder: <code class="token">teknisk/datakilder/16-kalender-saesoner-og-ferier.md</code>.
+      <br><b>Kildekonflikter (bevaret):</b> højsæsonugen "Jul" (20. til 27. december) er Ordinær hos Gausta. "Nytår" (27. december til 3. januar) er bredere end Gaustas højsæson (28. december til 2. januar). "Påske del 1" begynder 21. marts, mens Gausta først har højsæson fra 24. marts. Gaustas tabel lader lavsæson og ordinær sæson dele 6. februar.
+      <br><b>Åbent:</b> skoleferier i Telemark og andre norske fylker, svenske sportlov i vecka 8 og 10, sommerferier i Norge og Sverige, og om kalenderen skal hente helligdage og ferier automatisk (fx fra en helligdags-API) eller vedligeholdes manuelt. Kun back-office.</div></div>
+
   <div class="spec-block" id="e-sensorplan"><div class="spec-head"><h3>Sensor-plantegning</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="sample-banner" style="position:static;margin:0 0 14px;border-radius:var(--radius-sm)">EKSEMPELDATA: alle værdier er opfundne for at vise layoutet. Placeringerne er cirka.</div>
       <div data-sensorplan></div></div>
@@ -598,6 +605,8 @@
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
+<script src="bocal-data.js?v=c1"></script>
+<script src="bocal.js?v=c1"></script>
 <script src="sensorplan.js?v=s20261016b"></script>
 <script src="area-map-data.js"></script>
 <script src="area.js"></script>

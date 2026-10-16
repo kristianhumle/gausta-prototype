@@ -1415,3 +1415,39 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 
 /* Ski-in / ski-out kort på mobil: Fælleshus-mærkaten forskudt mod højre, så den ikke dækker lejlighedsbygningen */
 @media (max-width: 520px) { .sio-chip.poi.below { transform: translate(-12%, 12px); } }
+
+/* back-office kalender (bocal.js, C3) */
+.bc-grid .cal-d { min-height: 70px; gap: 4px; }
+.bc-d.s-low { background: color-mix(in srgb, var(--good) 11%, transparent); }
+.bc-d.s-ord { background: color-mix(in srgb, var(--amber) 13%, transparent); }
+.bc-d.s-high { background: color-mix(in srgb, var(--coral) 15%, transparent); }
+.bc-d.out { opacity: .55; }
+.bc-d.hw { box-shadow: inset 0 3px 0 var(--coral); }
+.bc-d.on { outline: 2px solid var(--accent); outline-offset: -2px; }
+.bc-top { display: flex; align-items: center; gap: 6px; width: 100%; }
+.bc-hwl { font-size: .62rem; font-weight: 700; color: var(--coral); text-transform: uppercase; letter-spacing: .04em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.bc-tags, .bc-bars { display: flex; gap: 3px; flex-wrap: wrap; min-height: 0; }
+.bc-tag { font-size: .6rem; font-weight: 750; letter-spacing: .03em; color: var(--coral); border: 1px solid color-mix(in srgb, var(--coral) 55%, transparent); border-radius: 4px; padding: 0 3px; line-height: 1.35; background: var(--surface); }
+.bc-tag.df { border-style: dashed; color: var(--muted); border-color: var(--border); }
+.bc-bar { font-size: .58rem; font-weight: 700; color: var(--on-accent); background: color-mix(in srgb, var(--text) 62%, transparent); border-radius: 3px; padding: 0 4px; line-height: 1.4; }
+.bc-sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; border: 1px solid var(--border); }
+.bc-sw.low { background: color-mix(in srgb, var(--good) 30%, var(--surface)); }
+.bc-sw.ord { background: color-mix(in srgb, var(--amber) 32%, var(--surface)); }
+.bc-sw.high { background: color-mix(in srgb, var(--coral) 36%, var(--surface)); }
+.bc-sw.hw { background: var(--surface); box-shadow: inset 0 3px 0 var(--coral); }
+.bc-li { display: flex; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); font-size: .9rem; align-items: flex-start; }
+.bc-li:last-child { border-bottom: 0; }
+.bc-detail { margin-top: 18px; }
+.bc-strip-wrap { margin-bottom: 6px; }
+.bc-strip-h { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; margin-bottom: 8px; font-size: .9rem; }
+.bc-strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(26px, 1fr)); gap: 3px; }
+.bc-wk { position: relative; font: inherit; border: 1px solid var(--border); border-radius: 4px; height: 38px; padding: 2px 0 0; cursor: pointer; background: var(--surface); display: flex; flex-direction: column; align-items: center; justify-content: flex-start; gap: 1px; }
+.bc-wk.low { background: color-mix(in srgb, var(--good) 22%, var(--surface)); }
+.bc-wk.ord { background: color-mix(in srgb, var(--amber) 26%, var(--surface)); }
+.bc-wk.high { background: color-mix(in srgb, var(--coral) 30%, var(--surface)); }
+.bc-wk.hw { box-shadow: inset 0 3px 0 var(--coral); }
+.bc-wk:hover { outline: 2px solid var(--accent); }
+.bc-wn { font-size: .58rem; color: var(--muted); }
+.bc-n { font-size: .78rem; font-weight: 750; color: var(--text); line-height: 1; }
+.bc-star { position: absolute; top: -7px; right: -3px; font-size: .62rem; color: var(--coral); }
+@media (max-width: 640px) { .bc-grid .cal-d { min-height: 58px; padding: 4px 2px 4px 4px; } .bc-hwl { display: none; } .bc-tag, .bc-bar { font-size: .52rem; } }
