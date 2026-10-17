@@ -440,6 +440,10 @@ textarea.field { min-height: 96px; resize: vertical; }
 .plan-svg .pd { fill: var(--plan-ink); font: 400 11px var(--font-mono); opacity: .7; pointer-events: none; }
 .plan-svg .pin circle { fill: var(--plan-hlink); }
 .plan-svg .pin text { fill: var(--plan-pin); font: 700 12px var(--font-body); pointer-events: none; }
+/* Garage: rum uden for planen, vist som klikbar etiket ved indgangen */
+.plan-svg .room-ext .pr { stroke-opacity: .45; }
+.plan-svg .room-ext .pl { font-size: 12px; }
+.plan-svg .room-ext .pin text { font-size: 10px; }
 .plan-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 24px; align-items: start; }
 .plan-panel { min-height: 280px; }
 .plan-hero { display: block; position: relative; aspect-ratio: 4 / 3; border-radius: var(--radius-sm); overflow: hidden; }

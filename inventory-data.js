@@ -55,12 +55,14 @@ window.GL_INVENTORY = {
       { n: 'Udemøbler', g: 0, s: 'saelger' }, { n: 'Adirondack-stole', g: 0, s: 'saelger' }, { n: 'Marmorbord', g: 0, s: 'saelger' },
       { n: 'Temperaturføler', g: 1, s: 'ejer' }
     ] },
+    { id: 'garage', name: 'Garage', dim: '', blurb: 'Lejlighedens p-plads i parkeringskælderen under bygningen.', items: [
+      { n: 'Ladestander', d: 'Ladeboks til elbil ved p-pladsen. Brug og afregning afklares.', g: 1, s: 'ejer' }
+    ] },
     { id: 'hele', name: 'Hele lejligheden', dim: '', blurb: 'Ting, sælgerens liste nævner uden rum, eller som gælder hele lejligheden.', items: [
       { n: 'Lamper (alle)', g: 0, s: 'saelger' },
       { n: '2 skindstole', d: 'Placering ikke oplyst.', g: 0, s: 'saelger' },
       { n: 'Rensdyrskind', g: 4, s: 'saelger' },
       { n: 'Smart styring af varme', d: 'Eva-system med varmestyring, røgalarm og vandsensor i køkkenet.', g: 1, s: 'ejer' },
-      { n: 'Ladestander til elbil', d: 'Ved parkeringspladsen. Brug og afregning afklares.', g: 1, s: 'ejer' },
       { n: 'Miele-støvsuger', d: 'Ca. 1 år gammel ifølge sælger.', g: 2, s: 'saelger' },
       { n: 'Gammelt smart-TV', d: 'Står på sælgerens liste. Om det bliver, og hvor, er uafklaret.', g: 1, s: 'saelger' },
       { n: 'Vinterudstyr nævnt i sælgerlisten', d: 'Ordlyden i kilden er uklar og skal afklares.', g: 4, s: 'verify' }

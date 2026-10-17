@@ -21,15 +21,16 @@
       photos: [[L(24),'Tv-hjørne'],[L(27),'Sofa og tv'],[L(12),'Seng og tv'],[L(32),'Seng med terrassedør'],[L(25),'Terrassedør med gardin']] },
     { id: 'terrasse', name: 'Terrasse', dim: '25 m²', desc: 'Terrasse med plads til udemøbler og sol det meste af dagen.', poly: [[552,660],[860,660],[860,815],[552,815]], label: [705,738], pin: [705,775],
       photos: [['video:terrasse','Video: terrassen og udsigten'],['sommer/sommer-01','Terrassen om sommeren']] },
+    { id: 'garage', name: 'Garage', dim: '', desc: 'Parkeringskælderen under bygningen med lejlighedens p-plads og ladestander til elbil. Al parkering, også for gæster, sker i parkeringskælderen.', photos: [['lejligheden/garage-01','Parkeringskælderen']] },
     { id: 'outside', name: 'Uden for planen', short: 'Uden for planen', dim: '', desc: 'Bygningen udefra, indgangen og depotrum uden for selve lejligheden.', photos: [[L(8),'Bygningen udefra'],[L(26),'Indgang udefra'],[L(20),'Depot'],[L(33),'Depot']] }
   ];
   // Video i rummenes billedliste: nøgle 'video:<id>'. Klip uden lyd (MP4, 1280 px) og et stillbillede.
   var VIDEOS = { terrasse: { src: 'assets/web/video/terrasse.mp4', poster: 'assets/web/video/terrasse-poster.jpg', thumb: 'assets/web/video/terrasse-poster-s.jpg', dur: '0:13' } };
   function isVid(k) { return k.indexOf('video:') === 0; }
   function vid(k) { return VIDEOS[k.slice(6)]; }
-  var SHORT = { entre: 'Entré og skirum', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', outside: 'Uden for planen' };
-  var PILLS = ['entre', 'sov1', 'sov2', 'kstue', 'bad', 'stuesov', 'terrasse', 'outside'];
-  var ORDER_ALL = ['kstue', 'stuesov', 'sov1', 'sov2', 'bad', 'entre', 'terrasse', 'outside'];
+  var SHORT = { entre: 'Entré og skirum', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', garage: 'Garage', outside: 'Uden for planen' };
+  var PILLS = ['entre', 'sov1', 'sov2', 'kstue', 'bad', 'stuesov', 'terrasse', 'garage', 'outside'];
+  var ORDER_ALL = ['kstue', 'stuesov', 'sov1', 'sov2', 'bad', 'entre', 'terrasse', 'garage', 'outside'];
   function room(id) { return ROOMS.filter(function (r) { return r.id === id; })[0]; }
   function lines(r) { return r.lines || r.name.replace(' og ', ' og|').split('|'); }
 
@@ -74,6 +75,8 @@
       // entry arrow
       '<path class="pentry" d="M718 186V204M711 198L718 206L725 198"/>' +
       '<text class="pd" x="740" y="196">Indgang</text>' +
+      // garagen ligger i parkeringskælderen, uden for planen: klikbar etiket ved indgangen med antal billeder
+      (o.sensors ? '' : '<g class="room room-ext" data-room="garage" tabindex="0" role="button" aria-label="Garage, ' + room('garage').photos.length + ' billeder"><rect class="pr" x="796" y="183" width="74" height="20" rx="10"/><text class="pl" x="805" y="197">Garage</text><g class="pin" transform="translate(859,193)"><circle r="8"/><text y="3.5" text-anchor="middle">' + room('garage').photos.length + '</text></g></g>') +
       // compass-ish north note
       '<text class="pd" x="858" y="826" text-anchor="end">Skitse, ikke målfast</text>';
     s += '</svg>';
