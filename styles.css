@@ -1503,3 +1503,13 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 }
 .hk-ov td:nth-child(6) { min-width: 120px; } .hk-ov td:nth-child(7) { min-width: 130px; } .hk-ov th, .hk-ov td { padding-left: 10px; padding-right: 10px; }
 @media (max-width: 760px) { .hk-ov td::before { font-family: var(--font-body); } }
+
+/* Website spec (website-spec.html, 18. oktober 2026) */
+.ws-filters { display: grid; gap: 10px; }
+.ws-fl { display: block; font: 650 .72rem var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+.ws-filters .plan-pills { margin: 0; }
+.ws-tasks { margin-top: 14px; border-top: 1px solid var(--border); padding-top: 10px; }
+.ws-tasks > summary { cursor: pointer; font-weight: 600; font-size: .9rem; }
+.ws-tasks .table-wrap { margin-top: 10px; }
+.ws-tasks .table td { font-size: .84rem; vertical-align: top; }
+.spec-head .row-flex { flex-wrap: wrap; justify-content: flex-end; }

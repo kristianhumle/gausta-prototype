@@ -266,7 +266,8 @@
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
     { href: 'gaest.html', label: 'Gæsteområde', match: ['gaest'] },
     { href: 'backoffice.html', label: 'Back-office', match: ['backoffice'] },
-    { href: 'backoffice-spec.html', label: 'Back-office spec', match: ['backoffice-spec'] }
+    { href: 'backoffice-spec.html', label: 'Back-office spec', match: ['backoffice-spec'] },
+    { href: 'website-spec.html', label: 'Website spec', match: ['website-spec'] }
   ];
 
   function pageId() { return (location.pathname.split('/').pop() || 'index.html').replace('.html', '') || 'index'; }
