@@ -120,8 +120,11 @@
       var map = h.getAttribute('data-photo-map');
       if (map) { map.split(';').forEach(function (kv) { var p = kv.split('='); if (p[0] === currentSeason()) key = p[1]; }); if (!/=/.test(map) ) key = key; }
       if (map && !new RegExp(currentSeason() + '=').test(map)) key = null;
-      if (key) { h.classList.add('has-photo'); h.style.backgroundImage = 'url(' + GL.photo(key) + ')'; }
-      else { h.classList.remove('has-photo'); h.style.backgroundImage = ''; }
+      // fokuspunkt pr. årstid (som hotspot i Sanity): data-photo-pos="summer=50% 25%;autumn=50% 20%", ellers midten
+      var pos = '';
+      (h.getAttribute('data-photo-pos') || '').split(';').forEach(function (kv) { var p = kv.split('='); if (p[0] === currentSeason() && p[1]) pos = p[1]; });
+      if (key) { h.classList.add('has-photo'); h.style.backgroundImage = 'url(' + GL.photo(key) + ')'; h.style.backgroundPosition = pos; }
+      else { h.classList.remove('has-photo'); h.style.backgroundImage = ''; h.style.backgroundPosition = ''; }
     });
   }
 
