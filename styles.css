@@ -1473,3 +1473,22 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .bc-prem-chip span { font-size: .74rem; color: var(--muted); }
 .bc-prem-chip:hover { outline: 2px solid var(--accent); }
 @media (max-width: 640px) { .bc-prem-list { grid-template-columns: repeat(2, 1fr); } }
+
+/* Vandring: oversigtstabel til besøgende (18. oktober 2026) */
+.hk-ov th { white-space: nowrap; }
+.hk-ov td { font-size: .86rem; vertical-align: top; }
+.hk-ov .num { white-space: nowrap; }
+.hk-ov-n { color: inherit; text-decoration: none; } .hk-ov-n:hover b, .hk-ov-n:focus-visible b { text-decoration: underline; text-underline-offset: 3px; }
+.hk-ov .meta { font-size: .74rem; color: var(--muted); margin-top: 2px; }
+.hk-ov td:nth-child(6) { min-width: 140px; } .hk-ov td:nth-child(7) { min-width: 160px; }
+.hk-ov-l a { display: block; white-space: nowrap; }
+@media (max-width: 760px) {
+  .hk-ov thead { display: none; }
+  .hk-ov, .hk-ov tbody, .hk-ov tr, .hk-ov td { display: block; width: 100%; }
+  .hk-ov tr { border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 10px 12px; margin-bottom: 10px; background: var(--surface); }
+  .hk-ov td { display: flex; justify-content: space-between; gap: 14px; padding: 4px 0; border: 0; text-align: right; }
+  .hk-ov td::before { content: attr(data-l); color: var(--muted); font-weight: 600; text-align: left; flex: none; }
+  .hk-ov td:first-child { display: block; text-align: left; padding-bottom: 8px; } .hk-ov td:first-child::before { content: none; }
+  .hk-ov td:nth-child(6), .hk-ov td:nth-child(7) { min-width: 0; }
+  .hk-ov-l { flex-direction: column; align-items: flex-end; }
+}
