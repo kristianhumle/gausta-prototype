@@ -1492,3 +1492,4 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
   .hk-ov td:nth-child(6), .hk-ov td:nth-child(7) { min-width: 0; }
   .hk-ov-l { flex-direction: column; align-items: flex-end; }
 }
+.hk-ov td:nth-child(6) { min-width: 120px; } .hk-ov td:nth-child(7) { min-width: 130px; } .hk-ov th, .hk-ov td { padding-left: 10px; padding-right: 10px; }

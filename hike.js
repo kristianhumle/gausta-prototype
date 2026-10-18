@@ -184,12 +184,13 @@
     var rs = d.routes.filter(function (r) { return r.status === 'valgt'; });
     function len(r) { var c = r.calc || {}; if (!c.lengthM) return r.dist && r.dist !== 'ikke oplyst' ? r.dist : '–'; return km(c.lengthM) + (r.loop ? ' rundtur' : ' én vej'); }
     function asc(r) { var c = r.calc || {}; return c.ascentM ? '+' + c.ascentM + ' m' : (r.ascent && r.ascent !== 'ikke oplyst' ? r.ascent : '–'); }
+    function near(r) { var f = r.fromApt; if (!f) return '–'; return (f.airM < 1000 ? Math.round(f.airM / 10) * 10 + ' m' : km(f.airM)) + ' luftlinje' + (f.drive ? ', ' + String(f.drive[0]).replace('.', ',') + ' km i bil (' + f.drive[1] + ' min)' : ''); }
     function lnk(r) { var a = (r.links || []).filter(function (l) { return !/^Gausta\.com/i.test(l.t); }); return a.length ? a.slice(0, 3).map(function (l) { return '<a href="' + esc(l.u) + '" target="_blank" rel="noopener">' + esc(l.t.replace(/\s*\(.*\)\s*$/, '')) + ' <span aria-hidden="true">↗</span></a>'; }).join('') : '<span class="faint">–</span>'; }
     el.innerHTML = '<div class="table-wrap"><table class="table hk-ov"><thead><tr><th>Tur</th><th>Sværhedsgrad</th><th>Afstand</th><th>Stigning</th><th>Tid</th><th>Start</th><th>Fra lejligheden</th><th>Læs mere</th></tr></thead><tbody>' +
       rs.map(function (r) {
         return '<tr><td data-l="Tur"><a class="hk-ov-n" href="#' + esc(r.id) + '" data-ov="' + esc(r.id) + '"><b>' + esc(r.name.replace(/ \(.*\)$/, '')) + '</b></a><div class="meta">' + esc(r.group) + '</div></td>' +
           '<td data-l="Sværhedsgrad">' + (chip(r.grade) || '–') + '</td><td data-l="Afstand" class="num">' + esc(len(r)) + '</td><td data-l="Stigning" class="num">' + esc(asc(r)) + '</td>' +
-          '<td data-l="Tid">' + esc(r.time && r.time !== 'ikke oplyst' ? r.time : '–') + '</td><td data-l="Start">' + esc(r.start || '–') + '</td><td data-l="Fra lejligheden">' + esc(fromApt(r) || '–') + '</td><td data-l="Læs mere" class="hk-ov-l">' + lnk(r) + '</td></tr>'; }).join('') +
+          '<td data-l="Tid">' + esc(r.time && r.time !== 'ikke oplyst' ? r.time : '–') + '</td><td data-l="Start">' + esc(r.start || '–') + '</td><td data-l="Fra lejligheden">' + esc(near(r)) + '</td><td data-l="Læs mere" class="hk-ov-l">' + lnk(r) + '</td></tr>'; }).join('') +
       '</tbody></table></div><p class="faint hk-attr">Afstand og stigning er vores beregning ud fra OpenStreetMap og terrænmodellen (vejledende, for stigning kun vejen frem). Tid og start er fra kilderne. Følg altid den officielle rute og tjek vejr og føre før turen.</p>';
     el.addEventListener('click', function (e) {
       var a = e.target.closest('[data-ov]'); if (!a) return;
