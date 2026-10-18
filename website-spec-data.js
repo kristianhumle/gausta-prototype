@@ -142,6 +142,131 @@ window.WS_GROUPS = [
   "src": "teknisk/ikke-funktionelle-krav.md"
  }
 ];
+window.WS_SCANS = [
+ {
+  "group": "N1",
+  "title": "Google Performance scan (Lighthouse), 18. oktober 2026",
+  "date": "18. oktober 2026",
+  "how": "Målt på den live side gaustahome.com med Lighthouse 12.8.2 (Googles egen motor, den samme som PageSpeed Insights) i Chrome 155, én kørsel pr. side og enhed. Mobil: Lighthouses mobilprofil med langsom 4G og fire gange langsommere processor. Desktop: desktopprofil. Netværk og processor er begrænset i selve browseren (\"devtools\"-metoden). PageSpeed Insights-tjenesten selv kunne ikke bruges, fordi dens gratis dagskvote var opbrugt (fejl 429), så scanningen er kørt lokalt. Én kørsel svinger, så tal skal ses som niveau, ikke facit. Sitet er noindex, så SEO-scoren er lav med vilje.",
+  "rows": [
+   {
+    "page": "Forsiden",
+    "mode": "Mobil",
+    "perf": 0.97,
+    "a11y": 0.88,
+    "bp": 0.96,
+    "seo": 0.61,
+    "fcp": "1.7 s",
+    "lcp": "1.7 s",
+    "tbt": "60 ms",
+    "cls": "0",
+    "si": "4.2 s"
+   },
+   {
+    "page": "Forsiden",
+    "mode": "Desktop",
+    "perf": null,
+    "a11y": 0.88,
+    "bp": 0.96,
+    "seo": 0.61,
+    "fcp": "0.3 s",
+    "lcp": "ikke målt",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "0.4 s"
+   },
+   {
+    "page": "Lejligheden",
+    "mode": "Mobil",
+    "perf": 0.79,
+    "a11y": 0.96,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.7 s",
+    "lcp": "5.3 s",
+    "tbt": "30 ms",
+    "cls": "0.048",
+    "si": "2.9 s"
+   },
+   {
+    "page": "Lejligheden",
+    "mode": "Desktop",
+    "perf": 1,
+    "a11y": 0.96,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.3 s",
+    "lcp": "0.4 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "0.3 s"
+   },
+   {
+    "page": "Vandring",
+    "mode": "Mobil",
+    "perf": 0.78,
+    "a11y": 0.95,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.6 s",
+    "lcp": "5.7 s",
+    "tbt": "30 ms",
+    "cls": "0",
+    "si": "3.1 s"
+   },
+   {
+    "page": "Vandring",
+    "mode": "Desktop",
+    "perf": 0.99,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.2 s",
+    "lcp": "0.5 s",
+    "tbt": "90 ms",
+    "cls": "0",
+    "si": "0.4 s"
+   },
+   {
+    "page": "Området",
+    "mode": "Mobil",
+    "perf": 0.83,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.7 s",
+    "lcp": "4.4 s",
+    "tbt": "100 ms",
+    "cls": "0",
+    "si": "2.8 s"
+   },
+   {
+    "page": "Området",
+    "mode": "Desktop",
+    "perf": 0.72,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.2 s",
+    "lcp": "4.7 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "2.3 s"
+   }
+  ],
+  "notes": [
+   "Mobil ydelse: Forsiden 97, Området 83, Lejligheden 79, Vandring 78. Grænsen for \"god\" er 90.",
+   "Største problem er LCP på mobil på Lejligheden (5,3 s), Vandring (5,7 s) og Området (4,4 s). Det største element er heroens foto, og det er markeret loading=\"lazy\", så browseren først henter det sent (\"LCP request discovery\"). Forsiden klarer sig, fordi dens største element er en tekst (1,7 s). Grænsen for god LCP er 2,5 s.",
+   "Forslag (ikke udført, kræver din godkendelse, da det ændrer produktionen): giv heroens foto prioritet (ikke lazy, fetchpriority høj) på de tre sider. Det besvarer også det åbne spørgsmål i N1.4 om priority. Forventet gevinst: LCP ned mod 2 til 3 s på mobil.",
+   "Området på desktop: ydelse 72, LCP 4,7 s, samme årsag. Forsiden på desktop: Lighthouse fandt ikke et LCP-element i to kørsler (ydelse ikke beregnet), så den side bør måles igen ved lejlighed.",
+   "Billeder: Lighthouse foreslår bedre levering og rette størrelser (op til ca. 400 KiB sparet på forsiden, 185 KiB på Vandring).",
+   "Tilgængelighed (se N6): 88 til 96. Fund: for lav farvekontrast i enkelte tekster, overskrifter i forkert rækkefølge, knapper hvis synlige tekst ikke matcher navnet, for små klikflader på forsiden, og ARIA-roller uden de rette børn på Området.",
+   "SEO 61 på alle sider: \"Page is blocked from indexing\" er bevidst (noindex før lancering, N5). \"Document does not have a meta description\" er et rigtigt fund, som skal rettes før lancering.",
+   "Bedste praksis: 96 til 100. Blokerende tid (TBT) er lav (0 til 100 ms), og layoutspring (CLS) er 0 til 0,048.",
+   "Dette er en enkeltstående manuel måling. Den er ikke automatiseret i CI, og der er ikke sat budgetter (N1.6). Feltdata fra rigtige besøgende findes ikke (ingen målinger endnu, afventer d8a)."
+  ]
+ }
+];
 window.WS_SPEC = [
  {
   "id": "N1.1",
@@ -167,28 +292,36 @@ window.WS_SPEC = [
     "t": "Bekræft klassisk ISR, cacheComponents slået fra (next.config.ts)",
     "prio": "",
     "rel": "gaelder",
-    "note": "Samme stack, samme valg gør sig gældende."
+    "note": "Samme stack, samme valg gør sig gældende.",
+    "s": "done",
+    "e": "next.config.ts: cacheComponents ikke sat (Next 16 standard er fra), altså klassisk ISR. x-nextjs-cache ikke målt"
    },
    {
     "id": "B1-0.2",
     "t": "Erstat revalidate = 0 med lang revalidate (fx 3600)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Live-data (vejr, lifte) er en tredjepartsdel; vælg cache pr. rute eller del, ikke blanket-dynamisk."
+    "note": "Live-data (vejr, lifte) er en tredjepartsdel; vælg cache pr. rute eller del, ikke blanket-dynamisk.",
+    "s": "done",
+    "e": "sanity/lib/fetch.ts: revalidate 3600 med tags; lib/met.ts, fnugg.ts og gaustabanen.ts har egne revalidate-værdier"
    },
    {
     "id": "B1-0.3",
     "t": "Signeret Sanity publish-webhook (app/api/revalidate/route.ts), tag GROQ efter _type",
     "prio": "",
     "rel": "gaelder",
-    "note": "Sanity bruges til offentligt indhold og gæsteområde."
+    "note": "Sanity bruges til offentligt indhold og gæsteområde.",
+    "s": "done",
+    "e": "app/api/revalidate/route.ts: parseBody med signaturtjek, revalidateTag på tags fra projektionen, 401 ved ugyldig signatur"
    },
    {
     "id": "B1-0.4",
     "t": "Gate SanityLive til draft; experimental.prefetchInlining; /api/expire-tags",
     "prio": "",
     "rel": "gaelder",
-    "note": "Samme Next 16 og next-sanity-risiko."
+    "note": "Samme Next 16 og next-sanity-risiko.",
+    "s": "partial",
+    "e": "SanityLive bruges ikke, draft mode er token-gated. prefetchInlining og /api/expire-tags findes ikke i koden"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -215,21 +348,27 @@ window.WS_SPEC = [
     "t": "@next/bundle-analyzer (ANALYZE=true), ingen styled-components eller Studio i marketing-chunks",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "@next/bundle-analyzer findes ikke i package.json, ingen ANALYZE-opsætning i next.config.ts"
    },
    {
     "id": "B1-1.2",
     "t": "Client-komponenter i mindste blade; hero som Server Component; walkthrough via next/dynamic",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta har sæsontemaer og billed- og videotunge sektioner i stedet for en scroll-walkthrough."
+    "note": "Gausta har sæsontemaer og billed- og videotunge sektioner i stedet for en scroll-walkthrough.",
+    "s": "partial",
+    "e": "Server Components som standard og hero uden use client, men 15 filer med use client og ingen next/dynamic"
    },
    {
     "id": "B1-1.3",
     "t": "Sanity-klient og GROQ kun server-side",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "sanity/lib/fetch.ts importerer server-only; GROQ-hentning kun på serveren, token kun i draft mode"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -259,14 +398,18 @@ window.WS_SPEC = [
     "t": "Kun transform og opacity via IntersectionObserver og CSS; content-visibility: auto",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gælder for animerede sektioner og lange galleri-sider."
+    "note": "Gælder for animerede sektioner og lange galleri-sider.",
+    "s": "none",
+    "e": "content-visibility og IntersectionObserver-animation ikke fundet i app, components eller styles"
    },
    {
     "id": "B1-2.2",
     "t": "prefers-reduced-motion: statisk slutstilstand",
     "prio": "",
     "rel": "gaelder",
-    "note": "Også for video og autoplay."
+    "note": "Også for video og autoplay.",
+    "s": "partial",
+    "e": "prefers-reduced-motion i base.css, flere elements/*.css og kortene; autoplay-video i Gallery.tsx ikke kontrolleret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -290,7 +433,8 @@ window.WS_SPEC = [
   "open": [
    "Skal hero-billedet have priority, og skal der laves blur-placeholders?",
    "Hvor stor billedbåndbredde tåler Railway-planen, og hvordan tømmes billedcachen ved udrulning (volumen)?",
-   "Hvordan håndteres video: komprimering, poster og autoplay på mobildata?"
+   "Hvordan håndteres video: komprimering, poster og autoplay på mobildata?",
+   "Scanningen viser, at heroens foto er lazy på Lejligheden, Vandring og Området og giver LCP på 4,4 til 5,7 s på mobil. Skal heroens foto have prioritet? (Anbefalet.)"
   ],
   "tasks": [
    {
@@ -298,21 +442,27 @@ window.WS_SPEC = [
     "t": "Pakket Sanity-billedloader, dimensioner, sizes, ét priority-billede",
     "prio": "",
     "rel": "gaelder",
-    "note": "Høj vægt: Gausta er billedtungt, og heroen er næppe ren SVG."
+    "note": "Høj vægt: Gausta er billedtungt, og heroen er næppe ren SVG.",
+    "s": "partial",
+    "e": "HeroSection.tsx: next/image med sizes og urlFor, men uden priority; øvrige billeder er img med loading=lazy"
    },
    {
     "id": "B1-3.2",
     "t": "LQIP blur-placeholders",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen blurDataURL, placeholder eller LQIP i koden"
    },
    {
     "id": "B1-3.3",
     "t": "Vælg billedpipeline: Next-optimizer i Railway-container eller direkte cdn.sanity.io",
     "prio": "",
     "rel": "gaelder",
-    "note": "Høj vægt: et billed- og videotungt site gør valget centralt."
+    "note": "Høj vægt: et billed- og videotungt site gør valget centralt.",
+    "s": "done",
+    "e": "next.config.ts: images med remotePatterns, AVIF og WebP; Next-optimizer på Railway valgt (G57)"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -343,14 +493,18 @@ window.WS_SPEC = [
     "t": "Fontvalg: system-stack eller next/font/local",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Skal dække norske tegn (æ ø å) og senere tyske (ä ö ü ß)."
+    "note": "Skal dække norske tegn (æ ø å) og senere tyske (ä ö ü ß).",
+    "s": "done",
+    "e": "app/[locale]/layout.tsx: Fraunces og Inter via next/font/google (selvhostet ved build), latin og latin-ext, display swap"
    },
    {
     "id": "B1-4.2",
     "t": "preconnect til cdn.sanity.io, ingen render-blokerende tredjeparts-script",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Flere tredjepartsorigins (vejr, lifte, webcam, kort); preconnect kun til de få kritiske."
+    "note": "Flere tredjepartsorigins (vejr, lifte, webcam, kort); preconnect kun til de få kritiske.",
+    "s": "partial",
+    "e": "Ingen preconnect i koden; Turnstile kun på formularsiden, ingen render-blokerende tredjeparts-script fundet"
    }
   ],
   "appr": "Skrifttyperne er valgt og bygget i designsystemet, og kravet handler kun om hurtig indlæsning."
@@ -364,8 +518,8 @@ window.WS_SPEC = [
   "what": "Hastighed måles på rigtige besøg (Core Web Vitals: LCP under 2,5 s, INP under 200 ms, CLS under 0,1) og holdes fast med automatiske grænser i byggeprocessen. Lighthouse og størrelsesgrænser fanger regressioner, før de kommer i produktion.",
   "gausta": "Lofterne skal genberegnes for et billedtungt site og sættes pr. skabelon efter første baseline. Måling på rigtige besøg afhænger af analytics og samtykke.",
   "built": {
-   "s": "none",
-   "where": "Intet fundet. .github/workflows/ci.yml har typecheck, tests, kontrast, skema og build, men ingen Lighthouse, size-limit eller budget.json; filen siger selv, at hastighedstjek tilføjes, når staging findes. web-vitals findes ikke i package.json."
+   "s": "partial",
+   "where": "En manuel Lighthouse-måling af fire sider er kørt 18. oktober 2026 og står øverst i N1 (Google Performance scan). Der er stadig ingen automatisk måling i CI, ingen budgetter og ingen felt-måling."
   },
   "decided": "G12 (Matomo cookieless som analytics). Felt-måling hviler på d8a (N4.1).",
   "deps": [
@@ -382,21 +536,27 @@ window.WS_SPEC = [
     "t": "size-limit med first-load JS-lofter i CI",
     "prio": "",
     "rel": "gaelder",
-    "note": "Lofterne genberegnes for Gausta."
+    "note": "Lofterne genberegnes for Gausta.",
+    "s": "none",
+    "e": "Ingen size-limit i package.json eller .github/workflows/ci.yml"
    },
    {
     "id": "B1-5.2",
     "t": "Lighthouse CI og budget.json på staging, PR eller lokal build",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Manuel Lighthouse-scan 18. okt. 2026 (se scanning i N1). Ingen CI, ingen budget.json."
    },
    {
     "id": "B1-5.3",
     "t": "Felt-RUM med web-vitals til analytics, segmenteret",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Afhænger af Gaustas analytics- og samtykkevalg og af, at A, B og C er adskilt."
+    "note": "Afhænger af Gaustas analytics- og samtykkevalg og af, at A, B og C er adskilt.",
+    "s": "none",
+    "e": "web-vitals findes ikke i package.json, ingen felt-RUM i koden"
    }
   ],
   "needs": "Budgetter for hastighed og om der skal oprettes et testmiljø (omkostning)."
@@ -427,21 +587,27 @@ window.WS_SPEC = [
     "t": "Node-service på Railway, verificér x-nextjs-cache; delt cache-handler ved flere instanser",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Relevant hvis back-office eller cron ligger i samme tjeneste; ellers udskudt."
+    "note": "Relevant hvis back-office eller cron ligger i samme tjeneste; ellers udskudt.",
+    "s": "partial",
+    "e": "Node-service på Railway med statisk app/api/health/route.ts; x-nextjs-cache ikke verificeret, én instans uden delt cache-handler"
    },
    {
     "id": "B1-6.2",
     "t": "Eksplicitte cache-headers kun på API- og webhook-ruter; CDN-Cache-Control ved Cloudflare",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta får API-ruter (webhook, live-data-proxyer, sensor-data)."
+    "note": "Gausta får API-ruter (webhook, live-data-proxyer, sensor-data).",
+    "s": "none",
+    "e": "Ingen eksplicitte cache-headers på API-ruterne; Cloudflare er DNS only (domaene-og-dns-setup.md)"
    },
    {
     "id": "B1-6.3",
     "t": "Bekræft Railway-region EU",
     "prio": "",
     "rel": "gaelder",
-    "note": "EU er sandsynligt krav for dansk og norsk publikum."
+    "note": "EU er sandsynligt krav for dansk og norsk publikum.",
+    "s": "partial",
+    "e": "Ifølge domaene-og-dns-setup.md er EU West ønsket, men markeret ikke verificeret i Railway"
    }
   ],
   "needs": "Du skal selv kontrollere Railway-regionen, forbrugsloftet og alarmen i Railway."
@@ -465,7 +631,9 @@ window.WS_SPEC = [
     "t": "Valgfri CSS scroll-driven animations",
     "prio": "",
     "rel": "ikke",
-    "note": "Ubetydelig gevinst nu, kan genovervejes. Udskudt hos Stormpine."
+    "note": "Ubetydelig gevinst nu, kan genovervejes. Udskudt hos Stormpine.",
+    "s": "na",
+    "e": "Udskudt hos Stormpine og ikke relevant for Gausta (rel er ikke)"
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -495,35 +663,45 @@ window.WS_SPEC = [
     "t": "Alle rigtige hemmeligheder (Sanity-skrivetoken, webhook-secret, preview-secret) som Sealed Railway-variabler; out-of-band kopi",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Gælder også back-office (DB-URL, Better Auth secret, sensor-API-nøgler)."
+    "note": "Gælder også back-office (DB-URL, Better Auth secret, sensor-API-nøgler).",
+    "s": "partial",
+    "e": "Ifølge sanity-setup.md ligger hemmeligheder i Railway; Sealed-variabler og kopi uden for platformen ikke bekræftet"
    },
    {
     "id": "B2-0.2",
     "t": "Audit af env-præfikser: ingen hemmelighed med NEXT_PUBLIC_; grep klientbundle efter token-mønstre",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Kun projekt-id, datasæt og Turnstile-sitekey er NEXT_PUBLIC; ingen dokumenteret grep af klientbundlen"
    },
    {
     "id": "B2-0.3",
     "t": "gitleaks eller GitHub secret scanning og push protection i CI; .env* gitignoreret",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Kun .gitignore udelukker .env*; ingen gitleaks i ci.yml, GitHub secret scanning ikke kontrolleret"
    },
    {
     "id": "B2-0.4",
     "t": "Dependabot eller Renovate og pnpm audit high/critical gate i CI",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen dependabot.yml, Renovate eller pnpm audit i .github/workflows/ci.yml"
    },
    {
     "id": "B2-0.5",
     "t": "Read-only Sanity-token til offentligt frontend; roter pending tokens",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Ingen eksisterende pending tokens, nye konti."
+    "note": "Ingen eksisterende pending tokens, nye konti.",
+    "s": "done",
+    "e": "Ifølge sanity-setup.md Viewer-token (11. okt 2026), brugt kun til kladder i sanity/lib/fetch.ts; ingen gamle tokens at rotere"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -553,21 +731,27 @@ window.WS_SPEC = [
     "t": "Tving HTTPS, bekræft Railway TLS på domæne og www, redirect HTTP",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Domæne og evt. .no og .dk varianter."
+    "note": "Domæne og evt. .no og .dk varianter.",
+    "s": "done",
+    "e": "Ifølge domaene-og-dns-setup.md målt 5. okt 2026: HTTP giver 301, www 308, gyldige certifikater; .no og .dk ikke relevante endnu"
    },
    {
     "id": "B2-1.2",
     "t": "Header-baseline: X-Content-Type-Options, Referrer-Policy, Permissions-Policy, frame-ancestors; matcher springer static, prefetch og API over",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Permissions-Policy skal måske tillade geolocation eller kamera, hvis kort eller QR-scan bruges."
+    "note": "Permissions-Policy skal måske tillade geolocation eller kamera, hvis kort eller QR-scan bruges.",
+    "s": "done",
+    "e": "next.config.ts: nosniff, Referrer-Policy, Permissions-Policy og frame-ancestors i CSP på alle stier"
    },
    {
     "id": "B2-1.3",
     "t": "HSTS uden preload først; upgrade-insecure-requests; preload først når alle subdomæner er permanent HTTPS",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Subdomænerne (back-office, evt. sensor-endpoint) skal medregnes."
+    "note": "Subdomænerne (back-office, evt. sensor-endpoint) skal medregnes.",
+    "s": "done",
+    "e": "next.config.ts: HSTS ét år uden preload og includeSubDomains; upgrade-insecure-requests uden for udvikling"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -599,35 +783,45 @@ window.WS_SPEC = [
     "t": "Beslut CSP-sti mod B1-caching (statisk-venlig eller nonce). Default statisk-venlig",
     "prio": "P0/P1",
     "rel": "tilpasses",
-    "note": "Back-office kan tage nonce, offentlig side statisk."
+    "note": "Back-office kan tage nonce, offentlig side statisk.",
+    "s": "done",
+    "e": "next.config.ts: statisk-venlig CSP uden nonce valgt og begrundet i kommentar; hash/SRI senere"
    },
    {
     "id": "B2-2.2",
     "t": "CSP report-only med report-endpoint; Sanity CDN og analytics-origin i connect-src og img-src",
     "prio": "P0/P1",
     "rel": "tilpasses",
-    "note": "Langt flere tredjepartsorigins (vejr, lifte, webcam, kort, events)."
+    "note": "Langt flere tredjepartsorigins (vejr, lifte, webcam, kort, events).",
+    "s": "none",
+    "e": "CSP er indført som enforcing; ingen report-only og intet report-endpoint i app/api"
    },
    {
     "id": "B2-2.3",
     "t": "Egen afslappet CSP til /studio eller udeladelse via matcher",
     "prio": "P0/P1",
     "rel": "gaelder",
-    "note": "Gælder hvis Sanity Studio indlejres."
+    "note": "Gælder hvis Sanity Studio indlejres.",
+    "s": "na",
+    "e": "Afløst af G58: Studio kører på sanity.studio, /studio omdirigeres i next.config.ts"
    },
    {
     "id": "B2-2.4",
     "t": "Promovér CSP til enforcing efter observation; re-scan",
     "prio": "P0/P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen observationsfase; CSP er enforcing fra start, og ekstern re-scan er ikke kørt"
    },
    {
     "id": "B2-2.5",
     "t": "Ved SRI-sti: aktivér experimental.sri, verificér at statisk og cache holder",
     "prio": "P0/P1",
     "rel": "tilpasses",
-    "note": "Kun hvis sti A vælges; tidlig prøve i byggeriet."
+    "note": "Kun hvis sti A vælges; tidlig prøve i byggeriet.",
+    "s": "na",
+    "e": "Afløst af valget af statisk CSP uden nonce; experimental.sri ikke brugt, hash-sti er åbent punkt"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -658,35 +852,45 @@ window.WS_SPEC = [
     "t": "Beskær Sanity CORS-origins; allow-credentials fra for offentligt origin",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ifølge sanity-setup.md står fire origins med credentials tilladt; ikke beskåret, ikke kontrolleret i Sanity Manage"
    },
    {
     "id": "B2-3.2",
     "t": "Verificér publish-webhooksignatur med next-sanity/webhook før revalidering",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "app/api/revalidate/route.ts: parseBody fra next-sanity/webhook verificerer signatur før revalidateTag"
    },
    {
     "id": "B2-3.3",
     "t": "Draft og preview bag signeret secret; SanityLive kun i draft mode",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "app/api/draft-mode/enable/route.ts: defineEnableDraftMode med secret-tjek; SanityLive ikke i brug, kladder kun med token"
    },
    {
     "id": "B2-3.4",
     "t": "Server Actions allowedOrigins; Zod på alle input",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Zod findes også i back-office-stakken."
+    "note": "Zod findes også i back-office-stakken.",
+    "s": "partial",
+    "e": "Zod i lib/inquiry/schema.ts, men ingen allowedOrigins for Server Actions i next.config.ts"
    },
    {
     "id": "B2-3.5",
     "t": "Sikker app-handoff-redirect: fast destination, ingen session i URL, intet åbent ?next=",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Handoff til back-office-login, samme princip."
+    "note": "Handoff til back-office-login, samme princip.",
+    "s": "na",
+    "e": "Ingen back-office eller app-handoff bygget i produktionsrepoet endnu"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -717,21 +921,27 @@ window.WS_SPEC = [
     "t": "Beslut Cloudflare foran (WAF, rate limiting, bot, CDN, DNS) eller kun Railway Under Attack Mode",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "Gælder som beslutning."
+    "note": "Gælder som beslutning.",
+    "s": "partial",
+    "e": "Cloudflare er DNS only; proxy-valg er åbent punkt i domaene-og-dns-setup.md, ingen WAF"
    },
    {
     "id": "B2-4.2",
     "t": "Rate-limit følsomme ruter (formular-POST, webhook, preview) i Cloudflare eller handler",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Tilføj login, sensor-ingest og evt. gæsteside-endpoints."
+    "note": "Tilføj login, sensor-ingest og evt. gæsteside-endpoints.",
+    "s": "partial",
+    "e": "Formular: 5 forsøg pr. 10 min i lib/inquiry/rate-limit.ts; webhook og draft-ruter har ingen egen grænse"
    },
    {
     "id": "B2-4.3",
     "t": "Dokumentér Under Attack Mode-runbook (toggle, udløb); kobler til B8",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "Gælder hvis Railway beholdes; tilpasses til Cloudflare hvis valgt."
+    "note": "Gælder hvis Railway beholdes; tilpasses til Cloudflare hvis valgt.",
+    "s": "none",
+    "e": "Ingen Under Attack Mode-runbook fundet i teknisk/ eller repoet"
    }
   ],
   "needs": "Om Cloudflare-proxyen skal slås til."
@@ -759,7 +969,9 @@ window.WS_SPEC = [
     "t": "Honeypot og server-side Turnstile på lead-formularer; afvis før ESP eller CRM",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Gælder kontakt- og forespørgselsformularen; ingen CRM nødvendigvis."
+    "note": "Gælder kontakt- og forespørgselsformularen; ingen CRM nødvendigvis.",
+    "s": "done",
+    "e": "app/[locale]/inquiry/actions.ts: honeypot, grænse, Zod, server-Turnstile før afsendelse; tests/inquiry.test.ts. Nøgler ikke kontrolleret"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -790,14 +1002,18 @@ window.WS_SPEC = [
     "t": "noindex på /studio (robots og meta)",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "Udvides til back-office og gæsteområde."
+    "note": "Udvides til back-office og gæsteområde.",
+    "s": "partial",
+    "e": "Hele sitet noindex (X-Robots-Tag, robots.ts, metadata); /studio er omdirigering, noindex på sanity.studio ikke kontrolleret"
    },
    {
     "id": "B2-6.2",
     "t": "Gennemgå Sanity-medlemmer og roller, mindst rettigheder",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Kun én ejer nu, men gælder ved senere hjælpere (fx rengøring, operatør)."
+    "note": "Kun én ejer nu, men gælder ved senere hjælpere (fx rengøring, operatør).",
+    "s": "partial",
+    "e": "Ifølge sanity-setup.md kun ejeren, backup-medlem ikke oprettet, andet medlem uafklaret; ikke kontrolleret i Sanity"
    }
   ],
   "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Backup-medlem i Sanity og hvordan gæsteområdets link udformes og fornyes.",
@@ -828,21 +1044,27 @@ window.WS_SPEC = [
     "t": "Ekstern header- og CSP-scan (securityheaders.com eller Observatory) på lanceringschecklisten med målkarakter",
     "prio": "P2",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen scan på lanceringschecklisten og ingen målkarakter fundet; ekstern scanner ikke kørt"
    },
    {
     "id": "B2-7.2",
     "t": "Overvåg CSP-report-endpoint efter lancering; triagér nye overtrædelser",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "Hold støjen nede (mange tredjeparter)."
+    "note": "Hold støjen nede (mange tredjeparter).",
+    "s": "none",
+    "e": "Intet CSP-report-endpoint i app/api, så intet at overvåge"
    },
    {
     "id": "B2-7.3",
     "t": "Fejlsporing (Sentry) så sikkerhedsrelevante runtime-fejl vises (overlap B8)",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "Se N8."
+    "note": "Se N8.",
+    "s": "none",
+    "e": "Sentry findes ikke i package.json, ingen fejlsporing i koden"
    }
   ],
   "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Valg af fejlsporing (N8.4) og målkarakter.",
@@ -875,21 +1097,27 @@ window.WS_SPEC = [
     "t": "Beslut cookieless-first vs cookies/pixels (fælles med B4)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "beslutningen skal tages igen, jf. tredjepartsembeds (kort, webcam, vejr, booking)"
+    "note": "beslutningen skal tages igen, jf. tredjepartsembeds (kort, webcam, vejr, booking)",
+    "s": "none",
+    "e": "Ejerens svar 18. okt 2026 er 'afvent' (ifølge spec-data); ingen beslutning om cookieless vs cookies fundet i repo eller teknisk/krav/n3."
    },
    {
     "id": "B3-0.2",
     "t": "Skriv posturen ind i repoets definition of done (AGENTS.md)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Repoet har ingen AGENTS.md; README.md har intet afsnit om privatliv eller definition of done."
    },
    {
     "id": "B3-1.0",
     "t": "Cookieless-gren: dokumentér hvorfor intet banner; verificér ingen cookie/localStorage (docs/privacy/tracking.md)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "kun gyldig for A (offentlig side), hvis alle embeds er blokeret eller klik-for-at-indlæse"
+    "note": "kun gyldig for A (offentlig side), hvis alle embeds er blokeret eller klik-for-at-indlæse",
+    "s": "none",
+    "e": "Ingen docs/privacy/tracking.md; PressCarousel.tsx bruger localStorage, SeasonSwitcher.tsx/lib/season.ts sessionStorage; ingen cookietest."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvad der må gemmes uden samtykke, og hvilke embeds der skal blokeres (juridisk).",
@@ -922,35 +1150,45 @@ window.WS_SPEC = [
     "t": "Cookie-gren: vælg CMP (Cookie Information/Cookiebot/Klaro/selvbygget), DA/EN",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "sandsynligvis nødvendig hvis embeds sætter cookies; sprog DA/EN, senere NO/DE"
+    "note": "sandsynligvis nødvendig hvis embeds sætter cookies; sprog DA/EN, senere NO/DE",
+    "s": "none",
+    "e": "Ingen CMP i repoet (ingen consent- eller cookiebanner-kode i components/, app/, lib/); beslutningen afventer."
    },
    {
     "id": "B3-1.2",
     "t": "Consent-first og symmetrisk banner, granulært, ingen pre-tick, ingen cookie wall",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "kun hvis CMP bygges"
+    "note": "kun hvis CMP bygges",
+    "s": "none",
+    "e": "Intet samtykkebanner i components/ eller app/."
    },
    {
     "id": "B3-1.3",
     "t": "Tilbagekaldelse lige så let + re-consent + log",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "kun hvis CMP bygges"
+    "note": "kun hvis CMP bygges",
+    "s": "none",
+    "e": "Ingen tilbagekaldelse eller samtykkelog i koden."
    },
    {
     "id": "B3-1.4",
     "t": "Gate scripts via samtykke, integreret med CSP og analytics-init",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "også embeds (iframes) skal gates, ikke kun scripts"
+    "note": "også embeds (iframes) skal gates, ikke kun scripts",
+    "s": "none",
+    "e": "LiveCam.tsx indlæser youtube-nocookie-iframe automatisk uden klik; CSP i next.config.ts, men ingen gating af scripts eller embeds."
    },
    {
     "id": "B3-6.2",
     "t": "Revidér samtykkelog og re-consent-kadence (hvis CMP)",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "kun hvis CMP"
+    "note": "kun hvis CMP",
+    "s": "none",
+    "e": "Ingen CMP og dermed ingen samtykkelog eller re-consent-kadence."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Samtykkeløsning eller klik-for-at-indlæse (juridisk).",
@@ -983,28 +1221,36 @@ window.WS_SPEC = [
     "t": "Databehandlerregister (rolle, data, lokation, underdatabehandlere)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "tilføj UniFi/hjemmeserver, vejr/lift/webcam-leverandører, booking, evt. e-mail"
+    "note": "tilføj UniFi/hjemmeserver, vejr/lift/webcam-leverandører, booking, evt. e-mail",
+    "s": "none",
+    "e": "Intet databehandlerregister i repoet; teknisk/krav/n3 har kun en skabelon-tabel over databehandlere."
    },
    {
     "id": "B3-2.2",
     "t": "Underskriv/indsaml DPA for hver databehandler",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "privatperson som dataansvarlig; kun relevant hvor persondata deles"
+    "note": "privatperson som dataansvarlig; kun relevant hvor persondata deles",
+    "s": "none",
+    "e": "Ingen DPA'er dokumenteret eller indsamlet i repo eller teknisk/."
    },
    {
     "id": "B3-2.3",
     "t": "US-databehandlere: DPF-verifikation + 2021-SCC + TIA",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Railway er stadig US-moder; HubSpot sandsynligvis ikke relevant"
+    "note": "Railway er stadig US-moder; HubSpot sandsynligvis ikke relevant",
+    "s": "none",
+    "e": "Ingen DPF/SCC/TIA-vurdering fundet; kun omtalt som krav i teknisk/krav/n3-privatliv-og-samtykke.md."
    },
    {
     "id": "B3-2.4",
     "t": "Foretræk EU-ejede/hostede leverandører (CLOUD Act)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "a-kasse-argumentet falder bort; EU-valg er stadig et privatlivsplus, men ikke et kanalkrav"
+    "note": "a-kasse-argumentet falder bort; EU-valg er stadig et privatlivsplus, men ikke et kanalkrav",
+    "s": "none",
+    "e": "Ingen dokumenteret leverandørvurdering efter EU-hosting; Railway og Sanity er stadig amerikanske moderselskaber."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Databehandleraftaler og leverandører uden for EU (juridisk).",
@@ -1038,28 +1284,36 @@ window.WS_SPEC = [
     "t": "Privatlivs- og cookiepolitik som lokaliserede Sanity-dokumenter via [slug]-route",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "sprog DA (/), EN (/en), senere NO/DE; ruter på dansk/norsk"
+    "note": "sprog DA (/), EN (/en), senere NO/DE; ruter på dansk/norsk",
+    "s": "partial",
+    "e": "Sanity-skema har textSection til Privatliv/Cookies og footer.ts linker dem; udgivet indhold og [[...slug]]-visning ikke kontrolleret."
    },
    {
     "id": "B3-3.2",
     "t": "Privatlivspolitikkens Art 13-indhold, juridisk review",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dækker også gæsteområde og back-office, ikke kun leads"
+    "note": "dækker også gæsteområde og back-office, ikke kun leads",
+    "s": "none",
+    "e": "Ingen Art 13-tekst eller juridisk review fundet; formularen er slået fra (INQUIRY_ENABLED) til GDPR-tekst er klar."
    },
    {
     "id": "B3-3.3",
     "t": "Cookiepolitik: tabel eller ærlig 'ingen cookies'-erklæring, matchet mod DevTools",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "tredjepartsembeds gør 'ingen cookies' usandsynlig uden gating"
+    "note": "tredjepartsembeds gør 'ingen cookies' usandsynlig uden gating",
+    "s": "none",
+    "e": "Ingen cookiepolitik i repoet; gl_lang-cookien (proxy.ts, lib/i18n.ts) og storage-brug er ikke matchet mod en politik."
    },
    {
     "id": "B3-3.4",
     "t": "Footer- og formularlinks til begge politikker + prefs-link",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Footer-skemaet kan linke juridiske sider (footer.ts, Footer.tsx); intet privatlivslink i InquiryForm.tsx og intet prefs-link."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvem gennemgår politikkerne juridisk, og om dit navn og din adresse skal stå på sitet.",
@@ -1091,14 +1345,18 @@ window.WS_SPEC = [
     "t": "privacy@-postkasse + DSAR-proces (1 måneds SLA)",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "enkelt ejer-postkasse; gæstedata og sensorlogs skal med i opslaget"
+    "note": "enkelt ejer-postkasse; gæstedata og sensorlogs skal med i opslaget",
+    "s": "none",
+    "e": "Ingen postkasse eller DSAR-proces i repo eller teknisk/."
    },
    {
     "id": "B3-4.2",
     "t": "Opbevaringsplan pr. kategori + håndhævelse",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "tilføj gæstedata og dørsensorlogs (UniFi)"
+    "note": "tilføj gæstedata og dørsensorlogs (UniFi)",
+    "s": "none",
+    "e": "Ingen opbevaringsplan eller sletningshåndhævelse fundet; formularen gemmer intet ud over mailen."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Kontaktadresse til indsigt og sletning, og hvor længe data må gemmes.",
@@ -1128,7 +1386,9 @@ window.WS_SPEC = [
     "t": "Let ROPA (Art 30)",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "privatperson kan have undtagelse fra Art 30-pligt i visse tilfælde (Åbent punkt, juridisk review), men en let ROPA anbefales alligevel"
+    "note": "privatperson kan have undtagelse fra Art 30-pligt i visse tilfælde (Åbent punkt, juridisk review), men en let ROPA anbefales alligevel",
+    "s": "none",
+    "e": "Ingen fortegnelse (ROPA) fundet i repo eller teknisk/; kun nævnt som anbefaling i teknisk/krav/n3."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Om du som privatperson skal føre en fortegnelse efter artikel 30.",
@@ -1159,14 +1419,18 @@ window.WS_SPEC = [
     "t": "Periodisk cookie-/tracker-scan eller CI-check",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "især pga. tredjepartsembeds (Playwright-test kan tjekke cookies)"
+    "note": "især pga. tredjepartsembeds (Playwright-test kan tjekke cookies)",
+    "s": "none",
+    "e": "ci.yml har ingen cookie- eller trackertest, og tests/ har kun vitest-filer, ingen Playwright."
    },
    {
     "id": "B3-6.3",
     "t": "Politik- og registergennemgang med ejer + interval (B10)",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "ejeren er én person; B10-governance findes ikke i Gausta"
+    "note": "ejeren er én person; B10-governance findes ikke i Gausta",
+    "s": "none",
+    "e": "Ingen fast gennemgang af politikker og registre dokumenteret eller aftalt."
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvor ofte politikker gennemgås.",
@@ -1192,7 +1456,9 @@ window.WS_SPEC = [
     "t": "Compliance-one-pager til a-kasse/fagforenings-købere",
     "prio": "P1",
     "rel": "ikke",
-    "note": "ikke relevant som salgsdokument; kernen genbruges som intern oversigt eller gæstevendt privatlivsnote"
+    "note": "ikke relevant som salgsdokument; kernen genbruges som intern oversigt eller gæstevendt privatlivsnote",
+    "s": "na",
+    "e": "rel er 'ikke': punktet er godkendt som ikke relevant for Gausta, dermed bygges det ikke."
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -1224,7 +1490,9 @@ window.WS_SPEC = [
     "t": "Deploy Matomo (officielt Docker-image) + managed MySQL/MariaDB som egne Railway-tjenester i EU-region med persistent volume, HTTPS-domæne, installationsguide, Site ID",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "kun hvis selvhostet Matomo vælges; for en privat feriebolig kan Plausible-cloud eller ingen analytics være bedre"
+    "note": "kun hvis selvhostet Matomo vælges; for en privat feriebolig kan Plausible-cloud eller ingen analytics være bedre",
+    "s": "na",
+    "e": "Afløst af ejerens valg af d8a på hjemmeserveren (18. okt 2026); Matomo er fravalgt. Intet Matomo-spor i repoet."
    }
   ],
   "needs": "Værktøjet er valgt (d8a). Tilbage: hvordan målingerne kommer hjem, uden at sitet afhænger af hjemmeserveren (N19). Se Claudes anbefaling.",
@@ -1256,7 +1524,9 @@ window.WS_SPEC = [
     "t": "Privacy-hærdning: disableCookies, IP-anonymisering min. 2 oktetter, anonymiserede referrers, Do-Not-Track, ingen userId/PII, kort log-retention; bevis (skærmbillede) for 'ingen banner'",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "princip; pakken til a-kasser er ikke relevant"
+    "note": "princip; pakken til a-kasser er ikke relevant",
+    "s": "none",
+    "e": "Ingen målekode i repoet; d8a-adfærd ved IP og cookies er ikke undersøgt, og der er intet bevis for 'ingen banner'."
    }
   ],
   "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies."
@@ -1286,7 +1556,9 @@ window.WS_SPEC = [
     "t": "Analytics-komponent med next/script, SPA-rutetracking, env-styret, ingen render hvis ikke sat",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "gælder kun flade A; ikke i gæsteområde (B) og back-office (C)"
+    "note": "gælder kun flade A; ikke i gæsteområde (B) og back-office (C)",
+    "s": "none",
+    "e": "Ingen analytics-komponent, next/script-måling eller sendBeacon i components/ eller app/."
    }
   ],
   "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
@@ -1318,14 +1590,18 @@ window.WS_SPEC = [
     "t": "UTM-mapping, Goals (CTA-klik-ud, prissidevisning), trackEvent, UTM-konvention, B2C/B2B-split i docs/analytics.md",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "mål bliver 'forespørgsel/klik til booking', sprog, kampagnekilde; B2C/B2B-split ikke relevant"
+    "note": "mål bliver 'forespørgsel/klik til booking', sprog, kampagnekilde; B2C/B2B-split ikke relevant",
+    "s": "none",
+    "e": "Ingen målehændelser eller UTM-håndtering i koden; formularen er slået fra, og docs/analytics.md findes ikke."
    },
    {
     "id": "B4-4.1",
     "t": "Cross-domain tilmeldingsattribution marketing til produktapp",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "analogt til klik-ud til bookingplatform (Airbnb/operatør/egen); afhænger af bookingmodel"
+    "note": "analogt til klik-ud til bookingplatform (Airbnb/operatør/egen); afhænger af bookingmodel",
+    "s": "none",
+    "e": "Ingen klik-ud-sporing eller cross-domain-attribution; bookingaftalen med gausta.com er ikke på plads."
    }
   ],
   "appr": "Målet er afklaret af bookingbeslutningen: indtil aftalen med gausta.com er på plads, er konverteringen en sendt forespørgsel via formularen eller en mail til ejeren. Klik ud til gausta.com tilføjes, når aftalen er på plads."
@@ -1352,7 +1628,9 @@ window.WS_SPEC = [
     "t": "Matomo-host i CSP; HTTPS + HSTS; admin 2FA/patching",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "CSP-del for valgt analytics-host; admin-del kun ved selvhost"
+    "note": "CSP-del for valgt analytics-host; admin-del kun ved selvhost",
+    "s": "partial",
+    "e": "next.config.ts har CSP og HSTS på ét år, men ingen målehost i connect-src; d8a-valg og målevej ikke afgjort."
    }
   ],
   "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
@@ -1382,7 +1660,9 @@ window.WS_SPEC = [
     "t": "Drift: MySQL-backups, patch-kadence, B2C/B2B-dashboard, tracking-udfald må ikke bryde sitet",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "kun ved selvhost; 'må aldrig blokere siden' gælder altid"
+    "note": "kun ved selvhost; 'må aldrig blokere siden' gælder altid",
+    "s": "none",
+    "e": "Ingen driftsopsætning, backup eller beskyttelse mod målingsudfald (ingen målekode i repoet)."
    }
   ],
   "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
@@ -1413,21 +1693,27 @@ window.WS_SPEC = [
     "t": "metadataBase, titelskabelon og standard OG/Twitter i app/layout.tsx",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "brandnavn og sprog ændres"
+    "note": "brandnavn og sprog ændres",
+    "s": "partial",
+    "e": "app/[locale]/layout.tsx: metadataBase og titelskabelon (noindex til lancering). Ingen standard OG/Twitter i layoutet, og filen ligger under [locale]."
    },
    {
     "id": "B5-0.2",
     "t": "Sanity seo-objekt (metaTitle, metaDescription, ogImage, noIndex) og seoSettings-singleton",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "noIndex bliver kritisk for gæsteområdet; flere sprog"
+    "note": "noIndex bliver kritisk for gæsteområdet; flere sprog",
+    "s": "partial",
+    "e": "sanity/schemaTypes/objects/seo.ts: titel, beskrivelse, delebillede pr. sprog; settings.ts har defaultSeo. Intet noIndex-felt."
    },
    {
     "id": "B5-0.3",
     "t": "Læs seo-felter i metadata; canonical og hreflang fra sprogkort",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "retningen af x-default afhænger af beslutningen om standardsprog"
+    "note": "retningen af x-default afhænger af beslutningen om standardsprog",
+    "s": "partial",
+    "e": "page.tsx generateMetadata: seo-felter, canonical og hreflang med x-default. Fallback til defaultSeo fra sideindstillinger bruges ikke i koden."
    }
   ],
   "appr": "G52 afgør sprogstrukturen. Resten er teknisk metadata."
@@ -1458,14 +1744,18 @@ window.WS_SPEC = [
     "t": "robots.ts: tillad site og sprogmapper, forbyd studio og preview, tillad AI-crawlere, Sitemap-link",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "forbyd også gæsteområde og back-office; AI-crawler-valg skal omvurderes"
+    "note": "forbyd også gæsteområde og back-office; AI-crawler-valg skal omvurderes",
+    "s": "partial",
+    "e": "app/robots.ts er pladsholder med Disallow på alt; ingen Sitemap-link, ingen AI-crawler-regler. X-Robots-Tag noindex i next.config.ts."
    },
    {
     "id": "B5-1.2",
     "t": "sitemap.ts fra Sanity med lastModified og sprogalternativer",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "kun offentlig del; gæsteområde udelades"
+    "note": "kun offentlig del; gæsteområde udelades",
+    "s": "none",
+    "e": "Ingen app/sitemap.ts i repoet."
    }
   ],
   "needs": "Om AI-træningscrawlere skal blokeres."
@@ -1494,7 +1784,9 @@ window.WS_SPEC = [
     "t": "Search Console og Bing Webmaster, metadata.verification",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen metadata.verification i repoet, intet i teknisk/domaene-og-dns-setup.md. Ejerens trin, ikke kontrolleret i tjenesterne."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1525,14 +1817,18 @@ window.WS_SPEC = [
     "t": "JSON-LD Organization og WebSite i root layout fra seoSettings",
     "prio": "P0/P1",
     "rel": "tilpasses",
-    "note": "privatperson, ikke virksomhed"
+    "note": "privatperson, ikke virksomhed",
+    "s": "none",
+    "e": "Ingen Organization/WebSite JSON-LD i repoet; kun FAQPage i components/blocks/FaqSection.tsx."
    },
    {
     "id": "B5-2.2",
     "t": "Per-side JSON-LD: SoftwareApplication+Offer, BreadcrumbList, Article+author",
     "prio": "P0/P1",
     "rel": "tilpasses",
-    "note": "SoftwareApplication gælder ikke; overnatningstyper i stedet; Breadcrumb og Article kan bruges"
+    "note": "SoftwareApplication gælder ikke; overnatningstyper i stedet; Breadcrumb og Article kan bruges",
+    "s": "partial",
+    "e": "Kun FAQPage JSON-LD i FaqSection.tsx. Ingen BreadcrumbList, overnatningstype eller Article."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1561,14 +1857,18 @@ window.WS_SPEC = [
     "t": "Standard OG-billede og twitter.card = summary_large_image",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen twitter:card eller standard-OG-billede i layoutet; kun openGraph pr. side i page.tsx."
    },
    {
     "id": "B5-3.2",
     "t": "Dynamisk OG via opengraph-image.tsx pr. side og sprog; test i delingsværktøj før deling",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Facebook/Messenger vigtigere end LinkedIn; fotodrevne kort; fire årstidsprofiler"
+    "note": "Facebook/Messenger vigtigere end LinkedIn; fotodrevne kort; fire årstidsprofiler",
+    "s": "none",
+    "e": "Ingen opengraph-image.tsx; OG-billede kun fra seo.shareImage i page.tsx. Ikke testet i delingsværktøj."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1600,21 +1900,27 @@ window.WS_SPEC = [
     "t": "Én trailing-slash-politik, håndhævet",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen trailingSlash-indstilling i next.config.ts; Next-standard gælder, ikke håndhævet eller dokumenteret."
    },
    {
     "id": "B5-4.2",
     "t": "Redirect-kort (GitHub Pages til prod) og Sanity-styrede redirects i middleware",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "ingen prototype at migrere; redaktørstyrede redirects kun hvis behov, ellers statiske"
+    "note": "ingen prototype at migrere; redaktørstyrede redirects kun hvis behov, ellers statiske",
+    "s": "partial",
+    "e": "next.config.ts: www til rod (308) og /studio. proxy.ts: /en til sti uden /en (308). Ingen Sanity-styrede redirects; ingen gamle adresser."
    },
    {
     "id": "B5-4.3",
     "t": "Dansk lancering: hreflang og afvisbart sprogforslag, ingen geo/IP-redirect",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "princippet gælder; retningen flipper: engelsk/dansk standard, andre sprog foreslås"
+    "note": "princippet gælder; retningen flipper: engelsk/dansk standard, andre sprog foreslås",
+    "s": "partial",
+    "e": "hreflang i page.tsx; proxy.ts sender forsiden efter Accept-Language (307), ikke for robotter (G52). Ikke afvisbart forslag; automatisk redirect."
    }
   ],
   "needs": "Om der findes gamle adresser, og om automatisk sprogomdirigering (G52) skal ændres til et afvisbart forslag."
@@ -1646,28 +1952,36 @@ window.WS_SPEC = [
     "t": "Håndhæv overskriftshierarki og påkrævet alt i Portable Text og billedskemaer",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "imageWithAlt.ts kræver alt på lanceringssprogene; simpleBlockContent.ts tillader kun afsnit. Ingen dekorativ-toggle, ikke alle billedfelter bruger typen."
    },
    {
     "id": "B5-5.2",
     "t": "Author-type og byline-komponent; synlig Last updated",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "byline kun hvis der er blog/guides; Opdateret-dato nyttig til lokalguider"
+    "note": "byline kun hvis der er blog/guides; Opdateret-dato nyttig til lokalguider",
+    "s": "none",
+    "e": "Ingen author-type, byline eller Opdateret-dato i sanity/ eller components/."
    },
    {
     "id": "B5-5.3",
     "t": "nativeReviewed-gate: ikke-reviewede dokumenter er noindex og ude af sitemap",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "gælder de oversatte sprog, ikke dansk"
+    "note": "gælder de oversatte sprog, ikke dansk",
+    "s": "none",
+    "e": "Ingen nativeReviewed-felt eller noindex pr. dokument i sanity/ eller page.tsx."
    },
    {
     "id": "B5-5.4",
     "t": "Pillar-plus-cluster-model og redaktionelle interne-link-referencer",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "omvurderes: lokale klynger om Gaustatoppen/Rjukan frem for software"
+    "note": "omvurderes: lokale klynger om Gaustatoppen/Rjukan frem for software",
+    "s": "none",
+    "e": "Ingen klynge- eller internlinkmodel i sanity/schemaTypes."
    }
   ],
   "needs": "Søgeord og om engelsk, norsk og svensk skal gennemgås af en person, før de offentliggøres."
@@ -1698,14 +2012,18 @@ window.WS_SPEC = [
     "t": "IndexNow-ping ved Sanity-publicering (webhook og nøglefil)",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "lav prioritet; kun Bing-gavn; nøglefilen er ikke en hemmelighed men dokumentér den"
+    "note": "lav prioritet; kun Bing-gavn; nøglefilen er ikke en hemmelighed men dokumentér den",
+    "s": "none",
+    "e": "Ingen IndexNow-kode eller nøglefil i repoet."
    },
    {
     "id": "B5-6.2",
     "t": "Analytics (krydsref. B4): EU-hostet cookieless, consent-gated; GA4 AI-kanal hvis GA4",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "privatperson, GDPR; vælg cookieløs analyse; GA4 er ikke påkrævet"
+    "note": "privatperson, GDPR; vælg cookieløs analyse; GA4 er ikke påkrævet",
+    "s": "none",
+    "e": "Ingen analysekode i repoet; Matomo er kun beslutning G12 ifølge teknisk/beslutningsregister.md."
    }
   ],
   "needs": "Valg af analyse og om IndexNow er værd at bygge."
@@ -1729,7 +2047,9 @@ window.WS_SPEC = [
     "t": "Valgfri /llms.txt fra Sanity-indeks",
     "prio": "P2",
     "rel": "ikke",
-    "note": "ubevist gavn; kan udskydes helt"
+    "note": "ubevist gavn; kan udskydes helt",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke); ingen llms.txt i repoet, bevidst afgrænset."
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -1759,14 +2079,18 @@ window.WS_SPEC = [
     "t": "Hæv --faint til AA i begge temaer og ret --accent til lille tekst i lyst; kræver godkendelse og ejerskab for synk med produktapp",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "gælder for alle otte kombinationer, ikke to; ingen produktapp at synkronisere"
+    "note": "gælder for alle otte kombinationer, ikke to; ingen produktapp at synkronisere",
+    "s": "partial",
+    "e": "scripts/contrast.mjs kører i CI (pnpm contrast), 76 af 76 par ifølge teknisk/byggeplan.md. Fokusring 4,17-4,52 mod 3; tekst over foto/video ikke målt."
    },
    {
     "id": "B6-0.2",
     "t": "Fjern disableRules(['color-contrast'])-udeladelsen i smoke-testen når tokens består",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "aldrig udelad reglen fra start; krav fra dag ét"
+    "note": "aldrig udelad reglen fra start; krav fra dag ét",
+    "s": "partial",
+    "e": "Ingen axe eller Playwright-smoketest i repoet, så ingen regeludelukkelse, men heller ingen browsertjek af color-contrast."
    }
   ],
   "appr": "G20 afgør, at der er fire paletter, og kontrasttjekket findes i CI."
@@ -1791,21 +2115,27 @@ window.WS_SPEC = [
     "t": "Skip-to-content-link og id på <main>",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Skip-link i components/shell/Header.tsx peger på #main, men id sidder på div i [locale]/layout.tsx, ikke på main-elementet."
    },
    {
     "id": "B6-1.2",
     "t": "Konsistent :focus-visible-ring på alle interaktive elementer",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "kontrast på fokusring i alle otte kombinationer"
+    "note": "kontrast på fokusring i alle otte kombinationer",
+    "s": "done",
+    "e": "styles/base.css: global :focus-visible med 2px accentring; footer-links har egen ring i shell.css. Kontrast ifølge byggeplan.md over 3."
    },
    {
     "id": "B6-1.4",
     "t": "Præcis én h1 pr. side og logisk overskriftsrækkefølge",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Hero (første blok) eller sidetitel giver én h1 i page.tsx; inquiry og 404 har egen h1. Ingen automatisk test af h1-antal."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1833,7 +2163,9 @@ window.WS_SPEC = [
     "t": "Fuld prefers-reduced-motion-dækning for hero (partikler, event-fades)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "gælder video, parallax, sæsonanimationer, autoplay"
+    "note": "gælder video, parallax, sæsonanimationer, autoplay",
+    "s": "partial",
+    "e": "prefers-reduced-motion i base.css, gallery.css, plan.css, skiinout.css, AreaMap og HikeMap. Hover-video i Gallery.tsx har autoPlay uden reduced-motion-tjek."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1861,14 +2193,18 @@ window.WS_SPEC = [
     "t": "Mega-menu åbner på tastaturfokus og lukker på Escape",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "afhænger af om Gausta får mega-menu; sandsynligvis enklere navigation"
+    "note": "afhænger af om Gausta får mega-menu; sandsynligvis enklere navigation",
+    "s": "partial",
+    "e": "Nav.tsx: undermenu åbner ved :focus-within; Escape lukker kun mobilmenuen (onKey). Ingen Escape på undermenu på computer."
    },
    {
     "id": "B6-2.2",
     "t": "Tematoggle med aria-pressed; verificér LocaleControl; mobilnav-toggle",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "tema er en sæsonvælger, ikke blot lys/mørk; flere sprog"
+    "note": "tema er en sæsonvælger, ikke blot lys/mørk; flere sprog",
+    "s": "done",
+    "e": "SeasonSwitcher.tsx aria-pressed; LanguageSwitcher.tsx select med label; Nav.tsx mobilknap med aria-expanded og aria-controls. Ingen skærmlæsertest."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1897,7 +2233,9 @@ window.WS_SPEC = [
     "t": "Delt billedobjekt med påkrævet alt og dekorativ-toggle; renderer sætter overskriftsniveau",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "væsentligt for billedtung side; alt-tekst pr. sprog"
+    "note": "væsentligt for billedtung side; alt-tekst pr. sprog",
+    "s": "partial",
+    "e": "imageWithAlt.ts: alt pr. sprog, påkrævet på lanceringssprogene, ingen dekorativ-toggle. Overskriftsniveau sættes af renderer; seo-delebillede er almindeligt image."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1929,21 +2267,27 @@ window.WS_SPEC = [
     "t": "eslint-plugin-jsx-a11y",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "eslint-plugin-jsx-a11y mangler i package.json; ingen eslint-opsætning."
    },
    {
     "id": "B6-4.2",
     "t": "Playwright og axe på alle ruter og begge temaer; Lighthouse a11y-assertion; ingen regeludelukkelser",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "matrix: otte tema-kombinationer, tre sprog, gæsteområde og back-office"
+    "note": "matrix: otte tema-kombinationer, tre sprog, gæsteområde og back-office",
+    "s": "none",
+    "e": "Hverken Playwright, axe eller Lighthouse i package.json eller .github/workflows/ci.yml (tilføjes, når staging findes)."
    },
    {
     "id": "B6-4.3",
     "t": "Reflow-gate (WCAG 1.4.10): Playwright ved 375/768/1280, ingen horisontal overflow",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gæsteområdet bruges mest på mobil"
+    "note": "gæsteområdet bruges mest på mobil",
+    "s": "none",
+    "e": "Ingen reflow-test; ingen Playwright i package.json eller tests/."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -1972,7 +2316,9 @@ window.WS_SPEC = [
     "t": "Fuld manuel gennemgang (tastatur, NVDA/VoiceOver, 200 %/400 % zoom, begge temaer, reduced-motion)",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "omfang og tidspunkt afgøres af Gausta; udføres af ejeren eller en hjælper"
+    "note": "omfang og tidspunkt afgøres af Gausta; udføres af ejeren eller en hjælper",
+    "s": "none",
+    "e": "Ingen manuel gennemgang dokumenteret i teknisk/ eller repoet. G131 beslutter tjekliste før lancering, endnu ikke udført."
    }
   ],
   "decided": "Sitet skal overholde WCAG 2.2 AA (ejerens svar 18. oktober 2026).",
@@ -2003,7 +2349,9 @@ window.WS_SPEC = [
     "t": "Tosproget tilgængelighedserklæring som Sanity-side, linket i footer; evt. tredjepartsaudit",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "juridisk pligt for privatperson uklar; erklæring stadig god praksis; tredjepartsaudit sandsynligvis ikke relevant"
+    "note": "juridisk pligt for privatperson uklar; erklæring stadig god praksis; tredjepartsaudit sandsynligvis ikke relevant",
+    "s": "na",
+    "e": "Afløst af G131 (18. oktober 2026): ingen tilgængelighedserklæring, WCAG 2.2 AA skal overholdes (teknisk/beslutningsregister.md)."
    }
   ],
   "decided": "Ingen tilgængelighedserklæring, men sitet skal overholde WCAG 2.2 AA (ejerens svar 18. oktober 2026).",
@@ -2033,14 +2381,18 @@ window.WS_SPEC = [
     "t": "Skriv standardreglen i repo-DoD (Server Action til submitLead(), ingen embeds); bekræft formularinventar (D1)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "reglen gælder, inventaret er et andet"
+    "note": "reglen gælder, inventaret er et andet",
+    "s": "none",
+    "e": "AGENTS.md/DoD findes ikke i repoet; formularinventar ikke afklaret (N7.1 open: endelig formularliste)"
    },
    {
     "id": "B7-1.1",
     "t": "Første formular som Server Action med useActionState, delt Zod-skema, få felter, a11y, submitLead()-abstraktion",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "samme mønster, andre felter"
+    "note": "samme mønster, andre felter",
+    "s": "partial",
+    "e": "Server Action, useActionState, Zod (lib/inquiry/schema.ts), labels bygget; ingen submitLead()-søm, no-JS og fokus til fejl ikke kontrolleret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2069,7 +2421,9 @@ window.WS_SPEC = [
     "t": "Honeypot + Turnstile server-verificeret + rate limit + CSP for challenges.cloudflare.com (D10)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "Turnstile er i Gaustas stack"
+    "note": "Turnstile er i Gaustas stack",
+    "s": "done",
+    "e": "actions.ts: honeypot, rate-limit.ts 5/10 min, turnstile.ts siteverify, tests; CSP tillader challenges.cloudflare.com. Nøgler i Railway ikke kontrolleret"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -2100,7 +2454,9 @@ window.WS_SPEC = [
     "t": "Adskilt, ikke-forhåndsafkrydset markedsføringssamtykke; gem samtykkebevis; B3-registerpost",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dansk og muligvis norsk lov, ingen B2B-ramme, intet B3-register"
+    "note": "dansk og muligvis norsk lov, ingen B2B-ramme, intet B3-register",
+    "s": "none",
+    "e": "Ingen samtykketekst, markedsføringsafkrydsning, samtykkebevis eller B3-register i koden (grep samtykke/consent uden formulartræf)"
    }
   ],
   "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). GDPR-tekst, afkrydsningsfelt og opbevaring af henvendelser (juridisk).",
@@ -2134,7 +2490,9 @@ window.WS_SPEC = [
     "t": "submitLead() sender fuldt lead som transaktionsmail til overvåget indbakke; idempotent; retry; aldrig tavst tab; retention",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "eneste nødvendige sink ved lancering"
+    "note": "eneste nødvendige sink ved lancering",
+    "s": "partial",
+    "e": "lib/inquiry/send.ts sender via Resend med Reply-To; ingen retry, idempotens, fallback-spor eller alarm ved fejl"
    }
   ],
   "needs": "Automatisk kvittering til gæsten og svartid. Operatørens skriftlige accept kan være overflødig, hvis booking går via gausta.com (bekræft)."
@@ -2165,7 +2523,9 @@ window.WS_SPEC = [
     "t": "Tilkobl CRM/ESP via API, behold mail som fallback, registrér databehandler",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "sandsynligvis ikke CRM; evt. ESP til nyhedsbrev/giv besked"
+    "note": "sandsynligvis ikke CRM; evt. ESP til nyhedsbrev/giv besked",
+    "s": "none",
+    "e": "Ingen CRM/ESP-integration i koden eller package.json, kun Resend til transaktionsmail"
    }
   ],
   "needs": "Om du har brug for et CRM."
@@ -2194,7 +2554,9 @@ window.WS_SPEC = [
     "t": "Start free-link til app med bevaret locale og UTM, ingen token i URL; konvertering app-side",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "ingen produktapp; svarer til link til bookingsystem eller Airbnb"
+    "note": "ingen produktapp; svarer til link til bookingsystem eller Airbnb",
+    "s": "none",
+    "e": "Ingen UTM- eller kildefangst (grep utm i app, components, lib uden træf); bookingmodel ikke afgjort"
    }
   ],
   "appr": "Bookingmodellen er afklaret: gausta.com, når aftalen er på plads. Indtil da er der intet udgående bookinglink, kun formular og mail. Kildemåling (UTM) tilføjes, når linket kommer."
@@ -2224,7 +2586,9 @@ window.WS_SPEC = [
     "t": "Nyhedsbrev med dobbelt opt-in, samtykketekst, one-click afmelding",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "kun hvis nyhedsbrev eller giv besked vælges"
+    "note": "kun hvis nyhedsbrev eller giv besked vælges",
+    "s": "none",
+    "e": "Ingen nyhedsbrevsformular, tilmeldingsliste eller afmeldingsflow i repoet"
    }
   ],
   "needs": "Om der skal være nyhedsbrev."
@@ -2254,7 +2618,9 @@ window.WS_SPEC = [
     "t": "Book a call via Cal.com (EU) eller link ud, cookiefri",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "afhænger af bookingmodel; opkaldsbooking sandsynligvis ikke relevant"
+    "note": "afhænger af bookingmodel; opkaldsbooking sandsynligvis ikke relevant",
+    "s": "none",
+    "e": "Ingen kalender- eller Cal.com-integration i repoet"
    }
   ],
   "needs": "Om der er behov for opkaldsbooking."
@@ -2282,7 +2648,9 @@ window.WS_SPEC = [
     "t": "Formalisér branch protection på main, der kræver CI (pnpm qa + next build) før merge, så Railway kun auto-deployer grøn main; bekræft at Railway kun deployer fra main",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "gælder begge apps hvis back-office er separat"
+    "note": "gælder begge apps hvis back-office er separat",
+    "s": "partial",
+    "e": "ci.yml kører typecheck, test, kontrast, skema, build ved push/PR; ingen qa-script, branch protection og Railway-deploy kun fra main ikke kontrolleret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2313,14 +2681,18 @@ window.WS_SPEC = [
     "t": "Let /api/health-route der returnerer 200 når klar; sæt som Railway-healthcheck-sti. Accept: bevidst ødelagt deploy fejler og erstatter ikke kørende version",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "back-offices tjek bør også ramme databaseforbindelsen"
+    "note": "back-offices tjek bør også ramme databaseforbindelsen",
+    "s": "partial",
+    "e": "app/api/health/route.ts svarer 200 uden eksterne kald; Railway-sti ifølge domaene-og-dns-setup.md, ikke kontrolleret i tjenesten; fejl-deploy ikke afprøvet"
    },
    {
     "id": "B8-1.2",
     "t": "Restart policy og SIGTERM-håndtering; verificér rollback-flowet (udfør én gang og bekræft live)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "gælder"
+    "note": "gælder",
+    "s": "none",
+    "e": "Ingen SIGTERM-håndtering i koden; restart policy og rollback-test ikke dokumenteret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2352,7 +2724,9 @@ window.WS_SPEC = [
     "t": "Off-platform-monitor på forside, /api/health og Matomo-vært; alarm til en kanal der faktisk følges. Anbefalet Better Stack",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Matomo findes ikke nødvendigvis; i stedet back-office, gæstelink og sensor-heartbeat"
+    "note": "Matomo findes ikke nødvendigvis; i stedet back-office, gæstelink og sensor-heartbeat",
+    "s": "none",
+    "e": "Ingen monitor; ifølge konti-og-adgang.md er Better Stack planlagt og åben, ingen konto dokumenteret"
    }
   ],
   "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Leverandør og alarmdestination for oppetidsovervågning (omkostning).",
@@ -2383,7 +2757,9 @@ window.WS_SPEC = [
     "t": "Fejlsporing med @sentry/* SDK mod Sentry EU eller selvhostet GlitchTip; PII-scrubbing, sampling, release-tagging; tilføj ingest-vært til CSP",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gælder; også server- og jobfejl i back-office"
+    "note": "gælder; også server- og jobfejl i back-office",
+    "s": "none",
+    "e": "Ingen Sentry/GlitchTip i package.json eller koden; ifølge konti-og-adgang.md planlagt og åben"
    }
   ],
   "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Valg af fejlsporing og hvilke persondata der må ende deri.",
@@ -2414,21 +2790,27 @@ window.WS_SPEC = [
     "t": "Planlagt Sanity dataset export (GitHub Action på cron), .github/workflows/backup-sanity.yml",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gælder hvis Sanity bruges"
+    "note": "gælder hvis Sanity bruges",
+    "s": "none",
+    "e": "Kun ci.yml i .github/workflows; ingen backup-sanity.yml eller Sanity-eksport"
    },
    {
     "id": "B8-4.2",
     "t": "Aktivér Railway-backups af Matomo MySQL; notér at selve sitet ikke kræver backup ud over git + Sanity",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "backup af back-office PostgreSQL i stedet; sitet kræver ingen backup kun for del A og B"
+    "note": "backup af back-office PostgreSQL i stedet; sitet kræver ingen backup kun for del A og B",
+    "s": "none",
+    "e": "Ingen back-office-database endnu; Railway-backup af volumener bruges ikke ifølge domaene-og-dns-setup.md"
    },
    {
     "id": "B8-4.3",
     "t": "Udfør og dokumentér én restore-test pr. lager (Railway: samme projekt + miljø)",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gælder"
+    "note": "gælder",
+    "s": "none",
+    "e": "Ingen restore-test dokumenteret eller mulig, da der ingen backups er"
    }
   ],
   "needs": "Afventer din beslutning om drift og backup (svar 18. oktober 2026: afvent). Hvor en kopi af databasen og hemmelighederne skal ligge uden for Railway (omkostning).",
@@ -2459,14 +2841,18 @@ window.WS_SPEC = [
     "t": "Ét docs/runbook.md: alvorlighedsniveauer, navngiven ejer, kommunikation, rollback-trin, kendte fejlscenarier; 10-minutters dry-run; ingen vagtrotation",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gælder, med Gausta-scenarier"
+    "note": "gælder, med Gausta-scenarier",
+    "s": "partial",
+    "e": "Ingen docs/runbook.md i repoet; domaene-og-dns-setup.md afsnit 10 er vedligeholds-runbook for domæne og hosting, ikke hændelsesplan, ingen dry-run"
    },
    {
     "id": "B8-6.2",
     "t": "Ét oppetids-SLO og månedligt blik; definér nede pr. service; fold SLO + ejerskab ind i B12-governance",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "SLO pr. del og for sensor-alarmkæden; B12-siden findes ikke for Gausta"
+    "note": "SLO pr. del og for sensor-alarmkæden; B12-siden findes ikke for Gausta",
+    "s": "none",
+    "e": "Intet oppetids-SLO eller månedlig gennemgang fundet i repoet eller teknisk/"
    }
   ],
   "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Oppetidsmål og om Tine skal være backup-ejer.",
@@ -2496,7 +2882,9 @@ window.WS_SPEC = [
     "t": "Beslut Railway PR-miljøer og om permanent staging er det værd; verificér på én PR",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "nyttige, men koster ekstra og må ikke dele produktions-DB eller sensornøgler"
+    "note": "nyttige, men koster ekstra og må ikke dele produktions-DB eller sensornøgler",
+    "s": "none",
+    "e": "Ingen PR-miljøer eller staging dokumenteret; ci.yml nævner, at staging-tjek tilføjes når staging findes"
    }
   ],
   "needs": "Om testmiljøer er pengene værd."
@@ -2525,14 +2913,18 @@ window.WS_SPEC = [
     "t": "Inventér alle systemer der sender som domænet (ESP, app, Workspace, systemmail); kræver tværteam",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "afsendere er ESP, back-office-alarmer, evt. postkasse, evt. booking"
+    "note": "afsendere er ESP, back-office-alarmer, evt. postkasse, evt. booking",
+    "s": "partial",
+    "e": "Afsendere delvist beskrevet i forespoergselsformular.md og konti-og-adgang.md; intet samlet afsenderregister, back-office-afsender uafklaret"
    },
    {
     "id": "B9-0.2",
     "t": "Bekræft DNS-adgang og navngiven ejer",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "ejer er altid den ene person"
+    "note": "ejer er altid den ene person",
+    "s": "done",
+    "e": "DNS hos Cloudflare, ejet af ejeren ifølge domaene-og-dns-setup.md (G31, dateret), ikke kontrolleret i tjenesten"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2563,14 +2955,18 @@ window.WS_SPEC = [
     "t": "SPF pr. afsenderdomæne, under 10 opslag, custom MAIL FROM",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "gælder"
+    "note": "gælder",
+    "s": "partial",
+    "e": "Ifølge domaene-og-dns-setup.md: Cloudflare-SPF på roden, Resend return-path rsend/send; opslagstal og alignment ikke kontrolleret"
    },
    {
     "id": "B9-0.4",
     "t": "DKIM (2048-bit) hos ESP og app; aligned d=",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "for hver Gausta-afsender (ESP, back-office)"
+    "note": "for hver Gausta-afsender (ESP, back-office)",
+    "s": "partial",
+    "e": "Ifølge forespoergselsformular.md Resend-DKIM verificeret 11. oktober 2026; 2048 bit og aligned d= ikke kontrolleret, ikke tjekket i tjenesten"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2601,21 +2997,27 @@ window.WS_SPEC = [
     "t": "Vælg DMARC-overvågningsværktøj (EU foretrukket); registrér som databehandler",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "gratis eller enkelt værktøj eller selv-parset indbakke kan række"
+    "note": "gratis eller enkelt værktøj eller selv-parset indbakke kan række",
+    "s": "none",
+    "e": "Intet DMARC-overvågningsværktøj valgt eller registreret som databehandler i teknisk/"
    },
    {
     "id": "B9-1.2",
     "t": "Publicér DMARC p=none med rua= (evt. ruf=) og sp=",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "gælder"
+    "note": "gælder",
+    "s": "partial",
+    "e": "_dmarc p=none lagt 11. oktober 2026 ifølge forespoergselsformular.md; rua/sp ikke dokumenteret, kildekonflikt i domaene-og-dns-setup.md afsnit 4b"
    },
    {
     "id": "B9-1.3",
     "t": "Overvåg ca. 90 dage; ret alignment til 98 %+",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "lavt volumen gør rapporterne tynde; princippet gælder"
+    "note": "lavt volumen gør rapporterne tynde; princippet gælder",
+    "s": "none",
+    "e": "Ingen påbegyndt overvågningsperiode eller alignment-måling dokumenteret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2644,7 +3046,9 @@ window.WS_SPEC = [
     "t": "Dedikerede sendesubdomæner pr. strøm (mail., news.)",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "kun hvis både transaktionel og marketing sendes; ellers ét subdomæne"
+    "note": "kun hvis både transaktionel og marketing sendes; ellers ét subdomæne",
+    "s": "partial",
+    "e": "Resend bruger return-path rsend/send, From på rod-domænet; ingen adskilte marketing/system-subdomæner. Kun transaktionsmail, så ét subdomæne kan række"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2673,14 +3077,18 @@ window.WS_SPEC = [
     "t": "DMARC til p=quarantine, når compliance høj og appen aligned",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "app erstattes af back-office-afsender"
+    "note": "app erstattes af back-office-afsender",
+    "s": "none",
+    "e": "DMARC står på p=none ifølge domaene-og-dns-setup.md; ikke hævet til quarantine"
    },
    {
     "id": "B9-3.2",
     "t": "DMARC til p=reject (pct=100) efter ren karantæneperiode",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "gælder"
+    "note": "gælder",
+    "s": "none",
+    "e": "Ikke gjort; DMARC er p=none, ingen karantæneperiode"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2709,14 +3117,18 @@ window.WS_SPEC = [
     "t": "One-click afmelding (RFC 8058) + synligt link på markedsføringsmail; prompte opt-outs",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "kun hvis nyhedsbrev eller giv besked-udsendelser findes"
+    "note": "kun hvis nyhedsbrev eller giv besked-udsendelser findes",
+    "s": "none",
+    "e": "Ingen markedsføringsmail eller afmeldingsflow findes (jf. N7.7); ikke relevant før nyhedsbrev vælges"
    },
    {
     "id": "B9-4.3",
     "t": "Listehygiejne: dobbelt opt-in, suppression af bounces/klager, ingen købte lister; opvarmning ved vækst",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "kun for marketinglister; ikke transaktionelle"
+    "note": "kun for marketinglister; ikke transaktionelle",
+    "s": "none",
+    "e": "Ingen marketinglister, suppression eller dobbelt opt-in findes endnu"
    }
   ],
   "needs": "Om der skal sendes markedsføringsmail."
@@ -2745,7 +3157,9 @@ window.WS_SPEC = [
     "t": "Google Postmaster Tools; spamrate under 0,1 %; alarm via B8",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Postmaster giver kun data ved nok volumen; DMARC-fejlalarm kan flyttes til back-office"
+    "note": "Postmaster giver kun data ved nok volumen; DMARC-fejlalarm kan flyttes til back-office",
+    "s": "none",
+    "e": "Ingen Postmaster Tools-verifikation dokumenteret i teknisk/"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2773,7 +3187,9 @@ window.WS_SPEC = [
     "t": "MTA-STS (politikfil + DNS) og TLS-RPT",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "lav prioritet; kun hvis Gausta modtager mail på eget domæne"
+    "note": "lav prioritet; kun hvis Gausta modtager mail på eget domæne",
+    "s": "none",
+    "e": "Ingen MTA-STS-politikfil eller TLS-RPT i repoet eller dokumentation"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2797,7 +3213,9 @@ window.WS_SPEC = [
     "t": "BIMI (SVG Tiny PS + VMC/CMC) efter DMARC = reject og afklaret navn/varemærke",
     "prio": "P2",
     "rel": "ikke",
-    "note": "kræver varemærke og koster ca. 1.000 til 1.500 USD/år, uden værdi for et privat udlejningssite"
+    "note": "kræver varemærke og koster ca. 1.000 til 1.500 USD/år, uden værdi for et privat udlejningssite",
+    "s": "na",
+    "e": "rel er ikke: BIMI kræver varemærke og koster 1.000 til 1.500 USD/år, ingen værdi for privat udlejningssite"
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -2829,7 +3247,9 @@ window.WS_SPEC = [
     "t": "Definér Gated-niveau og gør claims om produktadfærd, privacy/GDPR, sikkerhed og bæredygtighed publiceringsblokerende (claim-tjekliste, docs/editorial.md)",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "privat ejer uden juridisk rolle; behold princippet (ingen ubeviste claims, især udlejningsdata, bæredygtighed, GDPR) som en kort tjekliste, ikke et PR-workflow med Message Map"
+    "note": "privat ejer uden juridisk rolle; behold princippet (ingen ubeviste claims, især udlejningsdata, bæredygtighed, GDPR) som en kort tjekliste, ikke et PR-workflow med Message Map",
+    "s": "none",
+    "e": "Ingen claim-tjekliste eller docs/editorial.md i repoet; kun anbefaling i specifikationen, ingen publiceringsgate"
    }
   ],
   "needs": "Svar ja til Claudes anbefaling, eller ret den. En jurist er først nødvendig, når du tager imod bookinger med betaling.",
@@ -2859,7 +3279,9 @@ window.WS_SPEC = [
     "t": "House style-guide (tone, sætningsregler, CTA/stemme) og no-em-dash som CI-lint (docs/style.md); streng med tankestreg fejler CI",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "no-em-dash er allerede besluttet for Gausta; lint bør også dække CMS-indhold (Sanity) og oversættelser"
+    "note": "no-em-dash er allerede besluttet for Gausta; lint bør også dække CMS-indhold (Sanity) og oversættelser",
+    "s": "none",
+    "e": "Ingen tankestreg-lint i ci.yml, package.json eller scripts/; ingen docs/style.md. Reglen G19 følges manuelt"
    }
   ],
   "needs": "Svar ja til Claudes anbefaling, eller ret den.",
@@ -2888,7 +3310,9 @@ window.WS_SPEC = [
     "t": "Tosproget termbase med faste valg og DNT-liste (docs/glossary.md, evt. struktureret Sanity-dokument)",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Stormpines termer er ikke relevante; konceptet er (DA/EN, senere NO/DE): hytte/lodge, sæson, gæst, check-in, DNT for Gausta Home og stednavne"
+    "note": "Stormpines termer er ikke relevante; konceptet er (DA/EN, senere NO/DE): hytte/lodge, sæson, gæst, check-in, DNT for Gausta Home og stednavne",
+    "s": "none",
+    "e": "Ingen docs/glossary.md eller termbase-dokument i repoet; N10.3 afventer ejerens sprogbeslutning"
    }
   ],
   "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Hvornår norsk og tysk tilføjes, og hvem oversætter.",
@@ -2918,7 +3342,9 @@ window.WS_SPEC = [
     "t": "Promover CSS-variabler til DTCG-token-fil med Style Dictionary-build; hvert semantisk token i begge temaer",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "ingen produkt-app at dele med; fire sæsontemaer gør én kilde værd, men CSS custom properties direkte er nok, DTCG/Style Dictionary er valgfrit"
+    "note": "ingen produkt-app at dele med; fire sæsontemaer gør én kilde værd, men CSS custom properties direkte er nok, DTCG/Style Dictionary er valgfrit",
+    "s": "partial",
+    "e": "styles/tokens.css har variabler og fire data-season-temaer; ingen DTCG-fil eller Style Dictionary (valgfrit)"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2948,7 +3374,9 @@ window.WS_SPEC = [
     "t": "Dokumentér delte primitiver og tilføj lys/mørk kontrast-paritetstjek (axe/contrast) i pnpm qa",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "kontrasttjek i alle sæsonkombinationer; produkt-UI hero er ikke relevant"
+    "note": "kontrasttjek i alle sæsonkombinationer; produkt-UI hero er ikke relevant",
+    "s": "partial",
+    "e": "scripts/contrast.mjs (pnpm contrast) kører i ci.yml for fire årstider; ingen axe-tjek og ingen dokumenterede primitiver"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2978,7 +3406,9 @@ window.WS_SPEC = [
     "t": "Responsiv adfærd som designregel (breakpoints, nav-kollaps, grid-stacking, ingen vandret overflow ved 375px); håndhæves af reflow-gate",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "mobil-først er afgørende (gæsteområdet via QR bruges på telefon); hero-diagram er ikke relevant, men 375px-princippet gælder"
+    "note": "mobil-først er afgørende (gæsteområdet via QR bruges på telefon); hero-diagram er ikke relevant, men 375px-princippet gælder",
+    "s": "none",
+    "e": "Ingen 375px reflow-gate i ci.yml eller tests/; kun én overflow-x i styles/base.css (subnav), ikke en regel"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -3006,7 +3436,9 @@ window.WS_SPEC = [
     "t": "Én-tabels RACI og tre niveauer mappet på Sanity-roller (docs/editorial.md)",
     "prio": "P2",
     "rel": "ikke",
-    "note": "én ejer er alle roller; Sanitys betalte custom-RBAC er unødvendig; behold kun kladde, så udgiv, og en tjekliste"
+    "note": "én ejer er alle roller; Sanitys betalte custom-RBAC er unødvendig; behold kun kladde, så udgiv, og en tjekliste",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): én ejer er alle roller, Sanity forbliver Free (G34)"
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -3038,35 +3470,45 @@ window.WS_SPEC = [
     "t": "Beslutningsgate: hold B11 parkeret til en trigger er opfyldt (nok trafik, eller et konkret spørgsmål til painted-door/kvalitativ test); skriv triggeren ned",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "præcis denne tilgang; skriv en trigger ned og byg ikke"
+    "note": "præcis denne tilgang; skriv en trigger ned og byg ikke",
+    "s": "partial",
+    "e": "Parkeret og intet eksperimentværktøj i repoet, men triggeren er ikke nedskrevet; N11 afventer ejerens bekræftelse"
    },
    {
     "id": "B11-1.1",
     "t": "Edge Middleware tildeler variant ved første request, sticky ikke-identificerende cookie, server-side rendering uden flimmer eller layout shift",
     "prio": "P2",
     "rel": "ikke",
-    "note": "parkeret; kun princippet server-side, aldrig klientside gælder, hvis det genoptages"
+    "note": "parkeret; kun princippet server-side, aldrig klientside gælder, hvis det genoptages",
+    "s": "na",
+    "e": "Rel ikke og parkeret; ingen eksperimentramme i repoet"
    },
    {
     "id": "B11-2.1",
     "t": "Gate vedvarende bucketing-cookie bag samtykke; ingen persondata eller segment i URL; eksperimentendepunkt på CSP-allow-list; udfald via EU-hostet analytics",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "reglen ingen persondata i URL'er gælder altid (gæstelink/QR, back-office); resten er ikke relevant uden eksperimenter"
+    "note": "reglen ingen persondata i URL'er gælder altid (gæstelink/QR, back-office); resten er ikke relevant uden eksperimenter",
+    "s": "partial",
+    "e": "Ingen eksperimenter eller cookies; persondata-fri URL-regel ikke kontrolleret i koden (kun gl_lang-cookie i proxy.ts)"
    },
    {
     "id": "B11-3.1",
     "t": "Vælg værktøj (GrowthBook selvhostet anbefalet, ellers DIY-middleware) og kør én strategisk test; aflæs Bayesiansk/sekventielt",
     "prio": "P2",
     "rel": "ikke",
-    "note": "selvhostet GrowthBook er en ekstra driftsbyrde uden trafik at fodre den"
+    "note": "selvhostet GrowthBook er en ekstra driftsbyrde uden trafik at fodre den",
+    "s": "na",
+    "e": "Rel ikke; selvhostet GrowthBook fravalgt, ingen eksperimenter parkeret"
    },
    {
     "id": "B11-4.1",
     "t": "Forgren på groft, upersonligt segmentsignal løst server-side; én kanonisk URL, intet segment i URL",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "lav prioritet; sprog og sæson er allerede dækket af routing og temaer, ingen separat personalisering nødvendig"
+    "note": "lav prioritet; sprog og sæson er allerede dækket af routing og temaer, ingen separat personalisering nødvendig",
+    "s": "na",
+    "e": "Sprog og sæson dækkes af routing (proxy.ts) og data-season; ingen separat personalisering nødvendig"
    }
   ],
   "needs": "Om N11 fortsat skal være parkeret."
@@ -3100,14 +3542,18 @@ window.WS_SPEC = [
     "t": "Modellér omkostningskurven over centrene ved ca. 1x og 10x trafik; sæt Railway hårde forbrugsgrænser og budgetalarm",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "stærkt gældende (personligt budget); centrene bliver site, Sanity og back-office (database, planlagte jobs, scraping, sensorindtag), evt. uden analytics-server"
+    "note": "stærkt gældende (personligt budget); centrene bliver site, Sanity og back-office (database, planlagte jobs, scraping, sensorindtag), evt. uden analytics-server",
+    "s": "partial",
+    "e": "omkostninger.md (18. okt) har kostoversigt, men ingen 1x/10x-model; Railway-grænser og budgetalarm ikke kontrolleret"
    },
    {
     "id": "B12-1.1",
     "t": "Bliv på Sanity Free; skriv trigger til betalt plan (custom RBAC, planlagt udgivelse, request-loft); overvåg request-antal",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "Free er næsten sikkert nok; RBAC-triggeren er ikke relevant (én ejer), request-loft og planlagt udgivelse er de relevante triggere"
+    "note": "Free er næsten sikkert nok; RBAC-triggeren er ikke relevant (én ejer), request-loft og planlagt udgivelse er de relevante triggere",
+    "s": "partial",
+    "e": "Sanity Free ifølge beslutningsregister G34 og omkostninger.md; ingen skrevet betalt-trigger eller overvågning af request-antal"
    }
   ],
   "appr": "Kravet om omkostningskontrol er afklaret: intet fast loft, men et løbende overblik i vidensbasen (teknisk/omkostninger.md), som opdateres, hver gang en tjeneste tilføjes eller ændres."
@@ -3136,7 +3582,9 @@ window.WS_SPEC = [
     "t": "Bekræft at Sanity dataset-eksport tjener portabilitet; gendan én gang til et frisk projekt; skriv migrationsnote; bekræft veldannet skema og Portable Text",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "exit-plan er et eksplicit Gausta-behov; dækker også back-office-databasen (dump) og billeder, ikke kun Sanity"
+    "note": "exit-plan er et eksplicit Gausta-behov; dækker også back-office-databasen (dump) og billeder, ikke kun Sanity",
+    "s": "none",
+    "e": "Ingen eksportjob, gendannelsestest eller migrationsnote i repoet; R2-backup (G81) er besluttet men bygges til sidst"
    }
   ],
   "needs": "Om exit-planen også skal dække domæne og e-mail."
@@ -3167,14 +3615,18 @@ window.WS_SPEC = [
     "t": "Registrér at en automatisk QA-gate findes og gater (pnpm qa i GitHub Actions + branch protection på main)",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "gælder principielt; enkeltperson kan nøjes med CI uden review, men branch protection er stadig billig sikkerhed"
+    "note": "gælder principielt; enkeltperson kan nøjes med CI uden review, men branch protection er stadig billig sikkerhed",
+    "s": "partial",
+    "e": "ci.yml kører typecheck, test, kontrast, skema og build; branch protection på main ikke kontrolleret"
    },
    {
     "id": "B12-4.1",
     "t": "Én-tabels register med ejer for site, domæne/DNS og hver integration/processor, med fakturering/fornyelse, DPA og bekræftet EU/EØS-datalokation",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "én ejer, men registeret er værdifuldt som kontinuitetsplan (backup-ejer, adgange, fornyelser); processorer: Sanity, Railway, domæneregistrator, evt. betaling/booking, sensor-sky, scraping, e-mail"
+    "note": "én ejer, men registeret er værdifuldt som kontinuitetsplan (backup-ejer, adgange, fornyelser); processorer: Sanity, Railway, domæneregistrator, evt. betaling/booking, sensor-sky, scraping, e-mail",
+    "s": "partial",
+    "e": "Udkast i teknisk/konti-og-adgang.md; backup-ejer, DPA og fornyelsesdatoer mangler (åbne punkter), Resend-USA ikke undersøgt"
    }
   ],
   "needs": "Backup-ejer, databehandleraftaler og overførsel til USA (Resend)."
@@ -3207,14 +3659,18 @@ window.WS_SPEC = [
     "t": "Token-drevet, tema-bevidst not-found-side med klar besked og næste skridt, ægte HTTP 404; catch-all under locale kalder notFound() plus tidlig locale-validering",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "næste skridt bliver Hjem, Boliginfo/booking, Kontakt, gæsteområde; fire sæsontemaer; dansk og engelsk nu, norsk og tysk senere"
+    "note": "næste skridt bliver Hjem, Boliginfo/booking, Kontakt, gæsteområde; fire sæsontemaer; dansk og engelsk nu, norsk og tysk senere",
+    "s": "partial",
+    "e": "app/[locale]/not-found.tsx med Sanity-tekster på alle sprog og notFound() i slug-siden; ægte 404 og næste skridt ikke kontrolleret"
    },
    {
     "id": "B13-1.1",
     "t": "On-brand, betryggende global-error-side (app/global-error.tsx og/eller error.tsx), token-drevet og minimal uden afhængigheder",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "for gæsteområdet er en rolig fejlside ekstra vigtig (gæster på stedet, evt. dårlig dækning)"
+    "note": "for gæsteområdet er en rolig fejlside ekstra vigtig (gæster på stedet, evt. dårlig dækning)",
+    "s": "none",
+    "e": "Ingen app/global-error.tsx eller error.tsx i repoet"
    }
   ],
   "needs": "Indhold og sprog på 404- og 500-siderne, og logning (juridisk)."
@@ -3244,7 +3700,9 @@ window.WS_SPEC = [
     "t": "Ingen soft 404'er; 301 for flyttede linkede URL'er via redirect-map; 410 for udfasede sider; soft-404-tjek i link-checker",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "ny side, så få udfasede URL'er ved lancering; relevant ved senere omlægning og sæson-/kampagnesider"
+    "note": "ny side, så få udfasede URL'er ved lancering; relevant ved senere omlægning og sæson-/kampagnesider",
+    "s": "partial",
+    "e": "next.config.ts: www 301 og /en 308 i proxy.ts; ingen redirect-map for flyttede sider, 410-politik eller soft-404-tjek"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -3273,7 +3731,9 @@ window.WS_SPEC = [
     "t": "Byg ikke søgning før guide/blog-korpus findes; nedskriv trigger (Pagefind først, Algolia kun ved stort korpus); fremtidig søgeanalyse samtykke-bevidst og EU-resident",
     "prio": "P2",
     "rel": "tilpasses",
-    "note": "kan blive relevant for lokal guide og gæste-how-tos; Pagefind passer også til offline-venligt gæsteområde"
+    "note": "kan blive relevant for lokal guide og gæste-how-tos; Pagefind passer også til offline-venligt gæsteområde",
+    "s": "partial",
+    "e": "Ingen søgning bygget (ingen Pagefind eller Algolia i package.json), men triggeren er ikke nedskrevet i dokumentationen"
    }
   ],
   "appr": "Udskudt, og kravet er at vente, til der er indhold nok."
@@ -3301,28 +3761,36 @@ window.WS_SPEC = [
     "t": "Headless, CMS ejer ikke rendering",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "sæsontemaer og eget design kræver fuld kontrol over front-end"
+    "note": "sæsontemaer og eget design kræver fuld kontrol over front-end",
+    "s": "done",
+    "e": "Sanity leverer kun indhold; Next.js ejer visningen (sanity/lib/fetch.ts, components/blocks/)"
    },
    {
     "id": "CMS-03",
     "t": "Front-end-agnostisk",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "men valget er Next.js; ikke et aktivt krav"
+    "note": "men valget er Next.js; ikke et aktivt krav",
+    "s": "na",
+    "e": "Ikke et aktivt krav; valget er Next.js (package.json: next 16), front-end-agnostisk er ikke brugt"
    },
    {
     "id": "CMS-04",
     "t": "Indhold er tema-agnostisk, ingen temalogik i CMS",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "Gausta vælger sæsonspecifikke billeder i CMS; temaet (4 sæsoner) bør stadig være tokens i kode, kun billedvalg og sæsonmetadata i CMS"
+    "note": "Gausta vælger sæsonspecifikke billeder i CMS; temaet (4 sæsoner) bør stadig være tokens i kode, kun billedvalg og sæsonmetadata i CMS",
+    "s": "done",
+    "e": "Temaer er tokens i kode (styles/tokens.css, lib/season.ts); CMS har kun billedfeltet seasons (imageWithAlt.ts)"
    },
    {
     "id": "PAGE-02",
     "t": "Hårdkodede designmockups, CMS til redaktionel tekst",
     "prio": "",
     "rel": "tilpasses",
-    "note": "sæsonhero og layout hårdkodes; tekst og billeder i CMS"
+    "note": "sæsonhero og layout hårdkodes; tekst og billeder i CMS",
+    "s": "done",
+    "e": "Layout og sæsonhero i kode (components/blocks/); tekst og billeder i Sanity-blokke (sanity/schemaTypes/blocks/)"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -3353,63 +3821,81 @@ window.WS_SPEC = [
     "t": "Front-end-framework (lukket 2026-08-03: Next.js 16)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "foreløbig samme stak (Antagelse)"
+    "note": "foreløbig samme stak (Antagelse)",
+    "s": "done",
+    "e": "package.json: next 16.2.12 og react 19.2.4; lukket 3. august 2026"
    },
    {
     "id": "Q2",
     "t": "CMS-valg (lukket 2026-08-04: Sanity)",
     "prio": "",
     "rel": "gaelder",
-    "note": "se Tilpasning i kravfilen"
+    "note": "se Tilpasning i kravfilen",
+    "s": "done",
+    "e": "Sanity valgt og i brug: sanity ^6.18 og next-sanity i package.json, sanity.config.ts"
    },
    {
     "id": "Q3",
     "t": "Deploy-mål (lukket 2026-08-04: Railway)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "foreløbig samme (EU-region)"
+    "note": "foreløbig samme (EU-region)",
+    "s": "partial",
+    "e": "Railway ifølge teknisk/stack-og-arkitektur.md og opsaetning-overblik.md; EU-region står som åbent punkt, ikke kontrolleret"
    },
    {
     "id": "NF-03",
     "t": "Leverandørholdbarhed og MCP-levetid",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Skema som kode i repoet (sanity/schemaTypes/) giver flytbarhed; ingen dokumenteret vurdering af leverandør og MCP-levetid"
    },
    {
     "id": "HOST-01",
     "t": "SaaS/managed",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Sanity er managed SaaS; Studio hostes af Sanity (ci.yml deploy-studio, sanity deploy)"
    },
    {
     "id": "HOST-02",
     "t": "EU-region",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "privat ejer, men gæstedata og navne taler for EU; bekræft dataset-region ved oprettelse"
+    "note": "privat ejer, men gæstedata og navne taler for EU; bekræft dataset-region ved oprettelse",
+    "s": "none",
+    "e": "Region ikke verificeret ifølge teknisk/sanity-setup.md og opsaetning-overblik.md punkt 3 (åbent punkt)"
    },
    {
     "id": "HOST-03",
     "t": "Indholdseksport/portabilitet (NDJSON)",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "planlæg periodisk eksport"
+    "note": "planlæg periodisk eksport",
+    "s": "none",
+    "e": "Ingen eksportscript eller planlagt eksport i repoet (scripts/ har kun billeder og kontrast); backup af indhold ikke dokumenteret"
    },
    {
     "id": "NF-02",
     "t": "Gratis/lav tier brugbar til marketing, forudsigelig pris ved vækst",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "afgørende: privat budget"
+    "note": "afgørende: privat budget",
+    "s": "done",
+    "e": "Free-plan, 0 kr. ifølge teknisk/omkostninger.md (G34); ikke kontrolleret i Sanity Manage, grænser rigelige"
    },
    {
     "id": "SAN-01",
     "t": "Sanity Free-tier (0 EUR)",
     "prio": "",
     "rel": "gaelder",
-    "note": "én redaktør passer til Free"
+    "note": "én redaktør passer til Free",
+    "s": "partial",
+    "e": "Free ifølge omkostninger.md og G34; sanity-setup.md nævner Growth-prøve med ukendt slutdato, ikke kontrolleret i tjenesten"
    }
   ],
   "needs": "Sanity-plan og EU-region (omkostning), periodisk eksport og backup-medlem."
@@ -3440,56 +3926,72 @@ window.WS_SPEC = [
     "t": "Modulær/blokbaseret indholdsmodel",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "19 blokke i sanity/schemaTypes/blocks/ samlet i pageBuilder.ts"
    },
    {
     "id": "CMS-08",
     "t": "Struktureret, valideret indhold",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Skema med validation (requireLocales i sanity/i18n.ts); ci.yml kører schema:validate"
    },
    {
     "id": "CMS-14",
     "t": "Globals: nav, footer, Materials, standard-SEO/OG, sociale links",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Gausta har ikke Materials-menu; nav/footer/SEO gælder; tilføj fakta-singleton og sæson-singleton"
+    "note": "Gausta har ikke Materials-menu; nav/footer/SEO gælder; tilføj fakta-singleton og sæson-singleton",
+    "s": "partial",
+    "e": "navigation, footer, settings (defaultSeo) findes; fakta-singleton apartmentFacts findes; sociale links og sæson-singleton ikke fundet"
    },
    {
     "id": "CMS-15",
     "t": "Pages: slug + SEO + sections[]",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "sanity/schemaTypes/documents/page.ts: slug pr. sprog, seo og pageBuilder-sektioner"
    },
    {
     "id": "CMS-16",
     "t": "Sektionsblokke: Hero, Built-for, Walkthrough, Pillars, Cards, Pricing+FAQ, Trust, CTA, rich text",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "Gausta bruger Hero, Cards, FAQ, CTA, rich text, galleri, faciliteter, omegn, kontakt/booking; Walkthrough/Pricing/Trust/Journey ikke relevante i samme form"
+    "note": "Gausta bruger Hero, Cards, FAQ, CTA, rich text, galleri, faciliteter, omegn, kontakt/booking; Walkthrough/Pricing/Trust/Journey ikke relevante i samme form",
+    "s": "done",
+    "e": "hero, faq, iconCards, gallery, facilities, area, inquiry, text m.fl. i sanity/schemaTypes/blocks/"
    },
    {
     "id": "CMS-17",
     "t": "Reusable objekter: CTA, Link, Icon",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "link- og imageWithAlt-objekter findes (schemaTypes/objects/); ingen selvstændige CTA- og Icon-objekter, ikon ligger i iconCardsSection"
    },
    {
     "id": "CMS-18",
     "t": "Genbrugelige indholdssnippets",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "fakta (sengepladser, afstande) bør komme fra fakta-singleton"
+    "note": "fakta (sengepladser, afstande) bør komme fra fakta-singleton",
+    "s": "done",
+    "e": "apartmentFacts-singleton (sanity/structure.ts) bruges af faktalinjen (factsStrip, queries.ts); uiStrings til tekster"
    },
    {
     "id": "DEP-01",
     "t": "Typet API-konsum (GROQ)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "GROQ med defineQuery i sanity/lib/queries.ts; ingen typegen eller genererede resultattyper fundet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -3521,56 +4023,72 @@ window.WS_SPEC = [
     "t": "Flersproget indhold med oversættelsesworkflow",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dansk primær, engelsk, senere norsk/tysk (afløst: engelsk på /, dansk, norsk og svensk, G52)"
+    "note": "dansk primær, engelsk, senere norsk/tysk (afløst: engelsk på /, dansk, norsk og svensk, G52)",
+    "s": "partial",
+    "e": "Felter da/en/no/sv med internationalizedArray (sanity.config.ts); en og da påkrævet; oversættelsesworkflow og no/sv-indhold mangler"
    },
    {
     "id": "L-02",
     "t": "Locale-fallback",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "retningen skal vendes (afløst af G52: chrome falder tilbage til engelsk, indholdssider har eksakt match)"
+    "note": "retningen skal vendes (afløst af G52: chrome falder tilbage til engelsk, indholdssider har eksakt match)",
+    "s": "done",
+    "e": "Afløst af G52: indholdssider kun på udfyldte sprog (alternates i page.tsx), chrome falder tilbage til engelsk"
    },
    {
     "id": "L-03",
     "t": "Sprogrouting, switcher, hreflang, per-locale-URL",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dansk på /, engelsk på /en (afløst: engelsk på /, dansk på /da, G52)"
+    "note": "dansk på /, engelsk på /en (afløst: engelsk på /, dansk på /da, G52)",
+    "s": "done",
+    "e": "Afløst af G52: engelsk på /, /da, /no, /sv (proxy.ts, lib/i18n.ts); hreflang og x-default i app/[locale]/[[...slug]]/page.tsx"
    },
    {
     "id": "L-04",
     "t": "Én tilgang til website og produkt",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "produkt findes ikke; back-office er separat app, kan have egen UI-i18n senere"
+    "note": "produkt findes ikke; back-office er separat app, kan have egen UI-i18n senere",
+    "s": "na",
+    "e": "Produkt findes ikke; back-office er separat app (spec: ikke relevant)"
    },
    {
     "id": "L-05",
     "t": "AI-assisteret oversættelse",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "engelsk/norsk/tysk-udkast med dansk eller menneskelig gennemgang"
+    "note": "engelsk/norsk/tysk-udkast med dansk eller menneskelig gennemgang",
+    "s": "none",
+    "e": "Ingen oversættelsesopsætning i repoet (ingen AI Assist-konfiguration i sanity.config.ts); no/sv endnu ikke oversat"
    },
    {
     "id": "L-06",
     "t": "Oversættelsesstatus pr. locale",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen oversættelsesstatus pr. sprog i Studio (sanity/structure.ts); kun logik for sprog med udfyldt titel i page.tsx"
    },
    {
     "id": "L-07",
     "t": "Per-locale-forskelle ud over oversættelse",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "fx norske/tyske målgrupper, valuta, rejsevej"
+    "note": "fx norske/tyske målgrupper, valuta, rejsevej",
+    "s": "partial",
+    "e": "pressItem.ts har markedsfelt (omtaler pr. marked, lib/press.ts); øvrige lokale forskelle som valuta og målgruppe ikke fundet"
    },
    {
     "id": "Q4",
     "t": "Lokaliseringsplatform eller CMS (lukket 2026-08-04: dokument-i18n + next-intl)",
     "prio": "",
     "rel": "gaelder",
-    "note": "afløst i praksis af G56 og knapper/labels i Sanity"
+    "note": "afløst i praksis af G56 og knapper/labels i Sanity",
+    "s": "done",
+    "e": "Lukket 4. august 2026; afløst af G56 (oversættelse pr. felt i Sanity) og uiStrings i Sanity (sanity.config.ts)"
    }
   ],
   "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Om AI-oversættelser skal gennemgås, og af hvem.",
@@ -3600,35 +4118,45 @@ window.WS_SPEC = [
     "t": "Vedligeholdt/officiel MCP",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Officiel Sanity MCP bruges til billeder og indhold ifølge teknisk/billedproces.md og sanity-setup.md; ikke kontrolleret i tjenesten"
    },
    {
     "id": "CMS-07",
     "t": "Agent læser/opretter/opdaterer/publicerer",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Læs og skriv via MCP dokumenteret (billedproces.md, beslutningsregister G107 rettet via Sanity); publicering ikke kontrolleret her"
    },
    {
     "id": "CMS-09",
     "t": "Skemaet kan udvides via MCP/schema-as-code",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Skema er kode i sanity/schemaTypes/, kan udvides og udrulles (ci.yml: sanity deploy; deploy_schema via MCP)"
    },
    {
     "id": "CMS-12",
     "t": "Scoped agent-auth",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "brug mindste privilegium; separat token pr. formål"
+    "note": "brug mindste privilegium; separat token pr. formål",
+    "s": "partial",
+    "e": "Site-token kun Viewer og serverside (sanity/lib/client.ts, .env.example); MCP-rettigheder og token pr. formål ikke dokumenteret"
    },
    {
     "id": "CMS-13",
     "t": "AI-nativ ekstra (forslag, bulk, audits)",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "nyttigt til oversættelser og sæsonbilleder"
+    "note": "nyttigt til oversættelser og sæsonbilleder",
+    "s": "none",
+    "e": "Ingen AI-forslag, bulk eller audits i repoet (kun manuel brug af MCP); ikke opsat som funktion"
    }
   ],
   "needs": "Svar på, om agenter kun må lave kladder (anbefalet), og om kalenderscanneren må udgive events selv.",
@@ -3655,35 +4183,45 @@ window.WS_SPEC = [
     "t": "Kladde, preview, publicér",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Draft mode (app/api/draft-mode/), perspective drafts i sanity/lib/fetch.ts, published ellers (client.ts)"
    },
    {
     "id": "CMS-11",
     "t": "Versionering og rollback",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Versionshistorik er indbygget i Sanity; restore tilladt på faste dokumenter (sanity.config.ts); ikke kontrolleret i Studio"
    },
    {
     "id": "ED-01",
     "t": "Brugbar admin",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Egen Studio-struktur i sanity/structure.ts; udrullet via ci.yml deploy-studio (G58)"
    },
    {
     "id": "ED-02",
     "t": "Preview-URL'er mod rigtigt front-end",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "presentationTool med previewUrl og resolve i sanity.config.ts og sanity/presentation/resolve.ts"
    },
    {
     "id": "DEP-03",
     "t": "Preview/draft-mode i front-end",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "app/api/draft-mode/enable og disable; VisualEditing i app/[locale]/layout.tsx"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -3714,49 +4252,63 @@ window.WS_SPEC = [
     "t": "Lav-drift-deploy, indholdsændring giver revalidate",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "app/api/revalidate/route.ts med revalidateTag; webhook afprøvet 18. okt 2026 ifølge teknisk/opsaetning-overblik.md"
    },
    {
     "id": "DEP-02",
     "t": "Publicér, webhook, revalidate",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Publicér, webhook, revalidate afprøvet 18. okt 2026 ifølge opsaetning-overblik.md; 404-fejl rettet (dynamicParams fjernet)"
    },
    {
     "id": "WEBHOOK-01",
     "t": "Sanity Manage-webhook til /api/revalidate med delt hemmelighed",
     "prio": "",
     "rel": "gaelder",
-    "note": "ny webhook i Gaustas eget projekt"
+    "note": "ny webhook i Gaustas eget projekt",
+    "s": "done",
+    "e": "Oprettet i Sanity Manage med delt hemmelighed i Railway, svar 200 ifølge opsaetning-overblik.md 18. okt 2026; ikke kontrolleret i tjenesten"
    },
    {
     "id": "NF-01",
     "t": "Hurtigt, statisk/cachet",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Cache med tags og 3600 s (sanity/lib/fetch.ts), generateStaticParams i page.tsx; ingen målt ydelse eller budget i CI"
    },
    {
     "id": "PAGE-01",
     "t": "Port-/ny-side-proces (CSS, sektionstype, side-dokumenter, verificér, DoD, deploy)",
     "prio": "",
     "rel": "gaelder",
-    "note": "gælder som procesmønster"
+    "note": "gælder som procesmønster",
+    "s": "partial",
+    "e": "Procesmønster beskrevet i teknisk/byggeplan.md; ingen fast DoD-tjekliste for nye sider fundet i repoet"
    },
    {
     "id": "JRN-01",
     "t": "Journey-modul som eksempel på modulspecifikation",
     "prio": "",
     "rel": "tilpasses",
-    "note": "skabelonen genbruges, selve modulet er ikke relevant"
+    "note": "skabelonen genbruges, selve modulet er ikke relevant",
+    "s": "na",
+    "e": "Journey-modulet er ikke relevant; skabelonen genbruges kun som mønster"
    },
    {
     "id": "MIG-02",
     "t": "Spike med én side først",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "byg forside først end to end"
+    "note": "byg forside først end to end",
+    "s": "done",
+    "e": "Forsiden bygget først end to end (byggeplan.md, page-home udgivet 14. okt 2026)"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -3781,42 +4333,54 @@ window.WS_SPEC = [
     "t": "Roller/godkendelser",
     "prio": "P2",
     "rel": "ikke",
-    "note": "én redaktør"
+    "note": "én redaktør",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): én redaktør, ingen roller"
    },
    {
     "id": "ED-04",
     "t": "Visuel redigering i kontekst",
     "prio": "P2",
     "rel": "ikke",
-    "note": "ikke relevant nu (Storyblok-argumentet bortfalder)"
+    "note": "ikke relevant nu (Storyblok-argumentet bortfalder)",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): punktet bortfaldet; Presentation findes alligevel"
    },
    {
     "id": "HOST-04",
     "t": "Selvhost-mulighed",
     "prio": "P2",
     "rel": "ikke",
-    "note": ""
+    "note": "",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): selvhost ikke relevant"
    },
    {
     "id": "SAN-02",
     "t": "Growth ved flere sæder/roller (ca. 15 USD pr. sæde pr. måned)",
     "prio": "",
     "rel": "ikke",
-    "note": "medmindre forbrug overskrides"
+    "note": "medmindre forbrug overskrides",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): Free dækker behovet"
    },
    {
     "id": "STB-01",
     "t": "Storyblok som pivot",
     "prio": "",
     "rel": "ikke",
-    "note": "dyrere trin ca. 99 USD"
+    "note": "dyrere trin ca. 99 USD",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): Sanity valgt, ikke Storyblok"
    },
    {
     "id": "MIG-01",
     "t": "Klar migreringsvej fra prototype",
     "prio": "P0",
     "rel": "ikke",
-    "note": "intet at migrere, alt bygges nyt (kan bruge spike-princippet)"
+    "note": "intet at migrere, alt bygges nyt (kan bruge spike-princippet)",
+    "s": "na",
+    "e": "Ikke relevant for Gausta (rel ikke): intet at migrere, alt bygges nyt"
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -3844,91 +4408,117 @@ window.WS_SPEC = [
     "t": "Performance (budgetter i CI, fonts, billeder, ISR)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "se qa-og-test.md"
+    "note": "se qa-og-test.md",
+    "s": "partial",
+    "e": "Krydshenvisning til N1; ISR/cache i fetch.ts, men ingen ydelsesbudget eller Lighthouse i ci.yml"
    },
    {
     "id": "B2",
     "t": "Sikkerhed (HTTPS/HSTS, CSP, WAF, secrets)",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "tungere for back-office"
+    "note": "tungere for back-office",
+    "s": "partial",
+    "e": "Krydshenvisning til N2; next.config.ts har HSTS og CSP, token kun på serveren; resten vurderes i N2"
    },
    {
     "id": "B3",
     "t": "Privatliv/samtykke/GDPR",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "gæstedata og sensor-/KPI-data; Datatilsynet"
+    "note": "gæstedata og sensor-/KPI-data; Datatilsynet",
+    "s": "partial",
+    "e": "Krydshenvisning til N3; sprogcookie uden samtykke (G55); samlet privatlivsvurdering åben og vurderes i N3"
    },
    {
     "id": "B4",
     "t": "EU-hostet cookieless analytics",
     "prio": "P0",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen analytics-kode fundet i app, lib, components eller package.json; vurderes i N4"
    },
    {
     "id": "B5",
     "t": "SEO, JSON-LD, OG, sitemap, redirects",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "JSON-LD for LodgingBusiness/Accommodation i stedet for Organization/Product; gæsteområde noindex"
+    "note": "JSON-LD for LodgingBusiness/Accommodation i stedet for Organization/Product; gæsteområde noindex",
+    "s": "partial",
+    "e": "SEO-felter, canonical og hreflang findes; robots.ts findes; ingen sitemap eller JSON-LD for LodgingBusiness fundet"
    },
    {
     "id": "B6",
     "t": "Tilgængelighed, alt-tekst som krævet felt",
     "prio": "P0",
     "rel": "gaelder",
-    "note": "fire sæsoner"
+    "note": "fire sæsoner",
+    "s": "partial",
+    "e": "Alt-tekst påkrævet på en og da (imageWithAlt.ts), kontrasttjek i CI for fire årstider; øvrig tilgængelighed vurderes i N6"
    },
    {
     "id": "B7",
     "t": "Formularer, leads, CRM/ESP, booking",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "booking-model ikke besluttet"
+    "note": "booking-model ikke besluttet",
+    "s": "partial",
+    "e": "Forespørgselsformular med Turnstile og Resend (app/[locale]/inquiry, tests/inquiry.test.ts); vurderes i N7"
    },
    {
     "id": "B8",
     "t": "Miljøer, CI/CD, oppetid, backup",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "lavere ambition (privat), men backup af indhold og back-office-DB"
+    "note": "lavere ambition (privat), men backup af indhold og back-office-DB",
+    "s": "partial",
+    "e": "CI med typecheck, tests, build og Studio-udrulning; ingen backup af indhold, ingen staging; vurderes i N8"
    },
    {
     "id": "B9",
     "t": "SPF/DKIM/DMARC",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "hvis der sendes mail fra eget domæne"
+    "note": "hvis der sendes mail fra eget domæne",
+    "s": "partial",
+    "e": "SPF og DKIM for Cloudflare Email Routing og Resend ifølge teknisk/domaene-og-dns-setup.md; DMARC åbent, vurderes i N9"
    },
    {
     "id": "B10",
     "t": "Redaktionel governance, glossar, designsystem",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "glossar dansk/engelsk, ingen godkendelsesflow"
+    "note": "glossar dansk/engelsk, ingen godkendelsesflow",
+    "s": "partial",
+    "e": "Ingen godkendelsesflow (rel tilpasses); glossar og designsystem vurderes i N10; app/[locale]/designsystem findes"
    },
    {
     "id": "B11",
     "t": "Eksperimenter og personalisering",
     "prio": "P2",
     "rel": "ikke",
-    "note": "ikke relevant nu"
+    "note": "ikke relevant nu",
+    "s": "na",
+    "e": "Eksperimenter og personalisering: rel ikke, parkeret for Gausta (N11)"
    },
    {
     "id": "B12",
     "t": "Omkostningskurve, portabilitet, ejerskab",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "budget"
+    "note": "budget",
+    "s": "partial",
+    "e": "Free-planer og omkostningsliste (teknisk/omkostninger.md); eksport og ejerskab ikke dokumenteret; vurderes i N12"
    },
    {
     "id": "B13",
     "t": "Fejl-UX, 404, onsite-søgning",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "gælder for 404 (dansk/engelsk); søgning ikke relevant"
+    "note": "gælder for 404 (dansk/engelsk); søgning ikke relevant",
+    "s": "done",
+    "e": "app/[locale]/not-found.tsx med tekster fra uiStrings (notFound.*) pr. sprog; søgning ikke relevant"
    }
   ],
   "appr": "Krydshenvisninger til de øvrige krav, ingen egen beslutning."
@@ -3956,49 +4546,63 @@ window.WS_SPEC = [
     "t": "Flere sprog ét sted + oversættelsesworkflow",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dansk primær, engelsk, senere norsk/tysk (afløst: engelsk på /, G52)"
+    "note": "dansk primær, engelsk, senere norsk/tysk (afløst: engelsk på /, G52)",
+    "s": "done",
+    "e": "lib/i18n.ts: en, da, no, sv; sanity.config.ts: internationalized-array, en og da påkrævet. Engelsk på / afløser dansk primær (G52)"
    },
    {
     "id": "I18N-04",
     "t": "Én tilgang til website + produkt",
     "prio": "P1",
     "rel": "tilpasses",
-    "note": "kun website; back-office kan få egen enkel UI-i18n"
+    "note": "kun website; back-office kan få egen enkel UI-i18n",
+    "s": "done",
+    "e": "Kun website i gausta-vandring, UI-tekster i Sanity (uiStrings); back-office ligger uden for repoet (G28)"
    },
    {
     "id": "DEC-01",
     "t": "Dokumentniveau-i18n frem for feltniveau",
     "prio": "",
     "rel": "gaelder",
-    "note": "sider divergerer pr. marked, sæsonbilleder (afløst: feltniveau, G56)"
+    "note": "sider divergerer pr. marked, sæsonbilleder (afløst: feltniveau, G56)",
+    "s": "na",
+    "e": "Afløst af feltniveau-i18n (G56): internationalized-array i sanity.config.ts, ikke dokumentniveau"
    },
    {
     "id": "DEC-02",
     "t": "next-intl til UI-strenge, ikke i18next",
     "prio": "",
     "rel": "gaelder",
-    "note": "afløst: UI-tekster i Sanity (uiStrings), G56"
+    "note": "afløst: UI-tekster i Sanity (uiStrings), G56",
+    "s": "na",
+    "e": "Afløst af UI-tekster i Sanity (uiStrings, G56); next-intl findes ikke i package.json"
    },
    {
     "id": "DEC-15",
     "t": "Studio kun engelsk, uden for [locale]",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Studio kan være dansk eller engelsk; ligger uden for locale-routing"
+    "note": "Studio kan være dansk eller engelsk; ligger uden for locale-routing",
+    "s": "done",
+    "e": "Studio på egen adresse (sanity.config.ts, G58), uden for [locale]-ruter. Studiets eget visningssprog ikke kontrolleret"
    },
    {
     "id": "DEC-16",
     "t": "siteName ikke lokaliseret",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta-navn er ikke oversat, men standard-SEO/beskrivelse bør lokaliseres via andre dokumenter"
+    "note": "Gausta-navn er ikke oversat, men standard-SEO/beskrivelse bør lokaliseres via andre dokumenter",
+    "s": "partial",
+    "e": "siteName er ét felt i settings.ts (Footer.tsx, Header.tsx); standard-SEO hentes pr. sprog via loc() i queries.ts, ikke efterprøvet i tjenesten"
    },
    {
     "id": "DEC-17",
     "t": "Pr.-locale-publicering",
     "prio": "",
     "rel": "gaelder",
-    "note": "ikke mulig med feltniveau, se G56"
+    "note": "ikke mulig med feltniveau, se G56",
+    "s": "na",
+    "e": "Ikke mulig med feltniveau (G56); sprog styres af udfyldte felter, ikke af udgivelse pr. sprog"
    }
   ],
   "appr": "G52 og G56 afgør sprogmodellen. Resten er tekniske regler."
@@ -4029,49 +4633,63 @@ window.WS_SPEC = [
     "t": "Routing, switcher, hreflang, per-locale-URL",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "dansk på /, engelsk på /en (afløst: engelsk på /, dansk på /da, G52)"
+    "note": "dansk på /, engelsk på /en (afløst: engelsk på /, dansk på /da, G52)",
+    "s": "done",
+    "e": "proxy.ts: /en 308 til /, Accept-Language på forsiden; page.tsx: alternates.languages; LanguageSwitcher.tsx. Dansk på /da afløser G52"
    },
    {
     "id": "DEC-03",
     "t": "localePrefix: as-needed",
     "prio": "",
     "rel": "gaelder",
-    "note": "med dansk som standard (afløst: engelsk som standard, G52)"
+    "note": "med dansk som standard (afløst: engelsk som standard, G52)",
+    "s": "na",
+    "e": "Afløst af G52: engelsk uden præfiks, dansk på /da (lib/i18n.ts: prefix tom for en)"
    },
    {
     "id": "DEC-04",
     "t": "localeDetection: false",
     "prio": "",
     "rel": "tilpasses",
-    "note": "beslut, om / altid er dansk, ikke Accept-Language-baseret (afløst: Accept-Language ved første besøg, G52)"
+    "note": "beslut, om / altid er dansk, ikke Accept-Language-baseret (afløst: Accept-Language ved første besøg, G52)",
+    "s": "na",
+    "e": "Afløst af G52: proxy.ts sender forsiden efter Accept-Language og cookien gl_lang ved første besøg"
    },
    {
     "id": "DEC-05",
     "t": "/en 307 til / (standardsprog uden præfiks)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "/da 307 til /; /en er rigtigt præfiks (afløst: /en sendes til /, 308)"
+    "note": "/da 307 til /; /en er rigtigt præfiks (afløst: /en sendes til /, 308)",
+    "s": "na",
+    "e": "Afløst: proxy.ts sender /en permanent (308) til stien uden /en"
    },
    {
     "id": "DEC-06",
     "t": "Native per-locale-slugs",
     "prio": "",
     "rel": "gaelder",
-    "note": "danske og engelske slugs (G59)"
+    "note": "danske og engelske slugs (G59)",
+    "s": "done",
+    "e": "sanity/schemaTypes/objects/localizedSlug.ts: URL-navn pr. sprog (en, da, no, sv); page.tsx slår op pr. sprog"
    },
    {
     "id": "DEC-10",
     "t": "Lowercase-kebab slugs, danske tegn translittereres",
     "prio": "",
     "rel": "gaelder",
-    "note": "æ, ø, å; tilføj tyske og norske tegn"
+    "note": "æ, ø, å; tilføj tyske og norske tegn",
+    "s": "partial",
+    "e": "Slug-felt med maxLength 80 i localizedSlug.ts; ingen egen translitteration eller små bogstaver i koden, kun Sanitys standardslug"
    },
    {
     "id": "DEC-11",
     "t": "Middleware 308 for blandet case",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "proxy.ts har ingen omdirigering af blandet skrivemåde til små bogstaver (kun /en og forsidesprog)"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4103,35 +4721,45 @@ window.WS_SPEC = [
     "t": "Locale-fallback til engelsk",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "fallback-retning skal besluttes (besluttet: engelsk er standard, G52)"
+    "note": "fallback-retning skal besluttes (besluttet: engelsk er standard, G52)",
+    "s": "done",
+    "e": "sanity/lib/queries.ts: loc() falder tilbage til engelsk for menu, footer og standard-SEO; engelsk er standard (G52)"
    },
    {
     "id": "DEC-07",
     "t": "CMS-afledt link-map + render-time-localizer",
     "prio": "",
     "rel": "gaelder",
-    "note": "kanonisk sprog skifter (løst ved sideværdier pr. sprog, ikke en localizer)"
+    "note": "kanonisk sprog skifter (løst ved sideværdier pr. sprog, ikke en localizer)",
+    "s": "na",
+    "e": "Løst på anden måde: URL-navn pr. sprog i localizedSlug.ts og lib/content.ts, ingen link-map eller localizer"
    },
    {
     "id": "DEC-08",
     "t": "Eksakt (slug, language)-match, 404 ved manglende locale",
     "prio": "",
     "rel": "tilpasses",
-    "note": "se fallback-diskussion"
+    "note": "se fallback-diskussion",
+    "s": "done",
+    "e": "page.tsx: PAGE_QUERY kræver udfyldt titel på sproget, ellers notFound() (404)"
    },
    {
     "id": "DEC-09",
     "t": "Nav/footer/home coalesce til engelsk",
     "prio": "",
     "rel": "tilpasses",
-    "note": "coalesce til dansk (besluttet: coalesce til engelsk, standardsproget)"
+    "note": "coalesce til dansk (besluttet: coalesce til engelsk, standardsproget)",
+    "s": "done",
+    "e": "queries.ts: loc() falder tilbage til engelsk for nav, footer og forside, jf. beslutning om engelsk som standard"
    },
    {
     "id": "DEC-13",
     "t": "Sprogskifter deaktiveret, hvis oversættelse mangler",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "LanguageSwitcher.tsx læser sidens hreflang og viser kun sprog, siden findes på"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -4163,14 +4791,18 @@ window.WS_SPEC = [
     "t": "Selvrefererende canonical + reciprokke hreflang (en, da, x-default)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "x-default og sprogliste"
+    "note": "x-default og sprogliste",
+    "s": "partial",
+    "e": "page.tsx: canonical, alternates.languages og x-default til engelsk; ingen test af gensidighed i tests/"
    },
    {
     "id": "DEC-14",
     "t": "html lang pr. locale; OG-locale-map",
     "prio": "",
     "rel": "gaelder",
-    "note": "da_DK, en_GB/en_US, nb_NO, de_DE"
+    "note": "da_DK, en_GB/en_US, nb_NO, de_DE",
+    "s": "partial",
+    "e": "layout.tsx sætter html lang pr. sprog (htmlLang nb for norsk); OG-locale i page.tsx bruger kun sprogkoden, ikke da_DK/en_GB"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4202,49 +4834,63 @@ window.WS_SPEC = [
     "t": "AI-assisteret oversættelse",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen dokumenteret AI-udkastproces eller oversættelsesworkflow fundet i repoet eller teknisk/"
    },
    {
     "id": "I18N-06",
     "t": "Oversættelsesstatus pr. locale",
     "prio": "P1",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen oversættelsesstatus pr. sprog i repo eller Studio; kun translations-liste udledt af udfyldte titler i page.tsx"
    },
    {
     "id": "I18N-07",
     "t": "Per-locale-forskelle ud over oversættelse",
     "prio": "P2",
     "rel": "gaelder",
-    "note": "valuta (NOK/DKK/EUR), rejsevej fra Danmark/Norge/Tyskland"
+    "note": "valuta (NOK/DKK/EUR), rejsevej fra Danmark/Norge/Tyskland",
+    "s": "none",
+    "e": "Ingen sprogspecifik valuta eller rejsevej fundet i repoet; kun sprogvalg og tekster"
    },
    {
     "id": "TASK-01",
     "t": "Tilføj locale: routing, messages, supportedLanguages, dokumenter, OG_LOCALE",
     "prio": "",
     "rel": "gaelder",
-    "note": "norsk/svensk senere (afløst: tilføj til LOCALES i lib/i18n.ts, G52)"
+    "note": "norsk/svensk senere (afløst: tilføj til LOCALES i lib/i18n.ts, G52)",
+    "s": "done",
+    "e": "lib/i18n.ts LOCALES: tilføj sprog; sanity/i18n.ts og localizedSlug.ts følger; no og sv allerede defineret, ikke udgivet (PUBLISHED_LOCALES)"
    },
    {
     "id": "TASK-02",
     "t": "Seed-dokumenter pr. sprog",
     "prio": "",
     "rel": "gaelder",
-    "note": "seed-fil med danske og engelske sider"
+    "note": "seed-fil med danske og engelske sider",
+    "s": "partial",
+    "e": "Kun sanity/seed/ui-inquiry.json (formularstrenge); ingen seed af sider på dansk og engelsk"
    },
    {
     "id": "GATE-01",
     "t": "Manuel dansk-kvalitetscheck pr. side",
     "prio": "",
     "rel": "tilpasses",
-    "note": "kvalitetsgate pr. ikke-primært sprog og for dansk originaltekst"
+    "note": "kvalitetsgate pr. ikke-primært sprog og for dansk originaltekst",
+    "s": "none",
+    "e": "Ingen dansk kvalitetscheck pr. side dokumenteret eller automatiseret; ikke fundet i repo eller Definition of Done udover udkast"
    },
    {
     "id": "GATE-02",
     "t": "DA/EN-glossar og husstil (B10)",
     "prio": "P1",
     "rel": "gaelder",
-    "note": "dansk/engelsk/norsk/svensk-glossar for ejendomstermer"
+    "note": "dansk/engelsk/norsk/svensk-glossar for ejendomstermer",
+    "s": "none",
+    "e": "Intet glossar eller husstil fundet (ingen docs/glossary.md i repoet); kun planlagt i krav/n10-redaktion-brand-og-designsystem.md"
    }
   ],
   "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Hvem gennemgår norsk og svensk, og hvilken valuta der vises pr. sprog.",
@@ -4273,14 +4919,18 @@ window.WS_SPEC = [
     "t": "Tosproget 404 (B13)",
     "prio": "P2",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "app/[locale]/not-found.tsx og NotFoundText.tsx: tekster pr. sprog fra uiStrings, valgt efter siden"
    },
    {
     "id": "GATE-04",
     "t": "Tosprogede politikker (B3)",
     "prio": "P0",
     "rel": "tilpasses",
-    "note": "privatlivs-/cookiepolitik på alle sprog (kan være dansk + engelsk først)"
+    "note": "privatlivs-/cookiepolitik på alle sprog (kan være dansk + engelsk først)",
+    "s": "none",
+    "e": "Privatliv-, cookie- og vilkårssider ikke bygget: footerlinks vises som kommer snart (lib/content.ts, G42)"
    }
   ],
   "needs": "Hvem skriver privatlivs- og cookiepolitikken, og på hvilke sprog."
@@ -4304,7 +4954,9 @@ window.WS_SPEC = [
     "t": "Genbrug i produktappen",
     "prio": "",
     "rel": "ikke",
-    "note": "intet produkt; back-office er separat"
+    "note": "intet produkt; back-office er separat",
+    "s": "na",
+    "e": "Ikke relevant for Gausta: intet produkt, back-office er separat (rel ikke)"
    }
   ],
   "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
@@ -4336,49 +4988,63 @@ window.WS_SPEC = [
     "t": "Princip: automatiserede CI-gates plus manuel tjekliste",
     "prio": "",
     "rel": "gaelder",
-    "note": "samme to halvdele"
+    "note": "samme to halvdele",
+    "s": "partial",
+    "e": "ci.yml kører automatiske gates; manuel tjekliste kun som udkast i teknisk/kvalitet-og-faktakilder.md, ikke i repoet"
    },
    {
     "id": "QA-10",
     "t": "pnpm qa som én kommando",
     "prio": "",
     "rel": "gaelder",
-    "note": "endnu ikke oprettet; CI kører scripts enkeltvis"
+    "note": "endnu ikke oprettet; CI kører scripts enkeltvis",
+    "s": "none",
+    "e": "Ingen qa-script i package.json; ci.yml kører typecheck, test, contrast, schema:validate og build enkeltvis"
    },
    {
     "id": "QA-11",
     "t": "Krav-til-test-mapping (SEO, performance, tilgængelighed, i18n, redirects, visuel, funktionel)",
     "prio": "",
     "rel": "gaelder",
-    "note": "mapping bruges som tjekliste for, hvilke tests der mangler"
+    "note": "mapping bruges som tjekliste for, hvilke tests der mangler",
+    "s": "none",
+    "e": "Ingen krav-til-test-mapping fundet; teknisk/krav/qa-og-test.md er krav, ikke en dækningsoversigt"
    },
    {
     "id": "QA-13",
     "t": "Manuel tjekliste (7 punkter) plus PR-skabelon",
     "prio": "",
     "rel": "tilpasses",
-    "note": "udvides med sæson/tema, fakta, gæsteområde og live-data-fallback; Facebook og WhatsApp frem for LinkedIn"
+    "note": "udvides med sæson/tema, fakta, gæsteområde og live-data-fallback; Facebook og WhatsApp frem for LinkedIn",
+    "s": "partial",
+    "e": "Tjekliste som udkast i teknisk/kvalitet-og-faktakilder.md (Definition of Done); ingen PR-skabelon, .github har kun workflows"
    },
    {
     "id": "QA-20",
     "t": "Køreplan: byg trinvist, ingen udtømmende suite før siderne findes",
     "prio": "",
     "rel": "gaelder",
-    "note": "passer til Gaustas byggeplan, ét element ad gangen"
+    "note": "passer til Gaustas byggeplan, ét element ad gangen",
+    "s": "done",
+    "e": "Trinvis byggeplan i teknisk/byggeplan.md; tests tilføjes pr. element (tests/ har seks filer, ingen udtømmende suite)"
    },
    {
     "id": "QA-22",
     "t": "Definition of Done i AGENTS.md",
     "prio": "",
     "rel": "tilpasses",
-    "note": "egen Definition of Done for Gausta"
+    "note": "egen Definition of Done for Gausta",
+    "s": "partial",
+    "e": "Definition of Done som udkast i teknisk/kvalitet-og-faktakilder.md; ingen AGENTS.md i repoet"
    },
    {
     "id": "QA-23",
     "t": "Hvem er QA: suite plus reviewer",
     "prio": "",
     "rel": "tilpasses",
-    "note": "ejeren plus agent; ejeren godkender sprog og fakta"
+    "note": "ejeren plus agent; ejeren godkender sprog og fakta",
+    "s": "partial",
+    "e": "Suite i ci.yml plus ejeren som reviewer ifølge teknisk/proces-og-metode.md; ikke formaliseret i repoet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4407,35 +5073,45 @@ window.WS_SPEC = [
     "t": "Statisk: tsc --noEmit, Biome/ESLint, format",
     "prio": "",
     "rel": "gaelder",
-    "note": "typecheck findes; lint og format mangler"
+    "note": "typecheck findes; lint og format mangler",
+    "s": "partial",
+    "e": "package.json: typecheck (tsc --noEmit) i ci.yml; ingen Biome/ESLint eller format-script"
    },
    {
     "id": "QA-03",
     "t": "Build: next build i CI",
     "prio": "",
     "rel": "gaelder",
-    "note": "findes i ci.yml, også for Studio"
+    "note": "findes i ci.yml, også for Studio",
+    "s": "done",
+    "e": "ci.yml: trin Build (sitet) og Build (Studio)"
    },
    {
     "id": "QA-04",
     "t": "Unit (Vitest): hreflang/alternates, sitemap, robots og indekserbarhedskontakt, redirect-map, GROQ-projektioner",
     "prio": "",
     "rel": "gaelder",
-    "note": "udvides med nye enheder, se QA-G06 og QA-G07"
+    "note": "udvides med nye enheder, se QA-G06 og QA-G07",
+    "s": "partial",
+    "e": "vitest.config.mts; tests/ dækker sæson, formular, live-fliser, vandring; ingen test af hreflang, sitemap, robots eller redirects"
    },
    {
     "id": "QA-G06",
     "t": "Sæsonlogik: rigtig sæson for en given dato (faste datoer), og fald tilbage ved manglende sæsonbillede",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 6; delvist dækket af tests/season.test.ts"
+    "note": "Gausta-tillæg 6; delvist dækket af tests/season.test.ts",
+    "s": "partial",
+    "e": "tests/season.test.ts dækker årstider; fald tilbage ved manglende sæsonbillede ikke fundet testet"
    },
    {
     "id": "QA-G07",
     "t": "Fakta-singleton: ejendomsfakta på siden stemmer med propertyFacts, og fakta hårdkodes ikke i komponenter",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 7; afstemning mod det verificerede faktaark er et åbent punkt"
+    "note": "Gausta-tillæg 7; afstemning mod det verificerede faktaark er et åbent punkt",
+    "s": "none",
+    "e": "Ingen propertyFacts-singleton eller faktatest i tests/; fakta ligger i apartmentFacts-skema (sanity/schemaTypes/documents/apartmentFacts.ts)"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4467,35 +5143,45 @@ window.WS_SPEC = [
     "t": "E2E, SEO og tilgængelighed (Playwright plus axe): 200 pr. sprog, meta, noindex-header, konsolfejl, axe",
     "prio": "",
     "rel": "gaelder",
-    "note": "Playwright er ikke installeret endnu"
+    "note": "Playwright er ikke installeret endnu",
+    "s": "none",
+    "e": "Ingen Playwright eller axe i package.json; ingen e2e-tests i tests/"
    },
    {
     "id": "QA-G02",
     "t": "Gæsteside-noindex: header og meta, ikke i sitemap, robots afslører ikke stien, ingen hreflang eller canonical, ikke linket offentligt",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 2; samme tilgang som noindex-header og indekserbarhedskontakten"
+    "note": "Gausta-tillæg 2; samme tilgang som noindex-header og indekserbarhedskontakten",
+    "s": "none",
+    "e": "Ingen gæsteside i repoet og ingen test af noindex på gæsteområde; noindex gælder kun hele sitet (next.config.ts)"
    },
    {
     "id": "QA-G08",
     "t": "i18n i Playwright: 200 pr. sprog, html lang, canonical, hreflang-reciprocitet, x-default, 404 på forkert slug, /da til /-redirect",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 8; se i18n-og-routing.md"
+    "note": "Gausta-tillæg 8; se i18n-og-routing.md",
+    "s": "none",
+    "e": "Ingen browsertest af sprog; proxy.ts og page.tsx har logikken, men intet i tests/ tester hreflang eller redirect"
    },
    {
     "id": "QA-G09",
     "t": "Booking (hvis relevant): formularvalidering, honeypot og anti-bot, bekræftelsesflow",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta-tillæg 9; afhænger af valgt booking-model"
+    "note": "Gausta-tillæg 9; afhænger af valgt booking-model",
+    "s": "none",
+    "e": "Ingen browsertest af formular; tests/inquiry.test.ts er enhedstest af validering, mail, Turnstile og rate limit"
    },
    {
     "id": "B5-QA",
     "t": "JSON-LD, delingskort (OG) og redirects pr. side",
     "prio": "",
     "rel": "tilpasses",
-    "note": "andre JSON-LD-typer end Stormpine"
+    "note": "andre JSON-LD-typer end Stormpine",
+    "s": "none",
+    "e": "Ingen test af JSON-LD, delingskort eller redirects; ingen sitemap eller e2e i repoet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4527,28 +5213,36 @@ window.WS_SPEC = [
     "t": "Visuel regression (toHaveScreenshot, lys/mørk, da/en)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "4 sæsoner x sprog, ingen mørk tilstand (G20); begræns til nøglesider; valgfri"
+    "note": "4 sæsoner x sprog, ingen mørk tilstand (G20); begræns til nøglesider; valgfri",
+    "s": "none",
+    "e": "Ingen visuel regression: ingen Playwright eller toHaveScreenshot i repoet"
    },
    {
     "id": "QA-12",
     "t": "Axe udelukker color-contrast pt. (kendt gæld)",
     "prio": "",
     "rel": "ikke",
-    "note": "Gausta skal teste kontrast fra start, se QA-G01"
+    "note": "Gausta skal teste kontrast fra start, se QA-G01",
+    "s": "na",
+    "e": "rel ikke: axe er ikke installeret; kontrast testes via scripts/contrast.mjs (se QA-G01)"
    },
    {
     "id": "B6-QA",
     "t": "Alt-tekst krævet, kontrast, a11y i CI",
     "prio": "",
     "rel": "gaelder",
-    "note": "udvidet med sæsonmatrix og billedtekst"
+    "note": "udvidet med sæsonmatrix og billedtekst",
+    "s": "partial",
+    "e": "imageWithAlt.ts kræver alt-tekst; scripts/contrast.mjs i ci.yml dækker fire sæsoner; ingen axe"
    },
    {
     "id": "QA-G01",
     "t": "Kontrast i alle sæson/tema-kombinationer: Playwright-matrix med axe, token-kontrast som unit-test, tekst mod hero-billeder",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta-tillæg 1; token-delen findes som scripts/contrast.mjs"
+    "note": "Gausta-tillæg 1; token-delen findes som scripts/contrast.mjs",
+    "s": "partial",
+    "e": "scripts/contrast.mjs: 76 kontroller for fire sæsoner i ci.yml; mangler axe i browser og kontrast mod hero-billeder"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4579,42 +5273,54 @@ window.WS_SPEC = [
     "t": "Linkcheck (linkinator/lychee)",
     "prio": "",
     "rel": "gaelder",
-    "note": "planlagt i byggeplan A4"
+    "note": "planlagt i byggeplan A4",
+    "s": "none",
+    "e": "Ingen linkinator eller lychee i package.json eller ci.yml"
    },
    {
     "id": "QA-07",
     "t": "Performance: Lighthouse CI plus budget.json plus size-limit",
     "prio": "",
     "rel": "gaelder",
-    "note": "høj prioritet pga. billedmængde"
+    "note": "høj prioritet pga. billedmængde",
+    "s": "none",
+    "e": "Ingen Lighthouse CI, budget.json eller size-limit; ci.yml noterer, at Lighthouse tilføjes når staging findes"
    },
    {
     "id": "QA-09",
     "t": "Felt-RUM: web-vitals mod analytics, evt. Unlighthouse-crawl",
     "prio": "",
     "rel": "gaelder",
-    "note": "let version"
+    "note": "let version",
+    "s": "none",
+    "e": "Ingen web-vitals i package.json og ingen felt-måling i koden"
    },
    {
     "id": "QA-21",
     "t": "Lighthouse CI mod lokal next start eller staging-URL",
     "prio": "",
     "rel": "gaelder",
-    "note": "samme valg"
+    "note": "samme valg",
+    "s": "none",
+    "e": "Ingen Lighthouse CI i ci.yml; staging findes ikke endnu (teknisk/byggeplan.md)"
    },
    {
     "id": "B1-QA",
     "t": "Performancebudgetter, fonts, billeder, ISR",
     "prio": "",
     "rel": "gaelder",
-    "note": "billedtungt site"
+    "note": "billedtungt site",
+    "s": "none",
+    "e": "Ingen performancebudgetter i CI; kun next/image med sizes i HeroSection.tsx"
    },
    {
     "id": "QA-G10",
     "t": "Billeder: alt-tekst på alle, korrekte dimensioner (ingen CLS), hero preload'et, Lighthouse-budget for LCP",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 10"
+    "note": "Gausta-tillæg 10",
+    "s": "partial",
+    "e": "HeroSection.tsx bruger next/image med sizes, alt-tekst påkrævet i imageWithAlt.ts; ingen CLS- eller LCP-test, preload ikke kontrolleret"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4646,28 +5352,36 @@ window.WS_SPEC = [
     "t": "Offline-adfærd: Playwright setOffline efter første indlæsning, tydelig besked eller cachet indhold i gæsteområdet",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta-tillæg 3; forudsætter beslutning om service worker"
+    "note": "Gausta-tillæg 3; forudsætter beslutning om service worker",
+    "s": "none",
+    "e": "Ingen offline-test eller service worker i repoet; gæsteområdet findes ikke i repoet"
    },
    {
     "id": "QA-G04",
     "t": "Live-data-fallback: mock API-fejl og timeouts, vis ukendt eller sidste kendte værdi med tidsstempel, marker forældede data, test også Sanity-fejl",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 4; logikken er delvist enhedstestet"
+    "note": "Gausta-tillæg 4; logikken er delvist enhedstestet",
+    "s": "partial",
+    "e": "tests/live-tiles.test.ts og gaustabanen.test.ts dækker isFresh og pickSeasons; ingen mock af API-fejl, timeouts eller Sanity-fejl"
    },
    {
     "id": "QA-G11",
     "t": "Sikkerhed: test sikkerhedsheadere (CSP report-only først) og at ingen hemmeligheder findes i klient-bundlen",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gausta-tillæg 11"
+    "note": "Gausta-tillæg 11",
+    "s": "none",
+    "e": "Headers i next.config.ts, men ingen test af dem og ingen scan af klient-bundle for hemmeligheder"
    },
    {
     "id": "B2-QA",
     "t": "Sikkerhedsheadere og CSP, afhængighedsscanning",
     "prio": "",
     "rel": "gaelder",
-    "note": "afhængighedsscanning ikke fundet i repoet"
+    "note": "afhængighedsscanning ikke fundet i repoet",
+    "s": "partial",
+    "e": "Sikkerhedsheadere og CSP i next.config.ts; ingen afhængighedsscanning (ingen audit-trin i ci.yml, ingen Dependabot)"
    }
   ],
   "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Om gæsteområdet skal kunne bruges offline.",
@@ -4699,49 +5413,63 @@ window.WS_SPEC = [
     "t": "GitHub Actions på hver PR",
     "prio": "",
     "rel": "gaelder",
-    "note": "findes i ci.yml (push og pull_request)"
+    "note": "findes i ci.yml (push og pull_request)",
+    "s": "done",
+    "e": ".github/workflows/ci.yml: on push og pull_request"
    },
    {
     "id": "QA-15",
     "t": "Branch protection på main med qa-status",
     "prio": "",
     "rel": "gaelder",
-    "note": "aktivér fra start; ikke kontrolleret i GitHub"
+    "note": "aktivér fra start; ikke kontrolleret i GitHub",
+    "s": "partial",
+    "e": "Ikke i repoet; grenbeskyttelse i GitHub ikke kontrolleret"
    },
    {
     "id": "QA-16",
     "t": "Staging-miljø (anden Railway-service eller staging-gren)",
     "prio": "",
     "rel": "tilpasses",
-    "note": "valgfrit; en preview-udrulning kan være nok"
+    "note": "valgfrit; en preview-udrulning kan være nok",
+    "s": "none",
+    "e": "Ingen staging: teknisk/byggeplan.md siger, at staging mangler (ejerens trin); ingen preview-konfiguration i repoet"
    },
    {
     "id": "QA-17",
     "t": "Post-deploy-røgtest (nøglesider 200, noindex-header før lancering)",
     "prio": "",
     "rel": "gaelder",
-    "note": "ikke bygget"
+    "note": "ikke bygget",
+    "s": "none",
+    "e": "Ingen post-deploy-røgtest i ci.yml eller scripts/"
    },
    {
     "id": "QA-18",
     "t": "Fire Sanity CI-secrets",
     "prio": "",
     "rel": "tilpasses",
-    "note": "egne secrets til Gaustas Sanity-projekt; kun navne må stå i dokumenter"
+    "note": "egne secrets til Gaustas Sanity-projekt; kun navne må stå i dokumenter",
+    "s": "partial",
+    "e": "ci.yml bruger kun SANITY_AUTH_TOKEN (deploy-studio); build bruger ikke egne Sanity-secrets, rækkevidde ikke kontrolleret"
    },
    {
     "id": "B8-QA",
     "t": "Miljøer, rollback, oppetid, backup",
     "prio": "",
     "rel": "tilpasses",
-    "note": "lavere ambition, men back-office kræver mere"
+    "note": "lavere ambition, men back-office kræver mere",
+    "s": "partial",
+    "e": "ci.yml og Railway fra main ifølge teknisk/byggeplan.md, ikke kontrolleret i tjenesten; ingen staging, rollback- eller oppetidstest i repoet"
    },
    {
     "id": "QA-19",
     "t": "Pause/genoptag-plan",
     "prio": "",
     "rel": "ikke",
-    "note": "Gausta bygger harnesset trinvist fra start"
+    "note": "Gausta bygger harnesset trinvist fra start",
+    "s": "na",
+    "e": "rel ikke: Gausta bygger trinvist; ingen pause/genoptag-plan nødvendig"
    }
   ],
   "needs": "Grenbeskyttelse og om staging skal bygges (omkostning)."
@@ -4771,7 +5499,9 @@ window.WS_SPEC = [
     "t": "Back-office-tests: auth, database-migreringer, planlagte jobs (idempotens), scraping-kontrakttests, KPI-beregninger (tidszone, valuta), sensor-ingestion, E2E bag test-login",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Gausta-tillæg 5; antagelse: separat app med egen pipeline"
+    "note": "Gausta-tillæg 5; antagelse: separat app med egen pipeline",
+    "s": "none",
+    "e": "Ingen back-office-tests i gausta-vandring (back-office er separat, G28); hjemmeserverens pipeline ikke kontrolleret"
    }
   ],
   "needs": "Back-office: eget repo og juridiske rammer for scraping."
@@ -4799,14 +5529,18 @@ window.WS_SPEC = [
     "t": "Verificér vilkår, pris, attribution og tilgængelighed pr. kilde",
     "prio": "",
     "rel": "gaelder",
-    "note": "Kilde for kilde, jf. G9 og G22"
+    "note": "Kilde for kilde, jf. G9 og G22",
+    "s": "partial",
+    "e": "lib/met.ts, lib/fnugg.ts (vilkår læst 14. okt.) og lib/gaustabanen.ts (tilladelse) kommenterer vilkår; webcam, events og kort ikke afgjort"
    },
    {
     "id": "N14.b",
     "t": "Registrér kilderne med dato, vilkår og ejer af opdateringen",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Datakilder-mappen er stedet"
+    "note": "Datakilder-mappen er stedet",
+    "s": "partial",
+    "e": "teknisk/datakilder/README.md og 01-16 har læsedato og vilkår pr. kilde; ejer af opdateringen er ikke angivet, og intet er besluttet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4836,14 +5570,18 @@ window.WS_SPEC = [
     "t": "Hent kilder serverside med cache og kreditering",
     "prio": "",
     "rel": "gaelder",
-    "note": "Browseren kontakter aldrig kilden"
+    "note": "Browseren kontakter aldrig kilden",
+    "s": "partial",
+    "e": "lib/met.ts, fnugg.ts, gaustabanen.ts henter serverside med revalidate og krediterer i LiveSection; webcam og kort er ikke bygget"
    },
    {
     "id": "N14.d",
     "t": "Fallback ved nedbrud, så siden virker uden data",
     "prio": "",
     "rel": "gaelder",
-    "note": "Tosproget N/A-visning"
+    "note": "Tosproget N/A-visning",
+    "s": "done",
+    "e": "LiveSection.tsx viser live.na og live.noData ved null; lib/live-tiles.ts skjuler gammel data; tosproget UI-streng, test i live-tiles.test.ts"
    }
   ],
   "needs": "Den endelige webcam-metode."
@@ -4871,14 +5609,18 @@ window.WS_SPEC = [
     "t": "Fire tokensæt via data-season",
     "prio": "",
     "rel": "gaelder",
-    "note": "Forår findes, men er ikke aktivt"
+    "note": "Forår findes, men er ikke aktivt",
+    "s": "done",
+    "e": "styles/tokens.css har fire data-season sæt, spring findes men er slået fra (SPRING_ENABLED false i lib/season.ts)"
    },
    {
     "id": "N15.b",
     "t": "Automatisk valg efter dato, manuel overstyring",
     "prio": "",
     "rel": "gaelder",
-    "note": "Kun for sessionen"
+    "note": "Kun for sessionen",
+    "s": "done",
+    "e": "lib/season.ts datoregel, sessionStorage og SeasonSwitcher.tsx; tests/season.test.ts"
    }
   ],
   "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
@@ -4908,14 +5650,18 @@ window.WS_SPEC = [
     "t": "Kontrastkrav for alle fire årstidspaletter",
     "prio": "",
     "rel": "gaelder",
-    "note": "Stor risiko, jf. Stormpines kontrastproblem"
+    "note": "Stor risiko, jf. Stormpines kontrastproblem",
+    "s": "done",
+    "e": "scripts/contrast.mjs tjekker alle fire årstider; .github/workflows/ci.yml kører pnpm contrast ved hvert push"
    },
    {
     "id": "N15.d",
     "t": "Billedvalg pr. årstid fra CMS",
     "prio": "",
     "rel": "gaelder",
-    "note": "Tom betyder alle årstider"
+    "note": "Tom betyder alle årstider",
+    "s": "done",
+    "e": "imageWithAlt.ts har felt seasons (tom = alle); bruges af GallerySection.tsx og HeroSection.tsx"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -4945,14 +5691,18 @@ window.WS_SPEC = [
     "t": "Polling af sensorer og historik",
     "prio": "",
     "rel": "gaelder",
-    "note": "Hjemmeserver, ikke websitet"
+    "note": "Hjemmeserver, ikke websitet",
+    "s": "none",
+    "e": "Intet i produktionsrepoet (bevidst, N19); hjemmeserverens collector er ikke bygget ifølge beslutningsregisteret (G5)"
    },
    {
     "id": "N16.b",
     "t": "Alarmer og rapporter, også ved nedbrud af tunnel eller server",
     "prio": "",
     "rel": "gaelder",
-    "note": "Jf. N8"
+    "note": "Jf. N8",
+    "s": "none",
+    "e": "Ingen alarmer eller rapporter fundet; hvordan alarmer når ejeren ved nedbrud er åbent punkt"
    }
   ],
   "needs": "Hvordan alarmer når dig, når hjemmeserveren er nede."
@@ -4982,7 +5732,9 @@ window.WS_SPEC = [
     "t": "Opbevaringstid, oplysning til gæster og privatliv",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Afventer G11 og G16"
+    "note": "Afventer G11 og G16",
+    "s": "none",
+    "e": "Ingen opbevaringsregel eller oplysningstekst i repoet; G11 og G16 er åbne i beslutningsregister.md"
    }
   ],
   "needs": "Hvor længe sensordata gemmes, og hvad gæsterne oplyses om."
@@ -5010,14 +5762,18 @@ window.WS_SPEC = [
     "t": "Agentbaseret indsamling med kildevilkår",
     "prio": "",
     "rel": "gaelder",
-    "note": "Afventer G14"
+    "note": "Afventer G14",
+    "s": "none",
+    "e": "Ingen indsamling i repoet (bevidst); metode og vilkår er åbne (G14 i beslutningsregister.md)"
    },
    {
     "id": "N17.b",
     "t": "Estimatflag og dataoprindelse pr. tal",
     "prio": "",
     "rel": "gaelder",
-    "note": "Dato og kilde pr. tal, jf. vidensbasens regler"
+    "note": "Dato og kilde pr. tal, jf. vidensbasens regler",
+    "s": "none",
+    "e": "Intet estimatflag eller dataoprindelse bygget; kun dokumenteret som krav, afventer G14"
    }
   ],
   "needs": "Hvilke kilder der må skrabes (juridisk)."
@@ -5047,14 +5803,18 @@ window.WS_SPEC = [
     "t": "Permanent link, ingen adgangskoder på siden",
     "prio": "",
     "rel": "gaelder",
-    "note": "Dørkoder aldrig på websitet"
+    "note": "Dørkoder aldrig på websitet",
+    "s": "none",
+    "e": "Intet gæsteområde i repoet (kun inquiry og designsystem under app/[locale]); ejeren har svaret afvent"
    },
    {
     "id": "N18.b",
     "t": "Interne felter må aldrig følge med til gæsteområdet",
     "prio": "",
     "rel": "gaelder",
-    "note": "Jf. N19 og G34"
+    "note": "Jf. N19 og G34",
+    "s": "none",
+    "e": "Intet gæsteområde at beskytte; Sanity er kun offentligt indhold ifølge G33 og G34, men intet er bygget"
    }
   ],
   "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Udformning og fornyelse af gæsteområdets permanente link.",
@@ -5085,14 +5845,18 @@ window.WS_SPEC = [
     "t": "noindex og neutrale metatags i gæsteområdet",
     "prio": "",
     "rel": "gaelder",
-    "note": "Også efter lancering"
+    "note": "Også efter lancering",
+    "s": "partial",
+    "e": "Hele sitet er noindex (X-Robots-Tag i next.config.ts, app/robots.ts); ingen særskilt noindex for gæsteområde, som ikke findes"
    },
    {
     "id": "N18.d",
     "t": "Offline-adgang til gæsteindhold",
     "prio": "",
     "rel": "gaelder",
-    "note": "Jf. B4"
+    "note": "Jf. B4",
+    "s": "none",
+    "e": "Ingen service worker eller offline-cache i repoet; afhænger af B4 og gæsteområdet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -5120,14 +5884,18 @@ window.WS_SPEC = [
     "t": "Ingen live-kald, delt database, webhook ind eller offentlig adresse der peger hjem",
     "prio": "",
     "rel": "gaelder",
-    "note": "Gælder A og B"
+    "note": "Gælder A og B",
+    "s": "done",
+    "e": "Søgning i app, lib, components, proxy.ts finder ingen hjemmeadresse; CSP connect-src i next.config.ts tillader kun self og Sanity"
    },
    {
     "id": "N19.b",
     "t": "Hjemmet henter udefra; websitet kalder aldrig hjem",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Websitet kalder kun eksterne kilder (MET, Fnugg, Gaustabanen, Resend); ingen automatisk CI-regel mod interne adresser"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -5154,14 +5922,18 @@ window.WS_SPEC = [
     "t": "Hjemmedata kun som øjebliksbillede med dato",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen øjebliksbilleder fra hjemmet i repoet endnu; kun ekstern hentning"
    },
    {
     "id": "N19.d",
     "t": "Formularer og fejlmeldinger til e-mail eller Telegram",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Formularen sender e-mail via lib/inquiry/send.ts (Resend), ingen hjemmedatabase; ingen Telegram-fejlmelding fundet i repoet"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -5190,14 +5962,18 @@ window.WS_SPEC = [
     "t": "Interne data kun i back-office hjemme, aldrig i Sanity",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Sanity-skemaet er offentligt indhold, men inventoryItem.ts og place.ts har interne felter (status, source) i Sanity"
    },
    {
     "id": "N19.f",
     "t": "Undtagelser kun efter ejerens udtrykkelige beslutning, logget",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Ingen undtagelser fundet i koden; G28 er logget i beslutningsregister.md, men inventarfeltet i Sanity er uafklaret"
    }
   ],
   "needs": "Om feltet \"Kilde (vises ikke)\" må blive i Sanity."
@@ -5227,42 +6003,54 @@ window.WS_SPEC = [
     "t": "Følsomme økonomidata (N2, N3): kun ejeren, stærk login, data i EU, ingen tredjepartsscripts, ingen økonomidata i logs",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen økonomidata eller back-office i produktionsrepoet (bevidst); back-office er ikke bygget"
    },
    {
     "id": "TL.C8-2",
     "t": "Sikkerhedskopi og gendannelse (N8, N12): eksport til Excel/CSV, og eksporten testes",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen eksport eller backup af økonomidata fundet; ekstern backup er kun planlagt (teknisk/backoffice/F2-ekstern-backup.md)"
    },
    {
     "id": "TL.C8-3",
     "t": "To valutaer: NOK og DKK som separate felter med dato, kurs gemt pr. dag, ingen blandede subtotaler",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen valutamodel bygget; kun krav og regler i vidensbasen"
    },
    {
     "id": "TL.C8-4",
     "t": "Eksterne kilder (N14): valutakurs fra dokumenteret kilde med dato, vilkår og fallback (kilde ikke valgt)",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Kurskilde ikke valgt; teknisk/datakilder/04-valuta-bank-og-prisdata.md er en langliste uden beslutning"
    },
    {
     "id": "TL.C8-5",
     "t": "Datamodel: C8-C10 kræver database og planlagte hentninger, hvilket støtter en separat back-office-app",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Beslutning om separat back-office med database dokumenteret (G4, stack-og-arkitektur.md, backoffice/P1); intet bygget"
    },
    {
     "id": "TL.C8-6",
     "t": "Bilag: fakturafiler krypteret og adskilt fra det offentlige site",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen bilagslager eller kryptering fundet; ikke bygget"
    }
   ],
   "needs": "Kilde til valutakurser (back-office)."
@@ -5293,28 +6081,36 @@ window.WS_SPEC = [
     "t": "Statiske data: afstande og rejsetider beregnes én gang og gemmes i CMS med dato, ingen routing-opslag (N3, N1)",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Afstande som statiske data i lib/area.ts, tests/area.test.ts og place.ts; dato og dokumenteret kilde pr. værdi ikke kontrolleret"
    },
    {
     "id": "TL.A8-2",
     "t": "Kilde (N14): kortdata og routing ikke valgt, kortløsning cookiefri (G10)",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Kortdata fra OpenStreetMap i public/data/area-*.json og cookiefri CSP; routing- og rejsetidskilde ikke valgt"
    },
    {
     "id": "TL.A8-3",
     "t": "SEO (N5): én side pr. land eller udgangsby; da og en først, sv og no senere",
     "prio": "",
     "rel": "tilpasses",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen rejsesider pr. land eller udgangsby i app eller sanity/schemaTypes/documents; afgørelsen er åben"
    },
    {
     "id": "TL.A8-4",
     "t": "Indhold: færge og lufthavn med sidst-kontrolleret-dato og ejer",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Intet felt eller indhold til færge og lufthavn med sidst-kontrolleret-dato og ejer i skemaerne"
    }
   ],
   "needs": "Kilde til rejsetider, og om der skal være én side pr. land eller udgangsby."
@@ -5344,42 +6140,54 @@ window.WS_SPEC = [
     "t": "Én datamodel: poster i CMS, kort visning i del A, alle i del B, oversættelig pr. sprog",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "inventoryItem.ts og room.ts: poster i CMS, oversættelig; felterne antal, placering, ikon, showInSummary mangler; kort og fuld visning ikke fundet"
    },
    {
     "id": "TL.A9-2",
     "t": "Faktaark: intet publiceres før registreret efter møblering",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen mekanisme eller spærring i repoet for at holde inventar tilbage før registrering efter møblering"
    },
    {
     "id": "TL.A9-3",
     "t": "Privatliv og adgang (N18): interne felter aldrig til offentlig del eller gæsteområde",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "Feltet status (vises ikke) i inventoryItem.ts følger ikke med til sitet, men ligger i Sanity, som antages offentligt; gæsteområde findes ikke"
    },
    {
     "id": "TL.A9-4",
     "t": "Offline (B4): detaljeret liste kan caches og søges uden forbindelse",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen offline-cache eller service worker i repoet"
    },
    {
     "id": "TL.A9-5",
     "t": "SEO (N5): strukturerede data for faciliteter (amenity)",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen amenity-markup eller schema.org-data for faciliteter i app, components eller lib"
    },
    {
     "id": "TL.A9-6",
     "t": "Tilgængelighed (N6): ikoner med tekst, søgning og filtre med tastatur og skærmlæser",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen inventarvisning med søgning og filtre fundet; tastatur- og skærmlæsertest ikke fundet"
    }
   ],
   "needs": "Om de manglende inventarfelter skal tilføjes, eller den byggede model er endelig."
@@ -5412,49 +6220,63 @@ window.WS_SPEC = [
     "t": "Metatags pr. side og sprog: og:*, twitter:card, serverrenderet, unik titel og beskrivelse, kanonisk URL",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "app/[locale]/[[...slug]]/page.tsx: title, description, canonical, og:title/description/locale/type; mangler og:url, twitter:card, og:image:alt"
    },
    {
     "id": "TL.A11-2",
     "t": "Billede 1200 x 630 under ca. 1 MB, fire årstidsprofiler med standardbillede som fallback",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "partial",
+    "e": "seo.shareImage skæres til 1200 x 630 i generateMetadata; ingen årstidsprofiler, ingen standardbillede og ingen størrelsesgrænse"
    },
    {
     "id": "TL.A11-3",
     "t": "Platforme (Facebook, LinkedIn, WhatsApp, X, Instagram) testes i platformenes værktøjer (Antagelse)",
     "prio": "",
     "rel": "tilpasses",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen test i platformenes værktøjer; sitet er noindex og spærrer robotter, så det kan ikke testes før lancering"
    },
    {
     "id": "TL.A11-4",
     "t": "Adgang for robotter: ikke blokeret af robots.txt, WAF eller login; gæsteområdet noindex med neutrale tags",
     "prio": "",
     "rel": "tilpasses",
-    "note": "Hello world er noindex"
+    "note": "Hello world er noindex",
+    "s": "partial",
+    "e": "app/robots.ts og X-Robots-Tag spærrer bevidst alt indtil lancering; gæsteområdet findes ikke; robotadgang er ikke åbnet"
    },
    {
     "id": "TL.A11-5",
     "t": "Delingsknap: Web Share API eller Kopiér link, ingen tredjepartsscripts",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen delingsknap, Web Share API eller Kopiér link i components"
    },
    {
     "id": "TL.A11-6",
     "t": "QA: Playwright-test pr. side og sprog samt manuel tjekliste før lancering",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen Playwright i package.json; kun Vitest (tests/) og CI-tjek; ingen tjekliste i repoet"
    },
    {
     "id": "TL.A11-7",
     "t": "Åbne punkter: billedrettigheder, billeder pr. side og årstid, apex eller www, testadresse, Instagram, verificerede platformkrav",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Billedrettigheder, apex eller www, testadresse og Instagram er stadig åbne (needs i punktet); www omdirigeres til apex i next.config.ts"
    }
   ],
   "needs": "Billedrettigheder, apex eller www og om der skal laves delebilleder til Instagram."
@@ -5482,28 +6304,36 @@ window.WS_SPEC = [
     "t": "HTML: details og summary, svar altid i DOM'en, selvstændige korte svar",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "components/blocks/FaqSection.tsx: details/summary, svar i DOM'en; schema i sanity/schemaTypes/blocks/faqSection.ts"
    },
    {
     "id": "TL.N5-2",
     "t": "FAQPage JSON-LD med inLanguage, genereret fra samme CMS-felter som den synlige tekst",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "FaqSection.tsx bygger FAQPage JSON-LD med inLanguage fra samme Sanity-felter som den synlige tekst"
    },
    {
     "id": "TL.N5-3",
     "t": "Sprog: egen URL, serverrenderet indhold, hreflang og egen JSON-LD pr. sprog",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "done",
+    "e": "Egen URL pr. sprog (app/[locale]), serverrenderet blok, hreflang og canonical i page.tsx, JSON-LD pr. sprogside"
    },
    {
     "id": "TL.N5-4",
     "t": "Valider med Rich Results Test og schema.org-validator før lancering (Antagelse om Googles visning)",
     "prio": "",
     "rel": "gaelder",
-    "note": ""
+    "note": "",
+    "s": "none",
+    "e": "Ingen validering med Rich Results Test eller schema.org-validator dokumenteret i repoet eller CI"
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."

@@ -1513,3 +1513,8 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .ws-tasks .table-wrap { margin-top: 10px; }
 .ws-tasks .table td { font-size: .84rem; vertical-align: top; }
 .spec-head .row-flex { flex-wrap: wrap; justify-content: flex-end; }
+.ws-ev { font-size: .78rem; color: var(--faint); margin-top: 3px; }
+.ws-sc { display: inline-block; min-width: 34px; text-align: center; font: 650 .82rem var(--font-mono); padding: 2px 8px; border-radius: 99px; }
+.ws-sc.sc-good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
+.ws-sc.sc-ok { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
+.ws-sc.sc-bad { background: color-mix(in srgb, var(--coral) 16%, transparent); color: var(--coral); }
