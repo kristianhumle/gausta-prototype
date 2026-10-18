@@ -145,7 +145,7 @@ window.WS_GROUPS = [
 window.WS_SCANS = [
  {
   "group": "N1",
-  "title": "Google Performance scan (Lighthouse), 18. oktober 2026",
+  "title": "Google Performance scan (Lighthouse), 18. oktober 2026, før ændring",
   "date": "18. oktober 2026",
   "how": "Målt på den live side gaustahome.com med Lighthouse 12.8.2 (Googles egen motor, den samme som PageSpeed Insights) i Chrome 155, én kørsel pr. side og enhed. Mobil: Lighthouses mobilprofil med langsom 4G og fire gange langsommere processor. Desktop: desktopprofil. Netværk og processor er begrænset i selve browseren (\"devtools\"-metoden). PageSpeed Insights-tjenesten selv kunne ikke bruges, fordi dens gratis dagskvote var opbrugt (fejl 429), så scanningen er kørt lokalt. Én kørsel svinger, så tal skal ses som niveau, ikke facit. Sitet er noindex, så SEO-scoren er lav med vilje.",
   "rows": [
@@ -264,6 +264,125 @@ window.WS_SCANS = [
    "SEO 61 på alle sider: \"Page is blocked from indexing\" er bevidst (noindex før lancering, N5). \"Document does not have a meta description\" er et rigtigt fund, som skal rettes før lancering.",
    "Bedste praksis: 96 til 100. Blokerende tid (TBT) er lav (0 til 100 ms), og layoutspring (CLS) er 0 til 0,048.",
    "Dette er en enkeltstående manuel måling. Den er ikke automatiseret i CI, og der er ikke sat budgetter (N1.6). Feltdata fra rigtige besøgende findes ikke (ingen målinger endnu, afventer d8a)."
+  ]
+ },
+ {
+  "group": "N1",
+  "title": "Core Web Vitals (Lighthouse), 18. oktober 2026, efter heroens prioritet (senere fortrudt)",
+  "date": "18. oktober 2026",
+  "how": "Samme metode som scanningen før ændringen (Lighthouse 12.8.2, Chrome 155, mobil og desktop, én kørsel pr. side). Målt kort efter udrulningen af en ændring, der forhåndshentede heroens foto med høj prioritet. Core Web Vitals i laboratoriet: LCP (grænse for god 2,5 s), CLS (0,1) og TBT som stedfortræder for INP (200 ms). Feltdata fra rigtige besøgende (Google CrUX og Search Console) kunne ikke hentes: tjenesterne kræver en nøgle, PageSpeed Insights-kvoten var opbrugt, og sitet er nyt. Feltdata fås, når Search Console er claimet (N5.3) og sitet har trafik.",
+  "rows": [
+   {
+    "page": "Forsiden",
+    "mode": "Mobil",
+    "perf": 0.97,
+    "a11y": 0.88,
+    "bp": 0.96,
+    "seo": 0.61,
+    "fcp": "1.8 s",
+    "lcp": "1.8 s",
+    "tbt": "60 ms",
+    "cls": "0",
+    "si": "3.9 s"
+   },
+   {
+    "page": "Forsiden",
+    "mode": "Desktop",
+    "perf": null,
+    "a11y": 0.88,
+    "bp": 0.96,
+    "seo": 0.61,
+    "fcp": "0.3 s",
+    "lcp": "ikke målt",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "1.6 s"
+   },
+   {
+    "page": "Lejligheden",
+    "mode": "Mobil",
+    "perf": 0.82,
+    "a11y": 0.96,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.8 s",
+    "lcp": "4.5 s",
+    "tbt": "40 ms",
+    "cls": "0.048",
+    "si": "2.7 s"
+   },
+   {
+    "page": "Lejligheden",
+    "mode": "Desktop",
+    "perf": 0.94,
+    "a11y": 0.96,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.3 s",
+    "lcp": "1.6 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "0.9 s"
+   },
+   {
+    "page": "Vandring",
+    "mode": "Mobil",
+    "perf": 0.79,
+    "a11y": 0.95,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.6 s",
+    "lcp": "5.4 s",
+    "tbt": "30 ms",
+    "cls": "0",
+    "si": "3.0 s"
+   },
+   {
+    "page": "Vandring",
+    "mode": "Desktop",
+    "perf": 0.78,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.2 s",
+    "lcp": "3.7 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "1.6 s"
+   },
+   {
+    "page": "Området",
+    "mode": "Mobil",
+    "perf": 0.88,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "1.6 s",
+    "lcp": "3.7 s",
+    "tbt": "100 ms",
+    "cls": "0",
+    "si": "2.5 s"
+   },
+   {
+    "page": "Området",
+    "mode": "Desktop",
+    "perf": 0.9,
+    "a11y": 0.91,
+    "bp": 1,
+    "seo": 0.61,
+    "fcp": "0.2 s",
+    "lcp": "2.0 s",
+    "tbt": "0 ms",
+    "cls": "0",
+    "si": "1.0 s"
+   }
+  ],
+  "notes": [
+   "Mobil blev bedre: Lejligheden 79 til 82 (LCP 5,3 til 4,5 s), Vandring 78 til 79 (5,7 til 5,4 s), Området 83 til 88 (4,4 til 3,7 s). Forsiden uændret (97). Ingen mobilside nåede grænsen på 2,5 s for god LCP.",
+   "Desktop var blandet: Området blev bedre (72 til 90), men Lejligheden (100 til 94) og Vandring (99 til 78) blev dårligere. Det kan være en kold billedcache lige efter udrulningen (sitet laver selv billedstørrelserne, og de skal laves første gang) og ikke effekten af ændringen. Det er ikke afgjort.",
+   "CLS er 0 til 0,048 og TBT 0 til 100 ms på alle sider, dvs. god på begge. Det er altså kun LCP, der halter.",
+   "Ejeren bad om at fortryde ændringen, og den er trukket tilbage (commit \"Tilbagefør heroens prioritet\", 18. oktober 2026). Siden er derfor igen som i scanningen før ændringen.",
+   "Næste skridt, der testes lokalt i en A/B-måling uden at røre produktionen: gøre selve heroens billede lettere (beskåret til heroens format og lavere kvalitet) og, hver for sig, prioritet."
   ]
  }
 ];
@@ -424,7 +543,7 @@ window.WS_SPEC = [
   "gausta": "Gausta er billed- og videotungt, så dette er kernen i performance-arbejdet. Poster-billede som LCP og video, der ikke autoafspiller på mobildata, er Åbent punkt.",
   "built": {
    "s": "partial",
-   "where": "Pipeline valgt og bygget: Next-optimering på Railway (images i next.config.ts med AVIF og WebP, urlFor i sanity/lib/image.ts, /_next/image i components/blocks/*Section.tsx). Hero bruger next/image med sizes i components/blocks/HeroSection.tsx, men uden priority. Mange img har loading=lazy. Ingen blur-placeholders (LQIP) fundet. Ikke kontrolleret: faktisk LCP-element, billedvægt, og om videoer er komprimeret."
+   "where": "Pipeline valgt og bygget: Next-optimering på Railway (images i next.config.ts med AVIF og WebP, urlFor i sanity/lib/image.ts, /_next/image i components/blocks/*Section.tsx). Hero bruger next/image med sizes i components/blocks/HeroSection.tsx, men uden priority. Mange img har loading=lazy. Ingen blur-placeholders (LQIP) fundet. Ikke kontrolleret: faktisk LCP-element, billedvægt, og om videoer er komprimeret. Heroens prioritet blev prøvet og fortrudt 18. oktober 2026 (se scanningerne i N1)."
   },
   "decided": "G57 (Next-optimering på Railway), G104 (videoer ligger på sitet), G82 og G84 (videosupport i gallerier).",
   "deps": [
