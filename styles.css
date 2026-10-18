@@ -1518,3 +1518,13 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .ws-sc.sc-good { background: color-mix(in srgb, var(--good) 16%, transparent); color: var(--good); }
 .ws-sc.sc-ok { background: color-mix(in srgb, var(--amber) 16%, transparent); color: var(--amber); }
 .ws-sc.sc-bad { background: color-mix(in srgb, var(--coral) 16%, transparent); color: var(--coral); }
+.ws-sum tr.ws-r-green td { background: color-mix(in srgb, var(--good) 14%, transparent); }
+.ws-sum tr.ws-r-yellow td { background: color-mix(in srgb, var(--amber) 16%, transparent); }
+.ws-sum tr.ws-r-red td { background: color-mix(in srgb, var(--coral) 14%, transparent); }
+.ws-sum tr.ws-r-green td:first-child { box-shadow: inset 4px 0 0 var(--good); }
+.ws-sum tr.ws-r-yellow td:first-child { box-shadow: inset 4px 0 0 var(--amber); }
+.ws-sum tr.ws-r-red td:first-child { box-shadow: inset 4px 0 0 var(--coral); }
+.ws-key { display: inline-block; width: 22px; height: 14px; border-radius: 4px; border: 1px solid var(--border); }
+.ws-key.ws-r-green { background: color-mix(in srgb, var(--good) 35%, transparent); }
+.ws-key.ws-r-yellow { background: color-mix(in srgb, var(--amber) 38%, transparent); }
+.ws-key.ws-r-red { background: color-mix(in srgb, var(--coral) 35%, transparent); }

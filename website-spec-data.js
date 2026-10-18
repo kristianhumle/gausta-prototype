@@ -1765,31 +1765,122 @@ window.WS_SPEC = [
   "g": "N5",
   "status": "approved",
   "rel": "gaelder",
-  "title": "Search Console og Bing Webmaster",
-  "what": "Sitet registreres hos Googles Search Console og Bings Webmaster Tools, så man kan se, hvad der faktisk er indekseret, og hvilke fejl der er. Ejerskab bekræftes via DNS eller en meta-tag.",
-  "gausta": "Gælder uændret. Kræver, at ejeren selv bekræfter ejerskabet.",
+  "title": "Claim og optimer Google Search Console og Bing Webmaster Tools",
+  "what": "Sitet registreres (\"claim\") hos Googles Search Console og Bings Webmaster Tools, og begge værktøjer bruges bagefter aktivt til at optimere: se, hvad der er indekseret, hvilke fejl og advarsler der er, hvilke søgninger der giver visninger, og hvordan Core Web Vitals, mobil og strukturerede data klarer sig. Ejerskab bekræftes med en DNS-record, som ikke afhænger af noindex.",
+  "gausta": "Tilføjet efter ejerens ønske 18. oktober 2026. Selve claim kan gøres nu: bekræftelse med DNS-record (Cloudflare) virker, selv om sitet er noindex. Rapporterne bliver først meningsfulde efter lancering, når noindex er fjernet, og sitemap er indsendt (N5.2). Registrér på ejerens Gmail (G29) og tilføj en backup-ejer.",
   "built": {
    "s": "none",
-   "where": "Intet fundet i produktionsrepoet (ingen metadata.verification) og intet i teknisk/domaene-og-dns-setup.md. Ejerens trin, ikke kontrolleret i selve tjenesterne."
+   "where": "Intet fundet i produktionsrepoet (ingen metadata.verification) og intet i teknisk/domaene-og-dns-setup.md. Ejerens trin med DNS-record, ikke kontrolleret i selve tjenesterne."
   },
   "deps": [
    "N5.1"
   ],
   "open": [
-   "Hvornår skal ejerskabet bekræftes: før eller ved lancering?"
+   "Hvem tilføjes som backup-ejer i begge værktøjer (fx Tine)?"
   ],
   "tasks": [
    {
     "id": "B5-1.3",
-    "t": "Search Console og Bing Webmaster, metadata.verification",
+    "t": "Search Console og Bing Webmaster, bekræftelse af ejerskab (metadata.verification eller DNS)",
     "prio": "P0",
     "rel": "gaelder",
     "note": "",
     "s": "none",
     "e": "Ingen metadata.verification i repoet, intet i teknisk/domaene-og-dns-setup.md. Ejerens trin, ikke kontrolleret i tjenesterne."
+   },
+   {
+    "id": "N5.3-1",
+    "t": "Claim Google Search Console som domæne-ejendom (gaustahome.com) med DNS TXT-record i Cloudflare, på ejerens Gmail, og tilføj en backup-ejer",
+    "prio": "P0",
+    "rel": "gaelder",
+    "note": "Ejerens trin. Kan gøres nu.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-2",
+    "t": "Claim Bing Webmaster Tools (importér fra Search Console eller bekræft med DNS), og tilføj en backup-ejer",
+    "prio": "P0",
+    "rel": "gaelder",
+    "note": "Ejerens trin. Kan gøres nu.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-3",
+    "t": "Indsend sitemap.xml i begge værktøjer, når sitemap findes og noindex er fjernet",
+    "prio": "P0",
+    "rel": "gaelder",
+    "note": "Afhænger af N5.2 og lanceringen.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-4",
+    "t": "Bed om indeksering af forside og hovedsider (URL Inspection) ved lancering og kontrollér, at de er indekseret",
+    "prio": "P1",
+    "rel": "gaelder",
+    "note": "Ved lancering.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-5",
+    "t": "Overvåg rapporterne for indeksering, sider ikke indekseret og tekniske fejl, og ret fejl (månedlig tjekliste)",
+    "prio": "P1",
+    "rel": "gaelder",
+    "note": "Efter lancering.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-6",
+    "t": "Brug rapporten Core Web Vitals og Page experience i Search Console, og sammenlign med Lighthouse (N1)",
+    "prio": "P1",
+    "rel": "gaelder",
+    "note": "Feltdata kræver nok trafik, så først efter lancering.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-7",
+    "t": "Kontrollér strukturerede data (FAQ og andre) i Search Console og Rich Results Test (N5.4)",
+    "prio": "P1",
+    "rel": "gaelder",
+    "note": "Efter N5.4.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-8",
+    "t": "Brug søgeforespørgsler (Performance) til at forbedre titler, beskrivelser og indhold på dansk, engelsk, norsk og svensk (N5.1, N5.7)",
+    "prio": "P2",
+    "rel": "gaelder",
+    "note": "Efter lancering.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-9",
+    "t": "Bing: brug site scan og SEO-rapporter og slå IndexNow til, hvis det er værd at bygge (N5.8)",
+    "prio": "P2",
+    "rel": "gaelder",
+    "note": "Valgfrit.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
+   },
+   {
+    "id": "N5.3-10",
+    "t": "Slå e-mailadvarsler til i begge værktøjer og gem adgangen i adgangskodemanageren",
+    "prio": "P1",
+    "rel": "gaelder",
+    "note": "Ejerens trin.",
+    "s": "none",
+    "e": "Ikke gjort. Intet i repoet eller dokumentationen."
    }
   ],
-  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
+  "appr": "Tilføjet efter ejerens ønske 18. oktober 2026. Kravet har ingen valg, der kræver din beslutning, og ejerens trin (bekræftelse) er beskrevet i delopgaverne.",
+  "decided": "Ejeren vil have Search Console og Bing Webmaster Tools claimet og optimeret (18. oktober 2026)."
  },
  {
   "id": "N5.4",

@@ -44,7 +44,11 @@
       var it = ITEMS.filter(function (x) { return x.g === g.id; });
       if (!it.length) return '';
       var n = it.reduce(function (s, x) { return s + (x.tasks ? x.tasks.length : 0); }, 0);
-      return '<tr><td><a href="#ws-g-' + esc(g.id) + '"><b>' + esc(g.id) + '</b> · ' + esc(g.title) + '</a></td><td class="num">' + it.length + '</td><td class="num">' + n + '</td><td class="num">' + tdn('done', g.id) + '</td><td class="num">' + tdn('partial', g.id) + '</td><td class="num">' + it.filter(function (x) { return x.status === 'approved'; }).length + '</td><td class="num">' + it.filter(function (x) { return x.built && x.built.s === 'done'; }).length + '</td></tr>';
+      var rel = it.reduce(function (a, x) { return a.concat((x.tasks || []).filter(function (k) { return k.s !== 'na'; })); }, []);
+      var nd = rel.filter(function (k) { return k.s === 'done'; }).length, np = rel.filter(function (k) { return k.s === 'partial'; }).length;
+      var allApproved = it.every(function (x) { return x.status === 'approved'; });
+      var rc = rel.length && nd === rel.length && allApproved ? 'green' : (nd === 0 ? 'red' : 'yellow');
+      return '<tr class="ws-r-' + rc + '" title="' + (rc === 'green' ? 'Alt løst og godkendt' : rc === 'yellow' ? 'Påbegyndt, men der er stadig åbne delopgaver' : 'Ikke påbegyndt eller ingen delopgaver løst') + '"><td><a href="#ws-g-' + esc(g.id) + '"><b>' + esc(g.id) + '</b> · ' + esc(g.title) + '</a></td><td class="num">' + it.length + '</td><td class="num">' + n + '</td><td class="num">' + tdn('done', g.id) + '</td><td class="num">' + tdn('partial', g.id) + '</td><td class="num">' + it.filter(function (x) { return x.status === 'approved'; }).length + '</td><td class="num">' + it.filter(function (x) { return x.built && x.built.s === 'done'; }).length + '</td></tr>';
     }).join('');
   }
 
