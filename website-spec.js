@@ -52,6 +52,8 @@
       (x.gausta ? '<dt>For Gausta</dt><dd>' + esc(x.gausta) + '</dd>' : '') +
       (x.built && x.built.where ? '<dt>I koden</dt><dd>' + esc(x.built.where) + '</dd>' : '') +
       (x.decided ? '<dt>Besluttet</dt><dd>' + esc(x.decided) + '</dd>' : '') +
+      (x.appr ? '<dt>Godkendelse</dt><dd>Godkendt af Claude efter din uddelegering 18. oktober 2026. ' + esc(x.appr) + '</dd>' : '') +
+      (x.needs ? '<dt>Din beslutning</dt><dd><b>' + esc(x.needs) + '</b></dd>' : '') +
       '<dt>Afhænger af</dt><dd>' + (x.deps && x.deps.length ? '<div class="row-flex" style="gap:6px">' + x.deps.map(chip).join('') + '</div>' : '<span class="faint">intet</span>') + '</dd>' +
       (x.open && x.open.length ? '<dt>Åbne spørgsmål</dt><dd><ul style="margin:0;padding-left:18px">' + x.open.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></dd>' : '');
     var tasks = x.tasks && x.tasks.length ? '<details class="ws-tasks"><summary>' + x.tasks.length + ' delopgaver</summary><div class="table-wrap"><table class="table"><tr><th>ID</th><th>Delopgave</th><th>Prio</th><th>Relevans</th></tr>' +

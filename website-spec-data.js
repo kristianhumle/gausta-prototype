@@ -146,7 +146,7 @@ window.WS_SPEC = [
  {
   "id": "N1.1",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Caching og opdatering ved udgivelse",
   "what": "Siderne bygges statisk og genopbygges kun, når indholdet ændres: lang cache-tid, en signeret webhook fra Sanity ved udgivelse og styring af, hvilke dele der må være dynamiske. Det gør sitet hurtigt og billigt at drive. Stormpines egen plan sagde Done, mens koden stadig kørte dynamisk pr. request (kildekonflikt, bevaret).",
@@ -190,12 +190,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Samme Next 16 og next-sanity-risiko."
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "N1.2",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Rendering og JavaScript",
   "what": "Så lidt JavaScript som muligt sendes til browseren: interaktive dele holdes små, indholdet renderes på serveren, og Sanity-klienten og forespørgsler bliver på serveren. Det holder siden hurtig at åbne og at klikke på (INP under 200 ms).",
@@ -230,12 +231,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N1.3",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Animation og bevægelse",
   "what": "Animationer må kun bruge transform og opacity, og lange sider med mange sektioner kan springe maling over for dele uden for skærmen (content-visibility). Brugere, der har bedt om mindre bevægelse, får en statisk slutstilstand. Det beskytter mod hakkende sider og er også en tilgængelighedsregel.",
@@ -266,12 +268,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Også for video og autoplay."
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N1.4",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Billeder og video",
   "what": "Billeder leveres i rigtig størrelse og moderne format, med angivne mål, sizes og kun ét hurtigt prioriteret billede på forsiden. Uskarpe pladsholdere (LQIP) fylder, mens billedet hentes. Valget af billedpipeline afgør båndbredde, pris og hastighed.",
@@ -311,12 +314,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Høj vægt: et billed- og videotungt site gør valget centralt."
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N1.5",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Skrifttyper og kritisk sti",
   "what": "Skrifttyper og tredjepartsscripts må ikke forsinke første visning. Skrifter serveres fra sitet selv, og der forbindes kun tidligt til de få nødvendige eksterne adresser. Ingen render-blokerende tredjeparts-script.",
@@ -348,12 +352,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Flere tredjepartsorigins (vejr, lifte, webcam, kort); preconnect kun til de få kritiske."
    }
-  ]
+  ],
+  "appr": "Skrifttyperne er valgt og bygget i designsystemet, og kravet handler kun om hurtig indlæsning."
  },
  {
   "id": "N1.6",
   "g": "N1",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Måling og budgetter",
   "what": "Hastighed måles på rigtige besøg (Core Web Vitals: LCP under 2,5 s, INP under 200 ms, CLS under 0,1) og holdes fast med automatiske grænser i byggeprocessen. Lighthouse og størrelsesgrænser fanger regressioner, før de kommer i produktion.",
@@ -393,12 +398,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Afhænger af Gaustas analytics- og samtykkevalg og af, at A, B og C er adskilt."
    }
-  ]
+  ],
+  "needs": "Budgetter for hastighed og om der skal oprettes et testmiljø (omkostning)."
  },
  {
   "id": "N1.7",
   "g": "N1",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Hosting, region og cache-headers",
   "what": "Sitet kører som en almindelig Node-tjeneste i EU, med kontrol af at cachen virker, og med eksplicitte cache-headers på API-ruter. Delt cache mellem flere instanser er først nødvendigt ved skalering.",
@@ -437,12 +443,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "EU er sandsynligt krav for dansk og norsk publikum."
    }
-  ]
+  ],
+  "needs": "Du skal selv kontrollere Railway-regionen, forbrugsloftet og alarmen i Railway."
  },
  {
   "id": "N1.8",
   "g": "N1",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Udskudt: CSS scroll-drevne animationer",
   "what": "Valgfri brug af CSS scroll-driven animations som erstatning for JavaScript-styrede scroll-effekter. Gevinsten er ubetydelig og støtten versionsfølsom.",
@@ -460,12 +467,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "Ubetydelig gevinst nu, kan genovervejes. Udskudt hos Stormpine."
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "N2.1",
   "g": "N2",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Hemmeligheder og adgang",
   "what": "Alle nøgler og tokens ligger kun som skjulte variabler hos hosting-udbyderen, aldrig i kode, filer eller i klientens kode. Automatisk scanning af repoet og af afhængigheder. Offentlig side bruger kun et læse-token.",
@@ -517,12 +525,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Ingen eksisterende pending tokens, nye konti."
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N2.2",
   "g": "N2",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Transport og sikkerhedsheaders",
   "what": "Alt over HTTPS med HSTS og omdirigering fra HTTP. Et fast sæt sikkerhedsheaders (ingen indramning, ingen typegætning, begrænsede browserfunktioner, begrænset henvisning), indført forsigtigt og kontrolleret mod en ekstern scanner.",
@@ -560,12 +569,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Subdomænerne (back-office, evt. sensor-endpoint) skal medregnes."
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "N2.3",
   "g": "N2",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Indholdspolitik (CSP)",
   "what": "En Content-Security-Policy styrer, hvilke adresser siden må hente scripts, billeder, rammer og forbindelser fra, og begrænser skaden ved en indsprøjtet kode. Hovedspændingen er, at en streng nonce-baseret politik kræver dynamisk rendering og dermed kan koste statisk caching. Stormpines standard er den statisk-venlige sti.",
@@ -619,12 +629,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Kun hvis sti A vælges; tidlig prøve i byggeriet."
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N2.4",
   "g": "N2",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sanity og applikationsflade",
   "what": "Sanity og sitets egne indgange låses: tilladte oprindelser (CORS) beskæres, webhooken tjekkes på signatur, kladder vises kun bag en hemmelig forbindelse, og al input valideres. En sikker overgang til et login må ikke åbne for omdirigering til vilkårlige adresser.",
@@ -677,12 +688,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Handoff til back-office-login, samme princip."
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N2.5",
   "g": "N2",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Kant, Cloudflare og hastighedsgrænser",
   "what": "Beslutning om, hvorvidt en filtertjeneste (Cloudflare) skal stå foran sitet, og hvordan følsomme ruter beskyttes mod misbrug. Uden en sådan tjeneste står der kun hostingudbyderens grundlæggende DDoS-beskyttelse og en nødknap (Under Attack Mode).",
@@ -721,12 +733,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Gælder hvis Railway beholdes; tilpasses til Cloudflare hvis valgt."
    }
-  ]
+  ],
+  "needs": "Om Cloudflare-proxyen skal slås til."
  },
  {
   "id": "N2.6",
   "g": "N2",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Formularværn",
   "what": "Forespørgselsformularen beskyttes mod robotter: et skjult felt (honeypot) og en server-side kontrol af Cloudflare Turnstile, og anmodningen afvises, før noget sendes videre.",
@@ -748,12 +761,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Gælder kontakt- og forespørgselsformularen; ingen CRM nødvendigvis."
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "N2.7",
   "g": "N2",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Skjulte flader og adgang for medlemmer",
   "what": "Flader, der ikke skal findes af søgemaskiner (Studio, back-office, gæsteområde), mærkes noindex, og medlemmer i Sanity får kun de rettigheder, de behøver.",
@@ -785,12 +799,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Kun én ejer nu, men gælder ved senere hjælpere (fx rengøring, operatør)."
    }
-  ]
+  ],
+  "needs": "Backup-medlem i Sanity og hvordan gæsteområdets link udformes og fornyes."
  },
  {
   "id": "N2.8",
   "g": "N2",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Kontrol og overvågning efter lancering",
   "what": "Efter lancering scannes headers og CSP af en ekstern tjeneste, rapporter om overtrædelser overvåges, og en fejlsporing viser sikkerhedsrelevante fejl. Det er hærdning og opfølgning, ikke grundniveau.",
@@ -828,12 +843,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Se N8."
    }
-  ]
+  ],
+  "needs": "Valg af fejlsporing (N8.4) og målkarakter."
  },
  {
   "id": "N3.1",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Sporingsposture: intet banner, hvis det kan bevises",
   "what": "Ejeren vælger først, om sitet skal være uden sporing (og dermed uden samtykkebanner) eller bruge cookies og pixels. Vælges 'uden', skal det dokumenteres og bevises, at der ikke sættes cookies eller lokal lagring. Valget skrives ind i projektets arbejdsregler.",
@@ -873,12 +889,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun gyldig for A (offentlig side), hvis alle embeds er blokeret eller klik-for-at-indlæse"
    }
-  ]
+  ],
+  "needs": "Hvad der må gemmes uden samtykke, og hvilke embeds der skal blokeres (juridisk)."
  },
  {
   "id": "N3.2",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Samtykkeløsning og blokering af scripts og embeds",
   "what": "Hvis sitet sætter cookies ud over de strengt nødvendige, skal der være et samtykkebanner, hvor afvis er lige så let som acceptér, uden forhåndsafkrydsning og uden cookie wall. Tilbagekaldelse skal være lige så let, og valget logges. Scripts må først køre efter samtykke.",
@@ -932,12 +949,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun hvis CMP"
    }
-  ]
+  ],
+  "needs": "Samtykkeløsning eller klik-for-at-indlæse (juridisk)."
  },
  {
   "id": "N3.3",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Databehandlere og aftaler",
   "what": "Et register over alle leverandører, der rører persondata (rolle, hvilke data, hvor de ligger), databehandleraftaler med hver af dem, og for amerikanske leverandører en vurdering af overførselsgrundlag. EU-ejede eller EU-hostede leverandører foretrækkes.",
@@ -984,12 +1002,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "a-kasse-argumentet falder bort; EU-valg er stadig et privatlivsplus, men ikke et kanalkrav"
    }
-  ]
+  ],
+  "needs": "Databehandleraftaler og leverandører uden for EU (juridisk)."
  },
  {
   "id": "N3.4",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Privatlivs- og cookiepolitik på sitet",
   "what": "Privatlivspolitik og cookiepolitik skal ligge som sider på sitet på alle sprog, med de oplysninger loven kræver (hvem, hvad, hvorfor, hvor længe, rettigheder). Cookiepolitikken skal passe til det, DevTools faktisk viser. Footer og formularer linker til dem.",
@@ -1037,12 +1056,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Hvem gennemgår politikkerne juridisk, og om dit navn og din adresse skal stå på sitet."
  },
  {
   "id": "N3.5",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Rettigheder og opbevaring af persondata",
   "what": "En postkasse og en proces til at svare på anmodninger om indsigt, rettelse og sletning inden en måned. Og en plan for, hvor længe hver slags data gemmes, med noget der faktisk håndhæver sletningen.",
@@ -1074,12 +1094,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "tilføj gæstedata og dørsensorlogs (UniFi)"
    }
-  ]
+  ],
+  "needs": "Kontaktadresse til indsigt og sletning, og hvor længe data må gemmes."
  },
  {
   "id": "N3.6",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Fortegnelse over behandlinger (let ROPA)",
   "what": "En kort oversigt over, hvilke persondata der behandles, til hvad, med hvilket grundlag og hvem der modtager dem. Loven kræver den i mange tilfælde, og den er også en god arbejdsliste.",
@@ -1102,12 +1123,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "privatperson kan have undtagelse fra Art 30-pligt i visse tilfælde (Åbent punkt, juridisk review), men en let ROPA anbefales alligevel"
    }
-  ]
+  ],
+  "needs": "Om du som privatperson skal føre en fortegnelse efter artikel 30."
  },
  {
   "id": "N3.7",
   "g": "N3",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Løbende kontrol af cookies og politikker",
   "what": "En automatisk test eller et periodisk scan, der opdager nye cookies og sporere, og en fast gennemgang af politikker og registre.",
@@ -1138,12 +1160,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "ejeren er én person; B10-governance findes ikke i Gausta"
    }
-  ]
+  ],
+  "needs": "Hvor ofte politikker gennemgås."
  },
  {
   "id": "N3.8",
   "g": "N3",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Compliance-oplæg til a-kasser og fagforeninger",
   "what": "Et en-sides dokument, der forklarer sitets privatlivs- og sikkerhedsopsætning over for professionelle købere.",
@@ -1162,12 +1185,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "ikke relevant som salgsdokument; kernen genbruges som intern oversigt eller gæstevendt privatlivsnote"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "N4.1",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Valg af analyseværktøj og opsætning",
   "what": "Et værktøj til at måle besøg uden cookies. Stormpine valgte selvhostet Matomo med egen database, en tjeneste der skal drives og passes.",
@@ -1193,12 +1217,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun hvis selvhostet Matomo vælges; for en privat feriebolig kan Plausible-cloud eller ingen analytics være bedre"
    }
-  ]
+  ],
+  "needs": "Valg af analyseværktøj (Plausible, Matomo eller ingen), budget og trafik. Kilden har en konflikt."
  },
  {
   "id": "N4.2",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Privatlivshærdning af målingen",
   "what": "Målingen skal køre uden cookie og lokal lagring, med forkortede IP-adresser, anonyme referrers, respekt for Do-Not-Track og uden bruger-id. Der skal være bevis for, at det ikke udløser et samtykkebanner.",
@@ -1223,12 +1248,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "princip; pakken til a-kasser er ikke relevant"
    }
-  ]
+  ],
+  "needs": "Følger valget af analyseværktøj."
  },
  {
   "id": "N4.3",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Målescript i sitet",
   "what": "En lille komponent, der indlæser målescriptet asynkront, tæller sidevisninger ved sideskift og slet ikke renderer noget, hvis opsætningen mangler. Et udfald af målingen må aldrig bryde siden.",
@@ -1252,12 +1278,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder kun flade A; ikke i gæsteområde (B) og back-office (C)"
    }
-  ]
+  ],
+  "needs": "Følger valget af analyseværktøj."
  },
  {
   "id": "N4.4",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Mål, kampagner og klik til booking",
   "what": "Hvad der tæller som succes (mål), hvordan kampagnekilder (UTM) læses, og hvordan en besøgende følges fra sitet over til en booking på et andet domæne.",
@@ -1289,12 +1316,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "analogt til klik-ud til bookingplatform (Airbnb/operatør/egen); afhænger af bookingmodel"
    }
-  ]
+  ],
+  "needs": "Hvilken bookingmodel der gælder (G1), så mål kan defineres."
  },
  {
   "id": "N4.5",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Sikkerhed omkring målingen",
   "what": "Målehosten skal tillades i content security policy, køre på HTTPS med HSTS, og en eventuel admin-del skal have 2FA og holdes opdateret.",
@@ -1315,12 +1343,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "CSP-del for valgt analytics-host; admin-del kun ved selvhost"
    }
-  ]
+  ],
+  "needs": "Følger valget af analyseværktøj."
  },
  {
   "id": "N4.6",
   "g": "N4",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Drift af analytics",
   "what": "Backups af databasen, faste opdateringer, et dashboard og en regel om, at målingen aldrig må tage sitet ned.",
@@ -1343,12 +1372,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun ved selvhost; 'må aldrig blokere siden' gælder altid"
    }
-  ]
+  ],
+  "needs": "Om selvhost er realistisk i forhold til din tid."
  },
  {
   "id": "N5.1",
   "g": "N5",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Metadata, titler og SEO-model i Sanity",
   "what": "Grundlaget for alle sider: et fast basisdomæne, en titelskabelon, en standard for delekort og et SEO-felt i Sanity med titel, beskrivelse og billede pr. sprog. Hver side får canonical-adresse og hreflang (sprogvarianter, der peger på hinanden) genereret fra Sanity, og metadata skal ligge i HTML'ens head ved første byte.",
@@ -1386,12 +1416,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "retningen af x-default afhænger af beslutningen om standardsprog"
    }
-  ]
+  ],
+  "appr": "G52 afgør sprogstrukturen. Resten er teknisk metadata."
  },
  {
   "id": "N5.2",
   "g": "N5",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Robots og sitemap",
   "what": "robots.txt styrer, hvad crawlere må hente, og sitemap.xml lister alle sider med sprogalternativer og ændringsdato. Studio og kladderuter spærres, og AI-søgecrawlere tillades bevidst.",
@@ -1423,12 +1454,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun offentlig del; gæsteområde udelades"
    }
-  ]
+  ],
+  "needs": "Om AI-træningscrawlere skal blokeres."
  },
  {
   "id": "N5.3",
   "g": "N5",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Search Console og Bing Webmaster",
   "what": "Sitet registreres hos Googles Search Console og Bings Webmaster Tools, så man kan se, hvad der faktisk er indekseret, og hvilke fejl der er. Ejerskab bekræftes via DNS eller en meta-tag.",
@@ -1451,12 +1483,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N5.4",
   "g": "N5",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Struktureret data (schema.org)",
   "what": "Maskinlæsbar markup (JSON-LD), der fortæller søgemaskiner og AI, hvad siden handler om: virksomhed eller sted, brødkrummer, artikler og spørgsmål med svar. Markup må kun beskrive det, der er synligt på siden.",
@@ -1488,12 +1521,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "SoftwareApplication gælder ikke; overnatningstyper i stedet; Breadcrumb og Article kan bruges"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N5.5",
   "g": "N5",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Delekort (Open Graph og Twitter-kort)",
   "what": "Når et link deles, vises et kort med titel, tekst og billede (1200 x 630). Kortet skal være rigtigt, før linket deles første gang, fordi tjenesterne cacher det hårdt. Kort pr. side kan genereres automatisk.",
@@ -1523,12 +1557,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Facebook/Messenger vigtigere end LinkedIn; fotodrevne kort; fire årstidsprofiler"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N5.6",
   "g": "N5",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "URL-politik, redirects og sprogforslag",
   "what": "Én foretrukken adresse pr. side: fast regel for skråstreg til sidst, permanente omdirigeringer uden kæder, og ingen tvungen omdirigering ud fra land eller IP-adresse. Sproget foreslås i stedet via hreflang og et afvisbart forslag.",
@@ -1568,12 +1603,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "princippet gælder; retningen flipper: engelsk/dansk standard, andre sprog foreslås"
    }
-  ]
+  ],
+  "needs": "Om der findes gamle adresser, og om automatisk sprogomdirigering (G52) skal ændres til et afvisbart forslag."
  },
  {
   "id": "N5.7",
   "g": "N5",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Indholdskvalitet, overskrifter og sprogkontrol",
   "what": "Søgning belønner indhold, der viser egen erfaring: overskriftshierarki, alt-tekst, forfatter og dato, og modersmålskontrol før en oversættelse udgives. Interne links modelleres som redaktionelle referencer.",
@@ -1620,12 +1656,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "omvurderes: lokale klynger om Gaustatoppen/Rjukan frem for software"
    }
-  ]
+  ],
+  "needs": "Søgeord og om engelsk, norsk og svensk skal gennemgås af en person, før de offentliggøres."
  },
  {
   "id": "N5.8",
   "g": "N5",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Hurtig opdagelse og måling",
   "what": "IndexNow giver Bing besked om nye sider ved udgivelse. Måling af besøg fra søgning og AI kræver en analyseløsning, der overholder privatlivsreglerne.",
@@ -1657,12 +1694,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "privatperson, GDPR; vælg cookieløs analyse; GA4 er ikke påkrævet"
    }
-  ]
+  ],
+  "needs": "Valg af analyse og om IndexNow er værd at bygge."
  },
  {
   "id": "N5.9",
   "g": "N5",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "llms.txt",
   "what": "En frivillig tekstfil, der skal hjælpe AI med at forstå sitet. Den er kun et forslag, ikke en standard, og der er ingen dokumenteret effekt.",
@@ -1680,12 +1718,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "ubevist gavn; kan udskydes helt"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "N6.1",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Farvekontrast i alle årstider",
   "what": "Al tekst skal have mindst 4,5 til 1 i kontrast mod sin baggrund (stor tekst 3 til 1), ellers er den svær at læse. Kontrasten skal sikres i selve designtokens og kontrolleres automatisk, ikke først bagefter.",
@@ -1716,12 +1755,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "aldrig udelad reglen fra start; krav fra dag ét"
    }
-  ]
+  ],
+  "appr": "G20 afgør, at der er fire paletter, og kontrasttjekket findes i CI."
  },
  {
   "id": "N6.2",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Skip-link, synligt fokus og overskrifter",
   "what": "Tastaturbrugere skal kunne springe navigationen over, altid se, hvor fokus er, og møde en logisk overskriftsrækkefølge med præcis én h1 pr. side.",
@@ -1754,12 +1794,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N6.3",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Reduceret bevægelse",
   "what": "Brugere, der har slået bevægelse fra i systemet, skal ikke se animationer, parallax eller automatisk afspilning. Ikke-essentiel bevægelse skal kunne undgås.",
@@ -1781,12 +1822,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "gælder video, parallax, sæsonanimationer, autoplay"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N6.4",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Navigation og kontroller med tastatur",
   "what": "Menu, årstidsvælger, sprogvælger og mobilmenu skal kunne bruges med tastatur og skærmlæser: åbne ved fokus, lukke med Escape og fortælle deres tilstand.",
@@ -1815,12 +1857,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "tema er en sæsonvælger, ikke blot lys/mørk; flere sprog"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N6.5",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Alt-tekst og overskrifter i Sanity",
   "what": "Redaktøren skal ikke kunne udgive et billede uden alt-tekst (eller markere det som dekorativt), og overskriftsniveau styres af koden, ikke af redaktøren.",
@@ -1843,12 +1886,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "væsentligt for billedtung side; alt-tekst pr. sprog"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N6.6",
   "g": "N6",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Automatiske tilgængelighedstjek i CI",
   "what": "Automatiske værktøjer fanger kun omkring 40 til 57 procent af fejlene, men fanger regressioner. Kravet er en lint-regel for tilgængelighed, axe på alle sider, en Lighthouse-grænse og en test af, at siden ikke får vandret rulning på mobil (reflow).",
@@ -1888,12 +1932,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gæsteområdet bruges mest på mobil"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N6.7",
   "g": "N6",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Manuel tilgængelighedsgennemgang",
   "what": "En person gennemgår sitet med kun tastatur, med skærmlæser (NVDA eller VoiceOver), ved 200 og 400 procent zoom og med reduceret bevægelse. Det finder det, automatiske tjek overser.",
@@ -1916,12 +1961,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "omfang og tidspunkt afgøres af Gausta; udføres af ejeren eller en hjælper"
    }
-  ]
+  ],
+  "needs": "Hvem udfører den manuelle gennemgang, og hvornår."
  },
  {
   "id": "N6.8",
   "g": "N6",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Tilgængelighedserklæring",
   "what": "En kort, redigerbar side, der oplyser overensstemmelsesniveau, kendte begrænsninger, kontaktvej og dato, linket fra footeren, evt. suppleret af en ekstern audit.",
@@ -1945,12 +1991,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "juridisk pligt for privatperson uklar; erklæring stadig god praksis; tredjepartsaudit sandsynligvis ikke relevant"
    }
-  ]
+  ],
+  "needs": "Om en tilgængelighedserklæring er påkrævet for en privat udlejer (juridisk)."
  },
  {
   "id": "N7.1",
   "g": "N7",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Formularregel og opbygning",
   "what": "Alle formularer bygges som Server Actions på sitets egen server, med samme regler for felterne i browseren og på serveren (delt Zod-skema). De virker også uden JavaScript, og der bruges ingen indlejrede tredjepartsformularer, der sætter cookies.",
@@ -1980,12 +2027,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "samme mønster, andre felter"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N7.2",
   "g": "N7",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Spamværn",
   "what": "Tre billige lag mod robotter: et skjult felt, som kun robotter udfylder (honeypot), Cloudflare Turnstile, som kontrolleres på serveren, og en grænse for antal forsøg pr. IP. Uden servertjek er Turnstile uden værdi.",
@@ -2008,12 +2056,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Turnstile er i Gaustas stack"
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "N7.3",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Samtykke og lovligt grundlag",
   "what": "Markedsføringssamtykke skal være adskilt fra selve henvendelsen, ikke forhåndsafkrydset, og beviset (tidspunkt, ordlyd, valg) skal gemmes. Selve svaret på en henvendelse kræver ikke samtykke, men markedsføring til personer gør.",
@@ -2038,12 +2087,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "dansk og muligvis norsk lov, ingen B2B-ramme, intet B3-register"
    }
-  ]
+  ],
+  "needs": "GDPR-tekst, afkrydsningsfelt og opbevaring af henvendelser (juridisk)."
  },
  {
   "id": "N7.4",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Levering til indbakke",
   "what": "Hver henvendelse sendes som e-mail til en overvåget indbakke og må aldrig gå tabt uden at nogen ved det. Afsendelsen skal kunne gentages uden dubletter, og fejl skal være synlige. CRM er ikke nødvendigt ved lancering.",
@@ -2070,12 +2120,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "eneste nødvendige sink ved lancering"
    }
-  ]
+  ],
+  "needs": "Automatisk kvittering til gæsten, hvem der svarer og hvor hurtigt, og operatørens skriftlige accept."
  },
  {
   "id": "N7.5",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "CRM og nyhedsbrevssystem",
   "what": "Efter lancering kan leads kobles til et CRM eller et mailsystem via API, mens mail bevares som fallback. Hver ny databehandler skal registreres.",
@@ -2100,12 +2151,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "sandsynligvis ikke CRM; evt. ESP til nyhedsbrev/giv besked"
    }
-  ]
+  ],
+  "needs": "Om du har brug for et CRM."
  },
  {
   "id": "N7.6",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Udgående link til booking og kildemåling",
   "what": "Det primære mål (hos Stormpine: start gratis i appen) er et link, der bevarer sprog, ikke lækker tokens og sender en kilde med. Hos Gausta svarer det til et link til booking hos operatør, egen løsning eller en tredjepart.",
@@ -2128,12 +2180,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "ingen produktapp; svarer til link til bookingsystem eller Airbnb"
    }
-  ]
+  ],
+  "needs": "Bookingmodellen (G1)."
  },
  {
   "id": "N7.7",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Nyhedsbrev og giv-besked",
   "what": "Nyhedsbrev kræver dobbelt opt-in, tydelig samtykketekst og afmelding med ét klik. Det er kun nødvendigt, hvis funktionen vælges.",
@@ -2157,12 +2210,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun hvis nyhedsbrev eller giv besked vælges"
    }
-  ]
+  ],
+  "needs": "Om der skal være nyhedsbrev."
  },
  {
   "id": "N7.8",
   "g": "N7",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Kalender og booking af opkald",
   "what": "Hvis tidsbooking tilbydes, foretrækkes en open source-løsning i EU eller et almindeligt link, og indlejring må ikke sætte cookies. Hver ny tjeneste er en databehandler.",
@@ -2186,12 +2240,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "afhænger af bookingmodel; opkaldsbooking sandsynligvis ikke relevant"
    }
-  ]
+  ],
+  "needs": "Om der er behov for opkaldsbooking."
  },
  {
   "id": "N8.1",
   "g": "N8",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Kvalitetsport før udrulning",
   "what": "Railway udruller automatisk fra main, så main må kun modtage kode, der har bestået automatiske tjek. Branch protection på GitHub gør tjekkene til et krav og sikrer, at kun main udrulles.",
@@ -2213,12 +2268,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder begge apps hvis back-office er separat"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N8.2",
   "g": "N8",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sundhedstjek, genstart og tilbagerulning",
   "what": "Et sundhedstjek gør, at et ødelagt deploy ikke erstatter den kørende version. Tilbagerulning til en tidligere version skal være afprøvet, og serveren skal kunne lukke pænt ned.",
@@ -2250,12 +2306,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N8.3",
   "g": "N8",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Oppetidsovervågning og alarm",
   "what": "En tjeneste uden for hosting-platformen kigger jævnligt på sitet og sender alarm til en kanal, ejeren faktisk følger. Platformen kan ikke alarmere om sit eget nedbrud.",
@@ -2281,12 +2338,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Matomo findes ikke nødvendigvis; i stedet back-office, gæstelink og sensor-heartbeat"
    }
-  ]
+  ],
+  "needs": "Leverandør og alarmdestination for oppetidsovervågning (omkostning)."
  },
  {
   "id": "N8.4",
   "g": "N8",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Fejlsporing",
   "what": "Fejl i produktion opfanges med stack trace og udgivelsesnavn, men uden personoplysninger og med data i EU. Værten skal tillades i sitets sikkerhedspolitik.",
@@ -2310,12 +2368,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder; også server- og jobfejl i back-office"
    }
-  ]
+  ],
+  "needs": "Valg af fejlsporing og hvilke persondata der må ende deri."
  },
  {
   "id": "N8.5",
   "g": "N8",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Backup og gendannelse",
   "what": "Indhold i Sanity eksporteres planmæssigt, databasen sikres, og der udføres mindst én gendannelsestest pr. lager. En backup, der aldrig er gendannet, er kun et håb.",
@@ -2353,12 +2412,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder"
    }
-  ]
+  ],
+  "needs": "Hvor en kopi af databasen og hemmelighederne skal ligge uden for Railway (omkostning)."
  },
  {
   "id": "N8.6",
   "g": "N8",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Hændelsesplan, ejer og mål",
   "what": "Ét kort runbook med alvorlighedsniveauer, navngiven ejer, tilbagerulningstrin og kendte fejlscenarier, samt ét oppetidsmål med et månedligt blik. Ingen vagtrotation.",
@@ -2389,12 +2449,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "SLO pr. del og for sensor-alarmkæden; B12-siden findes ikke for Gausta"
    }
-  ]
+  ],
+  "needs": "Oppetidsmål og om Tine skal være backup-ejer."
  },
  {
   "id": "N8.7",
   "g": "N8",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Testmiljøer",
   "what": "Railway kan oprette et isoleret miljø for hver pull request, så ændringer kan prøves før de når produktion. Permanent staging er valgfrit.",
@@ -2417,12 +2478,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "nyttige, men koster ekstra og må ikke dele produktions-DB eller sensornøgler"
    }
-  ]
+  ],
+  "needs": "Om testmiljøer er pengene værd."
  },
  {
   "id": "N9.1",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Afsenderliste og DNS-ejerskab",
   "what": "Før man styrer mails, skal man vide, hvilke systemer der sender som domænet, og hvem der styrer DNS. Et overset system bliver afvist, når reglerne skærpes.",
@@ -2452,12 +2514,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "ejer er altid den ene person"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.2",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "SPF og DKIM",
   "what": "SPF lister, hvem der må sende for domænet, og DKIM underskriver mails kryptografisk. Begge skal passe til afsenderadressen, ellers sorteres mailen fra eller afvises.",
@@ -2489,12 +2552,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "for hver Gausta-afsender (ESP, back-office)"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.3",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "DMARC og overvågning",
   "what": "DMARC fortæller modtagere, hvad de skal gøre med mails, der ikke består, og giver rapporter om, hvem der sender. Man starter blødt (p=none), overvåger i omkring 90 dage og strammer derefter.",
@@ -2533,12 +2597,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "lavt volumen gør rapporterne tynde; princippet gælder"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.4",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Subdomæner pr. mailstrøm",
   "what": "Hver type mail kan have sit eget underdomæne, så en klagetop på markedsføring ikke skader transaktionsmails.",
@@ -2561,12 +2626,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun hvis både transaktionel og marketing sendes; ellers ét subdomæne"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.5",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "DMARC-håndhævelse",
   "what": "Når overvågningen viser, at alle rigtige afsendere består, skærpes DMARC til quarantine og siden reject, så ingen kan forfalske domænet.",
@@ -2596,12 +2662,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.6",
   "g": "N9",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Afmelding og listehygiejne",
   "what": "Markedsføringsmails skal have afmelding med ét klik og et synligt link, og listen skal holdes ren: dobbelt opt-in, fjern bounces og klagere, aldrig købte lister.",
@@ -2631,12 +2698,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kun for marketinglister; ikke transaktionelle"
    }
-  ]
+  ],
+  "needs": "Om der skal sendes markedsføringsmail."
  },
  {
   "id": "N9.7",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Omdømmemåling hos Google",
   "what": "Google Postmaster Tools viser domænets omdømme og spamrate. Fejl skal give alarm.",
@@ -2659,12 +2727,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Postmaster giver kun data ved nok volumen; DMARC-fejlalarm kan flyttes til back-office"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.8",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sikker indgående mail (MTA-STS)",
   "what": "MTA-STS og TLS-RPT kræver krypteret levering af mail til domænet og rapporterer problemer. Billig hygiejne, men ikke nødvendig.",
@@ -2686,12 +2755,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "lav prioritet; kun hvis Gausta modtager mail på eget domæne"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N9.9",
   "g": "N9",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Logo i indbakken (BIMI)",
   "what": "BIMI viser et logo ved afsenderen i nogle mailprogrammer. Det kræver DMARC i håndhævelse og et certifikat, som normalt kræver et registreret varemærke og koster omkring 1.000 til 1.500 USD om året.",
@@ -2709,12 +2779,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "kræver varemærke og koster ca. 1.000 til 1.500 USD/år, uden værdi for et privat udlejningssite"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "N10.1",
   "g": "N10",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Claim-tjekliste før udgivelse",
   "what": "Påstande om produktets adfærd, privatliv, sikkerhed eller bæredygtighed må ikke udgives uden dokumentation. Hos Stormpine er det en blokerende gate i pull requests. Dansk markedsføringsret kræver, at faktuelle påstande kan dokumenteres og er sande.",
@@ -2740,12 +2811,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "privat ejer uden juridisk rolle; behold princippet (ingen ubeviste claims, især udlejningsdata, bæredygtighed, GDPR) som en kort tjekliste, ikke et PR-workflow med Message Map"
    }
-  ]
+  ],
+  "needs": "Hvilken markedsføringsret der gælder for en privat udlejer, og om en jurist skal se på påstande om afstande og standard."
  },
  {
   "id": "N10.2",
   "g": "N10",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "House style og tankestreg-lint",
   "what": "En kort stilguide for tone og sætningsregler, og forbuddet mod tankestreg som en automatisk kontrol, så den fejler ved kørsel og ikke kun er en retningslinje.",
@@ -2768,12 +2840,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "no-em-dash er allerede besluttet for Gausta; lint bør også dække CMS-indhold (Sanity) og oversættelser"
    }
-  ]
+  ],
+  "needs": "Tone på sitet."
  },
  {
   "id": "N10.3",
   "g": "N10",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Termbase og ikke-oversæt-liste",
   "what": "Et lille glossar med faste oversættelser af nøgleord og en liste over navne, der aldrig oversættes, så stemmen er ens på alle sprog og hos alle forfattere.",
@@ -2795,12 +2868,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Stormpines termer er ikke relevante; konceptet er (DA/EN, senere NO/DE): hytte/lodge, sæson, gæst, check-in, DNT for Gausta Home og stednavne"
    }
-  ]
+  ],
+  "needs": "Hvornår norsk og tysk tilføjes, og hvem oversætter."
  },
  {
   "id": "N10.4",
   "g": "N10",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Designtokens og årstider",
   "what": "Farver, afstande og typografi ligger ét sted som tokens, og både sæsontemaer og eventuelle lys/mørk-temaer er defineret for hvert token. Så kan hele sitet omfarves uden at håndrette enkelte steder.",
@@ -2823,12 +2897,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "ingen produkt-app at dele med; fire sæsontemaer gør én kilde værd, men CSS custom properties direkte er nok, DTCG/Style Dictionary er valgfrit"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N10.5",
   "g": "N10",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Kontrasttjek i alle temaer",
   "what": "Et automatisk tjek af, at farveparrene opfylder tilgængelighedskravene i hvert tema, og at delte komponenter dokumenteres én gang.",
@@ -2852,12 +2927,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kontrasttjek i alle sæsonkombinationer; produkt-UI hero er ikke relevant"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N10.6",
   "g": "N10",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Mobilregler uden vandret rul",
   "what": "Responsiv adfærd er en fast designregel: navigationen klapper sammen, gitre stakker, og der må ikke komme vandret overflow ved 375 px bredde.",
@@ -2881,12 +2957,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "mobil-først er afgørende (gæsteområdet via QR bruges på telefon); hero-diagram er ikke relevant, men 375px-princippet gælder"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N10.7",
   "g": "N10",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Roller og godkendelsesniveauer i redaktionen",
   "what": "En ansvarsmatrix og tre godkendelsesniveauer (let, standard, gated) knyttet til roller i CMS'et, så lavrisiko-rettelser ikke venter på en juridisk kø.",
@@ -2908,12 +2985,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "én ejer er alle roller; Sanitys betalte custom-RBAC er unødvendig; behold kun kladde, så udgiv, og en tjekliste"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "N11.1",
   "g": "N11",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Eksperimenter og personalisering (parkeret)",
   "what": "A/B-tests og tilpasset indhold kræver trafik, som et lille site ikke har. Kravet er at holde området parkeret, skrive en trigger ned og, hvis det nogensinde bruges, tildele varianter på serveren uden flimmer og uden persondata i adresser.",
@@ -2967,12 +3045,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "lav prioritet; sprog og sæson er allerede dækket af routing og temaer, ingen separat personalisering nødvendig"
    }
-  ]
+  ],
+  "needs": "Om N11 fortsat skal være parkeret."
  },
  {
   "id": "N12.1",
   "g": "N12",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Omkostningskurve, budget og Sanity-plan",
   "what": "Modeller, hvad driften koster ved nuværende og tidoblet trafik, sæt hårde forbrugsgrænser og en budgetalarm, og skriv ned hvornår man skifter fra gratis til betalt Sanity.",
@@ -3007,12 +3086,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Free er næsten sikkert nok; RBAC-triggeren er ikke relevant (én ejer), request-loft og planlagt udgivelse er de relevante triggere"
    }
-  ]
+  ],
+  "needs": "Maksimalt månedligt budget og alarmtærskel, og om Sanity Free må bruges kommercielt."
  },
  {
   "id": "N12.2",
   "g": "N12",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Portabilitet og exit-plan",
   "what": "Indhold må aldrig være fanget. En regelmæssig eksport (NDJSON og billeder fra Sanity) skal være gendannet én gang til et frisk projekt, og der skal ligge en note om, hvordan man flytter væk.",
@@ -3035,12 +3115,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "exit-plan er et eksplicit Gausta-behov; dækker også back-office-databasen (dump) og billeder, ikke kun Sanity"
    }
-  ]
+  ],
+  "needs": "Om exit-planen også skal dække domæne og e-mail."
  },
  {
   "id": "N12.3",
   "g": "N12",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "QA-gate og ejerregister",
   "what": "En automatisk kvalitetskontrol skal findes og blokere dårlige ændringer før udrulning, og hver konto, integration og databehandler skal have en navngiven ejer med fakturering, fornyelse og databehandleraftale.",
@@ -3072,12 +3153,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "én ejer, men registeret er værdifuldt som kontinuitetsplan (backup-ejer, adgange, fornyelser); processorer: Sanity, Railway, domæneregistrator, evt. betaling/booking, sensor-sky, scraping, e-mail"
    }
-  ]
+  ],
+  "needs": "Backup-ejer, databehandleraftaler og overførsel til USA (Resend)."
  },
  {
   "id": "N13.1",
   "g": "N13",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Fejlsider: 404 og 500",
   "what": "En hjælpsom, on-brand og tosproget side, når en side ikke findes (ægte 404-statuskode, links tilbage ind på sitet), og en rolig, minimal fejlside ved serverfejl, som ikke selv kan fejle.",
@@ -3111,12 +3193,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "for gæsteområdet er en rolig fejlside ekstra vigtig (gæster på stedet, evt. dårlig dækning)"
    }
-  ]
+  ],
+  "needs": "Indhold og sprog på 404- og 500-siderne, og logning (juridisk)."
  },
  {
   "id": "N13.2",
   "g": "N13",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Statuskoder og omdirigeringer",
   "what": "Ingen sider må svare 200 med fejlindhold (soft 404). Flyttede sider med indgående links omdirigeres permanent (301), og bevidst fjernede sider kan svare 410, så søgemaskiner dropper dem.",
@@ -3140,12 +3223,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "ny side, så få udfasede URL'er ved lancering; relevant ved senere omlægning og sæson-/kampagnesider"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N13.3",
   "g": "N13",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Søgning på sitet (udskudt)",
   "what": "Byg ikke søgning, før der er et korpus af guider eller artikler at søge i. Når det sker, er anbefalingen Pagefind (statisk, uden cookies og uden ekstern tjeneste) frem for en hostet søgetjeneste som Algolia.",
@@ -3168,12 +3252,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "kan blive relevant for lokal guide og gæste-how-tos; Pagefind passer også til offline-venligt gæsteområde"
    }
-  ]
+  ],
+  "appr": "Udskudt, og kravet er at vente, til der er indhold nok."
  },
  {
   "id": "CMS.1",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Headless og designtroskab",
   "what": "Indholdssystemet ejer ikke visningen: det leverer kun indhold som data, og sitets eget design og animationer bevares uændret. Temaer ligger som tokens i koden, ikke i indholdssystemet. Hårdkodede designmockups og layout bliver i koden, mens redaktionel tekst kommer fra CMS'et.",
@@ -3216,12 +3301,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "sæsonhero og layout hårdkodes; tekst og billeder i CMS"
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "CMS.2",
   "g": "CMS",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Platformvalg, hosting og pris",
   "what": "Hvilket indholdssystem og hvilken stak sitet bygges på, og hvordan det hostes: en administreret tjeneste uden egen drift, helst med data i EU, en gratis eller billig plan og en leverandør, der holder. Stormpine valgte Sanity med Next.js på Railway.",
@@ -3302,12 +3388,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "én redaktør passer til Free"
    }
-  ]
+  ],
+  "needs": "Sanity-plan og EU-region (omkostning), periodisk eksport og backup-medlem."
  },
  {
   "id": "CMS.3",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sider, sektionsblokke og globale dokumenter",
   "what": "Indholdet er opdelt i sider, der består af typede sektionsblokke (hero, kort, FAQ, CTA, tekst), og i faste dokumenter som navigation, footer, standard-SEO og genbrugelige fakta. Alt er strukturerede, validerede felter, så både mennesker og AI kan skrive pålideligt. Sider hentes med typede forespørgsler.",
@@ -3381,12 +3468,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "CMS.4",
   "g": "CMS",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Flersproget indhold i CMS'et",
   "what": "Indhold kan skrives på flere sprog ét sted, med fallback så intet vises tomt, sprogrouting og korrekt SEO. Stormpine valgte dokumentniveau (ét dokument pr. sprog) og et bibliotek til knapper og labels. Oversættelse kan udkastes af AI og gennemgås af et menneske, og oversættelsesstatus kan ses pr. sprog. Detaljerne for adresser og fallback står i gruppen Sprog og routing.",
@@ -3461,12 +3549,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "afløst i praksis af G56 og knapper/labels i Sanity"
    }
-  ]
+  ],
+  "needs": "Om AI-oversættelser skal gennemgås, og af hvem."
  },
  {
   "id": "CMS.5",
   "g": "CMS",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "AI og MCP-adgang",
   "what": "En vedligeholdt MCP-server (en standardforbindelse for AI-værktøjer) gør, at en AI-agent kan læse, oprette, opdatere og udgive indhold og udvide skemaet. Agentens adgang afgrænses med så snævre rettigheder som muligt, og skrivninger lander som kladder til gennemsyn. Ekstra AI-funktioner som forslag og bulk-redigering er et plus.",
@@ -3517,12 +3606,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "nyttigt til oversættelser og sæsonbilleder"
    }
-  ]
+  ],
+  "needs": "Om agenter må udgive selv eller kun skrive kladder."
  },
  {
   "id": "CMS.6",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Redigering, kladder og preview",
   "what": "Redaktøren skal have en brugbar administrationsflade, kladder og preview-adresser, der viser det rigtige site, samt versionshistorik og mulighed for at rulle tilbage. Preview skal kobles til sitet, så kladder kan ses uden at være offentlige.",
@@ -3570,12 +3660,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "CMS.7",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Udgivelse, cache og nye sider",
   "what": "Når indhold udgives, melder CMS'et det til sitet med en signeret webhook (en automatisk besked), og sitet opdaterer de berørte sider uden ny udrulning. Sitet er hurtigt, fordi siderne er cachet. Nye sider tilføjes efter en fast proces, startende med én side hele vejen igennem, og nye moduler specificeres efter en skabelon.",
@@ -3642,12 +3733,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "byg forside først end to end"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "CMS.8",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Ikke relevant for Gausta (roller, visuel redigering, selvhost, dyrere planer, migrering)",
   "what": "Krav og valg fra Stormpine, der ikke giver mening for et privat site med én redaktør: roller og godkendelser, visuel redigering i kontekst, selvhostet CMS, dyrere planer eller et skifte til Storyblok, og migrering fra en eksisterende prototype.",
@@ -3701,12 +3793,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "intet at migrere, alt bygges nyt (kan bruge spike-princippet)"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "CMS.9",
   "g": "CMS",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Krydshenvisninger til de øvrige krav (B1 til B13)",
   "what": "Kravfilen peger på Stormpines øvrige områder, som har egne krav og står i andre filer: ydeevne, sikkerhed, privatliv, analyse, SEO, tilgængelighed, formularer, drift, e-mail, redaktionel styring, eksperimenter, omkostninger og fejlsider. De er ikke delopgaver her, men kroge, hvor CMS'et har en rolle (fx SEO-felter og alt-tekst som krævet felt).",
@@ -3812,12 +3905,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "gælder for 404 (dansk/engelsk); søgning ikke relevant"
    }
-  ]
+  ],
+  "appr": "Krydshenvisninger til de øvrige krav, ingen egen beslutning."
  },
  {
   "id": "I18N.1",
   "g": "I18N",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sprogmodel i Sanity",
   "what": "Hvordan oversat indhold gemmes: Stormpine valgte ét dokument pr. sprog, forbundet af et oversættelsesdokument, så sider kan afvige pr. marked og udgives uafhængigt. Knapper og labels ligger i et bibliotek ved siden af. Studio ligger uden for sprogrouting, og sitets navn oversættes ikke.",
@@ -3881,12 +3975,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "ikke mulig med feltniveau, se G56"
    }
-  ]
+  ],
+  "appr": "G52 og G56 afgør sprogmodellen. Resten er tekniske regler."
  },
  {
   "id": "I18N.2",
   "g": "I18N",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Sprogruter og adresser",
   "what": "Standardsproget ligger uden præfiks, de øvrige under deres eget (fx /da). Besøgende vælger selv sprog, så adresserne er forudsigelige. Hver side har sit eget sproglige URL-navn, i små bogstaver og uden specialtegn, og forkert skrivemåde omdirigeres til den rigtige.",
@@ -3953,12 +4048,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "I18N.3",
   "g": "I18N",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Fallback og links mellem sprog",
   "what": "Hvad der vises, når en oversættelse mangler. Fælles dele (menu, footer, knapper) falder tilbage til et andet sprog, så intet er tomt. Indholdssider har eksakt match på sprog og URL-navn og giver 404, hvis oversættelsen mangler. Links mellem sider skrives én gang og vises på sidens sprog, og sprogvælgeren tilbyder kun sprog, siden findes på.",
@@ -4012,12 +4108,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "I18N.4",
   "g": "I18N",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "SEO og sprogmærkning",
   "what": "Hver side skal oplyse søgemaskiner om sine sprogudgaver: en selvrefererende canonical-adresse, gensidige hreflang-links kun for sprog, der findes, og en standardudgave. Sidens sprog skal sættes i html-elementet, og delekort skal oplyse sproget.",
@@ -4050,12 +4147,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "da_DK, en_GB/en_US, nb_NO, de_DE"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "I18N.5",
   "g": "I18N",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Oversættelse, kvalitet og nye sprog",
   "what": "Hvordan nye sprog tilføjes, og hvordan oversættelser holdes gode: AI kan udkaste, et menneske gennemgår, og et fælles ordforråd sikrer ensartede termer. Status pr. sprog skal kunne ses, og nogle sprog kan have egne forskelle ud over oversættelse, fx valuta eller rejsevej.",
@@ -4123,12 +4221,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "dansk/engelsk/norsk/svensk-glossar for ejendomstermer"
    }
-  ]
+  ],
+  "needs": "Hvem gennemgår norsk og svensk, og hvilken valuta der vises pr. sprog."
  },
  {
   "id": "I18N.6",
   "g": "I18N",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Tosprogede fejlsider og politikker",
   "what": "Fejlsiden (404) og juridiske sider som privatlivs- og cookiepolitik skal findes på sitets sprog, ikke kun ét. Fejlsiden skal give nyttige næste skridt, og politikkerne skal afspejle, hvad sitet faktisk gør.",
@@ -4157,12 +4256,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "privatlivs-/cookiepolitik på alle sprog (kan være dansk + engelsk først)"
    }
-  ]
+  ],
+  "needs": "Hvem skriver privatlivs- og cookiepolitikken, og på hvilke sprog."
  },
  {
   "id": "I18N.7",
   "g": "I18N",
-  "status": "draft",
+  "status": "approved",
   "rel": "ikke",
   "title": "Ikke relevant for Gausta (genbrug i produktapp)",
   "what": "Stormpine genbruger sin sprogopsætning i en produktapp. Gausta har intet produkt, og back-office er en separat app med dansk brugerflade.",
@@ -4180,12 +4280,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "intet produkt; back-office er separat"
    }
-  ]
+  ],
+  "appr": "Afgrænsning: ikke relevant for Gausta. Dermed bygges det ikke."
  },
  {
   "id": "QA.1",
   "g": "QA",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Principper, rolle og manuel tjekliste",
   "what": "Kvalitetssikring har to halvdele: automatiske tjek, der blokerer en ødelagt ændring, og en kort manuel tjekliste til det, en maskine ikke kan vurdere (sprogkvalitet, delingskort, visuel finish, skærmlæser). Der bygges trinvist, ikke en udtømmende suite før siderne findes. Én kommando skal køre den automatiske suite, og hver ændring måles mod en Definition of Done.",
@@ -4253,12 +4354,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "ejeren plus agent; ejeren godkender sprog og fakta"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "QA.2",
   "g": "QA",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Statiske tjek, build og enhedstests",
   "what": "Typekontrol, lint og format fanger fejl uden at starte siden. Build-trinnet fanger fejl i metadata og servergengivelse. Enhedstests (Vitest) dækker de hjælpere, som mange sider genbruger: sprog- og hreflang-kort, sitemap, robots og indekserbarhedskontakten, redirects og forespørgsler mod Sanity.",
@@ -4309,12 +4411,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Gausta-tillæg 7; afstemning mod det verificerede faktaark er et åbent punkt"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "QA.3",
   "g": "QA",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Browsertests: sider, sprog og indekserbarhed",
   "what": "Playwright åbner siden i en rigtig browser og tjekker, at hver side svarer 200 på hvert sprog, at title, description, canonical og hreflang er rigtige, at noindex-headeren findes, og at konsollen er fri for fejl. Mapping til SEO-kravene (JSON-LD, delingskort, redirects) tilføjes pr. side.",
@@ -4368,12 +4471,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "andre JSON-LD-typer end Stormpine"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "QA.4",
   "g": "QA",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Tilgængelighed, kontrast og visuel kontrol",
   "what": "Automatisk tilgængelighedstjek (axe) i browseren plus tjek af, at tekst og baggrund har nok kontrast. Visuel regression sammenligner skærmbilleder af udvalgte sider for at fange utilsigtede designbrud. Alt-tekst på billeder er et krævet felt, og overskrifter står i rækkefølge.",
@@ -4420,12 +4524,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Gausta-tillæg 1; token-delen findes som scripts/contrast.mjs"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "QA.5",
   "g": "QA",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Performance, billeder, links og felt-måling",
   "what": "Hastighed måles i laboratoriet (Lighthouse med budgetfil, bundlestørrelse) og i marken (web-vitals), så en regression fanges før eller efter udgivelse. Et linktjek finder brudte interne og eksterne links. Lighthouse kører mod en lokal produktionsbuild eller en staging-adresse.",
@@ -4485,12 +4590,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Gausta-tillæg 10"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "QA.6",
   "g": "QA",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Robusthed og sikkerhed: offline, live-data og headere",
   "what": "Siden skal degradere pænt, når noget svigter, og sikkerhedsopsætningen skal testes. Det gælder fejl hos eksterne datakilder, manglende forbindelse og tomt indhold fra CMS'et. Sikkerhedsheadere og indholdspolitik (CSP) testes, og klientens kode må ikke indeholde hemmeligheder.",
@@ -4537,12 +4643,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "afhængighedsscanning ikke fundet i repoet"
    }
-  ]
+  ],
+  "needs": "Om gæsteområdet skal kunne bruges offline."
  },
  {
   "id": "QA.7",
   "g": "QA",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "CI, grenbeskyttelse og miljøer",
   "what": "Testene kører automatisk i GitHub Actions på hver pull request. Hovedgrenen er beskyttet, så den kun kan flettes, når tjekkene består; det er det, der gør automatisk udrulning sikker. Et staging-miljø lader tungere tjek køre mod en rigtig adresse før lancering, og en lille røgtest efter udrulning bekræfter, at nøglesider svarer. CI'en kræver Sanity-hemmeligheder.",
@@ -4609,12 +4716,13 @@ window.WS_SPEC = [
     "rel": "ikke",
     "note": "Gausta bygger harnesset trinvist fra start"
    }
-  ]
+  ],
+  "needs": "Grenbeskyttelse og om staging skal bygges (omkostning)."
  },
  {
   "id": "QA.8",
   "g": "QA",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Back-office tests",
   "what": "Back-office er en separat del med login, database, planlagte jobs, sensordata, indsamlede konkurrentdata og KPI'er. Det kræver egne testlag ud over det offentlige sted: adgangskontrol, migreringer, jobs der kan køres to gange uden skade, kontrakttests mod gemte HTML-eksempler, beregningstests med kendte tal og tests af de vigtigste flows bag et test-login.",
@@ -4638,12 +4746,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Gausta-tillæg 5; antagelse: separat app med egen pipeline"
    }
-  ]
+  ],
+  "needs": "Back-office: eget repo og juridiske rammer for scraping."
  },
  {
   "id": "N14.1",
   "g": "N14",
-  "status": "draft",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Verificér hver kilde før brug",
   "what": "Hver ekstern kilde (vejr, lifte og pister, webcam, events, kort) skal kontrolleres for vilkår, pris, attribution og tilgængelighed, før den bruges på siden.",
@@ -4672,12 +4781,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Datakilder-mappen er stedet"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N14.2",
   "g": "N14",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Cookiefri indhentning og fallback",
   "what": "Kilder hentes på serveren og caches, så den besøgendes browser ikke kontakter tredjepart og ikke får cookies. Ved nedbrud skal siden vise en fallback, så den ikke går i stykker.",
@@ -4708,12 +4818,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Tosproget N/A-visning"
    }
-  ]
+  ],
+  "needs": "Den endelige webcam-metode."
  },
  {
   "id": "N15.1",
   "g": "N15",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Fire tokensæt og automatisk valg",
   "what": "Siden har fire farvepaletter (vinter, forår, sommer, efterår) som designtokens. Årstiden vælges automatisk efter dato, og den besøgende kan overstyre den for sessionen. Der er ingen mørk tilstand.",
@@ -4742,12 +4853,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Kun for sessionen"
    }
-  ]
+  ],
+  "appr": "Bygget og i drift, og kravet følger ejerens tidligere beslutninger."
  },
  {
   "id": "N15.2",
   "g": "N15",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Tilgængelighed og billedvalg pr. årstid",
   "what": "Alle fire paletter skal bestå kontrastkrav (WCAG 2.2 AA), og billeder kan knyttes til en eller flere årstider.",
@@ -4778,12 +4890,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Tom betyder alle årstider"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N16.1",
   "g": "N16",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Hentning, historik og alarmer",
   "what": "Sensorer hjemme polles af en collector, der gemmer historik og sender alarmer. Alarmer skal nå ejeren, også når en tunnel eller hjemmeserver er nede.",
@@ -4814,12 +4927,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Jf. N8"
    }
-  ]
+  ],
+  "needs": "Hvordan alarmer når dig, når hjemmeserveren er nede."
  },
  {
   "id": "N16.2",
   "g": "N16",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Dataopbevaring og privatliv",
   "what": "Sensordata og dørhændelser skal opbevares med en afgrænset tid og oplyses til gæster. Der er dørsensorer, men ingen kameraer.",
@@ -4843,12 +4957,13 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "Afventer G11 og G16"
    }
-  ]
+  ],
+  "needs": "Hvor længe sensordata gemmes, og hvad gæsterne oplyses om."
  },
  {
   "id": "N17.1",
   "g": "N17",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Markedsdata og dataoprindelse",
   "what": "Agentbaseret indsamling af konkurrentpriser og salgspriser. Kildevilkår skal vurderes, tal der er estimater skal flagges, og hvert tal skal kunne føres tilbage til sin kilde og dato.",
@@ -4877,12 +4992,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Dato og kilde pr. tal, jf. vidensbasens regler"
    }
-  ]
+  ],
+  "needs": "Hvilke kilder der må skrabes (juridisk)."
  },
  {
   "id": "N18.1",
   "g": "N18",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Permanent link uden adgangskoder",
   "what": "Gæsteområdet nås via et permanent link. Ingen adgangskoder eller dørkoder må stå på siden, og interne felter må aldrig nå gæsteområdet.",
@@ -4913,12 +5029,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Jf. N19 og G34"
    }
-  ]
+  ],
+  "needs": "Udformning og fornyelse af gæsteområdets permanente link."
  },
  {
   "id": "N18.2",
   "g": "N18",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Ingen indeksering og offline-adgang",
   "what": "Gæsteområdet er noindex med neutrale metatags uden følsomt indhold. Indholdet skal kunne læses uden forbindelse.",
@@ -4949,12 +5066,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "Jf. B4"
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N19.1",
   "g": "N19",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Ingen runtime-kald fra websitet hjem",
   "what": "Det kundevendte website (A og B) må ikke have runtime-afhængighed til hjemmeserveren. Ingen anmodning fra en besøgende må nå hjem, og afhængigheden går kun én vej: hjemmet henter udefra.",
@@ -4983,12 +5101,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N19.2",
   "g": "N19",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Øjebliksbilleder og formularer",
   "what": "Data fra hjemmet sendes kun som øjebliksbillede med dato og websitet skal virke uden det. Formularer og fejlmeldinger går til e-mail eller Telegram, ikke til hjemmedatabasen.",
@@ -5016,12 +5135,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  },
  {
   "id": "N19.3",
   "g": "N19",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Interne data og undtagelser",
   "what": "Interne markeringer og operatørdata ligger hverken i Sanity eller i websitets runtime, fordi alt i Sanity må antages læsbart af alle. Undtagelser kræver ejerens beslutning og logges i beslutningsregisteret.",
@@ -5051,12 +5171,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Om feltet \"Kilde (vises ikke)\" må blive i Sanity."
  },
  {
   "id": "TL.1",
   "g": "TL",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Økonomidata (C8-C10)",
   "what": "Økonomidelen (udgifter, lån, bilag, værdiansættelse) er private finansielle data: kun ejeren har adgang, med stærk login, data i EU og ingen økonomidata i logs. Den kræver sikkerhedskopi med testet eksport, to valutaer gemt separat, en dokumenteret kilde til kurser og krypterede bilag.",
@@ -5115,12 +5236,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Kilde til valutakurser (back-office)."
  },
  {
   "id": "TL.2",
   "g": "TL",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Rejse og afstande (A8)",
   "what": "Afstande og rejsetider beregnes én gang med en dokumenteret kilde og gemmes i CMS med dato. Der er ingen opslag hos besøgende. Færge- og lufthavnsoplysninger skal have en sidst-kontrolleret-dato og en ejer.",
@@ -5166,12 +5288,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Kilde til rejsetider, og om der skal være én side pr. land eller udgangsby."
  },
  {
   "id": "TL.3",
   "g": "TL",
-  "status": "draft",
+  "status": "open",
   "rel": "gaelder",
   "title": "Inventar (A9, B7)",
   "what": "Inventar gemmes som poster i CMS og vises i en kort udgave i del A og en fuld i del B. Det hører til det verificerede faktaark, og intet publiceres før registrering efter møblering. Interne felter må ikke følge med til offentlig del eller gæsteområde.",
@@ -5230,12 +5353,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Om de manglende inventarfelter skal tilføjes, eller den byggede model er endelig."
  },
  {
   "id": "TL.4",
   "g": "TL",
-  "status": "draft",
+  "status": "open",
   "rel": "tilpasses",
   "title": "Social deling (A11)",
   "what": "Hver side og hvert sprog skal have serverrenderede Open Graph- og Twitter-tags, ét 1200 x 630-billede (med fire årstidsprofiler), adgang for platformenes robotter og en delingsknap uden tredjepartsscripts. Platformkrav ud over Stormpine-kilden er Antagelse og skal verificeres i testværktøjer.",
@@ -5304,12 +5428,13 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "needs": "Billedrettigheder, apex eller www og om der skal laves delebilleder til Instagram."
  },
  {
   "id": "TL.5",
   "g": "TL",
-  "status": "draft",
+  "status": "approved",
   "rel": "gaelder",
   "title": "FAQ-markup (N5)",
   "what": "FAQ bruger details og summary, så svaret altid ligger i DOM'en. Strukturerede data (FAQPage som JSON-LD) genereres fra samme CMS-felter som den synlige tekst og findes pr. sprog. Google viser FAQ-rich results kun for offentlige og sundhedssider (Antagelse, skal verificeres).",
@@ -5352,6 +5477,7 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": ""
    }
-  ]
+  ],
+  "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
  }
 ];
