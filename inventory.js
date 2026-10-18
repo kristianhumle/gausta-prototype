@@ -8,7 +8,7 @@
   var root = document.querySelector('[data-inventory]');
   if (!root || !window.GL_INVENTORY) return;
   var D = window.GL_INVENTORY, rooms = D.rooms;
-  var SHORT = { entre: 'Entré og skirum', kstue: 'Køkken og stue', stuesov: 'TV-stue', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', bad: 'Bad', terrasse: 'Terrasse', hele: 'Hele lejligheden' };
+  var SHORT = { entre: 'Entré', kstue: 'Køkken og stue', stuesov: 'TV-stue', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', bad: 'Bad', terrasse: 'Terrasse', hele: 'Hele lejligheden' };
   var esc = function (s) { return String(s == null ? '' : s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); };
   var cur = 'all';
 

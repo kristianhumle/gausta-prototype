@@ -7,7 +7,7 @@
   var L = function (n) { return 'lejligheden/lejligheden-' + (n < 10 ? '0' : '') + n; };
 
   var ROOMS = [
-    { id: 'entre', name: 'Entré og skirum', dim: '4 m²', desc: 'Indgangen med garderobe og bænk til overtøj og sko. Her er også plads til ski og udstyr.', poly: [[668,212],[750,212],[750,330],[668,330]], label: [709,262], slabel: [709,284], pin: [709,318],
+    { id: 'entre', name: 'Entré', dim: '4 m²', desc: 'Indgangen med garderobe og bænk til overtøj og sko. Her er også plads til ski og udstyr.', poly: [[668,212],[750,212],[750,330],[668,330]], label: [709,262], slabel: [709,284], pin: [709,318],
       photos: [[L(17),'Entré med garderobe'],[L(28),'Entré med bænk'],[L(2),'Gang'],[L(13),'Skirum']] },
     { id: 'sov1', name: 'Soveværelse 1', dim: '6 m²', desc: 'Soveværelse med dobbeltseng, lænestol og vindue.', poly: [[552,212],[668,212],[668,318],[552,318]], label: [610,262], pin: [653,227],
       photos: [[L(7),'Soveværelse'],[L(29),'Soveværelse, sengebord']] },
@@ -28,7 +28,7 @@
   var VIDEOS = { terrasse: { src: 'assets/web/video/terrasse.mp4', poster: 'assets/web/video/terrasse-poster.jpg', thumb: 'assets/web/video/terrasse-poster-s.jpg', dur: '0:13' } };
   function isVid(k) { return k.indexOf('video:') === 0; }
   function vid(k) { return VIDEOS[k.slice(6)]; }
-  var SHORT = { entre: 'Entré og skirum', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', outside: 'Udenfor', garage: 'Garage' };
+  var SHORT = { entre: 'Entré', sov1: 'Soveværelse 1', sov2: 'Soveværelse 2', kstue: 'Køkken og stue', bad: 'Bad', stuesov: 'TV-stue', terrasse: 'Terrasse', outside: 'Udenfor', garage: 'Garage' };
   var PILLS = ['entre', 'sov1', 'sov2', 'kstue', 'bad', 'stuesov', 'terrasse', 'outside', 'garage'];
   var ORDER_ALL = ['kstue', 'stuesov', 'sov1', 'sov2', 'bad', 'entre', 'terrasse', 'outside', 'garage'];
   function room(id) { return ROOMS.filter(function (r) { return r.id === id; })[0]; }

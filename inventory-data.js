@@ -9,7 +9,7 @@
 window.GL_INVENTORY = {
   groups: ['Møbler', 'Teknik og apparater', 'Køkken og husholdning', 'Sovning', 'Andet'],
   rooms: [
-    { id: 'entre', name: 'Entré og skirum', dim: '4 m²', blurb: 'Indgangen med garderobe og bænk til overtøj og sko, plads til ski og udstyr.', items: [
+    { id: 'entre', name: 'Entré', dim: '4 m²', blurb: 'Indgangen med garderobe og bænk til overtøj og sko, plads til ski og udstyr.', items: [
       { n: 'Hyttebænk', g: 0, s: 'saelger' }, { n: 'Hylde', g: 0, s: 'saelger' },
       { n: 'Garderobe og bænk til overtøj og sko', g: 0, s: 'verify' },
       { n: 'Skirum og tørring af udstyr', g: 4, s: 'verify' },

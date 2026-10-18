@@ -428,6 +428,8 @@ textarea.field { min-height: 96px; resize: vertical; }
 .plan-svg .room:hover .pr, .plan-svg .room:focus-visible .pr { fill: var(--plan-hl); }
 .plan-svg .room.on .pr { fill: var(--plan-hl); stroke: var(--plan-hlink); stroke-opacity: 1; stroke-width: 2; }
 .plan-svg .room:focus-visible .pr { stroke: var(--plan-hlink); stroke-opacity: 1; stroke-width: 2; }
+/* Entré og køkken/stue er åbne mod hinanden: ingen tynd rumkant mellem dem (vises kun, når rummet er valgt) */
+.plan-svg .room[data-room="entre"]:not(.on):not(:focus-visible) .pr, .plan-svg .room[data-room="kstue"]:not(.on):not(:focus-visible) .pr { stroke-opacity: 0; }
 .plan-svg .pw { stroke: var(--plan-ink); }
 .plan-svg .pwf { fill: var(--plan-ink); }
 .plan-svg .pf { fill: none; stroke: var(--plan-ink); stroke-width: 1.4; stroke-opacity: .7; }
