@@ -367,7 +367,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Intet fundet. .github/workflows/ci.yml har typecheck, tests, kontrast, skema og build, men ingen Lighthouse, size-limit eller budget.json; filen siger selv, at hastighedstjek tilføjes, når staging findes. web-vitals findes ikke i package.json."
   },
-  "decided": "G12 (Matomo cookieless som analytics).",
+  "decided": "G12 (Matomo cookieless som analytics). Felt-måling hviler på d8a (N4.1).",
   "deps": [
    "N1.4"
   ],
@@ -800,7 +800,8 @@ window.WS_SPEC = [
     "note": "Kun én ejer nu, men gælder ved senere hjælpere (fx rengøring, operatør)."
    }
   ],
-  "needs": "Backup-medlem i Sanity og hvordan gæsteområdets link udformes og fornyes."
+  "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Backup-medlem i Sanity og hvordan gæsteområdets link udformes og fornyes.",
+  "waits": true
  },
  {
   "id": "N2.8",
@@ -844,7 +845,8 @@ window.WS_SPEC = [
     "note": "Se N8."
    }
   ],
-  "needs": "Valg af fejlsporing (N8.4) og målkarakter."
+  "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Valg af fejlsporing (N8.4) og målkarakter.",
+  "waits": true
  },
  {
   "id": "N3.1",
@@ -890,7 +892,8 @@ window.WS_SPEC = [
     "note": "kun gyldig for A (offentlig side), hvis alle embeds er blokeret eller klik-for-at-indlæse"
    }
   ],
-  "needs": "Hvad der må gemmes uden samtykke, og hvilke embeds der skal blokeres (juridisk)."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvad der må gemmes uden samtykke, og hvilke embeds der skal blokeres (juridisk).",
+  "waits": true
  },
  {
   "id": "N3.2",
@@ -950,7 +953,8 @@ window.WS_SPEC = [
     "note": "kun hvis CMP"
    }
   ],
-  "needs": "Samtykkeløsning eller klik-for-at-indlæse (juridisk)."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Samtykkeløsning eller klik-for-at-indlæse (juridisk).",
+  "waits": true
  },
  {
   "id": "N3.3",
@@ -1003,7 +1007,8 @@ window.WS_SPEC = [
     "note": "a-kasse-argumentet falder bort; EU-valg er stadig et privatlivsplus, men ikke et kanalkrav"
    }
   ],
-  "needs": "Databehandleraftaler og leverandører uden for EU (juridisk)."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Databehandleraftaler og leverandører uden for EU (juridisk).",
+  "waits": true
  },
  {
   "id": "N3.4",
@@ -1057,7 +1062,8 @@ window.WS_SPEC = [
     "note": ""
    }
   ],
-  "needs": "Hvem gennemgår politikkerne juridisk, og om dit navn og din adresse skal stå på sitet."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvem gennemgår politikkerne juridisk, og om dit navn og din adresse skal stå på sitet.",
+  "waits": true
  },
  {
   "id": "N3.5",
@@ -1095,7 +1101,8 @@ window.WS_SPEC = [
     "note": "tilføj gæstedata og dørsensorlogs (UniFi)"
    }
   ],
-  "needs": "Kontaktadresse til indsigt og sletning, og hvor længe data må gemmes."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Kontaktadresse til indsigt og sletning, og hvor længe data må gemmes.",
+  "waits": true
  },
  {
   "id": "N3.6",
@@ -1124,7 +1131,8 @@ window.WS_SPEC = [
     "note": "privatperson kan have undtagelse fra Art 30-pligt i visse tilfælde (Åbent punkt, juridisk review), men en let ROPA anbefales alligevel"
    }
   ],
-  "needs": "Om du som privatperson skal føre en fortegnelse efter artikel 30."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Om du som privatperson skal føre en fortegnelse efter artikel 30.",
+  "waits": true
  },
  {
   "id": "N3.7",
@@ -1161,7 +1169,8 @@ window.WS_SPEC = [
     "note": "ejeren er én person; B10-governance findes ikke i Gausta"
    }
   ],
-  "needs": "Hvor ofte politikker gennemgås."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Hvor ofte politikker gennemgås.",
+  "waits": true
  },
  {
   "id": "N3.8",
@@ -1200,7 +1209,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Intet analytics-script eller analytics-host findes i produktionsrepoet (ingen spor i components/, app/ eller content security policy i next.config.ts)."
   },
-  "decided": "G12 (Matomo cookieless, egen eller delt instans) står i registret, men er ikke afgjort i praksis.",
+  "decided": "G12 (Matomo cookieless, egen eller delt instans) står i registret, men er ikke afgjort i praksis. Ejeren har valgt d8a (open source, kompatibel med GA4 og Matomo, gemmer i bl.a. ClickHouse), installeret på hjemmeserveren (ejerens svar 18. oktober 2026). Dermed er Plausible og Matomo fravalgt.",
   "deps": [
    "N3.1"
   ],
@@ -1218,7 +1227,8 @@ window.WS_SPEC = [
     "note": "kun hvis selvhostet Matomo vælges; for en privat feriebolig kan Plausible-cloud eller ingen analytics være bedre"
    }
   ],
-  "needs": "Valg af analyseværktøj (Plausible, Matomo eller ingen), budget og trafik. Kilden har en konflikt."
+  "needs": "Værktøjet er valgt (d8a). Tilbage: hvordan målingerne kommer hjem, uden at sitet afhænger af hjemmeserveren (N19). Se Claudes anbefaling.",
+  "rec": "Anbefaling: målinger sendes med navigator.sendBeacon (fire og glem), så sitet aldrig venter på svar, og hvis hjemmeserveren er nede, mistes kun målinger, aldrig sider. To veje: (A) direkte til d8a bag Cloudflare Tunnel, med en bevidst og dokumenteret undtagelse fra N19 for måling alene; (B) til et lille endpoint på sitet, som lægger målingerne i kø hos Railway, og hjemmeserveren henter dem (\"hjemmet henter udefra\", i tråd med N19). B passer til reglen, men kræver lidt lager og er lidt mere at bygge. Jeg anbefaler B, hvis du vil holde N19 uden undtagelse, ellers A. Hvilken vil du have? Bemærk også: d8as dokumentation, jeg kunne læse, siger intet om cookies, IP-håndtering og samtykke, så det skal undersøges, før tallet \"ingen banner\" lægges til grund (N3.1)."
  },
  {
   "id": "N4.2",
@@ -1232,7 +1242,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Ingen kode eller opsætning fundet i produktionsrepoet (18. oktober 2026)."
   },
-  "decided": "G12.",
+  "decided": "G12. Ejeren har valgt d8a (open source, kompatibel med GA4 og Matomo, gemmer i bl.a. ClickHouse), installeret på hjemmeserveren (ejerens svar 18. oktober 2026). Dermed er Plausible og Matomo fravalgt.",
   "deps": [
    "N4.1",
    "N3.1"
@@ -1249,7 +1259,7 @@ window.WS_SPEC = [
     "note": "princip; pakken til a-kasser er ikke relevant"
    }
   ],
-  "needs": "Følger valget af analyseværktøj."
+  "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies."
  },
  {
   "id": "N4.3",
@@ -1279,12 +1289,13 @@ window.WS_SPEC = [
     "note": "gælder kun flade A; ikke i gæsteområde (B) og back-office (C)"
    }
   ],
-  "needs": "Følger valget af analyseværktøj."
+  "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
+  "decided": "Ejeren har valgt d8a (open source, kompatibel med GA4 og Matomo, gemmer i bl.a. ClickHouse), installeret på hjemmeserveren (ejerens svar 18. oktober 2026). Dermed er Plausible og Matomo fravalgt."
  },
  {
   "id": "N4.4",
   "g": "N4",
-  "status": "open",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Mål, kampagner og klik til booking",
   "what": "Hvad der tæller som succes (mål), hvordan kampagnekilder (UTM) læses, og hvordan en besøgende følges fra sitet over til en booking på et andet domæne.",
@@ -1293,7 +1304,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Forespørgselsformularen findes (components/InquiryForm.tsx, app/[locale]/inquiry/), men er slået fra, og der er ingen målehændelser eller UTM-håndtering i koden."
   },
-  "decided": "G1 (bookingmodel, åben), G61 og G64 (forespørgselsformular).",
+  "decided": "G1 (bookingmodel, åben), G61 og G64 (forespørgselsformular). Booking sker via gausta.com, men aftalen er ikke på plads endnu. Indtil da henvises til forespørgselsformularen og mail til ejeren (ejerens svar 18. oktober 2026).",
   "deps": [
    "N4.1"
   ],
@@ -1317,7 +1328,7 @@ window.WS_SPEC = [
     "note": "analogt til klik-ud til bookingplatform (Airbnb/operatør/egen); afhænger af bookingmodel"
    }
   ],
-  "needs": "Hvilken bookingmodel der gælder (G1), så mål kan defineres."
+  "appr": "Målet er afklaret af bookingbeslutningen: indtil aftalen med gausta.com er på plads, er konverteringen en sendt forespørgsel via formularen eller en mail til ejeren. Klik ud til gausta.com tilføjes, når aftalen er på plads."
  },
  {
   "id": "N4.5",
@@ -1344,7 +1355,8 @@ window.WS_SPEC = [
     "note": "CSP-del for valgt analytics-host; admin-del kun ved selvhost"
    }
   ],
-  "needs": "Følger valget af analyseværktøj."
+  "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
+  "decided": "Ejeren har valgt d8a (open source, kompatibel med GA4 og Matomo, gemmer i bl.a. ClickHouse), installeret på hjemmeserveren (ejerens svar 18. oktober 2026). Dermed er Plausible og Matomo fravalgt."
  },
  {
   "id": "N4.6",
@@ -1373,7 +1385,8 @@ window.WS_SPEC = [
     "note": "kun ved selvhost; 'må aldrig blokere siden' gælder altid"
    }
   ],
-  "needs": "Om selvhost er realistisk i forhold til din tid."
+  "needs": "Følger valget af målevej (N4.1), og for N4.2 hvad d8a gør ved IP og cookies.",
+  "decided": "Ejeren har valgt d8a (open source, kompatibel med GA4 og Matomo, gemmer i bl.a. ClickHouse), installeret på hjemmeserveren (ejerens svar 18. oktober 2026). Dermed er Plausible og Matomo fravalgt."
  },
  {
   "id": "N5.1",
@@ -1938,7 +1951,7 @@ window.WS_SPEC = [
  {
   "id": "N6.7",
   "g": "N6",
-  "status": "open",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Manuel tilgængelighedsgennemgang",
   "what": "En person gennemgår sitet med kun tastatur, med skærmlæser (NVDA eller VoiceOver), ved 200 og 400 procent zoom og med reduceret bevægelse. Det finder det, automatiske tjek overser.",
@@ -1962,12 +1975,13 @@ window.WS_SPEC = [
     "note": "omfang og tidspunkt afgøres af Gausta; udføres af ejeren eller en hjælper"
    }
   ],
-  "needs": "Hvem udfører den manuelle gennemgang, og hvornår."
+  "decided": "Sitet skal overholde WCAG 2.2 AA (ejerens svar 18. oktober 2026).",
+  "appr": "Claude laver en tjekliste-gennemgang før lancering (automatiske tjek, tastatur og zoom). Ingen ekstern revision, og ingen skærmlæsertest foretages af Claude. Det bemærkes som begrænsning."
  },
  {
   "id": "N6.8",
   "g": "N6",
-  "status": "open",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Tilgængelighedserklæring",
   "what": "En kort, redigerbar side, der oplyser overensstemmelsesniveau, kendte begrænsninger, kontaktvej og dato, linket fra footeren, evt. suppleret af en ekstern audit.",
@@ -1992,7 +2006,8 @@ window.WS_SPEC = [
     "note": "juridisk pligt for privatperson uklar; erklæring stadig god praksis; tredjepartsaudit sandsynligvis ikke relevant"
    }
   ],
-  "needs": "Om en tilgængelighedserklæring er påkrævet for en privat udlejer (juridisk)."
+  "decided": "Ingen tilgængelighedserklæring, men sitet skal overholde WCAG 2.2 AA (ejerens svar 18. oktober 2026).",
+  "appr": "Afklaret af ejeren: ingen erklæring, men WCAG 2.2 AA skal overholdes. Kravene i N6.1 til N6.6 bærer det."
  },
  {
   "id": "N7.1",
@@ -2088,7 +2103,8 @@ window.WS_SPEC = [
     "note": "dansk og muligvis norsk lov, ingen B2B-ramme, intet B3-register"
    }
   ],
-  "needs": "GDPR-tekst, afkrydsningsfelt og opbevaring af henvendelser (juridisk)."
+  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). GDPR-tekst, afkrydsningsfelt og opbevaring af henvendelser (juridisk).",
+  "waits": true
  },
  {
   "id": "N7.4",
@@ -2102,7 +2118,7 @@ window.WS_SPEC = [
    "s": "partial",
    "where": "Mail via Resends API til flere modtagere med Reply-To og ren tekst: lib/inquiry/send.ts, lib/inquiry/email.ts, lib/inquiry/recipients.ts. Ved fejl vises en besked med info-adressen som alternativ. Mangler: ingen automatisk gentagelse, ingen idempotens, intet fallback-spor hvis Resend er nede, ingen alarm. Ikke kontrolleret: opbevaringstid i Gmail og om mailen havner i spam (forespoergselsformular.md)."
   },
-  "decided": "G30/G32: Resend til afsendelse, EU-region eu-west-1 (metadata i USA, åbent punkt i N3). G55: to modtagere. G61: formularen slået til via INQUIRY_ENABLED.",
+  "decided": "G30/G32: Resend til afsendelse, EU-region eu-west-1 (metadata i USA, åbent punkt i N3). G55: to modtagere. G61: formularen slået til via INQUIRY_ENABLED. Booking sker via gausta.com, men aftalen er ikke på plads endnu. Indtil da henvises til forespørgselsformularen og mail til ejeren (ejerens svar 18. oktober 2026). Ejeren svarer selv på henvendelser.",
   "deps": [
    "N7.2"
   ],
@@ -2121,7 +2137,7 @@ window.WS_SPEC = [
     "note": "eneste nødvendige sink ved lancering"
    }
   ],
-  "needs": "Automatisk kvittering til gæsten, hvem der svarer og hvor hurtigt, og operatørens skriftlige accept."
+  "needs": "Automatisk kvittering til gæsten og svartid. Operatørens skriftlige accept kan være overflødig, hvis booking går via gausta.com (bekræft)."
  },
  {
   "id": "N7.5",
@@ -2157,7 +2173,7 @@ window.WS_SPEC = [
  {
   "id": "N7.6",
   "g": "N7",
-  "status": "open",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Udgående link til booking og kildemåling",
   "what": "Det primære mål (hos Stormpine: start gratis i appen) er et link, der bevarer sprog, ikke lækker tokens og sender en kilde med. Hos Gausta svarer det til et link til booking hos operatør, egen løsning eller en tredjepart.",
@@ -2166,7 +2182,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Intet fundet. Ingen kilde- eller UTM-fangst i koden, og ingen udgående bookinglinks med kilde. Bookingmodellen er ikke afgjort."
   },
-  "decided": "G1: bookingmodel er åben. G2: operatøraftale åben.",
+  "decided": "G1: bookingmodel er åben. G2: operatøraftale åben. Booking sker via gausta.com, men aftalen er ikke på plads endnu. Indtil da henvises til forespørgselsformularen og mail til ejeren (ejerens svar 18. oktober 2026).",
   "deps": [],
   "open": [
    "Hvilken bookingmodel vælges (operatør, egen løsning, Airbnb, gausta.com)?",
@@ -2181,7 +2197,7 @@ window.WS_SPEC = [
     "note": "ingen produktapp; svarer til link til bookingsystem eller Airbnb"
    }
   ],
-  "needs": "Bookingmodellen (G1)."
+  "appr": "Bookingmodellen er afklaret: gausta.com, når aftalen er på plads. Indtil da er der intet udgående bookinglink, kun formular og mail. Kildemåling (UTM) tilføjes, når linket kommer."
  },
  {
   "id": "N7.7",
@@ -2339,7 +2355,8 @@ window.WS_SPEC = [
     "note": "Matomo findes ikke nødvendigvis; i stedet back-office, gæstelink og sensor-heartbeat"
    }
   ],
-  "needs": "Leverandør og alarmdestination for oppetidsovervågning (omkostning)."
+  "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Leverandør og alarmdestination for oppetidsovervågning (omkostning).",
+  "waits": true
  },
  {
   "id": "N8.4",
@@ -2369,7 +2386,8 @@ window.WS_SPEC = [
     "note": "gælder; også server- og jobfejl i back-office"
    }
   ],
-  "needs": "Valg af fejlsporing og hvilke persondata der må ende deri."
+  "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Valg af fejlsporing og hvilke persondata der må ende deri.",
+  "waits": true
  },
  {
   "id": "N8.5",
@@ -2413,7 +2431,8 @@ window.WS_SPEC = [
     "note": "gælder"
    }
   ],
-  "needs": "Hvor en kopi af databasen og hemmelighederne skal ligge uden for Railway (omkostning)."
+  "needs": "Afventer din beslutning om drift og backup (svar 18. oktober 2026: afvent). Hvor en kopi af databasen og hemmelighederne skal ligge uden for Railway (omkostning).",
+  "waits": true
  },
  {
   "id": "N8.6",
@@ -2450,7 +2469,8 @@ window.WS_SPEC = [
     "note": "SLO pr. del og for sensor-alarmkæden; B12-siden findes ikke for Gausta"
    }
   ],
-  "needs": "Oppetidsmål og om Tine skal være backup-ejer."
+  "needs": "Afventer din beslutning om drift og ejerskab (svar 18. oktober 2026: afvent). Oppetidsmål og om Tine skal være backup-ejer.",
+  "waits": true
  },
  {
   "id": "N8.7",
@@ -2812,7 +2832,8 @@ window.WS_SPEC = [
     "note": "privat ejer uden juridisk rolle; behold princippet (ingen ubeviste claims, især udlejningsdata, bæredygtighed, GDPR) som en kort tjekliste, ikke et PR-workflow med Message Map"
    }
   ],
-  "needs": "Hvilken markedsføringsret der gælder for en privat udlejer, og om en jurist skal se på påstande om afstande og standard."
+  "needs": "Svar ja til Claudes anbefaling, eller ret den. En jurist er først nødvendig, når du tager imod bookinger med betaling.",
+  "rec": "Anbefaling (ikke juridisk rådgivning, kun almindelig god praksis for en ferielejlighed): 1) Skriv kun påstande, der kan dokumenteres: afstande med kilde, dato og måde (til fods eller i bil), ellers \"ca.\". 2) Ingen superlativer (\"bedst\", \"perfekt\") og ingen sundheds-, miljø- eller sikkerhedspåstande uden bevis. 3) Åbningstider og sæson står altid med \"tjek aktuelle tider hos ...\" og en dato. 4) Priser og vilkår (afbestilling, depositum) først, når bookingaftalen er på plads, og så vist med alle gebyrer. 5) Vis, hvem udlejer er, og hvordan man kontakter dem, når booking åbnes (Antagelse: kræves i Danmark, ikke verificeret). 6) Kun egne eller licenserede billeder, og de viser tilstanden ved ankomst. 7) Ingen anmeldelser eller stjerner, medmindre de er ægte og kan dokumenteres. 8) Privatlivstekst og samtykke venter på dit svar (N3). 9) Før hver udgivelse i Sanity: \"Er det sandt, dateret og kildebelagt?\". Skal du modtage rigtige bookinger med betaling, bør en jurist se på vilkår, privatliv og udlejerens forpligtelser, én gang."
  },
  {
   "id": "N10.2",
@@ -2841,7 +2862,8 @@ window.WS_SPEC = [
     "note": "no-em-dash er allerede besluttet for Gausta; lint bør også dække CMS-indhold (Sanity) og oversættelser"
    }
   ],
-  "needs": "Tone på sitet."
+  "needs": "Svar ja til Claudes anbefaling, eller ret den.",
+  "rec": "Anbefaling til tone på en ferielejlighed: varm, jordnær og præcis, som en ven der kender stedet. Korte sætninger og konkrete ting (afstande, tider, hvad der er i lejligheden) frem for ord som perfekt, unik og drømmeagtig. Ærlig om begrænsninger (fx at pisten kun er åben i sæson). Ingen tankestreg og ingen udråbstegn. Samme tone på alle sprog, naturligt oversat og ikke ord for ord."
  },
  {
   "id": "N10.3",
@@ -2869,7 +2891,8 @@ window.WS_SPEC = [
     "note": "Stormpines termer er ikke relevante; konceptet er (DA/EN, senere NO/DE): hytte/lodge, sæson, gæst, check-in, DNT for Gausta Home og stednavne"
    }
   ],
-  "needs": "Hvornår norsk og tysk tilføjes, og hvem oversætter."
+  "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Hvornår norsk og tysk tilføjes, og hvem oversætter.",
+  "waits": true
  },
  {
   "id": "N10.4",
@@ -3051,7 +3074,7 @@ window.WS_SPEC = [
  {
   "id": "N12.1",
   "g": "N12",
-  "status": "open",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Omkostningskurve, budget og Sanity-plan",
   "what": "Modeller, hvad driften koster ved nuværende og tidoblet trafik, sæt hårde forbrugsgrænser og en budgetalarm, og skriv ned hvornår man skifter fra gratis til betalt Sanity.",
@@ -3060,7 +3083,7 @@ window.WS_SPEC = [
    "s": "partial",
    "where": "Ifølge beslutningsregister.md (G34) kører Sanity på Free, og ifølge konti-og-adgang.md ligger Railway på Hobby; ikke kontrolleret i selve tjenesterne. Railways hårde grænser og budgetalarm er ikke kontrolleret. Ingen omkostningsnote fundet i repoet."
   },
-  "decided": "G13: start gratis, sæt hård grænse og alarm. G34: Sanity Free, kun offentligt indhold.",
+  "decided": "G13: start gratis, sæt hård grænse og alarm. G34: Sanity Free, kun offentligt indhold. Ejeren har ikke et fast månedligt loft (svar 18. oktober 2026) og vil løbende have et overblik over omkostninger, der skal registreres i vidensbasen: se teknisk/omkostninger.md.",
   "deps": [
    "N12.3"
   ],
@@ -3087,7 +3110,7 @@ window.WS_SPEC = [
     "note": "Free er næsten sikkert nok; RBAC-triggeren er ikke relevant (én ejer), request-loft og planlagt udgivelse er de relevante triggere"
    }
   ],
-  "needs": "Maksimalt månedligt budget og alarmtærskel, og om Sanity Free må bruges kommercielt."
+  "appr": "Kravet om omkostningskontrol er afklaret: intet fast loft, men et løbende overblik i vidensbasen (teknisk/omkostninger.md), som opdateres, hver gang en tjeneste tilføjes eller ændres."
  },
  {
   "id": "N12.2",
@@ -3550,7 +3573,8 @@ window.WS_SPEC = [
     "note": "afløst i praksis af G56 og knapper/labels i Sanity"
    }
   ],
-  "needs": "Om AI-oversættelser skal gennemgås, og af hvem."
+  "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Om AI-oversættelser skal gennemgås, og af hvem.",
+  "waits": true
  },
  {
   "id": "CMS.5",
@@ -3607,7 +3631,8 @@ window.WS_SPEC = [
     "note": "nyttigt til oversættelser og sæsonbilleder"
    }
   ],
-  "needs": "Om agenter må udgive selv eller kun skrive kladder."
+  "needs": "Svar på, om agenter kun må lave kladder (anbefalet), og om kalenderscanneren må udgive events selv.",
+  "rec": "Anbefaling: agenter skriver kun kladder, og du udgiver. Sanity Free har kun få token-roller (læse, redigere, udrulle Studio), så en agent med redigeringsret kan teknisk meget. Derfor: (1) en agent får sit eget token, som kan oprette kladder, (2) agenten opretter kun dokumenter af den type, den har til opgave, og aldrig sider, menu eller UI-tekster, (3) alt, den skriver, mærkes med kilde og dato, og (4) du udgiver i Studio. Undtagelse, som du kan vælge: events fra kalenderscanneren kan udgives automatisk som \"traditionel\" (ikke bekræftet), da de er lavrisiko og dateret."
  },
  {
   "id": "CMS.6",
@@ -4222,7 +4247,8 @@ window.WS_SPEC = [
     "note": "dansk/engelsk/norsk/svensk-glossar for ejendomstermer"
    }
   ],
-  "needs": "Hvem gennemgår norsk og svensk, og hvilken valuta der vises pr. sprog."
+  "needs": "Afventer din beslutning om sprog (svar 18. oktober 2026: afvent). Hvem gennemgår norsk og svensk, og hvilken valuta der vises pr. sprog.",
+  "waits": true
  },
  {
   "id": "I18N.6",
@@ -4426,7 +4452,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Playwright findes ikke i package.json, og der er ingen e2e-tests i tests/. Det, der ville blive testet, er delvist på plads: noindex-header og sikkerhedsheadere i next.config.ts, Disallow i app/robots.ts, hreflang og x-default i app/[locale]/[[...slug]]/page.tsx, sprogruter i proxy.ts og lib/i18n.ts, og formularens Turnstile og rate limit i lib/inquiry/. Intet af det testes i browser. Gæsteområde er ikke fundet i repoet. Ikke kontrolleret: rigtige svar fra live-sitet."
   },
-  "decided": "G52: engelsk som standard på /, dansk på eget præfiks, sprogvalg gemmes. N5 om noindex indtil lancering.",
+  "decided": "G52: engelsk som standard på /, dansk på eget præfiks, sprogvalg gemmes. N5 om noindex indtil lancering. Booking sker via gausta.com, men aftalen er ikke på plads endnu. Indtil da henvises til forespørgselsformularen og mail til ejeren (ejerens svar 18. oktober 2026).",
   "deps": [
    "N2.1"
   ],
@@ -4644,7 +4670,8 @@ window.WS_SPEC = [
     "note": "afhængighedsscanning ikke fundet i repoet"
    }
   ],
-  "needs": "Om gæsteområdet skal kunne bruges offline."
+  "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Om gæsteområdet skal kunne bruges offline.",
+  "waits": true
  },
  {
   "id": "QA.7",
@@ -5030,7 +5057,8 @@ window.WS_SPEC = [
     "note": "Jf. N19 og G34"
    }
   ],
-  "needs": "Udformning og fornyelse af gæsteområdets permanente link."
+  "needs": "Afventer din beslutning om gæsteområdet (svar 18. oktober 2026: afvent). Udformning og fornyelse af gæsteområdets permanente link.",
+  "waits": true
  },
  {
   "id": "N18.2",

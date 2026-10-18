@@ -54,11 +54,12 @@
       (x.decided ? '<dt>Besluttet</dt><dd>' + esc(x.decided) + '</dd>' : '') +
       (x.appr ? '<dt>Godkendelse</dt><dd>Godkendt af Claude efter din uddelegering 18. oktober 2026. ' + esc(x.appr) + '</dd>' : '') +
       (x.needs ? '<dt>Din beslutning</dt><dd><b>' + esc(x.needs) + '</b></dd>' : '') +
+      (x.rec ? '<dt>Claudes anbefaling</dt><dd>' + esc(x.rec) + '</dd>' : '') +
       '<dt>Afhænger af</dt><dd>' + (x.deps && x.deps.length ? '<div class="row-flex" style="gap:6px">' + x.deps.map(chip).join('') + '</div>' : '<span class="faint">intet</span>') + '</dd>' +
       (x.open && x.open.length ? '<dt>Åbne spørgsmål</dt><dd><ul style="margin:0;padding-left:18px">' + x.open.map(function (q) { return '<li>' + esc(q) + '</li>'; }).join('') + '</ul></dd>' : '');
     var tasks = x.tasks && x.tasks.length ? '<details class="ws-tasks"><summary>' + x.tasks.length + ' delopgaver</summary><div class="table-wrap"><table class="table"><tr><th>ID</th><th>Delopgave</th><th>Prio</th><th>Relevans</th></tr>' +
       x.tasks.map(function (k) { return '<tr><td class="num">' + esc(k.id) + '</td><td>' + esc(k.t) + (k.note ? '<div class="muted" style="font-size:.82rem;margin-top:2px">' + esc(k.note) + '</div>' : '') + '</td><td>' + esc(k.prio || '') + '</td><td>' + esc(REL[k.rel] || k.rel || '') + '</td></tr>'; }).join('') + '</table></div></details>' : '';
-    return '<div class="spec-block' + (x.status === 'approved' ? ' approved' : '') + '" id="ws-' + esc(x.id) + '" data-id="' + esc(x.id) + '"><div class="spec-head"><h3>' + esc(x.id) + ' · ' + esc(x.title) + '</h3><div class="row-flex"><span class="pill-tag' + b.cls + '">' + b.label + '</span><span class="pill-tag">' + esc(REL[x.rel] || '') + '</span><span class="status ' + st.cls + '">' + st.label + '</span></div></div>' +
+    return '<div class="spec-block' + (x.status === 'approved' ? ' approved' : '') + '" id="ws-' + esc(x.id) + '" data-id="' + esc(x.id) + '"><div class="spec-head"><h3>' + esc(x.id) + ' · ' + esc(x.title) + '</h3><div class="row-flex"><span class="pill-tag' + b.cls + '">' + b.label + '</span><span class="pill-tag">' + esc(REL[x.rel] || '') + '</span>' + (x.waits ? '<span class="pill-tag warn">Afventer dig</span>' : '') + '<span class="status ' + st.cls + '">' + st.label + '</span></div></div>' +
       '<div class="spec-body"><dl class="bo-dl">' + rows + '</dl>' + tasks + '</div></div>';
   }
 
