@@ -295,8 +295,15 @@
           '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + (p.vandring ? '<a class="btn btn-primary btn-sm" href="vandring.html#' + p.vandring + '">Se vandreturen</a>' : '') + '</div></div>';
       }).join('') + '</div><p class="faint" style="margin-top:12px">' + note + '</p>';
     } else {
-      box.innerHTML = '<div class="table-wrap"><table class="table area-table"><tr><th>Sted</th><th class="col-type">Type</th><th class="r">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</th><th></th></tr>' + pois.map(function (p) {
-        return '<tr><td><b>' + esc(p.n) + '</b><div class="meta type-sub">' + CAT_NAME[kind + ':' + p.c] + '</div></td><td class="muted col-type">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
+      // Miniature af samme billede som i kortets panel (klik viser det stort i lysboksen, med kilde i billedteksten).
+      var hasImg = pois.some(function (p) { return p.img; });
+      var thumb = function (p) {
+        if (!hasImg) return '';
+        if (!p.img) return '<td class="col-img"><span class="area-thumb ph" aria-hidden="true"></span></td>';
+        return '<td class="col-img"><a class="area-thumb" href="' + p.img.u + '" data-lightbox data-cap="' + esc(p.n) + ' · Foto: ' + esc(p.img.k) + '" aria-label="Vis billede: ' + esc(p.n) + '"><img src="' + p.img.u + '" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer"></a></td>';
+      };
+      box.innerHTML = '<div class="table-wrap" data-gallery-group><table class="table area-table"><tr>' + (hasImg ? '<th class="col-img"><span class="sr-only">Billede</span></th>' : '') + '<th>Sted</th><th class="col-type">Type</th><th class="r">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</th><th></th></tr>' + pois.map(function (p) {
+        return '<tr>' + thumb(p) + '<td><b>' + esc(p.n) + '</b><div class="meta type-sub">' + CAT_NAME[kind + ':' + p.c] + '</div></td><td class="muted col-type">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
       }).join('') + '</table></div><p class="faint" style="margin-top:10px">' + note + '</p>';
     }
     }
