@@ -1,7 +1,7 @@
 /* Website spec: de tekniske specifikationer for gaustahome.com, hentet fra Stormpine-websitets Confluence og tilpasset (teknisk/krav/).
    Én post pr. punkt, med delopgaver. Status: draft, open, ready, approved. Built: done, partial, none (kontrolleret i produktionsrepoet 18. oktober 2026).
    Spejles som register i teknisk/website-spec.md (genereres af prototype/tools/website-spec-register.py). Offentlig side (noindex): ingen hemmeligheder, adresser eller nøgler. */
-window.WS_UPDATED = '18. oktober 2026';
+window.WS_UPDATED = '19. oktober 2026';
 window.WS_GROUPS = [
  {
   "id": "N1",
@@ -378,6 +378,9 @@ window.WS_SCANS = [
    }
   ],
   "notes": [
+   "A/B-måling af heroens billede (19. oktober 2026, lokal produktionsbuild, Lighthouse mobil, 2 kørsler pr. side, varm billedcache): beskæring og lavere kvalitet gav ingen mærkbar forskel (Lejligheden 89, Vandring 78, Området 82 til 85). Prioritet alene gav et lille, støjet løft (Lejligheden 84 til 92, Området 87 til 89, Vandring uændret 78). Heroens billedstørrelse er derfor ikke flaskehalsen (Brugeroplysning: ejeren bad om optimering; Inference: resultat).",
+   "Fund på Vandring: LCP er heroens billede på 228 KB, som konkurrerer med fire skrifttypefiler på ca. 240 KB i den kritiske sti. Test: kun latin-delmængden af Inter og Fraunces (ingen latin-ext-tegn bruges på sitet) gav i to kørsler pr. side Lejligheden 93 til 94 (LCP 3,0 til 3,1 s), Vandring 81 til 82 (LCP 4,8 s mod 5,6 s) og Området 91 til 92 (LCP 3,2 s mod 4,0 s). Ændringen er lavet og committet i arbejdskopien, men ikke udrullet til produktion (afventer ejerens tilladelse).",
+   "Prioritet på heroen genindføres ikke nu (Claudes anbefaling): gevinsten er lille og usikker, og faldet efter den første udrulning skyldtes sandsynligvis kold billedcache efter redeploy (Inference).",
    "Mobil blev bedre: Lejligheden 79 til 82 (LCP 5,3 til 4,5 s), Vandring 78 til 79 (5,7 til 5,4 s), Området 83 til 88 (4,4 til 3,7 s). Forsiden uændret (97). Ingen mobilside nåede grænsen på 2,5 s for god LCP.",
    "Desktop var blandet: Området blev bedre (72 til 90), men Lejligheden (100 til 94) og Vandring (99 til 78) blev dårligere. Det kan være en kold billedcache lige efter udrulningen (sitet laver selv billedstørrelserne, og de skal laves første gang) og ikke effekten af ændringen. Det er ikke afgjort.",
    "CLS er 0 til 0,048 og TBT 0 til 100 ms på alle sider, dvs. god på begge. Det er altså kun LCP, der halter.",
