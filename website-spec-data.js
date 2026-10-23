@@ -1,7 +1,7 @@
 /* Website spec: de tekniske specifikationer for gaustahome.com, hentet fra Stormpine-websitets Confluence og tilpasset (teknisk/krav/).
    Én post pr. punkt, med delopgaver. Status: draft, open, ready, approved. Built: done, partial, none (kontrolleret i produktionsrepoet 18. oktober 2026).
    Spejles som register i teknisk/website-spec.md (genereres af prototype/tools/website-spec-register.py). Offentlig side (noindex): ingen hemmeligheder, adresser eller nøgler. */
-window.WS_UPDATED = '23. oktober 2026';
+window.WS_UPDATED = '24. oktober 2026';
 window.WS_GROUPS = [
  {
   "id": "N1",
@@ -2277,7 +2277,7 @@ window.WS_SPEC = [
   "gausta": "Kravfilen taler om otte kombinationer (fire årstider i lys og mørk), men G20 fjernede mørk tilstand, så der er fire paletter. Sæsonaccenter bør bruges til flader, og en mørkere separat farve til lille tekst.",
   "built": {
    "s": "partial",
-   "where": "scripts/contrast.mjs tjekker farvepar i styles/tokens.css for alle fire årstider, og .github/workflows/ci.yml kører pnpm contrast. Ifølge teknisk/byggeplan.md består 76 af 76 par (ikke genkørt her). Fokusringen ligger ifølge samme fil på 4,17 til 4,52 mod kravet 3. Primærknappens hover og tekst over fotos og video er ikke målt. Axe-regel for color-contrast i browser findes ikke, da axe ikke kører endnu."
+   "where": "24. oktober 2026: scripts/contrast.mjs tjekker paletterne i CI, og axe tjekker kontrast på de rigtige sider i tre årstider uden fejl. Mangler: fokusringens kontrast (4,17 til 4,52 mod kravet 3) og tekst over foto og video er ikke målt separat."
   },
   "decided": "G20 (ingen mørk tilstand). Kontrast i fire årstider står i byggeplanens krav.",
   "deps": [],
@@ -2294,7 +2294,7 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "gælder for alle otte kombinationer, ikke to; ingen produktapp at synkronisere",
     "s": "partial",
-    "e": "scripts/contrast.mjs kører i CI (pnpm contrast), 76 af 76 par ifølge teknisk/byggeplan.md. Fokusring 4,17-4,52 mod 3; tekst over foto/video ikke målt."
+    "e": "24. oktober 2026: axe finder 0 kontrastfejl i vinter, sommer og efterår på alle sider (tests/e2e/a11y.spec.ts), og de 18 kendte er rettet (tal på filterknapper, footerens \"tekst følger\", ugenumre). Mangler: --faint i designtokens er ikke hævet generelt, og fokusringens kontrast er ikke målt."
    },
    {
     "id": "B6-0.2",
@@ -2302,8 +2302,8 @@ window.WS_SPEC = [
     "prio": "P0",
     "rel": "tilpasses",
     "note": "aldrig udelad reglen fra start; krav fra dag ét",
-    "s": "partial",
-    "e": "23. oktober 2026: axe kører med color-contrast aktiv i tests/e2e/a11y.spec.ts, uden regeludelukker. 18 kendte kontrastfejl ligger i baseline og skal rettes."
+    "s": "done",
+    "e": "24. oktober 2026: axe kører med color-contrast aktiv og uden regeludelukker i CI; 0 fejl."
    }
   ],
   "appr": "G20 afgør, at der er fire paletter, og kontrasttjekket findes i CI."
@@ -2347,8 +2347,8 @@ window.WS_SPEC = [
     "prio": "P0",
     "rel": "gaelder",
     "note": "",
-    "s": "partial",
-    "e": "Hero (første blok) eller sidetitel giver én h1 i page.tsx; inquiry og 404 har egen h1. Ingen automatisk test af h1-antal."
+    "s": "done",
+    "e": "24. oktober 2026: røgtesten kræver mindst én h1 pr. side, og axe (best practice) kræver logisk overskriftsrækkefølge. Footerens og presse-kortenes overskrifter og stedkortene er rettet."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2362,8 +2362,8 @@ window.WS_SPEC = [
   "what": "Brugere, der har slået bevægelse fra i systemet, skal ikke se animationer, parallax eller automatisk afspilning. Ikke-essentiel bevægelse skal kunne undgås.",
   "gausta": "Gælder video, hover-forhåndsvisning, kortzoom og årstidsanimationer. Video bør have pause-kontrol og stillbillede.",
   "built": {
-   "s": "partial",
-   "where": "prefers-reduced-motion er håndteret i styles/base.css (reveal, scroll), styles/elements/gallery.css, plan.css og skiinout.css, og i components/blocks/area/AreaMap.tsx og hike/HikeMap.tsx (kortzoom). Ikke kontrolleret: lydløs forhåndsvisning af video ved hover, hero-grafik, pause-kontrol og undertekster på video."
+   "s": "done",
+   "where": "24. oktober 2026: global regel i styles/base.css, scrollBehavior() i lib/motion.ts og LiveCam.tsx. Hero-billedet har ingen bevægelse. Gausta LIVE mangler en pause-knap for alle (se B6-1.3)."
   },
   "decided": "G82 og G84 (video med lydløs forhåndsvisning ved hover, klik åbner fuld visning).",
   "deps": [],
@@ -2377,8 +2377,8 @@ window.WS_SPEC = [
     "prio": "P0",
     "rel": "tilpasses",
     "note": "gælder video, parallax, sæsonanimationer, autoplay",
-    "s": "partial",
-    "e": "prefers-reduced-motion i base.css, gallery.css, plan.css, skiinout.css, AreaMap og HikeMap. Hover-video i Gallery.tsx har autoPlay uden reduced-motion-tjek."
+    "s": "done",
+    "e": "24. oktober 2026: styles/base.css slår animationer, overgange og glidende rulning fra ved reduceret bevægelse; JS-rulning bruger lib/motion.ts; Gausta LIVE afspilles ikke automatisk ved reduceret bevægelse. Testen kører axe med reduceret bevægelse. Åbent: Gausta LIVE har ingen pause-knap uden reduceret bevægelse (WCAG 2.2.2, ejerens beslutning G147)."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2448,7 +2448,7 @@ window.WS_SPEC = [
     "rel": "gaelder",
     "note": "væsentligt for billedtung side; alt-tekst pr. sprog",
     "s": "partial",
-    "e": "imageWithAlt.ts: alt pr. sprog, påkrævet på lanceringssprogene, ingen dekorativ-toggle. Overskriftsniveau sættes af renderer; seo-delebillede er almindeligt image."
+    "e": "24. oktober 2026: delt billedobjekt (imageWithAlt) har alt-tekst, men kravet er fjernet efter ejerens beslutning (G137): alt-tekst er valgfri, og billeder uden tekst vises som pynt. Ingen dekorativ-toggle (ikke nødvendig, tom alt er pynt). Kilde til konflikt: kravfilen ønsker påkrævet alt."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
@@ -2462,8 +2462,8 @@ window.WS_SPEC = [
   "what": "Automatiske værktøjer fanger kun omkring 40 til 57 procent af fejlene, men fanger regressioner. Kravet er en lint-regel for tilgængelighed, axe på alle sider, en Lighthouse-grænse og en test af, at siden ikke får vandret rulning på mobil (reflow).",
   "gausta": "Test mod fire årstider, flere sprog, gæsteområde og back-office. Gæsteområdet er noindex, så testen må ikke lække det faste link. Gæsteområdet bruges mest på mobil.",
   "built": {
-   "s": "partial",
-   "where": "23. oktober 2026: tests/e2e/a11y.spec.ts kører axe (WCAG 2.0 og 2.1, A og AA) på alle sider i vinter, sommer og efterår i CI. 30 kendte fejl ligger i tests/e2e/a11y-baseline.json, og kun nye fejl stopper. Mangler: eslint-plugin-jsx-a11y, Lighthouse-assertion og reflow-test ved 375, 768 og 1280."
+   "s": "done",
+   "where": "24. oktober 2026: CI kører jsx-a11y, axe (tre årstider, alle sider), reflow ved tre bredder og kontrast. Lighthouse-assertion er ikke bygget, fordi den bygger på axe. Baseline over kendte fejl er tom."
   },
   "deps": [
    "N6.1"
@@ -2481,8 +2481,8 @@ window.WS_SPEC = [
     "prio": "P1",
     "rel": "gaelder",
     "note": "",
-    "s": "none",
-    "e": "eslint-plugin-jsx-a11y mangler i package.json; ingen eslint-opsætning."
+    "s": "done",
+    "e": "24. oktober 2026: eslint-plugin-jsx-a11y kører i CI (pnpm lint:a11y, eslint.config.mjs) på app og components; 0 fejl, fire kendte undtagelser er forklaret i koden (lightbox-baggrund, video uden lyd, rullekarrusel, faner)."
    },
    {
     "id": "B6-4.2",
@@ -2491,7 +2491,7 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "matrix: otte tema-kombinationer, tre sprog, gæsteområde og back-office",
     "s": "partial",
-    "e": "23. oktober 2026: Playwright og axe i CI på alle sider i tre årstider, uden regeludelukker (kun YouTube-indlejringen udelades). Baseline over 30 kendte fejl. Mangler: Lighthouse-assertion."
+    "e": "24. oktober 2026: Playwright og axe (WCAG 2.0 til 2.2 AA og best practice) på alle sider i tre årstider i CI; baseline er tom, så enhver fejl stopper. Kendt falsk alarm: plantegningens rum og kortets klynger (SVG-tekst), undtaget i testen med forklaring. Mangler: Lighthouse-assertion (bygger på axe, derfor lav værdi)."
    },
    {
     "id": "B6-4.3",
@@ -2499,8 +2499,8 @@ window.WS_SPEC = [
     "prio": "P1",
     "rel": "gaelder",
     "note": "gæsteområdet bruges mest på mobil",
-    "s": "none",
-    "e": "Ingen reflow-test; ingen Playwright i package.json eller tests/."
+    "s": "done",
+    "e": "24. oktober 2026: tests/e2e/reflow.spec.ts kontrollerer, at ingen side ruller vandret ved 375, 768 og 1280 px. Fandt og rettede én fejl (skjult tekst i tabeller)."
    }
   ],
   "appr": "Teknisk krav uden valg, der kræver din beslutning (ingen omkostning, ingen juridisk afvejning, intet brand- eller indholdsvalg). De åbne spørgsmål er tekniske detaljer, som jeg afgør ved bygning."
