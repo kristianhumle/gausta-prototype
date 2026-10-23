@@ -250,7 +250,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 .phone { width: 320px; max-width: 100%; margin: 0 auto; border: 8px solid var(--text); border-radius: 36px; background: var(--bg); overflow: hidden; box-shadow: var(--shadow); }
 .phone .screen { padding: 18px 16px 24px; display: grid; gap: 12px; min-height: 560px; align-content: start; }
 .phone .card { padding: 14px; border-radius: 12px; }
-.tile { display: flex; gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--border); border-radius: 0; background: var(--surface); text-decoration: none; color: var(--text); }
+.tile { display: flex; gap: 12px; align-items: center; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); text-decoration: none; color: var(--text); }
 .tile:hover { border-color: var(--accent); }
 .tile small { color: var(--muted); display: block; }
 
