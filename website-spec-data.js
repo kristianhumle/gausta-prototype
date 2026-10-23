@@ -1,7 +1,7 @@
 /* Website spec: de tekniske specifikationer for gaustahome.com, hentet fra Stormpine-websitets Confluence og tilpasset (teknisk/krav/).
    Én post pr. punkt, med delopgaver. Status: draft, open, ready, approved. Built: done, partial, none (kontrolleret i produktionsrepoet 18. oktober 2026).
    Spejles som register i teknisk/website-spec.md (genereres af prototype/tools/website-spec-register.py). Offentlig side (noindex): ingen hemmeligheder, adresser eller nøgler. */
-window.WS_UPDATED = '19. oktober 2026';
+window.WS_UPDATED = '23. oktober 2026';
 window.WS_GROUPS = [
  {
   "id": "N1",
@@ -1542,8 +1542,8 @@ window.WS_SPEC = [
     "prio": "P2",
     "rel": "gaelder",
     "note": "især pga. tredjepartsembeds (Playwright-test kan tjekke cookies)",
-    "s": "none",
-    "e": "ci.yml har ingen cookie- eller trackertest, og tests/ har kun vitest-filer, ingen Playwright."
+    "s": "done",
+    "e": "23. oktober 2026: tests/e2e/privacy.spec.ts i CI: kun aftalte cookies og lokal lagring, ingen kendte sporingsværter, på hver side."
    },
    {
     "id": "B3-6.3",
@@ -1868,7 +1868,7 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "forbyd også gæsteområde og back-office; AI-crawler-valg skal omvurderes",
     "s": "partial",
-    "e": "app/robots.ts er pladsholder med Disallow på alt; ingen Sitemap-link, ingen AI-crawler-regler. X-Robots-Tag noindex i next.config.ts."
+    "e": "23. oktober 2026: app/robots.ts styres af INDEXING_ENABLED: lukket som standard, åben tillader alt undtagen /api/ og /studio/ og peger på sitemappen. Mangler: afgørelse om AI-crawlere (åbent punkt)."
    },
    {
     "id": "B5-1.2",
@@ -1876,8 +1876,8 @@ window.WS_SPEC = [
     "prio": "P0",
     "rel": "tilpasses",
     "note": "kun offentlig del; gæsteområde udelades",
-    "s": "none",
-    "e": "Ingen app/sitemap.ts i repoet."
+    "s": "done",
+    "e": "23. oktober 2026: app/sitemap.ts henter siderne fra Sanity med lastModified og sprogudgaver (hreflang) og udelader testsider; test i tests/e2e/headers.spec.ts."
    }
   ],
   "needs": "Om AI-træningscrawlere skal blokeres."
@@ -2303,7 +2303,7 @@ window.WS_SPEC = [
     "rel": "tilpasses",
     "note": "aldrig udelad reglen fra start; krav fra dag ét",
     "s": "partial",
-    "e": "Ingen axe eller Playwright-smoketest i repoet, så ingen regeludelukkelse, men heller ingen browsertjek af color-contrast."
+    "e": "23. oktober 2026: axe kører med color-contrast aktiv i tests/e2e/a11y.spec.ts, uden regeludelukker. 18 kendte kontrastfejl ligger i baseline og skal rettes."
    }
   ],
   "appr": "G20 afgør, at der er fire paletter, og kontrasttjekket findes i CI."
@@ -2462,8 +2462,8 @@ window.WS_SPEC = [
   "what": "Automatiske værktøjer fanger kun omkring 40 til 57 procent af fejlene, men fanger regressioner. Kravet er en lint-regel for tilgængelighed, axe på alle sider, en Lighthouse-grænse og en test af, at siden ikke får vandret rulning på mobil (reflow).",
   "gausta": "Test mod fire årstider, flere sprog, gæsteområde og back-office. Gæsteområdet er noindex, så testen må ikke lække det faste link. Gæsteområdet bruges mest på mobil.",
   "built": {
-   "s": "none",
-   "where": ".github/workflows/ci.yml kører typecheck, enhedstests, kontrast, skemavalidering og build, men ikke axe, Lighthouse, Playwright eller reflow-test (filen siger, at de tilføjes, når staging findes). eslint-plugin-jsx-a11y er ikke i package.json."
+   "s": "partial",
+   "where": "23. oktober 2026: tests/e2e/a11y.spec.ts kører axe (WCAG 2.0 og 2.1, A og AA) på alle sider i vinter, sommer og efterår i CI. 30 kendte fejl ligger i tests/e2e/a11y-baseline.json, og kun nye fejl stopper. Mangler: eslint-plugin-jsx-a11y, Lighthouse-assertion og reflow-test ved 375, 768 og 1280."
   },
   "deps": [
    "N6.1"
@@ -2490,8 +2490,8 @@ window.WS_SPEC = [
     "prio": "P1",
     "rel": "tilpasses",
     "note": "matrix: otte tema-kombinationer, tre sprog, gæsteområde og back-office",
-    "s": "none",
-    "e": "Hverken Playwright, axe eller Lighthouse i package.json eller .github/workflows/ci.yml (tilføjes, når staging findes)."
+    "s": "partial",
+    "e": "23. oktober 2026: Playwright og axe i CI på alle sider i tre årstider, uden regeludelukker (kun YouTube-indlejringen udelades). Baseline over 30 kendte fejl. Mangler: Lighthouse-assertion."
    },
    {
     "id": "B6-4.3",
@@ -3873,8 +3873,8 @@ window.WS_SPEC = [
     "prio": "P1",
     "rel": "tilpasses",
     "note": "næste skridt bliver Hjem, Boliginfo/booking, Kontakt, gæsteområde; fire sæsontemaer; dansk og engelsk nu, norsk og tysk senere",
-    "s": "partial",
-    "e": "app/[locale]/not-found.tsx med Sanity-tekster på alle sprog og notFound() i slug-siden; ægte 404 og næste skridt ikke kontrolleret"
+    "s": "done",
+    "e": "23. oktober 2026: not-found.tsx giver ægte 404, testet i tests/e2e/smoke.spec.ts (dansk og engelsk)."
    },
    {
     "id": "B13-1.1",
@@ -3882,8 +3882,8 @@ window.WS_SPEC = [
     "prio": "P1",
     "rel": "gaelder",
     "note": "for gæsteområdet er en rolig fejlside ekstra vigtig (gæster på stedet, evt. dårlig dækning)",
-    "s": "none",
-    "e": "Ingen app/global-error.tsx eller error.tsx i repoet"
+    "s": "done",
+    "e": "23. oktober 2026: app/[locale]/error.tsx (500 pr. sprog, tekster i koden) og app/global-error.tsx (sidste udvej) findes."
    }
   ],
   "needs": "Indhold og sprog på 404- og 500-siderne, og logning (juridisk)."
@@ -5584,8 +5584,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "Gausta-tillæg 11",
-    "s": "none",
-    "e": "Headers i next.config.ts, men ingen test af dem og ingen scan af klient-bundle for hemmeligheder"
+    "s": "done",
+    "e": "23. oktober 2026: tests/e2e/headers.spec.ts (CSP håndhæves, HSTS, nosniff, referrer, permissions, COOP) og scripts/check-secrets.mjs (hemmeligheder i .next/static) kører i CI."
    },
    {
     "id": "B2-QA",
@@ -5654,8 +5654,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "ikke bygget",
-    "s": "none",
-    "e": "Ingen post-deploy-røgtest i ci.yml eller scripts/"
+    "s": "partial",
+    "e": "23. oktober 2026: røgtest af alle sider kører i CI mod det byggede site (noindex, 200). Ikke efter udrulning på Railway."
    },
    {
     "id": "QA-18",
@@ -6434,8 +6434,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "",
-    "s": "partial",
-    "e": "app/[locale]/[[...slug]]/page.tsx: title, description, canonical, og:title/description/locale/type; mangler og:url, twitter:card, og:image:alt"
+    "s": "done",
+    "e": "23. oktober 2026: og:title, og:url, og:site_name, og:locale, og:locale:alternate, og:image med alt, twitter:card, canonical og hreflang pr. side og sprog (page.tsx); røgtesten kontrollerer dem."
    },
    {
     "id": "TL.A11-2",
@@ -6479,8 +6479,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "",
-    "s": "none",
-    "e": "Ingen Playwright i package.json; kun Vitest (tests/) og CI-tjek; ingen tjekliste i repoet"
+    "s": "partial",
+    "e": "23. oktober 2026: Playwright kontrollerer metadata pr. side og sprog i CI. Mangler: test i platformenes værktøjer og manuel tjekliste før lancering."
    },
    {
     "id": "TL.A11-7",
