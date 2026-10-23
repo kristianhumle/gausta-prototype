@@ -101,40 +101,6 @@
   }
 
 
-  // Sommerpalet (forsøg, 23. oktober 2026): varmere alternativer til sommerens kolde palet. Ingen attribut = den nuværende palet.
-  var SUMMER_PALS = [["", "Nuværende", "#23766A"], ["honning", "Honning", "#9E6C10"], ["koral", "Koral", "#BF553D"], ["eng", "Eng", "#657F1B"], ["sand", "Sand og sø", "#23766A"], ["hindbaer", "Hindbær", "#C42A62"], ["lavendel", "Lavendel", "#7A4FC4"], ["solnedgang", "Solnedgang", "#9A3B72"], ["kornblomst", "Fersken og kornblomst", "#2F63B8"], ["tropisk", "Tropisk", "#0D8385"]];
-  function applySummerPal() {
-    var v = sstore('gl.summer') || '';
-    if (v) root.setAttribute('data-summer', v); else root.removeAttribute('data-summer');
-    var p = document.querySelector('.summer-pal');
-    if (p) {
-      p.hidden = currentSeason() !== 'summer';
-      p.querySelectorAll('button').forEach(function (b) { b.setAttribute('aria-pressed', String(b.dataset.p === v)); });
-    }
-  }
-  function buildSummerPal() {
-    var q = new URLSearchParams(location.search).get('sommer');
-    if (q !== null) {
-      q = q.toLowerCase();
-      if (SUMMER_PALS.some(function (x) { return x[0] === q; }) || q === '' || q === 'nuvaerende') {
-        sstore('gl.summer', q === 'nuvaerende' ? '' : q);
-        if (q) { state.season = 'summer'; sstore('gl.season', 'summer'); }
-      }
-    }
-    var box = document.createElement('div');
-    box.className = 'summer-pal'; box.hidden = true; box.setAttribute('role', 'group'); box.setAttribute('aria-label', 'Sommerpalet (forsøg)');
-    box.innerHTML = '<b>Sommerpalet (forsøg)</b><div class="sp-row">' + SUMMER_PALS.map(function (x) {
-      return '<button type="button" data-p="' + x[0] + '" aria-pressed="false"><i style="background:' + x[2] + '"></i>' + x[1] + '</button>';
-    }).join('') + '</div>';
-    box.addEventListener('click', function (e) {
-      var b = e.target.closest('button'); if (!b) return;
-      sstore('gl.summer', b.dataset.p); applySummerPal();
-    });
-    document.body.appendChild(box);
-    document.addEventListener('gl:season', applySummerPal);
-    applySummerPal();
-  }
-
   // photos: prototype-only, converted to web sizes under assets/web/<folder>/<name>[-s].webp
   GL.photo = function (key, size) { var p = key.split('/'); return 'assets/web/' + p[0] + '/' + p[1] + (size === 's' || size === true ? '-s' : size === 'm' ? '-m' : '') + '.webp'; };
   GL.buildGallery = function (el, items, opts) {
@@ -397,7 +363,7 @@
     document.querySelectorAll('[data-icon]').forEach(function (el) { el.insertAdjacentHTML('afterbegin', icon(el.getAttribute('data-icon'))); });
     document.querySelectorAll('[data-season-card]').forEach(function (c) { c.setAttribute('role', 'button'); c.setAttribute('tabindex', '0'); });
     document.querySelectorAll('[data-area-subnav]').forEach(function (n) { n.innerHTML = GL.areaSubnav(n.getAttribute('data-area-subnav')); });
-    buildSummerPal(); applySeason(); applyLang(); wire();
+    applySeason(); applyLang(); wire();
     document.dispatchEvent(new Event('gl:ready'));
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();

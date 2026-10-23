@@ -45,8 +45,8 @@
   --sky-top: #E3EEDB; --sky-bot: #F6F8EF; --r1: #BCD2A4; --r2: #98B97C; --r3: #6F9658;
 }
 [data-season="summer"] {
-  --accent: #23766A; --accent-text: #1B665B; --accent-weak: #D8ECE8;
-  --sky-top: #D7ECEA; --sky-bot: #F3F8F4; --r1: #A6CFC4; --r2: #79B3A5; --r3: #4E9585;
+  --accent: #23766A; --accent-text: #1B665B; --accent-weak: #DDEBE0;
+  --sky-top: #F3E7C9; --sky-bot: #FAF6EA; --r1: #A6CFC4; --r2: #79B3A5; --r3: #4E9585;
 }
 
 /* base */
@@ -785,7 +785,7 @@ textarea.field { min-height: 96px; resize: vertical; }
 :root, [data-season="autumn"] { --bg:#F7EEE2;--surface:#FFFBF4;--elevated:#EDDFCB;--border:#DCC9AD;--text:#261A0F;--muted:#745F49;--faint:#706050; }
 [data-season="winter"] { --bg:#EDF2F7;--surface:#FAFCFF;--elevated:#E1EAF3;--border:#CBD9E7;--text:#13202D;--muted:#50627A;--faint:#5A6777; }
 [data-season="spring"] { --bg:#F0F5E8;--surface:#FBFDF6;--elevated:#E3EDD3;--border:#CFDDBA;--text:#1A2314;--muted:#55674A;--faint:#5F6B55; }
-[data-season="summer"] { --bg:#E9F4F2;--surface:#F9FEFD;--elevated:#D8ECE8;--border:#BFDDD7;--text:#10211E;--muted:#4A6963;--faint:#576B66; }
+[data-season="summer"] { --bg:#F6F0E3;--surface:#FFFCF5;--elevated:#EBE2CC;--border:#DDD1B3;--text:#20201A;--muted:#605A47;--faint:#6B644B; } /* Sand og sø, valgt 24. oktober 2026 */
 
 /* ===== Webcams (sideelementer, e-webcams) ===== */
 .wc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; align-items: start; }
@@ -1528,22 +1528,3 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .ws-key.ws-r-green { background: color-mix(in srgb, var(--good) 35%, transparent); }
 .ws-key.ws-r-yellow { background: color-mix(in srgb, var(--amber) 38%, transparent); }
 .ws-key.ws-r-red { background: color-mix(in srgb, var(--coral) 35%, transparent); }
-
-/* ===== Sommerpalet: forsøg med varmere farver (23. oktober 2026). Standard (ingen attribut) er den nuværende kolde palet.
-   Vælges i panelet nederst til venstre, når sommer er valgt, eller med ?sommer=honning|koral|eng|sand. Alle par er kontrolleret til 4,5:1. ===== */
-[data-season="summer"][data-summer="honning"] { --bg:#FBF3E0;--surface:#FFFCF3;--elevated:#F3E6C5;--border:#E6D5A8;--text:#2A2210;--muted:#6B5B30;--faint:#756639;--accent:#9E6C10;--accent-text:#8D5D07;--accent-weak:#F5E6BF;--sky-top:#FBE9B8;--sky-bot:#FFF8E6;--r1:#F0D48A;--r2:#DDB35A;--r3:#BF8C2C; }
-[data-season="summer"][data-summer="koral"] { --bg:#FBF0EA;--surface:#FFFAF6;--elevated:#F5DDD2;--border:#EBCBBC;--text:#2B1812;--muted:#735044;--faint:#805B4F;--accent:#BF553D;--accent-text:#A9432E;--accent-weak:#F7DDD3;--sky-top:#FBDCCF;--sky-bot:#FFF3EC;--r1:#F0B8A2;--r2:#E08C72;--r3:#C45F46; }
-[data-season="summer"][data-summer="eng"] { --bg:#F4F3DF;--surface:#FDFCEE;--elevated:#E7E8C4;--border:#D5D8A8;--text:#1E2410;--muted:#596030;--faint:#636A3B;--accent:#657F1B;--accent-text:#556E12;--accent-weak:#E4EBC0;--sky-top:#EBF0C4;--sky-bot:#F9FAE8;--r1:#CBD98E;--r2:#A8BE5E;--r3:#7E9A2E; }
-[data-season="summer"][data-summer="sand"] { --bg:#F6F0E3;--surface:#FFFCF5;--elevated:#EBE2CC;--border:#DDD1B3;--text:#20201A;--muted:#605A47;--faint:#6B644B;--accent:#23766A;--accent-text:#1B665B;--accent-weak:#DDEBE0;--sky-top:#F3E7C9;--sky-bot:#FAF6EA;--r1:#A6CFC4;--r2:#79B3A5;--r3:#4E9585; }
-[data-season="summer"][data-summer="hindbaer"] { --bg:#FDF0F3;--surface:#FFFAFB;--elevated:#F8DCE4;--border:#EEC4D1;--text:#2A1119;--muted:#753A4E;--faint:#85485C;--accent:#C42A62;--accent-text:#A81F52;--accent-weak:#FADCE6;--sky-top:#FBD3E0;--sky-bot:#FFF1F5;--r1:#F2A9C0;--r2:#E0709A;--r3:#BF3A6E; }
-[data-season="summer"][data-summer="lavendel"] { --bg:#F6F1FA;--surface:#FCFAFE;--elevated:#E8DDF3;--border:#D6C6E8;--text:#1D1428;--muted:#58467A;--faint:#695889;--accent:#7A4FC4;--accent-text:#613AA6;--accent-weak:#E6DAF5;--sky-top:#E3D5F4;--sky-bot:#F8F3FD;--r1:#CDB5EA;--r2:#A785D8;--r3:#7F55BB; }
-[data-season="summer"][data-summer="solnedgang"] { --bg:#FFF1EA;--surface:#FFFAF7;--elevated:#FADBCF;--border:#F0C3B3;--text:#2A1620;--muted:#7A4A5A;--faint:#855565;--accent:#9A3B72;--accent-text:#82285E;--accent-weak:#F7D9E4;--sky-top:#FFCFB8;--sky-bot:#FFF0E8;--r1:#F2A9B6;--r2:#CF7BA0;--r3:#8F4E86; }
-[data-season="summer"][data-summer="kornblomst"] { --bg:#FFF3EA;--surface:#FFFAF5;--elevated:#FBE0CE;--border:#F2CDB5;--text:#1C2233;--muted:#475072;--faint:#585F80;--accent:#2F63B8;--accent-text:#244F9A;--accent-weak:#DDE8F8;--sky-top:#CFE0F7;--sky-bot:#FFF3E8;--r1:#F4C5A0;--r2:#E79A6E;--r3:#C96F52; }
-[data-season="summer"][data-summer="tropisk"] { --bg:#FFF7E3;--surface:#FFFCF2;--elevated:#FFEBB9;--border:#F5DB93;--text:#10282B;--muted:#2F5558;--faint:#3F6366;--accent:#0D8385;--accent-text:#0A6E70;--accent-weak:#CDEDEA;--sky-top:#FFE29A;--sky-bot:#FFF8E4;--r1:#8FD6CF;--r2:#3FB5B0;--r3:#14807F; }
-.summer-pal { position: fixed; left: 14px; bottom: 14px; z-index: 120; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm, 0 4px 18px rgba(0,0,0,.14)); padding: 10px 12px; max-width: calc(100vw - 28px); font-size: .8rem; }
-.summer-pal[hidden] { display: none; }
-.summer-pal b { display: block; margin-bottom: 6px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-.summer-pal .sp-row { display: flex; flex-wrap: wrap; gap: 6px; }
-.summer-pal button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 99px; padding: 5px 11px 5px 7px; font: inherit; font-size: .8rem; cursor: pointer; }
-.summer-pal button[aria-pressed="true"] { background: var(--accent-weak); border-color: var(--accent); font-weight: 650; }
-.summer-pal button i { width: 14px; height: 14px; border-radius: 50%; display: block; border: 1px solid rgba(0,0,0,.18); }
