@@ -1602,3 +1602,4 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
   .bo-main { padding: 18px 16px 48px; }
   .bo-cards { grid-template-columns: 1fr; }
 }
+.br-table td.stamp { white-space: nowrap; }
