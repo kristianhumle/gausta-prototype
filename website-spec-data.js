@@ -1525,8 +1525,8 @@ window.WS_SPEC = [
   "what": "En automatisk test eller et periodisk scan, der opdager nye cookies og sporere, og en fast gennemgang af politikker og registre.",
   "gausta": "Pga. tredjepartsembeds er cookie-testen vigtig. Ejeren er én person, så den faste gennemgang erstatter Stormpines governance (B10), som ikke findes her.",
   "built": {
-   "s": "none",
-   "where": "CI kører typecheck, enhedstests, kontrast, skemavalidering og build (.github/workflows/ci.yml), men ingen cookie- eller trackertest. tests/ indeholder ingen Playwright-test."
+   "s": "partial",
+   "where": "23. oktober 2026: tests/e2e/privacy.spec.ts tjekker i en rigtig browser, at kun aftalte cookies (gl_lang) og lokal lagring (gl.season, gl-press-market) bruges, og at ingen kendte sporingsværter kaldes, på hver side. Kører i CI. Mangler: test pr. sprog og årstid, og dokumentation af posturen (docs/privacy/tracking.md)."
   },
   "deps": [
    "N3.1"
@@ -1850,7 +1850,7 @@ window.WS_SPEC = [
   "gausta": "Spær også gæsteområde og back-office og alle API-ruter. Sitemap omfatter kun den offentlige del. Valget af AI-crawlere (søge og svar kontra træning) skal tages bevidst.",
   "built": {
    "s": "partial",
-   "where": "app/robots.ts findes, men er en pladsholder med Disallow på alt indtil lancering. next.config.ts sætter X-Robots-Tag noindex, nofollow på alle sider. app/sitemap.ts findes ikke. Ifølge teknisk/domaene-og-dns-setup.md afsnit om lancering fjernes noindex i kode ved lancering."
+   "where": "23. oktober 2026: app/sitemap.ts findes og viser alle sider på dansk og engelsk med sprogudgaver (hreflang), uden testsider. app/robots.ts og X-Robots-Tag og meta robots styres af INDEXING_ENABLED (lib/launch.ts), og sitet er lukket som standard. Test i tests/e2e/headers.spec.ts. Ikke afklaret: hvilke AI-crawlere der skal tillades."
   },
   "decided": "Noindex indtil lancering (domæne- og byggedokumentation).",
   "deps": [
@@ -3853,8 +3853,8 @@ window.WS_SPEC = [
   "what": "En hjælpsom, on-brand og tosproget side, når en side ikke findes (ægte 404-statuskode, links tilbage ind på sitet), og en rolig, minimal fejlside ved serverfejl, som ikke selv kan fejle.",
   "gausta": "Dansk er primært sprog, så rod-404 må ikke være engelsk. Gæsteområdet skal have en rolig, kort fejlside med hjælp (kontakt til ejer, nødnumre), helst også offline. Fejlsiden ved serverfejl skal bruge minimal indbygget CSS, fordi den erstatter hele dokumentet.",
   "built": {
-   "s": "partial",
-   "where": "app/[locale]/not-found.tsx og components/shell/NotFoundText.tsx findes (tekster fra Sanity på alle sprog, linker ikke til gæsteområdet); app/[locale]/[[...slug]]/page.tsx og layout.tsx kalder notFound() ved ukendt sprog eller side. Ikke fundet: app/global-error.tsx eller error.tsx. Ægte 404-statuskode og tilgængelighed i alle årstider ikke kontrolleret mod den kørende side."
+   "s": "done",
+   "where": "23. oktober 2026: app/[locale]/error.tsx (500 pr. sprog) og app/global-error.tsx (sidste udvej) findes, ud over not-found.tsx. Ægte 404-statuskode testes i tests/e2e/smoke.spec.ts. Ikke afklaret: gæsteområdets fejlside og offline."
   },
   "decided": "G52: sprogruter, engelsk uden præfiks. G55: valg af sprog huskes.",
   "deps": [
@@ -5548,7 +5548,7 @@ window.WS_SPEC = [
   "gausta": "Live-data (vejr, snedybde, lifte, Gaustabanen) og eventuelle sensordata skal ved fejl vise ukendt eller sidste kendte værdi med tidsstempel og markering af forældede data, aldrig en brudt komponent. Offline-adfærd for gæsteområdet afhænger af, om det skal være en app med service worker. Sitet må ikke have runtime-kobling til hjemmeserveren (G28).",
   "built": {
    "s": "partial",
-   "where": "Sikkerhedsheadere (CSP, HSTS, nosniff, Referrer-Policy, Permissions-Policy, COOP) sættes i next.config.ts, men testes ikke. Fallback-logik for live-fliser er enhedstestet i tests/live-tiles.test.ts (isFresh, pickSeasons) og tests/gaustabanen.test.ts. Mangler: mock af API-fejl i browser, test af Sanity-fejl, offline-test, og grep efter hemmeligheder i build-output. Ikke kontrolleret: om CSP kører i report-only eller håndhævet."
+   "where": "23. oktober 2026: Playwright-tests kører i CI mod det byggede site (tests/e2e): røgtest af alle sider (status, sprog, h1, noindex, CSP-blokeringer, deling), sikkerhedsheadere inkl. at CSP håndhæves, cookies og lokal lagring, sporing, axe i tre årstider, og grep efter hemmeligheder i det byggede (scripts/check-secrets.mjs). Mangler: mock af API-fejl, Sanity-fejl, offline-test."
   },
   "decided": "G28: ingen runtime-kobling fra website til hjemmeserver. G9, G24, G93, G96: datakilderne og deres fallback til N/A.",
   "deps": [
@@ -5610,7 +5610,7 @@ window.WS_SPEC = [
   "gausta": "Gausta bygger harnesset trinvist fra start frem for at pause og genoptage. Grenbeskyttelse bør aktiveres fra start, hvis main auto-deployer. Staging er valgfrit; en preview-udrulning kan være nok. Gaustas CI skal bruge egne hemmeligheder til eget Sanity-projekt. Back-office kræver mindre ambition, men flere tests (se QA.9).",
   "built": {
    "s": "partial",
-   "where": ".github/workflows/ci.yml kører på push og pull_request: typecheck, vitest, kontrast, skemavalidering, build af site og Studio; jobbet deploy-studio kører kun på main og kun hvis hemmeligheden SANITY_AUTH_TOKEN findes. Ikke i repoet og ikke kontrolleret: grenbeskyttelse i GitHub, Railway-udrulning fra main. Staging findes ikke (byggeplan.md: mangler, ejerens trin), og der er ingen post-deploy-røgtest. Om build i CI bruger Sanity-projektets offentlige id og read-token er ikke kontrolleret."
+   "where": "23. oktober 2026: CI kører typecheck, enhedstests, kontrast, skema, tankestreg-kontrol, build, hemmelighedstjek og Playwright (.github/workflows/ci.yml); Studio udrulles fra main. Ikke i repoet og ikke kontrolleret: grenbeskyttelse i GitHub, Railway-udrulning fra main. Staging findes ikke."
   },
   "decided": "G58: Studio kører for sig selv og udrulles fra main. Kildekonflikt i Stormpine-materialet bevaret: Confluence siger QA-håndhævelse pauset, repoets docs siger CI kører og main er beskyttet. Genlæs live, før det tillægges betydning.",
   "deps": [
@@ -6415,7 +6415,7 @@ window.WS_SPEC = [
   "gausta": "Hello world er noindex og spærrer robotter, så forhåndsvisninger kan ikke testes før lancering eller en skjult testadresse. Billedrettigheder er uafklarede (prototypens billeder er pladsholdere).",
   "built": {
    "s": "partial",
-   "where": "Open Graph (titel, beskrivelse, sprog, billede 1200 x 630, canonical og hreflang) genereres i app/[locale]/[[...slug]]/page.tsx fra Sanity. Ikke fundet: og:url, og:image:alt, twitter:card, og:locale:alternate, delingsknap, opengraph-image, årstidsbillede til deling og Playwright-tests. Robotter spærres bevidst af app/robots.ts og X-Robots-Tag."
+   "where": "23. oktober 2026: metadata har nu og:url, og:site_name, og:locale:alternate, og:image med alt og twitter:card (app/[locale]/[[...slug]]/page.tsx), og røgtesten kontrollerer dem pr. side. Mangler stadig: delingsknap, årstidsbillede til deling, opengraph-image og afklaring af apex eller www. Robotter spærres bevidst."
   },
   "decided": "G52 (sprog og URL), G55 (sprogcookie uden samtykke).",
   "deps": [
