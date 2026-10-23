@@ -266,6 +266,7 @@
     { href: 'sideelementer.html', label: 'Sideelementer', match: ['sideelementer'] },
     { href: 'gaest.html', label: 'Gæsteområde', match: ['gaest'] },
     { href: 'backoffice.html', label: 'Back-office', match: ['backoffice'] },
+    { href: 'bo-elementer.html', label: 'Back-office elementer', match: ['bo-elementer'] },
     { href: 'backoffice-spec.html', label: 'Back-office spec', match: ['backoffice-spec'] },
     { href: 'website-spec.html', label: 'Website spec', match: ['website-spec'] }
   ];

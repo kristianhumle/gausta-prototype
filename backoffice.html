@@ -8,61 +8,109 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=c3">
+<link rel="stylesheet" href="styles.css?v=r1">
 </head>
-<body data-shell="site">
-<div class="sample-banner">EKSEMPELDATA: tallene på denne side er opfundne for at vise layoutet. Ingen er reelle.</div>
-<section class="section">
-  <div class="wrap">
-    <p class="eyebrow">C · Back-office</p>
-    <h1 style="font-size:clamp(2rem,4vw,3rem)">Marked, pris og drift.</h1>
-    <p class="lead">Login kræves (ejer, evt. medhjælper). Hvert tal skal vises med dato og kilde (C5).</p>
+<body data-shell="materials">
+<div class="sample-banner">PROTOTYPE: regnskabet bruger ejerens rækker fra regnearket plus fiktive rækker. Alle andre tal er opfundne.</div>
+<div class="bo-app">
+  <aside class="bo-side">
+    <div class="bo-brand">Back-office</div>
+    <div class="bo-user">Logget ind som Kristian (eksempel) · kun ejerne</div>
+    <nav class="bo-nav" aria-label="Back-office">
+      <a href="#overblik" data-view="overblik">Overblik</a>
+      <a href="#regnskab" data-view="regnskab">Regnskab <small>V6</small></a>
+      <a href="#udlejning" data-view="udlejning">Udlejning <small>V3</small></a>
+      <a href="#marked" data-view="marked">Marked <small>V4</small></a>
+      <a href="#kalender" data-view="kalender">Kalender <small>C3</small></a>
+      <a href="#sensorer" data-view="sensorer">Sensorer <small>V5</small></a>
+    </nav>
+    <div class="bo-foot">Prototype af back-office (del C). Elementerne findes enkeltvis under <a href="bo-elementer.html">Back-office elementer</a>.</div>
+  </aside>
 
-    <h2 style="margin-top:40px;font-size:1.5rem">C1 · Egen udlejningsperformance</h2>
-    <div class="grid grid-4" style="margin-top:16px">
-      <div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
-      <div class="kpi"><div class="label">Gns. døgnpris</div><b>0.000 kr</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
-      <div class="kpi"><div class="label">RevPAR</div><b>000 kr</b><span class="stamp">eksempel · beregnet</span></div>
-      <div class="kpi"><div class="label">Forudbestilling</div><b>00 dage</b><span class="stamp">eksempel · kilde: operatør</span></div>
-    </div>
-    <div class="card" style="margin-top:20px">
-      <div class="row-flex" style="justify-content:space-between"><h3 style="margin:0">Omsætning pr. måned</h3><span class="stamp">eksempel · år til år kan lægges ovenpå</span></div>
-      <div class="bars" style="margin:14px 0 30px"><div style="height:30%"><span>N</span></div><div style="height:55%"><span>D</span></div><div style="height:80%"><span>J</span></div><div style="height:90%"><span>F</span></div><div style="height:65%"><span>M</span></div><div style="height:40%"><span>A</span></div><div style="height:25%"><span>M</span></div><div style="height:35%"><span>J</span></div></div>
-    </div>
+  <main class="bo-main">
+    <section class="bo-view" data-view="overblik">
+      <h1>Overblik</h1>
+      <p class="lead">Er alt i orden? Nøgletal, næste premium-uge og status på lejligheden.</p>
+      <div data-boregn="overview"></div>
+      <div class="bo-cards" data-bo-overview></div>
+    </section>
 
-    <h2 style="margin-top:48px;font-size:1.5rem">C2 · Konkurrentovervågning</h2>
-    <div class="table-wrap" style="margin-top:16px"><table class="table">
-      <tr><th>Ejendom</th><th class="r">Pris/nat</th><th class="r">Belægning</th><th>Sidst hentet</th></tr>
-      <tr><td>Eksempel-lejlighed 1</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
-      <tr><td>Eksempel-lejlighed 2</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
-    </table></div>
-    <p class="faint" style="margin-top:8px">Belægning kan kun udledes af tilgængelighed og vises altid som estimat. Datakilder skal følge platformenes vilkår (åbent punkt).</p>
+    <section class="bo-view" data-view="regnskab" hidden>
+      <h1>Regnskab</h1>
+      <p class="lead">Indtægter og udgifter fra regnearket "Gausta regnskab". Ret posteringer i regnearket. Her vises de.</p>
+      <div data-boregn="full"></div>
+    </section>
 
-    <h2 style="margin-top:48px;font-size:1.5rem">C3 · Kalender: sæsoner, premium-uger, helligdage og skoleferier</h2>
-    <p class="muted" style="margin:6px 0 0">Hvornår efterspørgslen typisk stiger. Sæsoner fra Gausta utleie, udleje premium-ugerne (afgør sæsonliftkort, størst indtjening) fra Gausta Hytteleie, helligdage beregnet, skoleferier fra kommunernes ferieplaner. Hver periode har kilde og mærkning.</p>
-    <div class="card" style="margin-top:16px"><div data-bocal></div></div>
-
-    <h2 style="margin-top:48px;font-size:1.5rem">C7 · Sensorer</h2>
-    <div class="card" style="margin-top:16px"><h3 style="margin:0 0 4px">Plantegning med sensorer</h3><p class="muted" style="margin:0 0 14px;font-size:.9rem">Placering og seneste værdi pr. sensor. Eksempeldata.</p><div data-sensorplan></div></div>
-    <div class="grid grid-2" style="margin-top:16px;gap:20px">
-      <div class="card">
-        <div class="list-row"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen · 21 °C · 48 % (eksempel)</div></div><span class="stamp">00:00</span></div>
-        <div class="list-row"><span class="dot good"></span><div class="grow"><b>Terrasse</b><div class="meta">Temperatur · fugt · lys (eksempel)</div></div><span class="stamp">00:00</span></div>
-        <div class="list-row"><span class="dot warn"></span><div class="grow"><b>Hoveddør</b><div class="meta">Åbnet 00:00 · batteri 00 % (eksempel)</div></div><span class="stamp">00:00</span></div>
-        <div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel på alarmtilstand)</div></div><span class="stamp">00:00</span></div>
+    <section class="bo-view" data-view="udlejning" hidden>
+      <h1>Udlejning</h1>
+      <p class="lead">Egen udlejningsperformance (C1). Kilde: operatørens månedsafregning. Eksempeldata.</p>
+      <div class="grid grid-4" style="margin-top:16px">
+        <div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
+        <div class="kpi"><div class="label">Gns. døgnpris</div><b>0.000 kr</b><span class="stamp">eksempel · kilde: operatørens afregning</span></div>
+        <div class="kpi"><div class="label">RevPAR</div><b>000 kr</b><span class="stamp">eksempel · beregnet</span></div>
+        <div class="kpi"><div class="label">Forudbestilling</div><b>00 dage</b><span class="stamp">eksempel · kilde: operatør</span></div>
       </div>
-      <div class="stack">
-        <div class="notice bad"><b>Alarm (eksempel):</b> terrassedør åben, udendørs under frysepunktet.</div>
+      <div class="card" style="margin-top:20px">
+        <div class="row-flex" style="justify-content:space-between"><h3 style="margin:0">Omsætning pr. måned</h3><span class="stamp">eksempel · år til år kan lægges ovenpå</span></div>
+        <div class="bars" style="margin:14px 0 30px"><div style="height:30%"><span>N</span></div><div style="height:55%"><span>D</span></div><div style="height:80%"><span>J</span></div><div style="height:90%"><span>F</span></div><div style="height:65%"><span>M</span></div><div style="height:40%"><span>A</span></div><div style="height:25%"><span>M</span></div><div style="height:35%"><span>J</span></div></div>
+      </div>
+    </section>
+
+    <section class="bo-view" data-view="marked" hidden>
+      <h1>Marked</h1>
+      <p class="lead">Konkurrentovervågning (C2). Belægning kan kun udledes af tilgængelighed og vises altid som estimat. Eksempeldata.</p>
+      <div class="table-wrap" style="margin-top:16px"><table class="table">
+        <tr><th>Ejendom</th><th class="r">Pris/nat</th><th class="r">Belægning</th><th>Sidst hentet</th></tr>
+        <tr><td>Eksempel-lejlighed 1</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
+        <tr><td>Eksempel-lejlighed 2</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td><td class="stamp">åå-mm-dd · kilde</td></tr>
+      </table></div>
+    </section>
+
+    <section class="bo-view" data-view="kalender" hidden>
+      <h1>Kalender</h1>
+      <p class="lead">Sæsoner fra Gausta utleie, udleje premium-uger fra Gausta Hytteleie, helligdage og skoleferier i DK, SE og NO.</p>
+      <div class="card" style="margin-top:16px"><div data-bocal></div></div>
+    </section>
+
+    <section class="bo-view" data-view="sensorer" hidden>
+      <h1>Sensorer</h1>
+      <p class="lead">Placering og seneste værdi pr. sensor (C7). Eksempeldata.</p>
+      <div class="card" style="margin-top:16px"><div data-sensorplan></div></div>
+      <div class="stack" style="margin-top:16px">
         <div class="notice info">Historik skal gemmes af os (fx hvert 5. minut): UniFi leverer kun aktuelle målinger.</div>
-        <div class="notice">Forudsætninger åbne: hjemmegateway (Site Magic), internetabonnement og Alarm Manager-funktioner. Se spec. C7.</div>
+        <div class="notice">Forudsætninger åbne: hjemmegateway (Site Magic), internetabonnement, og hvordan Eva-enhederne forbindes. Se spec. C7.</div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
+  </main>
+</div>
 <script src="app.js"></script>
 <script src="plan.js"></script>
 <script src="bocal-data.js?v=c3"></script>
 <script src="bocal.js?v=c3"></script>
 <script src="sensorplan.js?v=s20261016b"></script>
+<script src="boregnskab-data.js?v=r1"></script>
+<script src="boregnskab.js?v=r1"></script>
+<script>
+(function () {
+  function show() {
+    var v = (location.hash || '#overblik').slice(1), ok = document.querySelector('.bo-view[data-view="' + v + '"]'); if (!ok) v = 'overblik';
+    [].forEach.call(document.querySelectorAll('.bo-view'), function (s) { s.hidden = s.dataset.view !== v; });
+    [].forEach.call(document.querySelectorAll('.bo-nav a'), function (a) { if (a.dataset.view === v) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current'); });
+  }
+  window.addEventListener('hashchange', function () { show(); window.scrollTo(0, 0); });
+  document.addEventListener('gl:ready', function () {
+    show();
+    var box = document.querySelector('[data-bo-overview]'); if (!box) return;
+    var today = new Date(), iso = today.toISOString().slice(0, 10), next = null;
+    (window.BOCAL ? window.BOCAL.highWeeks : []).forEach(function (w) { if (!next && w.to > iso) next = w; });
+    var S = (window.GL && GL.SensorPlan) ? GL.SensorPlan.SENSORS : [], bad = S.filter(function (s) { return s.st === 'bad'; }).length;
+    var unpaid = (window.BOREGN ? BOREGN.rows : []).filter(function (r) { return r.betalt !== 'Ja' && r.type === 'Udgift'; }).length;
+    box.innerHTML =
+      '<a class="card" href="#kalender"><span class="label stamp">Næste premium-uge</span><b>' + (next ? '★ ' + next.name : 'Ingen') + '</b><span class="muted" style="font-size:.86rem">' + (next ? next.from + ' til ' + next.to : '') + '</span></a>' +
+      '<a class="card" href="#sensorer"><span class="label stamp">Sensorer</span><b>' + (bad ? bad + ' alarm' : 'Alt OK') + '</b><span class="muted" style="font-size:.86rem">' + S.length + ' sensorer · eksempeldata</span></a>' +
+      '<a class="card" href="#regnskab"><span class="label stamp">Regnskab</span><b>' + unpaid + ' ubetalte udgifter</b><span class="muted" style="font-size:.86rem">Fra regnearket og fiktive rækker</span></a>';
+  });
+})();
+</script>
 </body>
 </html>

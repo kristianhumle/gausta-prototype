@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="da" data-season="autumn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Back-office elementer · gaustahome.com</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
+<link rel="stylesheet" href="styles.css?v=r1">
+</head>
+<body data-shell="materials">
+<main class="section" style="border:0"><div class="wrap">
+  <p class="eyebrow">Back-office · Elementkatalog</p>
+  <h1 style="font-size:clamp(2rem,4vw,3rem)">Byggeklodserne i back-office.</h1>
+  <p class="lead">Elementerne i back-office (del C), vist enkeltvis med status og krav. De hører ikke til det offentlige site eller gæsteområdet, kræver login og bruger eksempeldata. Se dem samlet i <a href="backoffice.html">back-office-prototypen</a>.</p>
+  <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
+  <div class="toc bo-toc"><a href="#e-boshell">App-ramme</a><a href="#e-regnskab">Regnskab</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-bocal">Kalender</a><a href="#e-sensorplan">Sensor-plantegning</a></div>
+  <div style="margin-top:24px"></div>
+  <div class="spec-block" id="e-boshell"><div class="spec-head"><h3>App-ramme: menu i siden</h3><div class="row-flex"><span class="pill-tag">back-office · V1</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><p class="muted" style="margin:0 0 10px;font-size:.9rem">Back-office er en app, ikke en del af websitet. Den har sin egen ramme: menu i venstre side (Overblik, Regnskab, Udlejning, Marked, Kalender, Sensorer), hvem der er logget ind, og ingen websitemenu eller Book-knap. På mobil bliver menuen en vandret række øverst. Se den i brug i <a href="backoffice.html">back-office-prototypen</a>.</p>
+      <div class="hdr-frame" style="border:1px solid var(--border);border-radius:var(--radius-sm);overflow:hidden"><iframe src="backoffice.html#overblik" title="Back-office, overblik" loading="lazy" style="width:100%;height:560px;border:0"></iframe></div></div>
+    <div class="spec-note"><b>Idé (Inference, 23. oktober 2026):</b> back-office adskilles fra websitet i både design og navigation (G28: ingen kobling). Login sker hos Cloudflare før appen (F3), så rammen viser kun, hvem der er logget ind. <b>Krav:</b> C5, V1.</div></div>
+
+  <div class="spec-block" id="e-regnskab"><div class="spec-head"><h3>Regnskab: indtægter og udgifter fra regnearket</h3><div class="row-flex"><span class="pill-tag">back-office · V6, D2, D4</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><div class="sample-banner" style="position:static;margin:0 0 14px;border-radius:var(--radius-sm)">DATA: ejerens 8 rækker fra regnearket "Gausta regnskab" (23. oktober 2026) plus fiktive lejeindtægter og udgifter, mærket "fiktiv".</div>
+      <div data-boregn="full"></div></div>
+    <div class="spec-note"><b>Idé (Brugeroplysning, 23. oktober 2026):</b> vise data fra Google-regnearket "Gausta regnskab" i back-office. Regnearket er master, back-office læser kun (G146).
+      <br><b>Indhold:</b> <b>synkstatus</b> (hvornår regnearket sidst er læst, antal rækker og fejl), <b>valg</b> (år, medtag etablering, medtag egen brug, fordel over periode, vis fiktive rækker), <b>nøgletal</b> (indtægter, udgifter og resultat <b>pr. valuta</b>, plus et samlet tal omregnet med dateret kurs ved siden af), <b>etablering</b> og <b>ikke betalt</b> for sig, <b>graf pr. måned</b> (indtægter mod udgifter med resultat), <b>udgifter pr. kategori</b> (klik for at filtrere) og <b>posteringstabel</b> med mærker (ikke betalt, etablering, egen brug, periode, fiktiv eller fra regnearket).
+      <br><b>Regler:</b> NOK og DKK lægges aldrig sammen i samme subtotal. Grafer og det samlede tal er omregnet til NOK og mærket med kurs og dato (her eksempelkursen fra vidensbasen, Norges Bank 2. oktober 2026). Etablering og egen brug holdes som standard uden for driften. Beløb med Periode fra/til fordeles over månederne (fx kommunale afgifter for et kvartal).
+      <br><b>Fiktive rækker:</b> operatørens afregninger november 2026 til april 2027 (opdigtede beløb, højest i premium-månederne), fællesudgift, strøm, internet, kommunale afgifter, renter (DKK) og en operatørfaktura. De er kun til at vise visningen.
+      <br><b>Åbent:</b> budget mod faktisk (fanen Budget er tom), dagskurs fra Norges Bank (I4), og hvordan operatørens afregning indtastes (G1, G2).</div></div>
+
+  <div class="spec-block" id="e-kpi"><div class="spec-head"><h3>KPI-flise og søjlediagram</h3><div class="row-flex"><span class="pill-tag">back-office · C1</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body"><div class="grid grid-2"><div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde, dato</span></div><div class="card"><div class="bars" style="margin-bottom:24px"><div style="height:40%"><span>J</span></div><div style="height:70%"><span>F</span></div><div style="height:55%"><span>M</span></div></div></div></div></div>
+    <div class="spec-note"><b>Regel:</b> hvert tal har dato og kilde (C5). Estimater mærkes. Diagrambibliotek vælges i den tekniske specifikation.</div></div>
+
+  <div class="spec-block" id="e-table"><div class="spec-head"><h3>Datatabel med estimat-mærke</h3><div class="row-flex"><span class="pill-tag">back-office · C2, C4</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body"><div class="table-wrap"><table class="table"><tr><th>Ejendom</th><th class="r">Pris/nat</th><th class="r">Belægning</th></tr><tr><td>Eksempel</td><td class="r">0.000 kr</td><td class="r">00 % <span class="pill-tag warn">estimat</span></td></tr></table></div></div>
+    <div class="spec-note"><b>Krav:</b> C5 eksport til CSV og Excel, datahistorik som snapshots.</div></div>
+
+  <div class="spec-block" id="e-sensor"><div class="spec-head"><h3>Sensorrække og alarm</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body"><div class="list-row" style="padding-top:0"><span class="dot good"></span><div class="grow"><b>Badeværelse</b><div class="meta">Lækage: ingen (eksempel)</div></div><span class="stamp">00:00</span></div><div class="list-row"><span class="dot bad"></span><div class="grow"><b>Terrassedør</b><div class="meta">Offline (eksempel)</div></div><span class="stamp">00:00</span></div></div>
+    <div class="spec-note"><b>Foreslået:</b> plantegningsvisning med sensorer. Afhænger af hardware og netværk (åbne punkter i spec.).</div></div>
+
+  <div class="spec-block" id="e-bocal"><div class="spec-head"><h3>Kalender: sæsoner, premium-uger, helligdage og skoleferier</h3><div class="row-flex"><span class="pill-tag">back-office · C3</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><div data-bocal></div></div>
+    <div class="spec-note"><b>Idé (Brugeroplysning, 16. oktober 2026):</b> én kalender, der viser, hvornår efterspørgslen typisk stiger: helligdage og skoleferier i Danmark, Sverige og Norge, Gaustas sæsoner og de 6 udleje premium-uger. Øverst en <b>ugestribe</b> for hele perioden (farve = sæson, ★ = udleje premium-uge, tal = antal lande med skoleferie), en boks, der forklarer premium-ugerne og reglen om sæsonliftkort,, derunder en <b>månedskalender</b> med lag og lande, der kan slås til og fra, og en liste over månedens perioder med kilde. Klik på en dag for detaljer.
+      <br><b>Data:</b> sæsoner fra Gausta utleies sæsonkalender (vinter 26-27, sommer 27, vinter 27-28) for lejligheder. <b>Udleje premium-uger</b> fra <b>Gausta Hytteleie</b> (Jul, Nytår, uge 7, uge 8, Påske del 1 og 2): de 6 uger, der afgør antallet af sæsonliftkort (3 uger stillet til rådighed for udleje giver 1 sæsonliftkort, alle 6 giver 2), og ugerne med størst indtjening. De er derfor markeret kraftigst med ★: rød ramme og skravering hen over hele ugen, rødt mærke med ★ og navn på ankomstdagen, én ★ pr. premium-uge i ugestriben (★★, hvis to ligger i samme kalenderuge, som Påske del 1 og 2 i uge 12), og de står øverst i månedens liste. Helligdage beregnes (påske efter den gregorianske regel), ikke-lovbestemte fridage (fx juleaften) vises stiplet. Skoleferier: Oslo kommune, Göteborgs Stad, Täby kommun, Malmö stad og Uppsala kommun (Fakta), svensk sportlov i vecka 10 (Norrland) som fast mønster (Inference), danske kommuners ferieplaner via calendar.center (Kildepåstand) og faste mønstre for efteråret 2027 (Inference). Detaljer og kilder: <code class="token">teknisk/datakilder/16-kalender-saesoner-og-ferier.md</code>.
+      <br><b>To kilder, bevidst vist hver for sig:</b> sæsonerne er Gausta utleies prisperioder, premium-ugerne er Gausta Hytteleies liftkort- og indtjeningsuger. De er ikke ens: "Jul" (20. til 27. december) er Ordinær i sæsonkalenderen, "Nytår" og "Påske del 1" er bredere end højsæsonen dér. Gaustas sæsontabel lader desuden lavsæson og ordinær sæson dele 6. februar.
+      <br><b>Åbent:</b> skoleferier i Telemark og andre norske fylker, sommerferier i Norge og Sverige, og om kalenderen skal hente helligdage og ferier automatisk (fx fra en helligdags-API) eller vedligeholdes manuelt. Kun back-office.</div></div>
+
+  <div class="spec-block" id="e-sensorplan"><div class="spec-head"><h3>Sensor-plantegning</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status prototype">Prototype</span></div></div>
+    <div class="spec-body"><div class="sample-banner" style="position:static;margin:0 0 14px;border-radius:var(--radius-sm)">EKSEMPELDATA: alle værdier er opfundne for at vise layoutet. Placeringerne er cirka.</div>
+      <div data-sensorplan></div></div>
+    <div class="spec-note"><b>Idé:</b> samme plantegning som på lejlighedssiden, med sensorernes placering og seneste værdi. Tryk på en sensor (eller vælg den i listen) for detaljer: sidste værdi, batteri, forbindelse og de seneste 24 timer. Lag: <b>Døre</b>, <b>Temperatur og fugt</b>, <b>Røg og fugt</b>, <b>Net og Wi-Fi</b>. Tonede cirkler viser det, der <b>ikke</b> er installeret.
+      <br><b>Med i prototypen (Brugeroplysning):</b> dørsensor på hoveddør og terrassedør (åben/lukket, sidst åbnet, temperatur i entré og TV-stue), temperatur på badeværelse og terrasse (badeværelset også fugt og lækage), og net- og Wi-Fi-status i entréen (internet, svartid, hastighed, antal enheder, sensor-gateway). <b>Tilføjet 16. oktober 2026 (ejerens skitse):</b> Eva-fugtmåler ved køkkenbordet, Eva-røgdetektor ved søjlen i stuen, to Eva-termostater (stuen og TV-stuen), SuperLink Gateway i stuen og internetstikket i stuens hjørne. Den tonede røgalarm er fjernet. <b>Åbent:</b> mærke, model og forbindelse for Eva-enhederne, og om back-office kan læse dem.
+      <br><b>Forslag til mere (Inference, ikke besluttet):</b> batteriniveau og offline-markering på planen, signalstyrke pr. sensor, fugt og dugpunkt (skimmelrisiko), frostalarm når boligen er tom, dørsensorer mod bookinger (aktivitet uden booking, C7), 24-timers kurve pr. sensor, tidsstempel med "ældre end X minutter" som advarsel, lækagesensor ved opvaskemaskinen (fravalgt), vindues- og altandør-sensor, og el- og vandforbrug (kræver anden hardware).
+      <br><b>Data og regler:</b> hvert tal har dato og kilde (C5). UniFi leverer kun aktuelle målinger, så historik gemmes af os (C7). Dørsensorer tæller ikke personer og virker kun ved 0 til 45 °C. Terrassens sensor kan komme under sin nedre grænse på -20 °C. Planen er en skitse (ikke målfast), og placeringerne skal verificeres ved installationen. <b>Åbent:</b> hjemmegateway (Site Magic), internetabonnement og hvilke sensortyper API'et dækker. Kun back-office (login), aldrig på det offentlige site eller i gæsteområdet (N18, G28).</div></div>
+</div></main>
+<script src="app.js"></script>
+<script src="plan.js"></script>
+<script src="bocal-data.js?v=c3"></script>
+<script src="bocal.js?v=c3"></script>
+<script src="sensorplan.js?v=s20261016b"></script>
+<script src="boregnskab-data.js?v=r1"></script>
+<script src="boregnskab.js?v=r1"></script>
+</body>
+</html>
