@@ -160,8 +160,7 @@
       panel.innerHTML = '<button type="button" class="am-back btn btn-ghost btn-sm" data-back>← Tilbage til listen</button>' + '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
         (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a></figcaption></figure>' : '') +
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
-        (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '') +
-        '<p class="plan-desc am-desc">' + esc(p.t) + '</p>' +
+               '<p class="plan-desc am-desc">' + esc(p.t) + '</p>' +
         '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + (p.vandring ? '<a class="btn btn-primary btn-sm" href="vandring.html#' + p.vandring + '">Se vandreturen</a>' : '') + '</div>';
       panel.scrollTop = 0;
     }
@@ -280,7 +279,7 @@
     var key = function (p) { return kind === 'close' ? p.air : (p.drive ? p.drive[1] : 9999); };
     all.sort(function (a, b) { return key(a) - key(b); });
     var dist = function (p) { return kind === 'close' ? 'ca. ' + km(p.air) : (p.drive ? p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)' : 'til fods eller med Gaustabanen'); };
-    var note = kind === 'close' ? 'Afstand er luftlinje fra Skipsfjellvegen 52.' : 'Køretid fra lejligheden i bil, beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM). Alle steder og oplysninger er kildepåstande og skal verificeres.';
+    var note = kind === 'close' ? 'Afstand er luftlinje fra Skipsfjellvegen 52.' : '';   // køretidsnoten (OSRM) er fjernet (G142)
     if (el.getAttribute('data-praktisk')) note = '';   // Tæt på (praktiske steder) og Oplevelser: ingen køretidsnote (G139, G141)
     var box = el, sel = { t: '', d: '' };
     var buckets = kind === 'close' ? [['', 'Alle afstande'], ['a', 'Under 500 m'], ['b', '500 m til 1 km'], ['c', 'Over 1 km']] : [['', 'Alle køretider'], ['a', 'Under 15 min'], ['b', '15 til 30 min'], ['c', 'Over 30 min']];
