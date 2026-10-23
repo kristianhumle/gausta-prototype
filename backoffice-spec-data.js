@@ -139,7 +139,7 @@ window.BO_SPEC = [
     out: 'Faner, kolonner, rullemenuer og regler for valuta. Udkast skrevet 23. oktober 2026.',
     deps: [], req: 'C8',
     decided: 'Regnearket er master, back-office læser kun, økonomidata må ligge i Google, nyt regneark, Tine kan rette (din beslutning 23. oktober 2026).',
-    open: ['Faner og kolonner oprettes i regnearket.', 'Kategorilisten.', 'Hvilke skatter gælder (ikke valideret)?'] },
+    open: ['Godkend opbygningen af regnearket (sat op 23. oktober 2026).', 'Kategorilisten.', 'Hvilke skatter gælder (ikke valideret)?'] },
   { id: 'D3', g: 'D', status: 'open', title: 'Bilag (fakturaer som filer)',
     what: 'Hvor fakturaer og kvitteringer gemmes, og at de kommer med i backup.',
     out: 'Lagringssted, filtyper, navngivning og backup.',
