@@ -1531,3 +1531,6 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 
 /* Området: tilbage til listen fra et sted eller en gruppe (G138) */
 .am-back { margin: 0 0 10px; }
+
+/* Stedkort: afstand mellem linjen og knapperne (G139) */
+.card .list-row + .row-flex { margin-top: 12px; }

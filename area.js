@@ -281,6 +281,7 @@
     all.sort(function (a, b) { return key(a) - key(b); });
     var dist = function (p) { return kind === 'close' ? 'ca. ' + km(p.air) : (p.drive ? p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)' : 'til fods eller med Gaustabanen'); };
     var note = kind === 'close' ? 'Afstand er luftlinje fra Skipsfjellvegen 52.' : 'Køretid fra lejligheden i bil, beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM). Alle steder og oplysninger er kildepåstande og skal verificeres.';
+    if (el.getAttribute('data-praktisk') === 'kun') note = '';   // Tæt på, praktiske steder: ingen fodnote (G139)
     var box = el, sel = { t: '', d: '' };
     var buckets = kind === 'close' ? [['', 'Alle afstande'], ['a', 'Under 500 m'], ['b', '500 m til 1 km'], ['c', 'Over 1 km']] : [['', 'Alle køretider'], ['a', 'Under 15 min'], ['b', '15 til 30 min'], ['c', 'Over 30 min']];
     var inBucket = function (p, d) {
@@ -290,13 +291,13 @@
     };
     function draw() {
     var pois = all.filter(function (p) { return (!sel.t || p.c === sel.t) && inBucket(p, sel.d); });
-    if (!pois.length) { box.innerHTML = '<p class="muted" style="margin:16px 0">Ingen steder matcher det valgte filter.</p><p class="faint">' + note + '</p>'; return; }
+    if (!pois.length) { box.innerHTML = '<p class="muted" style="margin:16px 0">Ingen steder matcher det valgte filter.</p>' + (note ? '<p class="faint">' + note + '</p>' : '') ; return; }
     if (style === 'cards') {
       box.innerHTML = '<div class="grid grid-3">' + pois.map(function (p) {
         return '<div class="card">' + (p.img ? '<figure class="am-fig am-fig-card"><img src="' + p.img.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + p.img.l + '" target="_blank" rel="noopener">' + p.img.k + '</a></figcaption></figure>' : '') + '<div class="kicker">' + CAT_NAME[kind + ':' + p.c] + '</div><h3>' + esc(p.n) + '</h3><p class="muted">' + esc(p.t) + '</p>' +
           '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</span><span>' + dist(p) + '</span></div>' +
           '<div class="row-flex">' + (p.l ? '<a class="btn btn-ghost btn-sm" href="' + p.l + '" target="_blank" rel="noopener">Officiel side <span aria-hidden="true">↗</span></a>' : '<span class="faint">Link kommer</span>') + (p.vandring ? '<a class="btn btn-primary btn-sm" href="vandring.html#' + p.vandring + '">Se vandreturen</a>' : '') + '</div></div>';
-      }).join('') + '</div><p class="faint" style="margin-top:12px">' + note + '</p>';
+      }).join('') + '</div>' + (note ? '<p class="faint" style="margin-top:12px">' + note + '</p>' : '');
     } else {
       // Miniature af samme billede som i kortets panel (klik viser det stort i lysboksen, med kilde i billedteksten).
       var hasImg = pois.some(function (p) { return p.img; });
@@ -307,7 +308,7 @@
       };
       box.innerHTML = '<div class="table-wrap" data-gallery-group><table class="table area-table"><tr>' + (hasImg ? '<th class="col-img"><span class="sr-only">Billede</span></th>' : '') + '<th>Sted</th><th class="col-type">Type</th><th class="r">' + (kind === 'wide' ? 'Køretid' : 'Afstand') + '</th><th></th></tr>' + pois.map(function (p) {
         return '<tr>' + thumb(p) + '<td><b>' + esc(p.n) + '</b><div class="meta type-sub">' + CAT_NAME[kind + ':' + p.c] + '</div></td><td class="muted col-type">' + CAT_NAME[kind + ':' + p.c] + '</td><td class="r num">' + dist(p) + '</td><td class="r">' + (p.l ? '<a href="' + p.l + '" target="_blank" rel="noopener" aria-label="Officiel side for ' + esc(p.n) + '">link <span aria-hidden="true">↗</span></a>' : '') + '</td></tr>';
-      }).join('') + '</table></div><p class="faint" style="margin-top:10px">' + note + '</p>';
+      }).join('') + '</table></div>' + (note ? '<p class="faint" style="margin-top:10px">' + note + '</p>' : '');
     }
     }
     if (el.hasAttribute('data-filter')) {
