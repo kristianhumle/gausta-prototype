@@ -1248,7 +1248,7 @@ window.WS_SPEC = [
  {
   "id": "N3.2",
   "g": "N3",
-  "status": "open",
+  "status": "approved",
   "rel": "tilpasses",
   "title": "Samtykkeløsning og blokering af scripts og embeds",
   "what": "Hvis sitet sætter cookies ud over de strengt nødvendige, skal der være et samtykkebanner, hvor afvis er lige så let som acceptér, uden forhåndsafkrydsning og uden cookie wall. Tilbagekaldelse skal være lige så let, og valget logges. Scripts må først køre efter samtykke.",
@@ -1257,7 +1257,7 @@ window.WS_SPEC = [
    "s": "none",
    "where": "Ingen kode eller opsætning fundet i produktionsrepoet (18. oktober 2026). Der er ingen samtykkeløsning, og Gausta LIVE indlæses automatisk uden klik (components/blocks/live/LiveCam.tsx, G85)."
   },
-  "decided": "G85 (webcam automatisk afspilning), G71 (forholdene lige nu med webcam), G10.",
+  "decided": "G85 (webcam automatisk afspilning), G71 (forholdene lige nu med webcam), G10, G147 (23. oktober 2026: nuværende webcam-løsning godkendt).",
   "deps": [
    "N3.1"
   ],
@@ -1313,8 +1313,8 @@ window.WS_SPEC = [
     "e": "Ingen CMP og dermed ingen samtykkelog eller re-consent-kadence."
    }
   ],
-  "needs": "Afventer din beslutning om privatliv og samtykke (svar 18. oktober 2026: afvent). Samtykkeløsning eller klik-for-at-indlæse (juridisk).",
-  "waits": true
+  "waits": true,
+  "appr": "Godkendt af ejeren 23. oktober 2026 (Brugeroplysning): den nuværende webcam-løsning beholdes. Gausta LIVE (Norway Live via youtube-nocookie.com) indlæses i fliserne uden klik og starter uden lyd (G71, G85). Ejeren vil ikke have klik-for-at-indlæse eller samtykkebanner til webcam i denne omgang. Forbehold, der ikke er afklaret af beslutningen: om YouTube-feedet sætter cookies eller sender data, når det indlæses, skal kontrolleres i en browser (N3.1), og privatlivspolitikken skal nævne YouTube og Norway Live. Tilladelsen fra Norway Live er stadig uafklaret."
  },
  {
   "id": "N3.3",
@@ -5761,7 +5761,7 @@ window.WS_SPEC = [
  {
   "id": "N14.2",
   "g": "N14",
-  "status": "open",
+  "status": "approved",
   "rel": "gaelder",
   "title": "Cookiefri indhentning og fallback",
   "what": "Kilder hentes på serveren og caches, så den besøgendes browser ikke kontakter tredjepart og ikke får cookies. Ved nedbrud skal siden vise en fallback, så den ikke går i stykker.",
@@ -5770,7 +5770,7 @@ window.WS_SPEC = [
    "s": "partial",
    "where": "lib/met.ts og lib/fnugg.ts henter på serveren med revalidate (30 og 15 minutter) og returnerer null ved fejl, jf. lib/live-tiles.ts. CSP i next.config.ts tillader kun YouTube (nocookie), Sanity og Turnstile som eksterne kilder. Kort og webcam-indlejring ikke kontrolleret i detaljer."
   },
-  "decided": "G10 (cookiefrit kort), G24, G27 (webcam), G76 (data fra gausta.com, ellers N/A), G93.",
+  "decided": "G10 (cookiefrit kort), G24, G27 (webcam), G76 (data fra gausta.com, ellers N/A), G93, G147.",
   "deps": [
    "N19.1"
   ],
@@ -5797,7 +5797,7 @@ window.WS_SPEC = [
     "e": "LiveSection.tsx viser live.na og live.noData ved null; lib/live-tiles.ts skjuler gammel data; tosproget UI-streng, test i live-tiles.test.ts"
    }
   ],
-  "needs": "Den endelige webcam-metode."
+  "appr": "Godkendt af ejeren 23. oktober 2026 (Brugeroplysning): den endelige webcam-metode er indlejring af Gausta LIVE som i dag (G85, G147). Kilder til vejr og forhold hentes stadig på serveren med fallback. Åbent: Norway Lives tilladelse og kontrol af cookies fra YouTube-indlejringen (N3.1)."
  },
  {
   "id": "N15.1",
