@@ -1603,3 +1603,26 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
   .bo-cards { grid-template-columns: 1fr; }
 }
 .br-table td.stamp { white-space: nowrap; }
+
+/* back-office vurdering (bovurdering.js, C10) */
+.bv-when { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 4px 0 14px; padding: 10px 14px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.bv-when label { flex: 1 1 260px; }
+.bv-when input[type=range] { flex: 2 1 260px; accent-color: var(--accent); }
+.bv-split { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 12px; }
+.bv-split > div { display: flex; flex-direction: column; gap: 2px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.bv-split b { font-family: var(--font-mono); font-weight: 500; font-size: 1.1rem; } .bv-split b.pos { color: var(--good); } .bv-split b.neg { color: var(--coral); }
+.bv-split .faint { font-size: .76rem; }
+.bv-split .bv-sum { background: var(--elevated); }
+.bv-line { fill: none; stroke: var(--accent); stroke-width: 2; }
+.bv-line.fik { stroke-dasharray: 5 4; opacity: .8; }
+.bv-line.avg { stroke: var(--text); stroke-width: 2; }
+.bv-line.tot { stroke: var(--text); stroke-width: 2.5; }
+.bv-line.val { stroke: var(--accent); }
+.bv-line.pris { stroke: var(--good); }
+.bv-h { stroke: var(--coral); stroke-dasharray: 3 3; stroke-width: 1.2; }
+.bv-hl { font: 600 11px var(--font-mono); fill: var(--coral); }
+.bv-mark { stroke: var(--faint); stroke-width: 1; stroke-dasharray: 2 3; }
+.bv-dot { fill: var(--accent); stroke: var(--surface); stroke-width: 1.5; }
+.bv-dot.fik { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
+.bv-k { height: 3px !important; } .bv-k.tot { background: var(--text); } .bv-k.val { background: var(--accent); } .bv-k.pris { background: var(--good); }
+@media (max-width: 860px) { .bv-split { grid-template-columns: 1fr 1fr; } }

@@ -8,10 +8,10 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=r3">
+<link rel="stylesheet" href="styles.css?v=v1">
 </head>
 <body data-shell="materials">
-<div class="sample-banner">PROTOTYPE: regnskabet bruger ejerens rækker fra regnearket plus fiktive rækker. Alle andre tal er opfundne.</div>
+<div class="sample-banner">PROTOTYPE: regnskab og vurdering bruger ejerens regneark, Norges Banks kurser og Lodge-handler fra vidensbasen plus fiktive rækker. Øvrige tal er opfundne.</div>
 <div class="bo-app">
   <aside class="bo-side">
     <div class="bo-brand">Back-office</div>
@@ -19,6 +19,7 @@
     <nav class="bo-nav" aria-label="Back-office">
       <a href="#overblik" data-view="overblik">Overblik</a>
       <a href="#regnskab" data-view="regnskab">Regnskab <small>V6</small></a>
+      <a href="#vurdering" data-view="vurdering">Vurdering <small>C10</small></a>
       <a href="#udlejning" data-view="udlejning">Udlejning <small>V3</small></a>
       <a href="#marked" data-view="marked">Marked <small>V4</small></a>
       <a href="#kalender" data-view="kalender">Kalender <small>C3</small></a>
@@ -39,6 +40,12 @@
       <h1>Regnskab</h1>
       <p class="lead">Indtægter og udgifter fra regnearket "Gausta regnskab". Ret posteringer i regnearket. Her vises de.</p>
       <div data-boregn="full"></div>
+    </section>
+
+    <section class="bo-view" data-view="vurdering" hidden>
+      <h1>Vurdering</h1>
+      <p class="lead">Estimeret værdi af B102 ud fra anskaffelsen, udviklingen i m²-prisen for solgte Lodge-lejligheder og NOK/DKK-kursen.</p>
+      <div data-bovurd></div>
     </section>
 
     <section class="bo-view" data-view="udlejning" hidden>
@@ -90,6 +97,8 @@
 <script src="sensorplan.js?v=s20261016b"></script>
 <script src="boregnskab-data.js?v=r3"></script>
 <script src="boregnskab.js?v=r3"></script>
+<script src="bovurdering-data.js?v=v1"></script>
+<script src="bovurdering.js?v=v1"></script>
 <script>
 (function () {
   function show() {

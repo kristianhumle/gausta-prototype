@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=r3">
+<link rel="stylesheet" href="styles.css?v=v1">
 </head>
 <body data-shell="materials">
 <main class="section" style="border:0"><div class="wrap">
@@ -16,7 +16,7 @@
   <h1 style="font-size:clamp(2rem,4vw,3rem)">Byggeklodserne i back-office.</h1>
   <p class="lead">Elementerne i back-office (del C), vist enkeltvis med status og krav. De hører ikke til det offentlige site eller gæsteområdet, kræver login og bruger eksempeldata. Se dem samlet i <a href="backoffice.html">back-office-prototypen</a>.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
-  <div class="toc bo-toc"><a href="#e-boshell">App-ramme</a><a href="#e-regnskab">Regnskab</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-bocal">Kalender</a><a href="#e-sensorplan">Sensor-plantegning</a></div>
+  <div class="toc bo-toc"><a href="#e-boshell">App-ramme</a><a href="#e-regnskab">Regnskab</a><a href="#e-vurdering">Vurdering</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-bocal">Kalender</a><a href="#e-sensorplan">Sensor-plantegning</a></div>
   <div style="margin-top:24px"></div>
   <div class="spec-block" id="e-boshell"><div class="spec-head"><h3>App-ramme: menu i siden</h3><div class="row-flex"><span class="pill-tag">back-office · V1</span><span class="status proposed">Foreslået</span></div></div>
     <div class="spec-body"><p class="muted" style="margin:0 0 10px;font-size:.9rem">Back-office er en app, ikke en del af websitet. Den har sin egen ramme: menu i venstre side (Overblik, Regnskab, Udlejning, Marked, Kalender, Sensorer), hvem der er logget ind, og ingen websitemenu eller Book-knap. På mobil bliver menuen en vandret række øverst. Se den i brug i <a href="backoffice.html">back-office-prototypen</a>.</p>
@@ -31,6 +31,15 @@
       <br><b>Regler:</b> NOK og DKK lægges aldrig sammen i samme subtotal. Grafer og det samlede tal er omregnet til NOK og mærket med kurs og dato (her eksempelkursen fra vidensbasen, Norges Bank 2. oktober 2026). Etablering og egen brug holdes som standard uden for driften. Beløb med Periode fra/til fordeles over månederne (fx kommunale afgifter for et kvartal).
       <br><b>Fiktive rækker:</b> operatørens afregninger november 2026 til april 2027 (opdigtede beløb, højest i premium-månederne), fællesudgift, strøm, internet, kommunale afgifter, renter (DKK) og en operatørfaktura. De er kun til at vise visningen.
       <br><b>Åbent:</b> budget mod faktisk (fanen Budget er tom), dagskurs fra Norges Bank (I4), og hvordan operatørens afregning indtastes (G1, G2).</div></div>
+
+  <div class="spec-block" id="e-vurdering"><div class="spec-head"><h3>Vurdering: estimeret værdi med pris- og valutagevinst</h3><div class="row-flex"><span class="pill-tag">back-office · C10</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><div class="sample-banner" style="position:static;margin:0 0 14px;border-radius:var(--radius-sm)">DATA: anskaffelse fra ejerens regneark "Gaustakøb", rigtige kurser fra Norges Bank til 23. oktober 2026, Lodge-handler fra vidensbasen. Efter 23. oktober 2026 er kurser og handler fiktive.</div>
+      <div data-bovurd></div></div>
+    <div class="spec-note"><b>Idé (Brugeroplysning, 23. oktober 2026):</b> en side "Vurdering", der tager udgangspunkt i anskaffelsesprisen og løbende opdaterer vurderingen med to parametre: <b>valutagevinst</b> (NOK/DKK) og <b>udviklingen i gennemsnitlig m²-pris</b> for solgte Lodge-lejligheder.
+      <br><b>Metode (Inference):</b> værdi i NOK = anskaffelse × (gennemsnitlig m²-pris i vinduet nu ÷ samme ved anskaffelsen). B102 ligger under Lodge-gennemsnittet (byggeår 2008), så vurderingen følger den relative udvikling, ikke niveauet. Spændet er den laveste og højeste m²-pris i vinduet. Værdi i DKK = værdi i NOK × dagskurs. Opdelingen i prisgevinst, valutagevinst og krydseffekt er den samme som i regnearket "Gaustakøb".
+      <br><b>Valg:</b> ekskl. eller inkl. løsøre, vindue 12 eller 24 måneder (udvides automatisk, hvis der er færre end 2 handler), alle Lodge-handler eller kun byggeår 2008, og fiktivt forløb til og med december 2027. Skyderen vælger vurderingsdatoen.
+      <br><b>Regler:</b> estimat, ikke en officiel vurdering eller rådgivning. Papirgevinst før skat. Handlerne er kildepåstande (finn.no, Eiendomsverdi), ikke tinglyste købesummer. Krav C10, C9, C4.
+      <br><b>Åbent:</b> automatisk hentning af nye Lodge-handler (C4, udskudt), dagskurs fra Norges Bank i drift (I4), og om vinduet eller udvalget skal være anderledes som standard.</div></div>
 
   <div class="spec-block" id="e-kpi"><div class="spec-head"><h3>KPI-flise og søjlediagram</h3><div class="row-flex"><span class="pill-tag">back-office · C1</span><span class="status prototype">Prototype</span></div></div>
     <div class="spec-body"><div class="grid grid-2"><div class="kpi"><div class="label">Belægning</div><b>00 %</b><span class="stamp">eksempel · kilde, dato</span></div><div class="card"><div class="bars" style="margin-bottom:24px"><div style="height:40%"><span>J</span></div><div style="height:70%"><span>F</span></div><div style="height:55%"><span>M</span></div></div></div></div></div>
@@ -66,5 +75,7 @@
 <script src="sensorplan.js?v=s20261016b"></script>
 <script src="boregnskab-data.js?v=r3"></script>
 <script src="boregnskab.js?v=r3"></script>
+<script src="bovurdering-data.js?v=v1"></script>
+<script src="bovurdering.js?v=v1"></script>
 </body>
 </html>
