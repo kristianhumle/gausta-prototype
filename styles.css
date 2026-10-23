@@ -1528,3 +1528,17 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .ws-key.ws-r-green { background: color-mix(in srgb, var(--good) 35%, transparent); }
 .ws-key.ws-r-yellow { background: color-mix(in srgb, var(--amber) 38%, transparent); }
 .ws-key.ws-r-red { background: color-mix(in srgb, var(--coral) 35%, transparent); }
+
+/* ===== Sommerpalet: forsøg med varmere farver (23. oktober 2026). Standard (ingen attribut) er den nuværende kolde palet.
+   Vælges i panelet nederst til venstre, når sommer er valgt, eller med ?sommer=honning|koral|eng|sand. Alle par er kontrolleret til 4,5:1. ===== */
+[data-season="summer"][data-summer="honning"] { --bg:#FBF3E0;--surface:#FFFCF3;--elevated:#F3E6C5;--border:#E6D5A8;--text:#2A2210;--muted:#6B5B30;--faint:#756639;--accent:#9E6C10;--accent-text:#8D5D07;--accent-weak:#F5E6BF;--sky-top:#FBE9B8;--sky-bot:#FFF8E6;--r1:#F0D48A;--r2:#DDB35A;--r3:#BF8C2C; }
+[data-season="summer"][data-summer="koral"] { --bg:#FBF0EA;--surface:#FFFAF6;--elevated:#F5DDD2;--border:#EBCBBC;--text:#2B1812;--muted:#735044;--faint:#805B4F;--accent:#BF553D;--accent-text:#A9432E;--accent-weak:#F7DDD3;--sky-top:#FBDCCF;--sky-bot:#FFF3EC;--r1:#F0B8A2;--r2:#E08C72;--r3:#C45F46; }
+[data-season="summer"][data-summer="eng"] { --bg:#F4F3DF;--surface:#FDFCEE;--elevated:#E7E8C4;--border:#D5D8A8;--text:#1E2410;--muted:#596030;--faint:#636A3B;--accent:#657F1B;--accent-text:#556E12;--accent-weak:#E4EBC0;--sky-top:#EBF0C4;--sky-bot:#F9FAE8;--r1:#CBD98E;--r2:#A8BE5E;--r3:#7E9A2E; }
+[data-season="summer"][data-summer="sand"] { --bg:#F6F0E3;--surface:#FFFCF5;--elevated:#EBE2CC;--border:#DDD1B3;--text:#20201A;--muted:#605A47;--faint:#6B644B;--accent:#23766A;--accent-text:#1B665B;--accent-weak:#DDEBE0;--sky-top:#F3E7C9;--sky-bot:#FAF6EA;--r1:#A6CFC4;--r2:#79B3A5;--r3:#4E9585; }
+.summer-pal { position: fixed; left: 14px; bottom: 14px; z-index: 120; background: var(--surface); color: var(--text); border: 1px solid var(--border); border-radius: var(--radius); box-shadow: var(--shadow-sm, 0 4px 18px rgba(0,0,0,.14)); padding: 10px 12px; max-width: calc(100vw - 28px); font-size: .8rem; }
+.summer-pal[hidden] { display: none; }
+.summer-pal b { display: block; margin-bottom: 6px; font-size: .72rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.summer-pal .sp-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.summer-pal button { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--bg); color: var(--text); border-radius: 99px; padding: 5px 11px 5px 7px; font: inherit; font-size: .8rem; cursor: pointer; }
+.summer-pal button[aria-pressed="true"] { background: var(--accent-weak); border-color: var(--accent); font-weight: 650; }
+.summer-pal button i { width: 14px; height: 14px; border-radius: 50%; display: block; border: 1px solid rgba(0,0,0,.18); }
