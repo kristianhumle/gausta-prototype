@@ -1548,18 +1548,18 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .br-mini .card { padding: 14px 18px; display: flex; flex-direction: column; gap: 2px; }
 .br-mini .label { font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--faint); font-weight: 650; }
 .br-mini b { font-family: var(--font-mono); font-weight: 500; font-size: 1.05rem; }
-.br-two { margin-top: 16px; gap: 16px; }
+.br-two { margin-top: 16px; }
 .br-chart { width: 100%; height: auto; display: block; }
 .br-grid { stroke: var(--border); stroke-width: 1; }
-.br-ax { font: 500 10px var(--font-mono); fill: var(--faint); }
+.br-ax { font: 500 12px var(--font-mono); fill: var(--faint); }
 .br-in { fill: color-mix(in srgb, var(--good) 75%, var(--surface)); }
 .br-out { fill: color-mix(in srgb, var(--coral) 70%, var(--surface)); }
-.br-net { font: 650 10px var(--font-mono); } .br-net.pos { fill: var(--good); } .br-net.neg { fill: var(--coral); }
+.br-net { font: 650 12px var(--font-mono); } .br-net.pos { fill: var(--good); } .br-net.neg { fill: var(--coral); }
 .br-note { font-size: .78rem; margin: 8px 0 0; }
 .br-key { display: inline-block; width: 10px; height: 10px; border-radius: 2px; vertical-align: -1px; margin: 0 2px 0 6px; }
 .br-key.in { background: color-mix(in srgb, var(--good) 75%, var(--surface)); } .br-key.out { background: color-mix(in srgb, var(--coral) 70%, var(--surface)); }
 .br-cats { display: flex; flex-direction: column; gap: 6px; }
-.br-cat { font: inherit; display: grid; grid-template-columns: minmax(120px, 1.3fr) 1fr auto; gap: 10px; align-items: center; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 4px 6px; cursor: pointer; font-size: .82rem; }
+.br-cat { font: inherit; display: grid; grid-template-columns: minmax(200px, 1fr) 2fr minmax(150px, auto); gap: 10px; align-items: center; text-align: left; background: transparent; border: 1px solid transparent; border-radius: 6px; padding: 4px 6px; cursor: pointer; font-size: .82rem; }
 .br-cat:hover, .br-cat.on { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); }
 .br-catn { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .br-bar { height: 10px; background: var(--elevated); border-radius: 5px; overflow: hidden; }

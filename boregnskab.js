@@ -51,7 +51,8 @@
       function both(k) { return (cur(s.NOK[k], 'NOK') + cur(s.DKK[k], 'DKK')) || '<span class="br-cur">0</span>'; }
       var resN = s.NOK.ind - s.NOK.udg, resD = s.DKK.ind - s.DKK.udg;
       var etN = 0, etD = 0; etab.forEach(function (r) { if (r.valuta === 'NOK') etN += r.beloeb; else etD += r.beloeb; });
-      var unN = 0, unD = 0; unpaid.forEach(function (r) { var v = r.type === 'Indtægt' ? 0 : r.beloeb; if (r.valuta === 'NOK') unN += v; else unD += v; });
+      var unpaidUdg = unpaid.filter(function (r) { return r.type === 'Udgift'; }), unpaidInd = unpaid.length - unpaidUdg.length;
+      var unN = 0, unD = 0; unpaidUdg.forEach(function (r) { if (r.valuta === 'NOK') unN += r.beloeb; else unD += r.beloeb; });
       return '<div class="br-kpis">' +
         '<div class="kpi"><div class="label">Indtægter</div>' + both('ind') + '<span class="stamp">' + (st.etab || st.egen ? 'inkl. valgte poster' : 'drift') + '</span></div>' +
         '<div class="kpi"><div class="label">Udgifter</div>' + both('udg') + '<span class="stamp">' + (st.etab ? 'inkl. etablering' : 'uden etablering') + (st.egen ? ', inkl. egen brug' : ', uden egen brug') + '</span></div>' +
@@ -60,7 +61,7 @@
         '</div>' +
         (mode === 'overview' ? '' : '<div class="br-mini">' +
         '<div class="card"><div class="label">Etablering (engangsindkøb)</div><b>' + [etN ? 'NOK ' + nf(etN) : '', etD ? 'DKK ' + nf(etD) : ''].filter(Boolean).join(' · ') + '</b><span class="stamp">' + etab.length + ' poster med Etablering = Ja. ' + (st.etab ? 'Tælles med ovenfor.' : 'Holdt uden for driften.') + '</span></div>' +
-        '<div class="card"><div class="label">Ikke betalt</div><b>' + (unpaid.length ? [unN ? 'NOK ' + nf(unN) : '', unD ? 'DKK ' + nf(unD) : ''].filter(Boolean).join(' · ') + ' i udgifter' : 'Intet') + '</b><span class="stamp">' + unpaid.length + ' poster uden Betalt = Ja</span></div>' +
+        '<div class="card"><div class="label">Ikke betalt</div><b>' + (unpaidUdg.length ? [unN ? 'NOK ' + nf(unN) : '', unD ? 'DKK ' + nf(unD) : ''].filter(Boolean).join(' · ') : 'Intet') + '</b><span class="stamp">' + unpaidUdg.length + ' udgifter uden Betalt = Ja' + (unpaidInd ? ' · ' + unpaidInd + ' indtægt afventer' : '') + '</span></div>' +
         '</div>');
     }
 
@@ -74,7 +75,7 @@
       });
       var keys = Object.keys(m).sort(); if (!keys.length) return '<p class="muted">Ingen poster i perioden.</p>';
       var max = Math.max.apply(null, keys.map(function (k) { return Math.max(m[k].ind, m[k].udg); })) || 1;
-      var W = 760, H = 240, pad = 34, bw = (W - pad * 2) / keys.length, h = '';
+      var W = 900, H = 260, pad = 40, bw = (W - pad * 2) / keys.length, h = '';
       [0, .5, 1].forEach(function (f) { var y = H - 26 - f * (H - 50); h += '<line x1="' + pad + '" x2="' + (W - 6) + '" y1="' + y + '" y2="' + y + '" class="br-grid"/><text x="' + (pad - 4) + '" y="' + (y + 4) + '" class="br-ax" text-anchor="end">' + nf(max * f / 1000) + 'k</text>'; });
       keys.forEach(function (k, i) {
         var x = pad + i * bw, b = Math.min(22, bw / 2 - 4), hi = m[k].ind / max * (H - 50), hu = m[k].udg / max * (H - 50), net = m[k].ind - m[k].udg;
@@ -126,8 +127,8 @@
       var list = rows();
       if (mode === 'overview') { el.innerHTML = kpiHtml(list); return; }
       el.innerHTML = sync() + controls() + kpiHtml(list) +
-        '<div class="grid grid-2 br-two"><div class="card"><h3 style="margin:0 0 8px">Pr. måned</h3>' + monthChart(list) + '</div>' +
-        '<div class="card"><h3 style="margin:0 0 8px">Udgifter pr. kategori</h3>' + catChart(list) + '</div></div>' +
+        '<div class="card br-two"><h3 style="margin:0 0 8px">Pr. måned</h3>' + monthChart(list) + '</div>' +
+        '<div class="card br-two"><h3 style="margin:0 0 8px">Udgifter pr. kategori</h3>' + catChart(list) + '</div>' +
         '<div class="card" style="margin-top:16px"><h3 style="margin:0 0 8px">Posteringer</h3>' + table(list) + '</div>';
     }
 
