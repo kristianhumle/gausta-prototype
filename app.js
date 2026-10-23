@@ -102,7 +102,7 @@
 
 
   // Sommerpalet (forsøg, 23. oktober 2026): varmere alternativer til sommerens kolde palet. Ingen attribut = den nuværende palet.
-  var SUMMER_PALS = [["", "Nuværende", "#23766A"], ["honning", "Honning", "#9E6C10"], ["koral", "Koral", "#BF553D"], ["eng", "Eng", "#657F1B"], ["sand", "Sand og sø", "#23766A"]];
+  var SUMMER_PALS = [["", "Nuværende", "#23766A"], ["honning", "Honning", "#9E6C10"], ["koral", "Koral", "#BF553D"], ["eng", "Eng", "#657F1B"], ["sand", "Sand og sø", "#23766A"], ["hindbaer", "Hindbær", "#C42A62"], ["lavendel", "Lavendel", "#7A4FC4"], ["solnedgang", "Solnedgang", "#9A3B72"], ["kornblomst", "Fersken og kornblomst", "#2F63B8"], ["tropisk", "Tropisk", "#0D8385"]];
   function applySummerPal() {
     var v = sstore('gl.summer') || '';
     if (v) root.setAttribute('data-summer', v); else root.removeAttribute('data-summer');
