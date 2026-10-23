@@ -150,14 +150,14 @@
     }
     function panelList(sel, title) {
       var mem = memberPois(sel);
-      panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + mem.length + ' steder</span></div><h3 style="margin:0 0 10px">' + title + '</h3>' +
+      panel.innerHTML = '<button type="button" class="am-back btn btn-ghost btn-sm" data-back>← Tilbage til listen</button>' + '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + mem.length + ' steder</span></div><h3 style="margin:0 0 10px">' + title + '</h3>' +
         '<div class="am-list">' + mem.map(function (p) { return '<button type="button" data-poi="' + p.id + '"><b>' + esc(p.n) + '</b><span class="muted">' + CAT_NAME[cur + ':' + p.c] + '</span></button>'; }).join('') + '</div>';
       panel.scrollTop = 0;
     }
     function panelPoi(p) {
       var dist = cur === 'close' ? ['Luftlinje fra lejligheden', 'ca. ' + km(p.air)] : (p.drive ? ['Køretid fra lejligheden', p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)'] : ['Fra lejligheden', 'ingen vej til toppen']);
       var im = p.img;
-      panel.innerHTML = '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
+      panel.innerHTML = '<button type="button" class="am-back btn btn-ghost btn-sm" data-back>← Tilbage til listen</button>' + '<div class="row-flex" style="margin-bottom:8px"><span class="pill-tag accent">' + CAT_NAME[cur + ':' + p.c] + '</span></div><h3 style="margin:0 0 10px">' + esc(p.n) + '</h3>' +
         (im ? '<figure class="am-fig"><img src="' + im.u + '" alt="' + esc(p.n) + '" loading="lazy" decoding="async" referrerpolicy="no-referrer"><figcaption>Foto: <a href="' + im.l + '" target="_blank" rel="noopener">' + im.k + '</a></figcaption></figure>' : '') +
         '<div class="list-row" style="padding:8px 0"><span class="grow muted">' + dist[0] + '</span><span>' + dist[1] + '</span></div>' +
         (cur === 'wide' ? '<div class="faint" style="margin:-2px 0 4px">Køretid beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM), skal verificeres.</div>' : '') +
@@ -258,7 +258,10 @@
       var b = e.target.closest('.am-pin'); if (!b) return; var id = b.dataset.id;
       if (id === 'cluster') select('cluster', 'cluster'); else if (MAPS[cur].groups[id]) select(id, 'group'); else select(id, 'poi');
     });
-    panel.addEventListener('click', function (e) { var b = e.target.closest('[data-poi]'); if (b) select(b.dataset.poi, 'poi'); });
+    panel.addEventListener('click', function (e) {
+      if (e.target.closest('[data-back]')) { select(null); return; }   // tilbage til listen (G138)
+      var b = e.target.closest('[data-poi]'); if (b) select(b.dataset.poi, 'poi');
+    });
     window.addEventListener('resize', function () { layout(); });
     if (window.ResizeObserver) new ResizeObserver(function () { layout(); }).observe(wrap);
     el.addEventListener('click', function (e) { if (e.target.closest('a[aria-disabled="true"], .subnav a')) e.preventDefault(); });

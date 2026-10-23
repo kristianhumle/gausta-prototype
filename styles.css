@@ -1528,3 +1528,6 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .ws-key.ws-r-green { background: color-mix(in srgb, var(--good) 35%, transparent); }
 .ws-key.ws-r-yellow { background: color-mix(in srgb, var(--amber) 38%, transparent); }
 .ws-key.ws-r-red { background: color-mix(in srgb, var(--coral) 35%, transparent); }
+
+/* Området: tilbage til listen fra et sted eller en gruppe (G138) */
+.am-back { margin: 0 0 10px; }
