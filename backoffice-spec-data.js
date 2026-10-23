@@ -2,7 +2,7 @@
    One entry per item. Status: draft (Udkast), open (Afklares), ready (Klar til godkendelse), approved (Godkendt).
    Mirrored as a register in teknisk/backoffice-spec.md: update both when a status changes.
    Public page (noindex): no host names, IP addresses, VM numbers, places or secrets here. */
-window.BO_SPEC_UPDATED = '14. oktober 2026';
+window.BO_SPEC_UPDATED = '24. oktober 2026';
 window.BO_SPEC_GROUPS = [
   { id: 'F', title: 'Forudsætninger', lead: 'Ejerhandlinger, der skal være på plads, før der kan bygges noget på serveren.' },
   { id: 'P', title: 'Platform', lead: 'Fundamentet på hjemmeserveren: maskine, database, backup, adgang og jobkørsel.' },
@@ -45,7 +45,7 @@ window.BO_SPEC = [
     what: 'Ét privat repo kun til back-office, adskilt fra websitet, med app, planlagte job, databaseskema og opsætning af containere. Samme teknik som websitet. Docker-images bygges i GitHub og hentes af serveren, så serveren ikke fyldes op af builds.',
     out: 'Repo-navn, mappestruktur, teknik, CI og udrulning. Skrevet 14. oktober 2026.',
     deps: [], req: 'G4, G18, G29',
-    decided: 'Navn, ét samlet repo og byg i GitHub (din beslutning 14. oktober 2026). Data sendes aldrig til GitHub, og GitHubs gratis abonnement rækker.',
+    decided: 'Navn, ét samlet repo og byg i GitHub (din beslutning 14. oktober 2026). Data sendes aldrig til GitHub, og GitHubs gratis abonnement rækker. Repoet er oprettet 24. oktober 2026 med opsætning af database og backup, og CI tester roller, backup og gendannelse ved hver ændring.',
     open: [] },
   { id: 'P2', g: 'P', status: 'approved', title: 'Egen virtuel maskine med Docker',
     what: 'Back-office får sin egen maskine. En eksisterende, ubrugt maskine (2 CPU, 4 GB RAM) geninstalleres med Ubuntu Server 24.04 LTS på en ny disk. Den bærer intet andet, så back-office er adskilt fra GPU-maskinen og fra den maskine, der styrer energien. Docker med compose, administration kun via privat netværk, ingen åbne porte.',
@@ -53,17 +53,20 @@ window.BO_SPEC = [
     deps: [], req: 'G27',
     decided: 'Hjemmeserver (3. oktober 2026). 11. oktober 2026: den ubrugte maskine genbruges, Ubuntu 24.04 LTS som de øvrige, ny disk på mindst 40 GB (størrelse sættes ved opsætning), ingen diskkryptering. Opsat 12. oktober 2026: maskinen hedder nu Gausta og kører Ubuntu 24.04.5 med Docker, firewall og automatiske sikkerhedsopdateringer. Adgang via Tailscale kun fra ejerens Mac. Gammel disk ryddet op. Godkendt af ejeren 12. oktober 2026.',
     open: [] },
-  { id: 'P3', g: 'P', status: 'draft', title: 'Database (PostgreSQL)',
+  { id: 'P3', g: 'P', status: 'ready', title: 'Database (PostgreSQL)',
     what: 'Én database til marked, økonomi, kurs og sensorer. Ændringer i strukturen styres i kode. Markedsdata overskrives aldrig, der tilføjes kun.',
     out: 'Version, opsætning, hvordan strukturen ændres, og adgangsroller (indsamling skriver, app læser og skriver, rapporter læser).',
+    decided: 'PostgreSQL 18 (din beslutning 24. oktober 2026). Sat op og testet 24. oktober 2026: databasen kører i en container uden åben port. Fire roller: ejer (ændringer i strukturen), indsamling (læse og tilføje, aldrig rette eller slette), app (læse og skrive) og rapporter (kun læse). 13 automatiske test af rollerne er bestået.',
     deps: ['P2'], req: 'C5, N16, N17', open: [] },
-  { id: 'P4', g: 'P', status: 'draft', title: 'Hemmeligheder',
+  { id: 'P4', g: 'P', status: 'ready', title: 'Hemmeligheder',
     what: 'Nøgler og adgangskoder ligger kun på serveren, aldrig i repoet eller i dokumentationen.',
     out: 'Liste over hemmeligheder (kun navne, ikke værdier), hvor de ligger, og hvordan de skiftes.',
+    decided: 'Sat op 24. oktober 2026: fem adgangskoder er lavet tilfældigt på serveren og ligger kun dér. Repoet har kun navnene. Du bør gemme en kopi i din adgangskodemanager.',
     deps: ['P2'], req: 'N2', open: [] },
-  { id: 'P5', g: 'P', status: 'draft', title: 'Backup og gendannelse (lokalt)',
+  { id: 'P5', g: 'P', status: 'ready', title: 'Backup og gendannelse (lokalt)',
     what: 'Natlig databasekopi på serveren, og maskinen er med i det månedlige backup-job til USB-disken. Gendannelse øves én gang, før noget sættes i drift. Kopien uden for huset er P9.',
     out: 'Plan, opbevaringstid og en testprotokol med dato for den øvede gendannelse.',
+    decided: 'Sat op 24. oktober 2026: databasekopi hver nat kl. 02:30, kontrolleret før den gemmes. Daglige kopier i 14 dage og månedlige i 12 måneder. Hele maskinen kommer desuden med i den månedlige backup til USB-disken. Gendannelse øvet 24. oktober 2026: OK.',
     deps: ['P3'], req: 'N8, N12', open: [] },
   { id: 'P6', g: 'P', status: 'draft', title: 'Adgang udefra med login',
     what: 'Back-office nås gennem en udgående tunnel med login foran. Ingen åbne porte hjemme.',
