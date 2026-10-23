@@ -239,8 +239,7 @@
     { href: 'omraadet.html', id: 'omraadet', da: 'Oversigt', en: 'Overview' },
     { href: 'taet-paa.html', id: 'taet-paa', da: 'Tæt på', en: 'Nearby' },
     { href: 'oplevelser.html', id: 'oplevelser', da: 'Oplevelser', en: 'Experiences' },
-    { href: 'vandring.html', id: 'vandring', da: 'Vandring', en: 'Hiking' },
-    { id: 'nu', da: 'Nu og events', en: 'Now and events', soon: true }
+    { href: 'vandring.html', id: 'vandring', da: 'Vandring', en: 'Hiking' }
   ];
   function areaIds() { return AREA.map(function (x) { return x.id; }); }
   GL.areaSubnav = function (cur) {
