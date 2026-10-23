@@ -281,7 +281,7 @@
     all.sort(function (a, b) { return key(a) - key(b); });
     var dist = function (p) { return kind === 'close' ? 'ca. ' + km(p.air) : (p.drive ? p.drive[1] + ' min (' + String(p.drive[0]).replace('.', ',') + ' km)' : 'til fods eller med Gaustabanen'); };
     var note = kind === 'close' ? 'Afstand er luftlinje fra Skipsfjellvegen 52.' : 'Køretid fra lejligheden i bil, beregnet 3. oktober 2026 på OpenStreetMap-data (OSRM). Alle steder og oplysninger er kildepåstande og skal verificeres.';
-    if (el.getAttribute('data-praktisk') === 'kun') note = '';   // Tæt på, praktiske steder: ingen fodnote (G139)
+    if (el.getAttribute('data-praktisk')) note = '';   // Tæt på (praktiske steder) og Oplevelser: ingen køretidsnote (G139, G141)
     var box = el, sel = { t: '', d: '' };
     var buckets = kind === 'close' ? [['', 'Alle afstande'], ['a', 'Under 500 m'], ['b', '500 m til 1 km'], ['c', 'Over 1 km']] : [['', 'Alle køretider'], ['a', 'Under 15 min'], ['b', '15 til 30 min'], ['c', 'Over 30 min']];
     var inBucket = function (p, d) {
