@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=v1">
+<link rel="stylesheet" href="styles.css?v=d1">
 </head>
 <body data-shell="materials">
 <main class="section" style="border:0"><div class="wrap">
@@ -16,7 +16,7 @@
   <h1 style="font-size:clamp(2rem,4vw,3rem)">Byggeklodserne i back-office.</h1>
   <p class="lead">Elementerne i back-office (del C), vist enkeltvis med status og krav. De hører ikke til det offentlige site eller gæsteområdet, kræver login og bruger eksempeldata. Se dem samlet i <a href="backoffice.html">back-office-prototypen</a>.</p>
   <div class="row-flex" style="margin-top:18px"><span class="status prototype">Prototype</span><span class="muted">bygget i prototypen</span><span class="status research">Research</span><span class="muted">alternativer undersøgt, valg åbent</span><span class="status proposed">Foreslået</span><span class="muted">designet, ikke bygget</span><span class="status approved">✓ Godkendt</span><span class="muted">afklaret endeligt af dig</span></div>
-  <div class="toc bo-toc"><a href="#e-boshell">App-ramme</a><a href="#e-regnskab">Regnskab</a><a href="#e-vurdering">Vurdering</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-bocal">Kalender</a><a href="#e-sensorplan">Sensor-plantegning</a></div>
+  <div class="toc bo-toc"><a href="#e-boshell">App-ramme</a><a href="#e-regnskab">Regnskab</a><a href="#e-vurdering">Vurdering</a><a href="#e-kpi">KPI og diagram</a><a href="#e-table">Datatabel</a><a href="#e-sensor">Sensorrække</a><a href="#e-bocal">Kalender</a><a href="#e-sensorplan">Sensor-plantegning</a><a href="#e-doorcal">Døraktivitet</a></div>
   <div style="margin-top:24px"></div>
   <div class="spec-block" id="e-boshell"><div class="spec-head"><h3>App-ramme: menu i siden</h3><div class="row-flex"><span class="pill-tag">back-office · V1</span><span class="status proposed">Foreslået</span></div></div>
     <div class="spec-body"><p class="muted" style="margin:0 0 10px;font-size:.9rem">Back-office er en app, ikke en del af websitet. Den har sin egen ramme: menu i venstre side (Overblik, Regnskab, Udlejning, Marked, Kalender, Sensorer), hvem der er logget ind, og ingen websitemenu eller Book-knap. På mobil bliver menuen en vandret række øverst. Se den i brug i <a href="backoffice.html">back-office-prototypen</a>.</p>
@@ -67,12 +67,22 @@
       <br><b>Med i prototypen (Brugeroplysning):</b> dørsensor på hoveddør og terrassedør (åben/lukket, sidst åbnet, temperatur i entré og TV-stue), temperatur på badeværelse og terrasse (badeværelset også fugt og lækage), og net- og Wi-Fi-status i entréen (internet, svartid, hastighed, antal enheder, sensor-gateway). <b>Tilføjet 16. oktober 2026 (ejerens skitse):</b> Eva-fugtmåler ved køkkenbordet, Eva-røgdetektor ved søjlen i stuen, to Eva-termostater (stuen og TV-stuen), SuperLink Gateway i stuen og internetstikket i stuens hjørne. Den tonede røgalarm er fjernet. <b>Åbent:</b> mærke, model og forbindelse for Eva-enhederne, og om back-office kan læse dem.
       <br><b>Forslag til mere (Inference, ikke besluttet):</b> batteriniveau og offline-markering på planen, signalstyrke pr. sensor, fugt og dugpunkt (skimmelrisiko), frostalarm når boligen er tom, dørsensorer mod bookinger (aktivitet uden booking, C7), 24-timers kurve pr. sensor, tidsstempel med "ældre end X minutter" som advarsel, lækagesensor ved opvaskemaskinen (fravalgt), vindues- og altandør-sensor, og el- og vandforbrug (kræver anden hardware).
       <br><b>Data og regler:</b> hvert tal har dato og kilde (C5). UniFi leverer kun aktuelle målinger, så historik gemmes af os (C7). Dørsensorer tæller ikke personer og virker kun ved 0 til 45 °C. Terrassens sensor kan komme under sin nedre grænse på -20 °C. Planen er en skitse (ikke målfast), og placeringerne skal verificeres ved installationen. <b>Åbent:</b> hjemmegateway (Site Magic), internetabonnement og hvilke sensortyper API'et dækker. Kun back-office (login), aldrig på det offentlige site eller i gæsteområdet (N18, G28).</div></div>
+
+  <div class="spec-block" id="e-doorcal"><div class="spec-head"><h3>Døraktivitet i kalender</h3><div class="row-flex"><span class="pill-tag">back-office · C7</span><span class="status proposed">Foreslået</span></div></div>
+    <div class="spec-body"><div class="sample-banner" style="position:static;margin:0 0 14px;border-radius:var(--radius-sm)">EKSEMPELDATA: sensorerne er ikke sat op. Ophold og åbninger er opdigtede.</div>
+      <div data-doorcal></div></div>
+    <div class="spec-note"><b>Idé (Brugeroplysning, 24. oktober 2026):</b> en kalender for dørsensorerne, hvor man kan se, hvilke dage der har været aktivitet.
+      <br><b>Indhold:</b> månedskalender med ugenumre. Farven viser antal åbninger (1-2, 3-6, 7+), firkant = hoveddør, prik = terrassedør. Lejerophold (grøn bundstreg) og egne ophold (gul bundstreg) ligger ovenpå, og ankomst, afrejse og rengøring er skrevet på dagen. Filter: begge døre, hoveddør eller terrassedør. Nøgletal for måneden: dage med aktivitet, åbninger, dage med aktivitet uden ophold, frostalarmer. Klik på en dag for detaljer.
+      <br><b>Markeringer (krav C7):</b> <b>!</b> = aktivitet uden ophold ("døraktivitet mod bookinger kan afsløre aktivitet uden booking"). <b>❄</b> = terrassedør åben længe, mens det er frost udenfor. Rengøring dagen efter en afrejse regnes som forventet.
+      <br><b>Data i drift (Inference):</b> åbninger fra UniFi-dørsensorerne (UP-Sense) via sensorhentningen (I5), gemt som historik af back-office. Ophold fra operatørens bookinger eller afregning (afhænger af G1 og G2) og egne ophold fra regnearket eller en kalender. <b>Begrænsning:</b> sensorerne tæller åbninger, ikke personer.
+      <br><b>Åbent:</b> hvor bookingdata kommer fra, og om tilsyn og rengøring fra operatøren kan markeres, så de ikke giver advarsel.</div></div>
 </div></main>
 <script src="app.js"></script>
 <script src="plan.js"></script>
 <script src="bocal-data.js?v=c3"></script>
 <script src="bocal.js?v=c3"></script>
 <script src="sensorplan.js?v=s20261016b"></script>
+<script src="doorcal.js?v=d1"></script>
 <script src="boregnskab-data.js?v=r3"></script>
 <script src="boregnskab.js?v=r3"></script>
 <script src="bovurdering-data.js?v=v1"></script>

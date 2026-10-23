@@ -33,7 +33,7 @@ window.BO_SPEC = [
     decided: 'Cloudflare Access med Google-login, egen adresse og tunnel, to ejere, 24 timer (din beslutning 14. oktober 2026).',
     open: [] },
   { id: 'F4', g: 'F', status: 'open', title: 'Hjemmegateway til sensorerne (Site Magic)',
-    what: 'En UniFi-gateway hjemme, der forbindes med routeren i lejligheden, så sensordata kan hentes sikkert. Kræver, at internettet i lejligheden er overdraget (1. november 2026).',
+    what: 'En UniFi-gateway hjemme, der forbindes med routeren i lejligheden, så sensordata kan hentes sikkert. Kræver, at internettet i lejligheden er overdraget (sket ved overtagelsen 12. oktober 2026).',
     out: 'Valgt gatewaymodel, opsat forbindelse og en testet læsning fra sensor-API\'et.',
     deps: [], req: 'C7, G5',
     open: ['Hvilken gatewaymodel?', 'Type og hastighed på internetabonnementet i lejligheden.'] },
@@ -235,7 +235,7 @@ window.BO_SPEC_ORDER = [
   { step: '3', title: 'Historikken starter', ids: ['D1', 'I1', 'I2', 'U1', 'P8'], note: 'Gausta.com hentes dagligt, alarmer virker.' },
   { step: '4', title: 'Kurs og app', ids: ['I4', 'V1', 'V2', 'V4', 'V8'], note: 'Første version af back-office.' },
   { step: '5', title: 'Økonomi', ids: ['D2', 'D3', 'D4', 'D5', 'D6', 'D8', 'V3', 'V6'], note: 'Afhænger delvist af booking-model og operatøraftale.' },
-  { step: '6', title: 'Sensorer', ids: ['F4', 'I5', 'I6', 'V5'], note: 'Tidligst efter overtagelsen 1. november 2026.' },
+  { step: '6', title: 'Sensorer', ids: ['F4', 'I5', 'I6', 'V5'], note: 'Når hjemmegatewayen er sat op. Lejligheden er overtaget 12. oktober 2026.' },
   { step: '7', title: 'Udvidelser', ids: ['I3', 'I7', 'I8', 'I9', 'V7', 'U2', 'U3', 'D7', 'D9'], note: 'Airbnb, marked, presse og skub til Sanity.' },
   { step: '8', title: 'Til sidst', ids: ['P9'], note: 'Kopi uden for huset. Senest før økonomidata lægges ind.' },
   { step: 'Løbende', title: 'Tværgående', ids: ['F5', 'T2', 'T3', 'T4'], note: 'Følger med hele vejen.' }

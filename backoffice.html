@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,560;9..144,620&family=Inter:wght@400;500;600;650&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/favicon-proto.svg" type="image/svg+xml"><link rel="alternate icon" href="assets/logo/favicon-proto.ico" sizes="any"><link rel="apple-touch-icon" href="assets/logo/apple-touch-icon-proto.png">
-<link rel="stylesheet" href="styles.css?v=v1">
+<link rel="stylesheet" href="styles.css?v=d1">
 </head>
 <body data-shell="materials">
 <div class="sample-banner">PROTOTYPE: regnskab og vurdering bruger ejerens regneark, Norges Banks kurser og Lodge-handler fra vidensbasen plus fiktive rækker. Øvrige tal er opfundne.</div>
@@ -83,6 +83,7 @@
       <h1>Sensorer</h1>
       <p class="lead">Placering og seneste værdi pr. sensor (C7). Eksempeldata.</p>
       <div class="card" style="margin-top:16px"><div data-sensorplan></div></div>
+      <div class="card" style="margin-top:16px"><h3 style="margin:0 0 4px">Døraktivitet pr. dag</h3><p class="muted" style="margin:0 0 6px;font-size:.9rem">Hvornår hoveddør og terrassedør er åbnet, med ophold ovenpå. Dage med aktivitet uden ophold og terrassedør åben i frost markeres. Eksempeldata.</p><div data-doorcal></div></div>
       <div class="stack" style="margin-top:16px">
         <div class="notice info">Historik skal gemmes af os (fx hvert 5. minut): UniFi leverer kun aktuelle målinger.</div>
         <div class="notice">Forudsætninger åbne: hjemmegateway (Site Magic), internetabonnement, og hvordan Eva-enhederne forbindes. Se spec. C7.</div>
@@ -95,6 +96,7 @@
 <script src="bocal-data.js?v=c3"></script>
 <script src="bocal.js?v=c3"></script>
 <script src="sensorplan.js?v=s20261016b"></script>
+<script src="doorcal.js?v=d1"></script>
 <script src="boregnskab-data.js?v=r3"></script>
 <script src="boregnskab.js?v=r3"></script>
 <script src="bovurdering-data.js?v=v1"></script>

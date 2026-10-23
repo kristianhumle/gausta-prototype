@@ -1626,3 +1626,28 @@ html[data-season="winter"] [data-nu] .nl-credit, html[data-season="spring"] [dat
 .bv-dot.fik { fill: var(--surface); stroke: var(--accent); stroke-width: 2; }
 .bv-k { height: 3px !important; } .bv-k.tot { background: var(--text); } .bv-k.val { background: var(--accent); } .bv-k.pris { background: var(--good); }
 @media (max-width: 860px) { .bv-split { grid-template-columns: 1fr 1fr; } }
+
+/* døraktivitet i kalender (doorcal.js, C7) */
+.dc-sum { display: flex; gap: 8px 18px; flex-wrap: wrap; font-size: .86rem; margin: 0 0 10px; color: var(--muted); }
+.dc-sum b { font-family: var(--font-mono); color: var(--text); font-size: 1rem; }
+.dc-sum .warn b { color: var(--amber); } .dc-sum .bad b { color: var(--coral); }
+.dc-grid .cal-d { min-height: 66px; gap: 3px; position: relative; }
+.dc-d.lv1 { background: color-mix(in srgb, var(--accent) 12%, transparent); }
+.dc-d.lv2 { background: color-mix(in srgb, var(--accent) 26%, transparent); }
+.dc-d.lv3 { background: color-mix(in srgb, var(--accent) 44%, transparent); }
+.dc-d.st-lejer { box-shadow: inset 0 -4px 0 var(--good); }
+.dc-d.st-egen { box-shadow: inset 0 -4px 0 var(--amber); }
+.dc-d.on { outline: 2px solid var(--accent); outline-offset: -2px; }
+.dc-top { display: flex; align-items: center; gap: 5px; width: 100%; }
+.dc-n { font: 600 .74rem var(--font-mono); color: var(--text); min-height: 1em; }
+.dc-doors { display: flex; gap: 3px; }
+.dc-m, .dc-t { display: inline-block; width: 8px; height: 8px; border-radius: 2px; }
+.dc-m { background: var(--text); } .dc-t { background: var(--accent); border-radius: 50%; }
+.dc-flag { display: inline-flex; align-items: center; justify-content: center; min-width: 15px; height: 15px; border-radius: 50%; font-size: .62rem; font-weight: 800; color: #fff; padding: 0 2px; }
+.dc-flag.warn { background: var(--amber); } .dc-flag.bad { background: var(--coral); }
+.dc-tag { font-size: .58rem; text-transform: uppercase; letter-spacing: .04em; color: var(--muted); }
+.dc-sw { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 2px; border: 1px solid var(--border); }
+.dc-sw.lv1 { background: color-mix(in srgb, var(--accent) 12%, var(--surface)); } .dc-sw.lv2 { background: color-mix(in srgb, var(--accent) 26%, var(--surface)); } .dc-sw.lv3 { background: color-mix(in srgb, var(--accent) 44%, var(--surface)); }
+.dc-sw.st-lejer { box-shadow: inset 0 -4px 0 var(--good); } .dc-sw.st-egen { box-shadow: inset 0 -4px 0 var(--amber); }
+.dc-detail { margin-top: 14px; }
+@media (max-width: 640px) { .dc-grid .cal-d { min-height: 54px; padding: 4px 2px 4px 4px; } .dc-tag { display: none; } }
