@@ -641,7 +641,7 @@ window.WS_SPEC = [
   "gausta": "Lofterne skal genberegnes for et billedtungt site og sættes pr. skabelon efter første baseline. Måling på rigtige besøg afhænger af analytics og samtykke.",
   "built": {
    "s": "partial",
-   "where": "En manuel Lighthouse-måling af fire sider er kørt 18. oktober 2026 og står øverst i N1 (Google Performance scan). Der er stadig ingen automatisk måling i CI, ingen budgetter og ingen felt-måling."
+   "where": "24. oktober 2026: Lighthouse-måling og budgetter findes (performance-budget.json, scripts/lighthouse.mjs, CI-job \"performance\", rådgivende). Budgetterne er sat efter første måling med luft, og målene (score 90, LCP 2,5 s, TBT 200 ms, CLS 0,1) vises som oplysning. Alle fem målte sider er under målet, især forsiden (LCP omkring 21 s i simuleret langsom 4G). Mangler: felt-måling på rigtige besøg (afhænger af analytics, N4.1) og at gøre jobbet blokerende."
   },
   "decided": "G12 (Matomo cookieless som analytics). Felt-måling hviler på d8a (N4.1).",
   "deps": [
@@ -659,8 +659,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "Lofterne genberegnes for Gausta.",
-    "s": "none",
-    "e": "Ingen size-limit i package.json eller .github/workflows/ci.yml"
+    "s": "partial",
+    "e": "24. oktober 2026: JS-, billed- og totalvægt har budgetter pr. side i performance-budget.json (fra Lighthouses ressourceoversigt). Ikke size-limit på selve bundlerne."
    },
    {
     "id": "B1-5.2",
@@ -668,8 +668,8 @@ window.WS_SPEC = [
     "prio": "",
     "rel": "gaelder",
     "note": "",
-    "s": "partial",
-    "e": "Manuel Lighthouse-scan 18. okt. 2026 (se scanning i N1). Ingen CI, ingen budget.json."
+    "s": "done",
+    "e": "24. oktober 2026: scripts/lighthouse.mjs (pnpm perf) kører Lighthouse mobil mod det byggede site og sammenligner med performance-budget.json; CI-jobbet \"performance\" kører det (rådgivende, continue-on-error). Der er ikke staging, men lokal build bruges, som kravet tillader."
    },
    {
     "id": "B1-5.3",

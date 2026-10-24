@@ -36,7 +36,7 @@ window.BO_SPEC = [
     what: 'Din gateway derhjemme kan være hub, og hjemmet har fast offentlig IP, så der skal ikke købes ny hardware. Plan: Site Magic mellem gatewayen hjemme og routeren i lejligheden, eget net i lejligheden, lejernes gæstenet holdes udenfor, og kun back-office-maskinen må tale med routeren. Data hentes fra UniFi Protects officielle API.',
     out: 'Plan, firewallregler og test af API. Plan skrevet 24. oktober 2026.',
     deps: [], req: 'C7, G5',
-    open: ['Er udstyret i lejligheden sat op og online?', 'Ligger begge gateways på samme UniFi-konto, og hvilken firmware kører de?', 'Dækker API\'et alle sensortyper (afgøres ved test)?'] },
+    open: ['Firmware på begge gateways og nettet i lejligheden aflæses.', 'Dækker API\'et alle sensortyper (afgøres ved test)?'] },
   { id: 'F5', g: 'F', status: 'draft', title: 'Strøm og internet hjemme',
     what: 'Hvis serveren er nede, mangler der dage i kalenderhistorikken, og de kan ikke hentes bagefter. Serverskabet har allerede nødstrøm (UPS), men hvor længe den holder, er ikke kendt. Mobilt internet som backup er ikke vurderet.',
     out: 'UPS-driftstid målt eller aflæst, og beslutning om backup af internet (ja eller nej) med pris.',
